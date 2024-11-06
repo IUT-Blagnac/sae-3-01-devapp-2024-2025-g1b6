@@ -1,0 +1,121 @@
+= Document de Conception - Site de Vente de Jouets en Ligne
+
+== 1. Contexte et Objectifs
+
+=== 1.1 Contexte
+Le projet consiste en la création d’un site de vente en ligne de jouets, orienté vers une expérience utilisateur qui distingue les besoins spécifiques des **clients adultes** et des **clients enfants**. Le site doit proposer des fonctionnalités adaptées à chaque type de client, telles que la **visualisation de produits par tranche d’âge**, une **liste de souhaits** pour les adultes, un **système de fidélisation** et des descriptions complètes pour chaque produit.
+
+=== 1.2 Objectifs
+- Offrir aux utilisateurs une expérience personnalisée et sécurisée.
+- Répondre aux besoins des clients adultes en leur permettant de noter et de consulter les souhaits de leurs enfants.
+- Faciliter la navigation pour les clients enfants en leur permettant de trouver des jouets adaptés à leur âge.
+
+== 2. Description Fonctionnelle
+
+=== 2.1 User Stories et Cas d'utilisation
+
+|===
+| **ID** | **User Story**                                                                                       | **Cas d'utilisation**                               |
+| US1    | En tant que client, je souhaite accéder à des jeux adaptés à mon âge pour faire une commande rapidement. | CU1 :       |
+| US2    | En tant que client enfant, je souhaite visualiser facilement le catalogue afin de trouver les jouets. | CU2 :                 |
+| US3    | En tant que client (adulte), je souhaite avoir une liste de souhaits pour noter les envies de mon enfant. | CU3 :             |
+| US4    | En tant que client (adulte), je souhaite un système de fidélisation pour accéder aux produits souhaités. | CU4 :               |
+| US5    | En tant que client (adulte), je souhaite une description complète des produits pour assurer mes choix. | CU5 :      |
+|===
+
+== 3. Architecture et Conception Technique
+
+=== 3.1 Architecture Globale
+
+- **Front-End** : 
+- **Back-End** : 
+- **Base de Données** : 
+
+=== 3.2 Modèles de Données
+
+==== Modèle `Produit`
+
+|===
+| **Champ**       | **Type**       | **Description**                             |
+| `product_id`    | UUID           | Identifiant unique du produit               |
+| `name`          | String         | Nom du produit                              |
+| `age_range`     | Integer[]      | Plage d’âges recommandée                    |
+| `description`   | Text           | Description complète et fiche technique     |
+| `category`      | String         | Catégorie du produit (ex. jouet éducatif)   |
+| `price`      | Float         | Prix du produit   |
+|===
+
+*A compléter*
+
+== 4. Interfaces Utilisateur (Wireframes)
+
+=== 4.1 Page de Catalogue pour Enfants
+
+- **Navigation** : Interface simplifiée avec des icônes et catégories claires.
+- **Section de filtres par âge** : Sélection automatique de la tranche d’âge de l’utilisateur enfant.
+
+=== 4.2 Page de Liste de Souhaits pour Adultes
+
+- **Section principale** : Affiche les produits ajoutés, avec options de suppression et de tri.
+- **Bouton "Ajouter à la liste de souhaits"** : Permet d’ajouter un produit depuis sa page de détail.
+
+=== 4.3 Page Produit avec Description Complète
+
+- **Détails** : Affichage de la fiche technique avec informations essentielles.
+- **Sécurité et âge recommandé** : Informations sur les matériaux, les consignes de sécurité et l’âge recommandé.
+
+== 5. API et Services
+
+=== 5.1 Endpoints REST pour la Liste de Souhaits
+
+|===
+| **Méthode** | **Endpoint**                         | **Description**                           | **Paramètres**                              |
+| `POST`      | `/wishlist`                          | Crée une liste de souhaits                | `user_id`                                   |
+| `PUT`       | `/wishlist/{wishlist_id}/add`        | Ajoute un produit à la liste              | `wishlist_id`, `product_id`                 |
+| `DELETE`    | `/wishlist/{wishlist_id}/remove`     | Supprime un produit de la liste           | `wishlist_id`, `product_id`                 |
+| `GET`       | `/products?age={age}`                | Récupère les produits filtrés par âge     | `age` (facultatif pour filtrer les produits)|
+|===
+
+=== 5.2 Exemples de Requêtes
+
+==== Ajouter un Produit à la Liste de Souhaits
+[source,http]
+----
+PUT /wishlist/{wishlist_id}/add
+Body: {
+    "product_id": "123e4567-e89b-12d3-a456-426614174000"
+}
+----
+
+==== Filtrer les Produits par Âge
+[source,http]
+----
+GET /products?age=6
+----
+
+== 6. Gestion des Erreurs
+
+|===
+| **Code d'erreur** | **Description**                                   | **Solution**                                      |
+| 404               | Produit ou liste de souhaits non trouvée          | Vérifier les IDs dans la requête                  |
+| 400               | Produit déjà dans la liste                        | Ne pas permettre l’ajout de doublons              |
+| 500               | Erreur interne du serveur                         | Notifier le support et analyser les logs          |
+|===
+
+== 7. Sécurité
+
+- **Authentification et Autorisation** : Seuls les utilisateurs connectés peuvent accéder à leur liste de souhaits et aux détails de leur compte.
+- **Filtrage par Âge** : Les produits sont automatiquement filtrés pour correspondre à la tranche d’âge appropriée.
+- **Contrôles d’Accès** : Uniquement les utilisateurs propriétaires d’une liste peuvent la modifier.
+
+== 8. Tests
+
+=== 8.1 Tests Unitaires
+
+- **Filtrage de produits par tranche d’âge** : Vérifie que seuls les produits correspondant à l’âge de l’utilisateur sont affichés.
+- **Création et gestion de la liste de souhaits** : Assure la création de la liste et l'ajout/suppression de produits.
+
+=== 8.2 Tests d'Interface Utilisateur
+
+- **Affichage des produits pour enfants** : Vérifie que les pages enfants sont adaptées avec icônes et navigation simplifiée.
+- **Consistance des fiches techniques** : Vérifie que chaque fiche technique de produit est bien structurée et lisible.
