@@ -1,4 +1,4 @@
-= Document de Conception - Site de Vente de Jouets en Ligne
+= Document de Conception - Ludorama
 
 == 1. Contexte et Objectifs
 
