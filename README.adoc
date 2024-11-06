@@ -124,6 +124,10 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 
 |===
 
+=== Document de Conception
+
+link:Doc_Conception.adoc[Lien vers le document de conception]
+
 
 
 [[liensUtiles]]
