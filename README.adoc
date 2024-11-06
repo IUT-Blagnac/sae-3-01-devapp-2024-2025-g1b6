@@ -63,21 +63,52 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 
 TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 
-=== Dépôt initial
+=== Backlog Produit : Site de Vente de Jouets en Ligne
 
-Ce dépôt initial a été créé pour que tous les groupes de 2ème année aient les mêmes informations de départ.
+|===
+| **Priorité** | **ID** | **User Story** | **Description / Détail** | **Critères d'acceptation**
 
-Vous y trouverez des fichiers qui peuvent être supprimés s'ils ne vous sont pas utiles :
+| Haute
+| US1
+| En tant que **client enfant**, je souhaite pouvoir **visualiser facilement le catalogue** afin de **trouver les jouets à commander au Père Noël**.
+| Créer une interface simplifiée, visuellement attrayante et facile à naviguer pour les enfants, avec des catégories adaptées (par âge, type de jouet, etc.)
+| 
+- Affichage visuel adapté aux enfants
+- Navigation intuitive avec icônes et couleurs
+- Présence d'une section "Spécial Noël"
 
-- `.gitignore` => un fichier minimaliste des éléments à ne pas pousser en général sur vos dépôts (utiliser la commande `git add -f` pour forcer l'ajout d'un fichier Jar qui ne bougera plus, pour archive par exemple).
-- `.github` => le répertoire qui contient des éléments de gestion de projet :
-** `workflows` => le repertoire qui contient les actions à lancer à chaque push sur votre repo. 
-*** `blank.yml` => un exemple bidon mais dont vous pourrez vérifier l’exécution correcte (1er tag)
-** `ISSUE_TEMPLATE` => le repertoire qui contient quelques templates pour vos issues.
-*** `us.yml` => Exemple de template pour les User Stories
-*** `bug.yml` => Exemple de template pour les issues de bug report
+| Haute
+| US2
+| En tant que **client (adulte)**, je souhaite **avoir une liste de souhaits** pour noter ce que mon enfant désire.
+| Ajouter une fonctionnalité permettant aux utilisateurs connectés de créer et gérer une liste de souhaits. Les items doivent être ajoutables depuis la page de catalogue ou de description.
+| 
+- Création d’une liste de souhaits
+- Ajouter / supprimer des articles facilement
+- Persistance de la liste même après déconnexion
+- Possibilité de trier ou filtrer la liste de souhaits
 
-TIP: Adaptez ces fichiers à votre projet et à votre organisation. Et inspirez-vous en pour en ajouter.
+| Moyenne
+| US3
+| En tant que **client (adulte)**, je souhaite avoir un **système de fidélisation** afin d’avoir accès facilement aux produits que mon enfant désire.
+| Mettre en place un système de points de fidélité qui récompense les achats et permet d’obtenir des réductions ou accès anticipés à des jouets exclusifs.
+| 
+- Système de points attribués pour chaque achat
+- Interface pour consulter le solde de points
+- Récompenses disponibles (réductions, produits exclusifs)
+- Email de notification en cas d’avantages disponibles
+
+| Basse
+| US4
+| En tant que **client (adulte)**, je souhaite avoir une **description complète** (avec fiche technique) pour être sûr de ce que j’achète.
+| Ajouter des fiches techniques détaillées pour chaque jouet : dimensions, matériaux, âge recommandé, et autres informations pertinentes.
+| 
+- Page produit avec fiche technique détaillée
+- Présentation des caractéristiques clés (matériaux, dimensions)
+- Informations sur les consignes de sécurité et d'entretien
+- Affichage clair et bien structuré pour chaque fiche produit
+
+|===
+
 
 [[liensUtiles]]
 === Liens utiles
