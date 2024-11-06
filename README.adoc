@@ -77,7 +77,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Mise en place d’un filtre d'âge obligatoire pour les utilisateurs non connectés +
 - Interface qui limite l'affichage des produits inadaptés pour les comptes enfants/adultes +
 - Affichage d’un message d’avertissement pour les produits sensibles
-|To Do
+|ToDo
 
 | Haute
 | US2
@@ -87,7 +87,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Affichage visuel adapté aux enfants +
 - Navigation intuitive avec icônes et couleurs +
 - Présence d'une section "Spécial Noël"
-|To Do
+|ToDo
 
 | Basse
 | US3
@@ -98,7 +98,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Ajouter / supprimer des articles facilement +
 - Persistance de la liste même après déconnexion +
 - Possibilité de trier ou filtrer la liste de souhaits 
-|To Do
+|ToDo
 
 | Moyenne
 | US4
@@ -109,7 +109,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Interface pour consulter le solde de points +
 - Récompenses disponibles (réductions, produits exclusifs) +
 - Email de notification en cas d’avantages disponibles 
-|To Do
+|ToDo
 
 | Moyenne
 | US5
@@ -120,7 +120,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Présentation des caractéristiques clés (matériaux, dimensions) +
 - Informations sur les consignes de sécurité et d'entretien +
 - Affichage clair et bien structuré pour chaque fiche produit +
-|To Do
+|ToDo
 
 |===
 
