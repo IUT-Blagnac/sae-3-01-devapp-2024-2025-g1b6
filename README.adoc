@@ -73,10 +73,10 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 | En tant que **client**, je souhaite **avoir accès à des jeux/objets adaptés à mon âge, et non à des produits inadaptés** afin de pouvoir faire ma commande rapidement et efficacement (ex : armes d’airsoft pour un enfant, ou dinette pour un adulte).
 | Mettre en place un système de filtrage ou de tri par âge pour le catalogue de produits, avec une option de personnalisation selon l’âge de l’utilisateur.
 | 
-- Les produits sont classés par tranches d'âge
-- Mise en place d’un filtre d'âge obligatoire pour les utilisateurs non connectés
-- Interface qui limite l'affichage des produits inadaptés pour les comptes enfants/adultes
-- Affichage d’un message d’avertissement pour les produits sensibles
+- Les produits sont classés par tranches d'âge++
+- Mise en place d’un filtre d'âge obligatoire pour les utilisateurs non connectés++
+- Interface qui limite l'affichage des produits inadaptés pour les comptes enfants/adultes++
+- Affichage d’un message d’avertissement pour les produits sensibles++
 |To Do
 
 | Haute
@@ -84,9 +84,9 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 | En tant que **client enfant**, je souhaite pouvoir **visualiser facilement le catalogue** afin de **trouver les jouets à commander au Père Noël**.
 | Créer une interface simplifiée, visuellement attrayante et facile à naviguer pour les enfants, avec des catégories adaptées (par âge, type de jouet, etc.)
 | 
-- Affichage visuel adapté aux enfants
-- Navigation intuitive avec icônes et couleurs
-- Présence d'une section "Spécial Noël"
+- Affichage visuel adapté aux enfants++
+- Navigation intuitive avec icônes et couleurs++
+- Présence d'une section "Spécial Noël"++
 |To Do
 
 | Basse
@@ -94,10 +94,10 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 | En tant que **client (adulte)**, je souhaite **avoir une liste de souhaits** pour noter ce que mon enfant désire.
 | Ajouter une fonctionnalité permettant aux utilisateurs connectés de créer et gérer une liste de souhaits. Les items doivent être ajoutables depuis la page de catalogue ou de description.
 | 
-- Création d’une liste de souhaits
-- Ajouter / supprimer des articles facilement
-- Persistance de la liste même après déconnexion
-- Possibilité de trier ou filtrer la liste de souhaits
+- Création d’une liste de souhaits++
+- Ajouter / supprimer des articles facilement++
+- Persistance de la liste même après déconnexion++
+- Possibilité de trier ou filtrer la liste de souhaits++
 |To Do
 
 | Moyenne
@@ -105,10 +105,10 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 | En tant que **client (adulte)**, je souhaite **avoir un système de fidélisation** afin d’avoir accès facilement aux produits que mon enfant désire.
 | Mettre en place un système de points de fidélité qui récompense les achats et permet d’obtenir des réductions ou accès anticipés à des jouets exclusifs.
 | 
-- Système de points attribués pour chaque achat
-- Interface pour consulter le solde de points
-- Récompenses disponibles (réductions, produits exclusifs)
-- Email de notification en cas d’avantages disponibles
+- Système de points attribués pour chaque achat++
+- Interface pour consulter le solde de points++
+- Récompenses disponibles (réductions, produits exclusifs)++
+- Email de notification en cas d’avantages disponibles++
 |To Do
 
 | Moyenne
@@ -116,10 +116,10 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 | En tant que **client (adulte)**, je souhaite **avoir une description complète** (avec fiche technique) pour être sûr de ce que j’achète.
 | Ajouter des fiches techniques détaillées pour chaque jouet : dimensions, matériaux, âge recommandé, et autres informations pertinentes.
 | 
-- Page produit avec fiche technique détaillée
-- Présentation des caractéristiques clés (matériaux, dimensions)
-- Informations sur les consignes de sécurité et d'entretien
-- Affichage clair et bien structuré pour chaque fiche produit
+- Page produit avec fiche technique détaillée++
+- Présentation des caractéristiques clés (matériaux, dimensions)++
+- Informations sur les consignes de sécurité et d'entretien++
+- Affichage clair et bien structuré pour chaque fiche produit++
 |To Do
 
 |===
