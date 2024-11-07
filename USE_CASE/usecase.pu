@@ -1,4 +1,6 @@
 @startuml
+left to right direction
+
 actor Client
 actor Administrateur
 
@@ -19,6 +21,10 @@ Client --> (Gérer points fidélité) : <<extend>>
 ' Order History and Reviews
 Client --> (Visualiser commandes passées)
 Client --> (Rédiger avis) : <<include>>
+
+' Cart Management
+Client --> (Ajouter au panier)
+Client --> (Gérer panier)
 
 ' Administrator Console
 Administrateur --> (Ajouter / Supprimer produit)
