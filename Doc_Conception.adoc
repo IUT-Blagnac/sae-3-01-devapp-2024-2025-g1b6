@@ -25,97 +25,13 @@ Le projet consiste en la création d’un site de vente en ligne de jouets, orie
 
 == 3. Architecture et Conception Technique
 
-=== 3.1 Architecture Globale
 
-- **Front-End** : 
-- **Back-End** : 
-- **Base de Données** : 
-
-=== 3.2 Modèles de Données
-
-==== Modèle `Produit`
-
-|===
-| **Champ**       | **Type**       | **Description**                             |
-| `product_id`    | UUID           | Identifiant unique du produit               |
-| `name`          | String         | Nom du produit                              |
-| `age_range`     | Integer[]      | Plage d’âges recommandée                    |
-| `description`   | Text           | Description complète et fiche technique     |
-| `category`      | String         | Catégorie du produit (ex. jouet éducatif)   |
-| `price`      | Float         | Prix du produit   |
-|===
-
-*A compléter*
 
 == 4. Interfaces Utilisateur (Wireframes)
 
-=== 4.1 Page de Catalogue pour Enfants
-
-- **Navigation** : Interface simplifiée avec des icônes et catégories claires.
-- **Section de filtres par âge** : Sélection automatique de la tranche d’âge de l’utilisateur enfant.
-
-=== 4.2 Page de Liste de Souhaits pour Adultes
-
-- **Section principale** : Affiche les produits ajoutés, avec options de suppression et de tri.
-- **Bouton "Ajouter à la liste de souhaits"** : Permet d’ajouter un produit depuis sa page de détail.
-
-=== 4.3 Page Produit avec Description Complète
-
-- **Détails** : Affichage de la fiche technique avec informations essentielles.
-- **Sécurité et âge recommandé** : Informations sur les matériaux, les consignes de sécurité et l’âge recommandé.
-
 == 5. API et Services
-
-=== 5.1 Endpoints REST pour la Liste de Souhaits
-
-|===
-| **Méthode** | **Endpoint**                         | **Description**                           | **Paramètres**                              |
-| `POST`      | `/wishlist`                          | Crée une liste de souhaits                | `user_id`                                   |
-| `PUT`       | `/wishlist/{wishlist_id}/add`        | Ajoute un produit à la liste              | `wishlist_id`, `product_id`                 |
-| `DELETE`    | `/wishlist/{wishlist_id}/remove`     | Supprime un produit de la liste           | `wishlist_id`, `product_id`                 |
-| `GET`       | `/products?age={age}`                | Récupère les produits filtrés par âge     | `age` (facultatif pour filtrer les produits)|
-|===
-
-=== 5.2 Exemples de Requêtes
-
-==== Ajouter un Produit à la Liste de Souhaits
-[source,http]
-----
-PUT /wishlist/{wishlist_id}/add
-Body: {
-    "product_id": "123e4567-e89b-12d3-a456-426614174000"
-}
-----
-
-==== Filtrer les Produits par Âge
-[source,http]
-----
-GET /products?age=6
-----
 
 == 6. Gestion des Erreurs
 
-|===
-| **Code d'erreur** | **Description**                                   | **Solution**                                      |
-| 404               | Produit ou liste de souhaits non trouvée          | Vérifier les IDs dans la requête                  |
-| 400               | Produit déjà dans la liste                        | Ne pas permettre l’ajout de doublons              |
-| 500               | Erreur interne du serveur                         | Notifier le support et analyser les logs          |
-|===
 
 == 7. Sécurité
-
-- **Authentification et Autorisation** : Seuls les utilisateurs connectés peuvent accéder à leur liste de souhaits et aux détails de leur compte.
-- **Filtrage par Âge** : Les produits sont automatiquement filtrés pour correspondre à la tranche d’âge appropriée.
-- **Contrôles d’Accès** : Uniquement les utilisateurs propriétaires d’une liste peuvent la modifier.
-
-== 8. Tests
-
-=== 8.1 Tests Unitaires
-
-- **Filtrage de produits par tranche d’âge** : Vérifie que seuls les produits correspondant à l’âge de l’utilisateur sont affichés.
-- **Création et gestion de la liste de souhaits** : Assure la création de la liste et l'ajout/suppression de produits.
-
-=== 8.2 Tests d'Interface Utilisateur
-
-- **Affichage des produits pour enfants** : Vérifie que les pages enfants sont adaptées avec icônes et navigation simplifiée.
-- **Consistance des fiches techniques** : Vérifie que chaque fiche technique de produit est bien structurée et lisible.
