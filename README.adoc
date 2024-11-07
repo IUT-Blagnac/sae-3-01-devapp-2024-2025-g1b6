@@ -77,7 +77,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Mise en place d’un filtre d'âge obligatoire pour les utilisateurs non connectés +
 - Interface qui limite l'affichage des produits inadaptés pour les comptes enfants/adultes +
 - Affichage d’un message d’avertissement pour les produits sensibles
-|ToDo
+| ToDo
 
 | Haute
 | US2
@@ -87,7 +87,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Affichage visuel adapté aux enfants +
 - Navigation intuitive avec icônes et couleurs +
 - Présence d'une section "Spécial Noël"
-|ToDo
+| ToDo
 
 | Basse
 | US3
@@ -98,7 +98,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Ajouter / supprimer des articles facilement +
 - Persistance de la liste même après déconnexion +
 - Possibilité de trier ou filtrer la liste de souhaits 
-|ToDo
+| ToDo
 
 | Moyenne
 | US4
@@ -109,7 +109,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Interface pour consulter le solde de points +
 - Récompenses disponibles (réductions, produits exclusifs) +
 - Email de notification en cas d’avantages disponibles 
-|ToDo
+| ToDo
 
 | Moyenne
 | US5
@@ -119,57 +119,107 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Page produit avec fiche technique détaillée +
 - Présentation des caractéristiques clés (matériaux, dimensions) +
 - Informations sur les consignes de sécurité et d'entretien +
-- Affichage clair et bien structuré pour chaque fiche produit +
-|ToDo
+- Affichage clair et bien structuré pour chaque fiche produit
+| ToDo
 
 | Haute
 | US6
-| En tant que **client**, je souhaite pouvoir **ajouter plusieurs produits à mon panier en une seule action** afin de gagner du temps lors de mes achats.
-| Permettre aux utilisateurs de sélectionner plusieurs produits sur la page de catalogue et de les ajouter en une seule opération.
+| En tant que **client**, je souhaite pouvoir **filtrer les produits** par intervalles de prix, marques, catégories, groupes, et avis/notes afin de trouver rapidement des produits correspondant à mes critères.
+| Permettre le filtrage des produits sur la page catalogue selon plusieurs critères de recherche.
 | 
-- Sélection multiple de produits sur la page catalogue +
-- Ajout groupé au panier +
-- Confirmation de l’ajout de chaque produit sélectionné
+- Mise en place des filtres par prix, marque, groupement (soldes, nouveautés, meilleures ventes), et avis/notes +
+- Affichage des résultats correspondant en temps réel +
+- Indicateurs visuels montrant quels filtres sont actifs
 | ToDo
 
 | Moyenne
 | US7
-| En tant que **client**, je souhaite **recevoir des notifications pour des offres spéciales** sur les jouets de ma liste de souhaits afin de bénéficier des meilleurs prix.
-| Mettre en place un système de notifications pour informer l’utilisateur des promotions sur les jouets de la liste de souhaits.
+| En tant que **client**, je souhaite **voir les produits en rupture de stock** mais être empêché de les commander.
+| Afficher les produits en rupture de stock sur la page catalogue, avec une indication claire de leur disponibilité.
 | 
-- Envoi de notifications pour les réductions sur les articles de la liste de souhaits +
-- Lien direct vers le produit en promotion dans la notification +
-- Notifications configurables dans les paramètres du compte
+- Les produits en rupture de stock sont affichés, mais désactivés pour l’ajout au panier +
+- Un message indique l’impossibilité de commander les produits en rupture de stock +
+- Possibilité d’ajouter le produit à une liste de souhaits ou de recevoir une alerte de réapprovisionnement
 | ToDo
 
 | Moyenne
 | US8
-| En tant que **client (adulte)**, je souhaite **voir des suggestions de jouets similaires** pour élargir les options disponibles pour mon enfant.
-| Afficher des produits similaires en bas de chaque page de produit, basés sur la catégorie, l’âge recommandé, et le prix.
+| En tant que **client (adulte)**, je souhaite **pouvoir laisser un avis ou une note sur un produit acheté** dans une commande livrée afin de partager mon expérience.
+| Ajouter une fonctionnalité pour laisser des avis et notes après livraison d’une commande contenant le produit.
 | 
-- Section "Suggestions" sur la page produit +
-- Produits affichés en fonction de la catégorie et tranche d’âge +
-- Suggestions actualisées selon les préférences de l’utilisateur
-| ToDo
-
-| Moyenne
-| US9
-| En tant qu’**utilisateur**, je souhaite **accéder à un historique de mes commandes** afin de revoir facilement mes achats passés et mes dépenses.
-| Permettre l’accès à un historique détaillé des commandes sur une page dédiée dans le profil utilisateur.
-| 
-- Page dédiée à l’historique des commandes avec détails +
-- Accès aux commandes passées avec produits, quantité, prix et date +
-- Option pour répéter l’achat d’une commande spécifique
+- Possibilité de déposer un avis après réception d'une commande +
+- Affichage des avis et notes sur chaque fiche produit +
+- Interface pour trier les avis (meilleurs, plus récents)
 | ToDo
 
 | Haute
-| US10
-| En tant que **client**, je souhaite pouvoir **filtrer les jouets par différents critères** (prix, catégorie, âge recommandé) afin de trouver rapidement les produits adaptés.
-| Ajouter des filtres dynamiques par prix, catégorie et tranche d’âge sur la page catalogue.
+| US9
+| En tant que **client**, je souhaite **visualiser les produits regroupés** par catégorie spéciale (soldes, nouveautés, meilleures ventes, made in France) pour repérer plus facilement les produits intéressants.
+| Ajouter une section dédiée aux groupes de produits sur la page d'accueil et dans les filtres de la page catalogue.
 | 
-- Filtres dynamiques pour le prix, la catégorie et l’âge +
-- Affichage des résultats en temps réel selon les filtres appliqués +
-- Indication visuelle des filtres actifs sur la page
+- Présence des sections spéciales sur la page d'accueil (soldes, nouveautés, meilleures ventes, made in France) +
+- Filtres de recherche spécifiques pour afficher chaque groupe +
+- Indicateurs visuels pour chaque groupe sur les vignettes produit
+| ToDo
+
+| Basse
+| US10
+| En tant que **client**, je souhaite pouvoir **visualiser les variantes de produits (coloris et/ou tailles)** pour choisir le modèle qui convient le mieux à mes besoins.
+| Afficher les variations de taille et de couleur sur chaque fiche produit lorsque plusieurs options sont disponibles.
+| 
+- Affichage des options de couleur et de taille sur la fiche produit +
+- Sélection facile d'une variation et ajout direct au panier +
+- Mise à jour de la disponibilité par variante (ex. taille ou couleur indisponible)
+| ToDo
+
+| Moyenne
+| US11
+| En tant que **gestionnaire de stock**, je souhaite **visualiser les quantités en stock (actuel, minimum, maximum)** pour optimiser les niveaux de réapprovisionnement.
+| Mettre en place un tableau de bord permettant de suivre les quantités en stock, et signaler les articles nécessitant un réapprovisionnement.
+| 
+- Affichage des niveaux de stock actuels, minimum et maximum pour chaque produit +
+- Notification pour le réapprovisionnement automatique lorsque le stock minimum est atteint +
+- Interface de gestion des alertes pour les niveaux de stock
+| ToDo
+
+| Moyenne
+| US12
+| En tant que **client**, je souhaite **utiliser différents types de paiement** (CB, PayPal…) pour avoir plus de flexibilité au moment de payer ma commande.
+| Intégrer plusieurs options de paiement sécurisées pour offrir aux utilisateurs différentes méthodes de paiement.
+| 
+- Options de paiement par carte bancaire, PayPal et autres options locales +
+- Interface sécurisée pour le processus de paiement +
+- Vérification automatique de la validité des informations de paiement
+| ToDo
+
+| Haute
+| US13
+| En tant que **client**, je souhaite **pouvoir commander des lots de produits** pour acheter des ensembles complets.
+| Ajouter une fonctionnalité permettant de regrouper des produits en lot pour des achats groupés, avec des tarifs spéciaux.
+| 
+- Fiche produit dédiée pour les lots de produits (ex. lot de petites voitures) +
+- Indication du contenu du lot sur la fiche produit +
+- Tarification ajustée en fonction du lot
+| ToDo
+
+| Haute
+| US14
+| En tant que **client**, je souhaite **pouvoir voir des avis et notes clients** pour m'assurer de la qualité des produits avant de les acheter.
+| Permettre aux clients d'accéder aux avis et aux notes des autres clients pour chaque produit sur la page de description.
+| 
+- Section dédiée aux avis clients et notes pour chaque produit +
+- Tri des avis par pertinence, date ou note +
+- Affichage d'une moyenne des notes sur la fiche produit
+| ToDo
+
+| Haute
+| US15
+| En tant que **client**, je souhaite pouvoir **chercher des produits par mots-clés et filtres (prix, marques, notes)** afin de trouver rapidement les produits recherchés.
+| Implémenter une barre de recherche avec des filtres combinés pour permettre des recherches précises et rapides.
+| 
+- Barre de recherche avec suggestions de mots-clés +
+- Filtres avancés pour affiner les résultats (prix, notes, marques, etc.) +
+- Affichage rapide des résultats en fonction des critères choisis
 | ToDo
 
 |===
