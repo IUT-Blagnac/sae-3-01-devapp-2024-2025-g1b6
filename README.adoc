@@ -122,6 +122,56 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Affichage clair et bien structuré pour chaque fiche produit +
 |ToDo
 
+| Haute
+| US6
+| En tant que **client**, je souhaite pouvoir **ajouter plusieurs produits à mon panier en une seule action** afin de gagner du temps lors de mes achats.
+| Permettre aux utilisateurs de sélectionner plusieurs produits sur la page de catalogue et de les ajouter en une seule opération.
+| 
+- Sélection multiple de produits sur la page catalogue +
+- Ajout groupé au panier +
+- Confirmation de l’ajout de chaque produit sélectionné
+| ToDo
+
+| Moyenne
+| US7
+| En tant que **client**, je souhaite **recevoir des notifications pour des offres spéciales** sur les jouets de ma liste de souhaits afin de bénéficier des meilleurs prix.
+| Mettre en place un système de notifications pour informer l’utilisateur des promotions sur les jouets de la liste de souhaits.
+| 
+- Envoi de notifications pour les réductions sur les articles de la liste de souhaits +
+- Lien direct vers le produit en promotion dans la notification +
+- Notifications configurables dans les paramètres du compte
+| ToDo
+
+| Moyenne
+| US8
+| En tant que **client (adulte)**, je souhaite **voir des suggestions de jouets similaires** pour élargir les options disponibles pour mon enfant.
+| Afficher des produits similaires en bas de chaque page de produit, basés sur la catégorie, l’âge recommandé, et le prix.
+| 
+- Section "Suggestions" sur la page produit +
+- Produits affichés en fonction de la catégorie et tranche d’âge +
+- Suggestions actualisées selon les préférences de l’utilisateur
+| ToDo
+
+| Moyenne
+| US9
+| En tant qu’**utilisateur**, je souhaite **accéder à un historique de mes commandes** afin de revoir facilement mes achats passés et mes dépenses.
+| Permettre l’accès à un historique détaillé des commandes sur une page dédiée dans le profil utilisateur.
+| 
+- Page dédiée à l’historique des commandes avec détails +
+- Accès aux commandes passées avec produits, quantité, prix et date +
+- Option pour répéter l’achat d’une commande spécifique
+| ToDo
+
+| Haute
+| US10
+| En tant que **client**, je souhaite pouvoir **filtrer les jouets par différents critères** (prix, catégorie, âge recommandé) afin de trouver rapidement les produits adaptés.
+| Ajouter des filtres dynamiques par prix, catégorie et tranche d’âge sur la page catalogue.
+| 
+- Filtres dynamiques pour le prix, la catégorie et l’âge +
+- Affichage des résultats en temps réel selon les filtres appliqués +
+- Indication visuelle des filtres actifs sur la page
+| ToDo
+
 |===
 
 === Document de Conception
