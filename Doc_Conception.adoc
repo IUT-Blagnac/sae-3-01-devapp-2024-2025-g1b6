@@ -82,6 +82,8 @@ image::/images/DS/GestionAvis.png[]
 
 === 3.1. Diagramme de classes Métier
 
+image::/images/diagramme_classes_metier.png[Diagramme de classes métier]
+
 Le diagramme de classes métier représente les principales entités du système e-commerce Ludorama et leurs relations. Les classes principales incluent `Client`, `Produit`, `Categorie`, `SousCategorie`, `Marque`, `Panier`, `Commande`, `Paiement`, `Avis`, `Administrateur`, `ListeSouhaits`, et `SystemeFidelisation`.
 
 ==== Explication des Classes et Relations
@@ -110,9 +112,9 @@ Le diagramme de classes métier représente les principales entités du système
 - Une `Commande` est associée à un `Paiement`.
 - Un `Client` a une `ListeSouhaits` et un `SystemeFidelisation`.
 
-image::/images/diagramme_classes_metier.png[Diagramme de classes métier]
-
 === 3.2. Diagramme d'état Commande
+
+image::/images/diagramme_etat_commande.png[Diagramme d'état Commande]
 
 Le diagramme d'état pour la classe `Commande` montre les différents états par lesquels une commande peut passer, ainsi que les transitions possibles entre ces états.
 
@@ -129,8 +131,6 @@ Le diagramme d'état pour la classe `Commande` montre les différents états par
 - Une commande passe de `Expediee` à `Livree` lorsqu'elle est livrée au client.
 - Une commande peut être annulée à partir de l'état `EnCoursTraitement` ou `Expediee`.
 - Une commande peut retourner à l'état `Expediee` à partir de l'état `Annulee` si elle est retournée par le client.
-
-image::/images/diagramme_etat_commande.png[Diagramme d'état Commande]
 
 === 3.3. Diagramme de classes de conception
 
