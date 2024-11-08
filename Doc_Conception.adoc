@@ -25,23 +25,35 @@ Le projet consiste en la création d’un site de vente en ligne de jouets, orie
 
 === 2.2 Use Case
 
-link:USE_CASE/UC.png[Lien vers le use case]
+link:/images/USE_CASE/UC.png[Lien vers le use case]
 
-image::/USE_CASE/UC.png[]
+image::/images/USE_CASE/UC.png[]
 
 === 2.3 Diagrammes séquences
 
 ==== 1. Connexion du client :
-image::/DS/ConnexionClient.png[]
+image::/images/DS/ConnexionClient.png[]
 - Le client envoie ses informations pour se connecter via l'interface Web.
 - Le client envoie ses informations pour se connecter via l'interface Web.
 - Si les informations sont valides, le client obtient l'accès.
 
 ==== 2. Recherche et Visualisation d'un Produit :
-image::/DS/RechercheVisualisationProduit.png[]
+image::/images/DS/RechercheVisualisationProduit.png[]
 - Le client recherche des produits en fonction de critères spécifiques.
 - Le système filtre et récupère les produits correspondants de la base de données.
-- 
+- La liste des produits est affichée au client, qui peut ensuite voir les détails d'un produit spécifique.
+
+==== 3. Gestion du Panier :
+image::/images/DS/GestionPanier.png[]
+- Le client ajoute des produits au panier ou modifie le contenu de son panier.
+- Le système met à jour le panier dans la base de données.
+- Le client voit la confirmation des modifications apportées au panier.
+
+==== 4. Gestion des Avis :
+image::/images/DS/GestionAvis.png[]
+- Le client peut rédiger un avis sur un produit, qui est stocké dans la base de données.
+- L'administrateur peut répondre aux avis du client.
+- La réponse de l’administrateur est enregistrée et affichée.
 
 == 3. Architecture et Conception Technique
 
@@ -58,15 +70,3 @@ Le diagramme de classe joint illustre comment le système gère les fonctionnali
 Les relations entre les classes, telles que `Client` et `Panier` ou `Produit` et `Avis`, montrent comment les fonctionnalités sont intégrées pour offrir une navigation intuitive et adaptée aux différents types de clients.
 
 image::images/diagrammesDeClassesDeConception.png[Diagramme de classes de conception de Ludorama]
-
-
-
-
-== 4. Interfaces Utilisateur (Wireframes)
-
-== 5. API et Services
-
-== 6. Gestion des Erreurs
-
-
-== 7. Sécurité
