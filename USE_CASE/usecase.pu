@@ -10,17 +10,17 @@ Client --> (Créer compte client)
 
 ' Product Management
 Client --> (Rechercher produits)
-Client --> (Visualiser liste produits) : <<include>>
+Client --> (Visualiser liste produits)
 Client --> (Trier liste produits)
-Client --> (Visualiser détail produit) : <<include>>
+Client --> (Visualiser détail produit)
 
 ' Wishlist and Loyalty
 Client --> (Gérer liste de souhaits)
-Client --> (Gérer points fidélité) : <<extend>>
+Client --> (Gérer points fidélité)
 
 ' Order History and Reviews
 Client --> (Visualiser commandes passées)
-Client --> (Rédiger avis) : <<include>>
+Client --> (Rédiger avis)
 
 ' Cart Management
 Client --> (Ajouter au panier)
