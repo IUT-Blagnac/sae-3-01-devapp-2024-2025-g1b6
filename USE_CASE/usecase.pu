@@ -29,8 +29,9 @@ Client --> (Gérer panier)
 ' Administrator Console
 Administrateur --> (Ajouter / Supprimer produit)
 Administrateur --> (Gérer les produits)
-Administrateur --> (Répondre aux avis) : <<include>>
+Administrateur --> (Répondre aux avis)
 
 ' Relation between Reviews and Responses
-(Rédiger avis) <-- (Répondre aux avis) : <<include>>
+(Rédiger avis) <-- (Répondre aux avis)
+
 @enduml
