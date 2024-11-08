@@ -23,7 +23,28 @@ Le projet consiste en la création d’un site de vente en ligne de jouets, orie
 | US5    | En tant que client (adulte), je souhaite une description complète des produits pour assurer mes choix. | CU5 :      |
 |===
 
+=== 2.2 Use Case
+
+link:USE_CASE/UC.png[Lien vers le use case]
+
+image::/USE_CASE/UC.png[]
+
 == 3. Architecture et Conception Technique
+
+=== 3.3. Diagramme de classes de conception
+
+Les diagrammes de classes de conception permettent de structurer les principales entités du projet et leurs interactions pour répondre aux besoins fonctionnels identifiés. Dans le contexte de Ludorama, un site de vente en ligne de jouets, ces diagrammes sont essentiels pour assurer une expérience utilisateur fluide et personnalisée.
+
+Le diagramme de classe joint illustre comment le système gère les fonctionnalités de recherche, de visualisation de produit, et d'ajout au panier, tout en prenant en compte les besoins spécifiques des **clients adultes** et des **clients enfants** :
+
+- **Recherche** : La classe `Recherche` est conçue pour permettre aux utilisateurs de trouver rapidement des produits en fonction de critères comme l'âge ou la catégorie de jouet.
+- **Visualisation de produit** : La classe `Produit` fournit des informations détaillées sur chaque jouet, incluant des descriptions complètes et des avis, particulièrement utiles pour les **clients adultes**.
+- **Ajout au panier** : La classe `Panier` permet de gérer les articles que les utilisateurs souhaitent acheter. Elle est associée à la classe `Client`, représentant la relation entre un client et son panier. Le système de fidélisation est également pris en charge dans cette architecture pour encourager les **clients adultes** à revenir sur la plateforme.
+
+Les relations entre les classes, telles que `Client` et `Panier` ou `Produit` et `Avis`, montrent comment les fonctionnalités sont intégrées pour offrir une navigation intuitive et adaptée aux différents types de clients.
+
+image::images/diagrammesDeClassesDeConception.png[Diagramme de classes de conception de Ludorama]
+
 
 
 

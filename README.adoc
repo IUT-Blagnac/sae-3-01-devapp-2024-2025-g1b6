@@ -68,7 +68,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 |===
 | **Priorité** | **ID** | **User Story** | **Description / Détail** | **Critères d'acceptation** | **Etat**
 
-| Haute
+| Moyenne
 | US1
 | En tant que **client**, je souhaite **avoir accès à des jeux/objets adaptés à mon âge, et non à des produits inadaptés** afin de pouvoir faire ma commande rapidement et efficacement (ex : armes d’airsoft pour un enfant, ou dinette pour un adulte).
 | Mettre en place un système de filtrage ou de tri par âge pour le catalogue de produits, avec une option de personnalisation selon l’âge de l’utilisateur.
@@ -79,7 +79,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Affichage d’un message d’avertissement pour les produits sensibles
 | ToDo
 
-| Haute
+| Moyenne
 | US2
 | En tant que **client enfant**, je souhaite pouvoir **visualiser facilement le catalogue** afin de **trouver les jouets à commander au Père Noël**.
 | Créer une interface simplifiée, visuellement attrayante et facile à naviguer pour les enfants, avec des catégories adaptées (par âge, type de jouet, etc.)
@@ -100,7 +100,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Possibilité de trier ou filtrer la liste de souhaits 
 | ToDo
 
-| Moyenne
+| Basse
 | US4
 | En tant que **client (adulte)**, je souhaite **avoir un système de fidélisation** afin d’avoir accès facilement aux produits que mon enfant désire.
 | Mettre en place un système de points de fidélité qui récompense les achats et permet d’obtenir des réductions ou accès anticipés à des jouets exclusifs.
@@ -111,7 +111,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Email de notification en cas d’avantages disponibles 
 | ToDo
 
-| Moyenne
+| Haute
 | US5
 | En tant que **client (adulte)**, je souhaite **avoir une description complète** (avec fiche technique) pour être sûr de ce que j’achète.
 | Ajouter des fiches techniques détaillées pour chaque jouet : dimensions, matériaux, âge recommandé, et autres informations pertinentes.
@@ -142,7 +142,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Possibilité d’ajouter le produit à une liste de souhaits ou de recevoir une alerte de réapprovisionnement
 | ToDo
 
-| Moyenne
+| Basse
 | US8
 | En tant que **client (adulte)**, je souhaite **pouvoir laisser un avis ou une note sur un produit acheté** dans une commande livrée afin de partager mon expérience.
 | Ajouter une fonctionnalité pour laisser des avis et notes après livraison d’une commande contenant le produit.
@@ -192,7 +192,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Vérification automatique de la validité des informations de paiement
 | ToDo
 
-| Haute
+| Basse
 | US13
 | En tant que **client**, je souhaite **pouvoir commander des lots de produits** pour acheter des ensembles complets.
 | Ajouter une fonctionnalité permettant de regrouper des produits en lot pour des achats groupés, avec des tarifs spéciaux.
@@ -202,7 +202,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Tarification ajustée en fonction du lot
 | ToDo
 
-| Haute
+| Basse
 | US14
 | En tant que **client**, je souhaite **pouvoir voir des avis et notes clients** pour m'assurer de la qualité des produits avant de les acheter.
 | Permettre aux clients d'accéder aux avis et aux notes des autres clients pour chaque produit sur la page de description.
@@ -214,6 +214,14 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 
 | Haute
 | US15
+| En tant que **client**, je souhaite pouvoir **chercher des produits par mots-clés ** afin de trouver rapidement les produits recherchés.
+| Implémenter une barre de recherche simple.
+| 
+- Barre de recherche simple recherchant les mots clés dans les noms des différents produits +
+| ToDo
+
+| Moyenne
+| US16
 | En tant que **client**, je souhaite pouvoir **chercher des produits par mots-clés et filtres (prix, marques, notes)** afin de trouver rapidement les produits recherchés.
 | Implémenter une barre de recherche avec des filtres combinés pour permettre des recherches précises et rapides.
 | 
@@ -221,6 +229,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Filtres avancés pour affiner les résultats (prix, notes, marques, etc.) +
 - Affichage rapide des résultats en fonction des critères choisis
 | ToDo
+
 
 |===
 
