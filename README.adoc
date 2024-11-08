@@ -214,6 +214,14 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 
 | Haute
 | US15
+| En tant que **client**, je souhaite pouvoir **chercher des produits par mots-clés ** afin de trouver rapidement les produits recherchés.
+| Implémenter une barre de recherche simple.
+| 
+- Barre de recherche simple recherchant les mots clés dans les noms des différents produits +
+| ToDo
+
+| Moyenne
+| US15
 | En tant que **client**, je souhaite pouvoir **chercher des produits par mots-clés et filtres (prix, marques, notes)** afin de trouver rapidement les produits recherchés.
 | Implémenter une barre de recherche avec des filtres combinés pour permettre des recherches précises et rapides.
 | 
@@ -221,6 +229,7 @@ TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
 - Filtres avancés pour affiner les résultats (prix, notes, marques, etc.) +
 - Affichage rapide des résultats en fonction des critères choisis
 | ToDo
+
 
 |===
 
