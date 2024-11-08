@@ -29,6 +29,14 @@ link:USE_CASE/UC.png[Lien vers le use case]
 
 image::/USE_CASE/UC.png[]
 
+=== 2.3 Diagrammes séquences
+
+==== 1. Connexion du client
+image::/DS/ConnexionClient.png[]
+- Le client envoie ses informations pour se connecter via l'interface Web.
+- Le client envoie ses informations pour se connecter via l'interface Web.
+- Si les informations sont valides, le client obtient l'accès.
+
 == 3. Architecture et Conception Technique
 
 === 3.3. Diagramme de classes de conception
