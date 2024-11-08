@@ -20,16 +20,30 @@ Ce document de conception vise à fournir une compréhension claire et détaill�
 
 == 2. Description Fonctionnelle
 
+== 2. Description Fonctionnelle
+
 === 2.1 User Stories et Cas d'utilisation
 
 |===
 | **ID** | **User Story**                                                                                       | **Cas d'utilisation**                               |
-| US1    | En tant que client, je souhaite accéder à des jeux adaptés à mon âge pour faire une commande rapidement. | CU1 :       |
-| US2    | En tant que client enfant, je souhaite visualiser facilement le catalogue afin de trouver les jouets. | CU2 :                 |
-| US3    | En tant que client (adulte), je souhaite avoir une liste de souhaits pour noter les envies de mon enfant. | CU3 :             |
-| US4    | En tant que client (adulte), je souhaite un système de fidélisation pour accéder aux produits souhaités. | CU4 :               |
-| US5    | En tant que client (adulte), je souhaite une description complète des produits pour assurer mes choix. | CU5 :      |
+| US1    | En tant que **client**, je souhaite **avoir accès à des jeux/objets adaptés à mon âge, et non à des produits inadaptés** afin de pouvoir faire ma commande rapidement et efficacement (ex : armes d’airsoft pour un enfant, ou dinette pour un adulte). | CU1 : Filtrage des produits par âge       |
+| US2    | En tant que **client enfant**, je souhaite pouvoir **visualiser facilement le catalogue** afin de **trouver les jouets à commander au Père Noël**. | CU2 : Navigation simplifiée pour enfants                 |
+| US3    | En tant que **client (adulte)**, je souhaite **avoir une liste de souhaits** pour noter ce que mon enfant désire. | CU3 : Gestion de la liste de souhaits             |
+| US4    | En tant que **client (adulte)**, je souhaite **avoir un système de fidélisation** afin d’avoir accès facilement aux produits que mon enfant désire. | CU4 : Système de fidélisation               |
+| US5    | En tant que **client (adulte)**, je souhaite **avoir une description complète** (avec fiche technique) pour être sûr de ce que j’achète. | CU5 : Fiche technique détaillée      |
+| US6    | En tant que **client**, je souhaite pouvoir **filtrer les produits** par intervalles de prix, marques, catégories, groupes, et avis/notes afin de trouver rapidement des produits correspondant à mes critères. | CU6 : Filtrage avancé des produits      |
+| US7    | En tant que **client**, je souhaite **voir les produits en rupture de stock** mais être empêché de les commander. | CU7 : Affichage des produits en rupture de stock      |
+| US8    | En tant que **client (adulte)**, je souhaite **pouvoir laisser un avis ou une note sur un produit acheté** dans une commande livrée afin de partager mon expérience. | CU8 : Gestion des avis et notes      |
+| US9    | En tant que **client**, je souhaite **visualiser les produits regroupés** par catégorie spéciale (soldes, nouveautés, meilleures ventes, made in France) pour repérer plus facilement les produits intéressants. | CU9 : Visualisation des produits par catégorie spéciale      |
+| US10    | En tant que **client**, je souhaite pouvoir **visualiser les variantes de produits (coloris et/ou tailles)** pour choisir le modèle qui convient le mieux à mes besoins. | CU10 : Visualisation des variantes de produits      |
+| US11    | En tant que **gestionnaire de stock**, je souhaite **visualiser les quantités en stock (actuel, minimum, maximum)** pour optimiser les niveaux de réapprovisionnement. | CU11 : Suivi des niveaux de stock      |
+| US12    | En tant que **client**, je souhaite **utiliser différents types de paiement** (CB, PayPal…) pour avoir plus de flexibilité au moment de payer ma commande. | CU12 : Options de paiement      |
+| US13    | En tant que **client**, je souhaite **pouvoir commander des lots de produits** pour acheter des ensembles complets. | CU13 : Gestion des lots de produits      |
+| US14    | En tant que **client**, je souhaite **pouvoir voir des avis et notes clients** pour m'assurer de la qualité des produits avant de les acheter. | CU14 : Consultation des avis et notes      |
+| US15    | En tant que **client**, je souhaite pouvoir **chercher des produits par mots-clés** afin de trouver rapidement les produits recherchés. | CU15 : Recherche par mots-clés      |
+| US16    | En tant que **client**, je souhaite pouvoir **chercher des produits par mots-clés et filtres (prix, marques, notes)** afin de trouver rapidement les produits recherchés. | CU16 : Recherche avancée par mots-clés et filtres      |
 |===
+
 
 === 2.2 Use Case
 image::/images/USE_CASE/UC.png[]
