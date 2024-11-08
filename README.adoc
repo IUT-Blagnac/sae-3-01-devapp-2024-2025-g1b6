@@ -10,10 +10,6 @@ Projet est réalisé par::
 
 Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.fr[JMB]
 
-== Contexte général
-
-TIP: Cette partie de votre `README.adoc` peut être supprimée ou mise ailleurs.
-
 === Backlog Produit : Ludorama
 
 |===
