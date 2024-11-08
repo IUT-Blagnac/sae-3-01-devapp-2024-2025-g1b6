@@ -3,12 +3,20 @@
 == 1. Contexte et Objectifs
 
 === 1.1 Contexte
-Le projet consiste en la création d’un site de vente en ligne de jouets, orienté vers une expérience utilisateur qui distingue les besoins spécifiques des **clients adultes** et des **clients enfants**. Le site doit proposer des fonctionnalités adaptées à chaque type de client, telles que la **visualisation de produits par tranche d’âge**, une **liste de souhaits** pour les adultes, un **système de fidélisation** et des descriptions complètes pour chaque produit.
+Le projet consiste en la création d’un site de vente en ligne de jouets, orienté vers une expérience utilisateur qui distingue les besoins spécifiques des **clients adultes** et des **clients enfants**. Le site doit proposer des fonctionnalités adaptées à chaque type de client, telles que la **visualisation de produits par tranche d’âge**, une **liste de souhaits** pour les adultes, un **système de fidélisation**, des descriptions complètes pour chaque produit, et un filtrage précis pour une expérience d'achat optimisée.
+
+Ludorama, en tant que leader dans la vente de jouets, souhaite moderniser son site web pour offrir une navigation intuitive, des fonctionnalités de personnalisation, et une sécurité renforcée. Le but est de rendre l'achat de jouets en ligne aussi simple et agréable que possible, tout en garantissant la satisfaction des utilisateurs.
+
+Ce document de conception vise à fournir une compréhension claire et détaillée de la solution proposée, en expliquant les aspects fonctionnels et techniques nécessaires à la réalisation du projet. Il sert de guide pour les développeurs, les designers, et les parties prenantes pour assurer la cohérence et la qualité de la solution finale.
 
 === 1.2 Objectifs
 - Offrir aux utilisateurs une expérience personnalisée et sécurisée.
 - Répondre aux besoins des clients adultes en leur permettant de noter et de consulter les souhaits de leurs enfants.
 - Faciliter la navigation pour les clients enfants en leur permettant de trouver des jouets adaptés à leur âge.
+- Mettre en place un système de fidélisation pour récompenser les clients réguliers.
+- Assurer une gestion efficace et intuitive des avis et des évaluations des produits.
+- Intégrer des fonctionnalités de filtrage avancées pour simplifier la recherche de produits.
+- Fournir des informations complètes et détaillées sur chaque produit pour aider les clients à faire des choix informés.
 
 == 2. Description Fonctionnelle
 
