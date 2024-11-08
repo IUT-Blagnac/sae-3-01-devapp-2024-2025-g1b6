@@ -26,6 +26,32 @@ Le projet consiste en la création d’un site de vente en ligne de jouets, orie
 === 2.2 Use Case
 image::/images/USE_CASE/UC.png[]
 
+==== Acteurs
+1. *Client* : Représente les utilisateurs qui naviguent sur le site pour acheter des produits.
+2. *Administrateur* : Représente l'administrateur du site, chargé de gérer les produits et de modérer les avis.
+
+==== Cas d'utilisation pour le Client
+- *Se connecter / Déconnecter* : Le client peut se connecter ou se déconnecter de son compte.
+- *Créer compte client* : Permet au client de créer un nouveau compte.
+- *Rechercher produits* : Le client peut rechercher des produits en utilisant des mots-clés ou des filtres.
+- *Visualiser liste produits* : Affiche la liste des produits disponibles en fonction de la recherche.
+- *Trier liste produits* : Permet de trier la liste des produits par critères comme le prix.
+- *Visualiser détail produit* : Le client peut consulter les détails d’un produit spécifique.
+- *Gérer liste de souhaits* : Le client peut ajouter des produits à sa liste de souhaits.
+- *Gérer points fidélité* : Fonctionnalité optionnelle qui permet au client de gérer ses points de fidélité.
+- *Visualiser commandes passées* : Le client peut accéder à l’historique de ses commandes.
+- *Rédiger avis* : Le client peut laisser un avis sur les produits achetés.
+- *Ajouter au panier* et *Gérer panier* : Permet d'ajouter des produits au panier et de gérer son contenu (modifier les quantités ou supprimer des articles).
+
+==== Cas d'utilisation pour l'Administrateur
+- *Ajouter / Supprimer produit* : L'administrateur peut ajouter de nouveaux produits ou en supprimer.
+- *Gérer les produits* : L'administrateur peut modifier les détails des produits existants.
+- *Répondre aux avis* : L'administrateur peut répondre aux avis laissés par les clients pour modérer ou fournir des informations supplémentaires.
+
+==== Relations entre les cas d'utilisation
+- *Répondre aux avis* dépend du cas d'utilisation *Rédiger avis*. Cela signifie que les réponses de l'administrateur sont liées aux avis postés par les clients.
+
+
 === 2.3 Diagrammes séquences
 
 ==== 1. Connexion du client :
