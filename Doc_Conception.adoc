@@ -101,12 +101,12 @@ Le diagramme de classes métier représente les principales entités du système
 
 ==== Relations entre les Classes
 
-- Un `Client` peut passer plusieurs `Commande`s.
+- Un `Client` peut passer plusieurs `Commande`.
 - Chaque `Commande` est liée à un `Panier`.
-- Un `Panier` peut contenir plusieurs `Produit`s.
+- Un `Panier` peut contenir plusieurs `Produit`.
 - Un `Produit` appartient à une `Categorie` et une `SousCategorie`, et est associé à une `Marque`.
-- Un `Produit` peut avoir plusieurs `Avis` laissés par des `Client`s.
-- Un `Client` peut laisser plusieurs `Avis` sur des `Produit`s.
+- Un `Produit` peut avoir plusieurs `Avis` laissés par des `Client`.
+- Un `Client` peut laisser plusieurs `Avis` sur des `Produit`.
 - Une `Commande` est associée à un `Paiement`.
 - Un `Client` a une `ListeSouhaits` et un `SystemeFidelisation`.
 
