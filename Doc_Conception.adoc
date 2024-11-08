@@ -23,6 +23,12 @@ Le projet consiste en la création d’un site de vente en ligne de jouets, orie
 | US5    | En tant que client (adulte), je souhaite une description complète des produits pour assurer mes choix. | CU5 :      |
 |===
 
+=== 2.2 Use Case
+
+link:USE_CASE/UC.png[Lien vers le use case]
+
+image::/USE_CASE/UC.png[]
+
 == 3. Architecture et Conception Technique
 
 === 3.3. Diagrammes de classes de conception
