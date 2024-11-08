@@ -24,9 +24,6 @@ Le projet consiste en la création d’un site de vente en ligne de jouets, orie
 |===
 
 === 2.2 Use Case
-
-link:/images/USE_CASE/UC.png[Lien vers le use case]
-
 image::/images/USE_CASE/UC.png[]
 
 === 2.3 Diagrammes séquences
