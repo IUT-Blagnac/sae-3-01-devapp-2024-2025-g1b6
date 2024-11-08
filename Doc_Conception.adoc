@@ -80,6 +80,58 @@ image::/images/DS/GestionAvis.png[]
 
 == 3. Architecture et Conception Technique
 
+=== 3.1. Diagramme de classes Métier
+
+Le diagramme de classes métier représente les principales entités du système e-commerce Ludorama et leurs relations. Les classes principales incluent `Client`, `Produit`, `Categorie`, `SousCategorie`, `Marque`, `Panier`, `Commande`, `Paiement`, `Avis`, `Administrateur`, `ListeSouhaits`, et `SystemeFidelisation`.
+
+==== Explication des Classes et Relations
+
+- *Client* : Représente un utilisateur du site. Les attributs incluent des informations personnelles comme l'identifiant, le nom, le prénom, l'email, l'adresse, le téléphone et la date de naissance.
+- *Produit* : Représente un produit disponible sur le site. Il a des attributs comme le nom, la description, le prix, le stock, l'âge minimum et maximum recommandé, ainsi que des relations avec `Categorie`, `SousCategorie` et `Marque`.
+- *Categorie* : Représente une catégorie de produits. Chaque catégorie peut contenir plusieurs sous-catégories.
+- *SousCategorie* : Représente une sous-catégorie de produits, liée à une catégorie.
+- *Marque* : Représente la marque d'un produit.
+- *Panier* : Représente un panier d'achat, contenant des produits et lié à un client.
+- *Commande* : Représente une commande effectuée par un client, incluant un panier et un paiement.
+- *Paiement* : Représente un paiement pour une commande, avec des détails sur le type de paiement et la date.
+- *Avis* : Représente un avis laissé par un client sur un produit, incluant une note et un commentaire.
+- *Administrateur* : Représente un administrateur du site, avec des attributs pour le nom, le prénom et l'email.
+- *ListeSouhaits* : Représente une liste de souhaits, permettant aux clients de gérer les produits qu'ils désirent.
+- *SystemeFidelisation* : Représente un système de points de fidélité pour les clients, permettant de gagner des points pour les achats effectués.
+
+==== Relations entre les Classes
+
+- Un `Client` peut passer plusieurs `Commande`s.
+- Chaque `Commande` est liée à un `Panier`.
+- Un `Panier` peut contenir plusieurs `Produit`s.
+- Un `Produit` appartient à une `Categorie` et une `SousCategorie`, et est associé à une `Marque`.
+- Un `Produit` peut avoir plusieurs `Avis` laissés par des `Client`s.
+- Un `Client` peut laisser plusieurs `Avis` sur des `Produit`s.
+- Une `Commande` est associée à un `Paiement`.
+- Un `Client` a une `ListeSouhaits` et un `SystemeFidelisation`.
+
+image::/images/diagramme_classes_metier.png[Diagramme de classes métier]
+
+=== 3.2. Diagramme d'état Commande
+
+Le diagramme d'état pour la classe `Commande` montre les différents états par lesquels une commande peut passer, ainsi que les transitions possibles entre ces états.
+
+==== Explication des États et Transitions
+
+- *EnCoursTraitement* : L'état initial d'une commande une fois qu'elle est créée. Elle est en cours de traitement.
+- *Expediee* : La commande est expédiée au client.
+- *Livree* : La commande est livrée au client.
+- *Annulee* : La commande est annulée.
+
+==== Transitions
+
+- Une commande passe de `EnCoursTraitement` à `Expediee` lorsqu'elle est expédiée.
+- Une commande passe de `Expediee` à `Livree` lorsqu'elle est livrée au client.
+- Une commande peut être annulée à partir de l'état `EnCoursTraitement` ou `Expediee`.
+- Une commande peut retourner à l'état `Expediee` à partir de l'état `Annulee` si elle est retournée par le client.
+
+image::/images/diagramme_etat_commande.png[Diagramme d'état Commande]
+
 === 3.3. Diagramme de classes de conception
 
 Les diagrammes de classes de conception permettent de structurer les principales entités du projet et leurs interactions pour répondre aux besoins fonctionnels identifiés. Dans le contexte de Ludorama, un site de vente en ligne de jouets, ces diagrammes sont essentiels pour assurer une expérience utilisateur fluide et personnalisée.
