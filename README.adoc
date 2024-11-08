@@ -1,4 +1,4 @@
-= SAE 3.01 devApp 2024-2025
+= SAE 3.01 DevApp 2024-2025
 == Equipe
 
 Projet est réalisé par::
