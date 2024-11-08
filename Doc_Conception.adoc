@@ -31,7 +31,7 @@ image::/USE_CASE/UC.png[]
 
 == 3. Architecture et Conception Technique
 
-=== 3.3. Diagrammes de classes de conception
+=== 3.3. Diagramme de classes de conception
 
 Les diagrammes de classes de conception permettent de structurer les principales entités du projet et leurs interactions pour répondre aux besoins fonctionnels identifiés. Dans le contexte de Ludorama, un site de vente en ligne de jouets, ces diagrammes sont essentiels pour assurer une expérience utilisateur fluide et personnalisée.
 
