@@ -31,11 +31,17 @@ image::/USE_CASE/UC.png[]
 
 === 2.3 Diagrammes séquences
 
-==== 1. Connexion du client
+==== 1. Connexion du client :
 image::/DS/ConnexionClient.png[]
 - Le client envoie ses informations pour se connecter via l'interface Web.
 - Le client envoie ses informations pour se connecter via l'interface Web.
 - Si les informations sont valides, le client obtient l'accès.
+
+==== 2. Recherche et Visualisation d'un Produit :
+image::/DS/RechercheVisualisationProduit.png[]
+- Le client recherche des produits en fonction de critères spécifiques.
+- Le système filtre et récupère les produits correspondants de la base de données.
+- 
 
 == 3. Architecture et Conception Technique
 
