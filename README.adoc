@@ -16,7 +16,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | **Priorité** | **ID** | **User Story** | **Description / Détail** | **Critères d'acceptation** | **Etat**
 
 | Moyenne
-| US1
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/5[US1]
 | En tant que **client**, je souhaite **avoir accès à des jeux/objets adaptés à mon âge, et non à des produits inadaptés** afin de pouvoir faire ma commande rapidement et efficacement (ex : armes d’airsoft pour un enfant, ou dinette pour un adulte).
 | Mettre en place un système de filtrage ou de tri par âge pour le catalogue de produits, avec une option de personnalisation selon l’âge de l’utilisateur.
 | 
@@ -27,7 +27,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Moyenne
-| US2
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/3[US2]
 | En tant que **client enfant**, je souhaite pouvoir **visualiser facilement le catalogue** afin de **trouver les jouets à commander au Père Noël**.
 | Créer une interface simplifiée, visuellement attrayante et facile à naviguer pour les enfants, avec des catégories adaptées (par âge, type de jouet, etc.)
 | 
@@ -37,7 +37,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Basse
-| US3
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/1[US3]
 | En tant que **client (adulte)**, je souhaite **avoir une liste de souhaits** pour noter ce que mon enfant désire.
 | Ajouter une fonctionnalité permettant aux utilisateurs connectés de créer et gérer une liste de souhaits. Les items doivent être ajoutables depuis la page de catalogue ou de description.
 | 
@@ -48,7 +48,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Basse
-| US4
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/2[US4]
 | En tant que **client (adulte)**, je souhaite **avoir un système de fidélisation** afin d’avoir accès facilement aux produits que mon enfant désire.
 | Mettre en place un système de points de fidélité qui récompense les achats et permet d’obtenir des réductions ou accès anticipés à des jouets exclusifs.
 | 
@@ -59,7 +59,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Haute
-| US5
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/4[US5]
 | En tant que **client (adulte)**, je souhaite **avoir une description complète** (avec fiche technique) pour être sûr de ce que j’achète.
 | Ajouter des fiches techniques détaillées pour chaque jouet : dimensions, matériaux, âge recommandé, et autres informations pertinentes.
 | 
@@ -70,7 +70,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Haute
-| US6
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/7[US6]
 | En tant que **client**, je souhaite pouvoir **filtrer les produits** par intervalles de prix, marques, catégories, groupes, et avis/notes afin de trouver rapidement des produits correspondant à mes critères.
 | Permettre le filtrage des produits sur la page catalogue selon plusieurs critères de recherche.
 | 
@@ -80,7 +80,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Moyenne
-| US7
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/7[US7]
 | En tant que **client**, je souhaite **voir les produits en rupture de stock** mais être empêché de les commander.
 | Afficher les produits en rupture de stock sur la page catalogue, avec une indication claire de leur disponibilité.
 | 
@@ -90,7 +90,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Basse
-| US8
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/9[US8]
 | En tant que **client (adulte)**, je souhaite **pouvoir laisser un avis ou une note sur un produit acheté** dans une commande livrée afin de partager mon expérience.
 | Ajouter une fonctionnalité pour laisser des avis et notes après livraison d’une commande contenant le produit.
 | 
@@ -100,7 +100,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Haute
-| US9
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/10[US9]
 | En tant que **client**, je souhaite **visualiser les produits regroupés** par catégorie spéciale (soldes, nouveautés, meilleures ventes, made in France) pour repérer plus facilement les produits intéressants.
 | Ajouter une section dédiée aux groupes de produits sur la page d'accueil et dans les filtres de la page catalogue.
 | 
@@ -110,7 +110,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Basse
-| US10
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/10[US10]
 | En tant que **client**, je souhaite pouvoir **visualiser les variantes de produits (coloris et/ou tailles)** pour choisir le modèle qui convient le mieux à mes besoins.
 | Afficher les variations de taille et de couleur sur chaque fiche produit lorsque plusieurs options sont disponibles.
 | 
@@ -120,7 +120,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Moyenne
-| US11
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/12[US11]
 | En tant que **gestionnaire de stock**, je souhaite **visualiser les quantités en stock (actuel, minimum, maximum)** pour optimiser les niveaux de réapprovisionnement.
 | Mettre en place un tableau de bord permettant de suivre les quantités en stock, et signaler les articles nécessitant un réapprovisionnement.
 | 
@@ -130,7 +130,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Moyenne
-| US12
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/13[US12]
 | En tant que **client**, je souhaite **utiliser différents types de paiement** (CB, PayPal…) pour avoir plus de flexibilité au moment de payer ma commande.
 | Intégrer plusieurs options de paiement sécurisées pour offrir aux utilisateurs différentes méthodes de paiement.
 | 
@@ -140,7 +140,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Basse
-| US13
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/14[US13]
 | En tant que **client**, je souhaite **pouvoir commander des lots de produits** pour acheter des ensembles complets.
 | Ajouter une fonctionnalité permettant de regrouper des produits en lot pour des achats groupés, avec des tarifs spéciaux.
 | 
@@ -150,7 +150,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Basse
-| US14
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/15[US14]
 | En tant que **client**, je souhaite **pouvoir voir des avis et notes clients** pour m'assurer de la qualité des produits avant de les acheter.
 | Permettre aux clients d'accéder aux avis et aux notes des autres clients pour chaque produit sur la page de description.
 | 
@@ -160,7 +160,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Haute
-| US15
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/16[US15]
 | En tant que **client**, je souhaite pouvoir **chercher des produits par mots-clés ** afin de trouver rapidement les produits recherchés.
 | Implémenter une barre de recherche simple.
 | 
@@ -168,7 +168,7 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | ToDo
 
 | Moyenne
-| US16
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/17[US16]
 | En tant que **client**, je souhaite pouvoir **chercher des produits par mots-clés et filtres (prix, marques, notes)** afin de trouver rapidement les produits recherchés.
 | Implémenter une barre de recherche avec des filtres combinés pour permettre des recherches précises et rapides.
 | 
