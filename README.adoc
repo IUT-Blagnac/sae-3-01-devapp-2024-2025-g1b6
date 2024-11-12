@@ -33,7 +33,6 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | 
 - Affichage visuel adapté aux enfants +
 - Navigation intuitive avec icônes et couleurs +
-- Présence d'une section "Spécial Noël"
 | ToDo
 
 | Basse
