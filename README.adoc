@@ -64,7 +64,6 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 | 
 - Page produit avec fiche technique détaillée +
 - Présentation des caractéristiques clés (matériaux, dimensions) +
-- Informations sur les consignes de sécurité et d'entretien +
 - Affichage clair et bien structuré pour chaque fiche produit
 | ToDo
 
