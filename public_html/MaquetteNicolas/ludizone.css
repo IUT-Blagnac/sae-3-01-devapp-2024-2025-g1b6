@@ -1,0 +1,460 @@
+body{
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.body{
+    background-color: #fff;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    display: flex;
+    overflow: hidden;
+}
+
+.header{
+    position: relative;
+    margin: 0em;
+
+    background-color: #bf69f9;
+    color: #fff;
+    font-size: 0.8em;;
+    height: 1.7em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.barreMenu{
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: -0.5em;
+
+    background-color: #fff;
+    color: #000;
+    padding: 0.1em;
+    text-align: center;
+    width: 100vw;
+    height: 3em;
+}
+
+.menuListe{
+    position: relative;
+    list-style-type: none;
+    margin: -0.1em;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.imgMenu{
+    background-image: url('images/menu_deroulant.png');
+    width: 4em;
+    height: 4em;
+    margin-right: 0.5em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.titreLudorama{
+    position: relative;
+    margin-top: 0.4em;
+
+    background-color: #fff;
+    color: #000;
+    height: 3em;
+}
+
+.barreRecherche {
+    position: relative;
+    margin-top: 0.9em;
+    margin-left: 2em;
+    height: 2em;
+    width: 70em;
+
+    border: 2px solid #e2e0e0; 
+    border-radius: 2em;
+    background-color: #e2e0e0;
+    display: flex;
+    color: #767676;
+    padding: 0.1em;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.barreRecherche:focus {
+    outline: none; 
+    border-color: #e2e0e0; 
+}
+
+.imgLoc{
+    background-image: url('images/location.png');
+    margin-top: 0.4em;
+    margin-left: 0.5em;
+
+    width: 2.8em;
+    height: 2.8em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgPanier{
+    background-image: url('images/panier.png');
+    margin-top: 0.6em;
+    margin-left: 0.5em;
+
+    width: 2.5em;
+    height: 2.5em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgCompte{
+    background-image: url('images/user.png');
+    margin-top: 0.6em;
+    margin-left: 1em;
+
+    width: 2.7em;
+    height: 2.7em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.principal{
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    background-color: #bf69f9;
+    color: #e2e0e0;
+    height: 4em;
+    width: 9em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.filtres{
+    position: fixed;
+    margin-top: -5em;
+    left: 0;
+    height: 15em;
+    width: 10em;
+    text-align: center;
+}
+
+.listFiltres{
+    position: relative;
+    list-style-type: none;
+    margin-top: -1em;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.liFiltres{
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    background-color: #bf69f9;
+    color: #e2e0e0;
+    height: 4em;
+    width: 9em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ludizone{
+    position: relative;
+    margin-top: 6em;
+    margin-left: 11.5em;
+    height: 40em;
+    width: 84.3em;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}   
+
+.ludizone::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+.ludizone::-webkit-scrollbar-thumb {
+    background-color: #bf69f9;
+    border: 1em solid transparent;
+    border-radius: 2em;
+    position: relative;
+    right: 5em;
+    top: 0.5em;
+}
+
+.coupDeCoeur{
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    height: 4em;
+    width: 90em;
+}
+
+.titreCDC{
+    position: relative;
+    margin-top: 0;
+    margin-left: 0;
+    padding: 0.1em;
+    width: 15em;
+    font-size: 1.5em;
+    border-bottom: #a526fa solid 0.15em;
+}
+
+.listeCDC{
+    position: relative;
+    list-style-type: none;
+    margin-top: 0.5em;
+    margin-left:1em;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.jeuCDC{
+    position: relative;
+    background-color: #e0bff6;
+    margin-right: 5em;
+    width: 16em;
+    height: 18em;
+    border-radius: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.imgJeuCDC1 {
+    background-image: url('images/jeu1.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 9em;
+    height: 9em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgJeuCDC2 {
+    background-image: url('images/Jeu2.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 9em;
+    height: 9em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgJeuCDC3 {
+    background-image: url('images/Jeu3.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 12em;
+    height: 9em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgJeuCDC4 {
+    background-image: url('images/Jeu4.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 12em;
+    height: 9em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.nomJeu{
+    position: relative;
+    margin-top: 1em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    width: 15em;
+    font-size: 1em;
+    text-align: center;
+    font-family: poppins;
+}
+
+.prixCDC{
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 10em;
+    padding: 0.1em;
+    width: 15em;
+    font-size: 1em;
+    text-align: center;
+    font-family: poppins;
+}
+
+.listeDisponibilites {
+    position: relative;
+    list-style-type: none;
+    width: 14em;
+    border-radius:1em;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    background-color: #c267ff;
+    word-spacing: 2em;
+}
+
+.elementDispo {
+    position: relative;
+    margin:0.5em;
+    padding: 0.1em;
+    width: 15em;
+}
+
+.elementDispoImg {
+    width: 1.5em;
+    height: 1.5em;
+    position: relative;
+    left: -1em;
+    top: 0.6em;
+    margin-top: -0.3em;
+}
+
+
+
+.titreLudiGame {
+    position: relative;
+    margin-top: 12.5em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    width: 15em;
+    font-size: 1.5em;
+    border-bottom: #a526fa solid 0.15em;
+}
+
+.imgLudiGame{
+    background-image: url('images/LudiGame.webp');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 70em;
+    height: 35em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+
+.ludiEvent {
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    height: 4em;
+    width: 90em;
+}
+
+.titreLudiEvent {
+    position: relative;
+    left: 35%;
+    padding: 0.1em;
+    width: 6em;
+    font-size: 1.5em;
+    border-bottom: #a526fa solid 0.15em;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+}
+
+.listeEvent {
+    position: relative;
+    list-style-type: none;
+    margin-top: 0.5em;
+    margin-left: 1em;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.Event {
+    margin-top: 1em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    height: 20em;
+    width: 20em;
+
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.imgEvent1 {
+    background-image: url('images/Event1.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.btnParticipe {
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    width: 13em;
+    height: 6em;
+    font-size: 1em;
+    text-align: center;
+    font-family: poppins;
+    background-color: #bf69f9;
+    border: solid 0.5em #bf69f9;
+    color: #e2e0e0;
+    height: 2em;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
