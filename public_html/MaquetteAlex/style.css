@@ -1,0 +1,334 @@
+/* Style général */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Bande de notification */
+.notification-bar {
+    background-color: #4a00e0;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f4f4f4;
+}
+
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+nav button {
+    background-color: #d1c4e9;
+    border: none;
+    padding: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.header-icons span {
+    margin-left: 10px;
+}
+/* Section "Coup de coeur" */
+.favorites {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.favorite-item {
+    background-color: #e1bee7;
+    border-radius: 20px;
+    text-align: center;
+    width: 200px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Pour séparer les éléments */
+    height: 300px; /* Hauteur fixe pour chaque élément */
+}
+
+.favorite-item img {
+    width: 100px; /* Ajuste la taille de l'image */
+    height: 100px;
+    border-radius: 10px; /* Bords arrondis pour l'image */
+    margin-bottom: 15px; /* Espacement sous l'image */
+}
+
+.favorite-item p {
+    font-size: 14px; /* Taille de la description */
+    color: #706f6f; /* Couleur du texte */
+    margin-bottom: 10px; /* Un peu d'espace sous la description */
+}
+
+.favorite-item button {
+    background-color: #ba68c8;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.favorite-item button:hover {
+    background-color: #d1a7d7;
+    color: white;
+}
+
+/* S'assurer que le lien ne garde pas le soulignement */
+.favorite-item a {
+    text-decoration: none;
+    color: inherit; /* Hérite de la couleur du texte */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+
+main {
+    flex: 1;
+    padding: 20px;
+}
+/* Center the search bar container */
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0; /* Adds some space above and below the search bar */
+}
+
+/* Styling for the search bar */
+.search-bar {
+    width: 1000px; /* Adjust width as needed */
+    padding: 10px;
+    border-radius: 20px; /* Rounded corners */
+    background-color: #f0f0f0; /* Light gray background */
+    border: none; /* Remove border */
+    text-align: center; /* Center the placeholder text */
+    font-size: 16px;
+    color: #706f6f; /* Text color */
+}
+
+.search-bar::placeholder {
+    color: #706f6f; /* Placeholder text color */
+    font-style: italic; /* Optional: makes the placeholder text italic */
+}
+
+
+
+/* Styling for the navigation container */
+.navigation-container {
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Styling for the buttons in the navigation */
+.navigation-container button {
+    background-color: #C869E6;
+    border: 2px solid #E1ABF1; /* Slightly darker border */
+    padding: 10px 15px;
+    border-radius: 20px;
+    color: #ffffff;
+    font-weight: bold;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navigation-container button:hover {
+    background-color: #d1a7d7; /* Darker shade on hover */
+    color: #fff;
+}
+
+
+.hero-section {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-section h1 {
+    font-size: 32px; /* Taille plus grande pour le titre principal */
+    font-weight: bold; /* Texte en gras */
+    margin-bottom: 10px; /* Un peu d'espace sous le titre */
+}
+
+.hero-section p {
+    font-size: 18px; /* Taille du texte du message important */
+    font-weight: bold; /* Texte en gras */
+    margin-bottom: 20px; /* Un peu d'espace sous le message */
+}
+
+.hero-section .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Espace entre le texte et l'image */
+}
+
+.hero-section img {
+    width: 30%; /* Ajuste la taille de l'image pour qu'elle ne soit pas trop grande */
+    max-width: 400px; /* Largeur maximale de l'image */
+    height: auto; /* Maintient le ratio de l'image */
+    border-radius: 10px; /* Bords arrondis pour l'image */
+}
+
+
+
+.collection-btn {
+    background-color: #ba68c8;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.age-categories {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.age-categories div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.age-categories div img {
+    width: 150px; /* Taille de l'image, ajustez selon vos préférences */
+    height: 150px;
+    border-radius: 10px; /* Légère arrondi pour l'image */
+    border: 2px solid #9c4dcc; /* Légère bordure violette autour de l'image */
+    margin-bottom: 5px;
+}
+
+.age-categories div p {
+    margin: 0;
+    color: #706f6f; /* Couleur du texte */
+}
+
+
+
+.collections, .favorites, .events {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.favorite-item, .event-item {
+    background-color: #e1bee7;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    width: 150px;
+}
+
+.product-card a {
+    text-decoration: none; /* Enlève le soulignement du lien */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-card {
+    background-color: #e1bee7;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Assure que les éléments sont espacés verticalement */
+    height: 250px; /* Fixe une hauteur pour garantir que le bouton reste en bas */
+}
+
+.product-card h3, .product-card p {
+    margin-bottom: 10px; /* Un peu d'espace sous le titre et la date */
+}
+
+.product-card button {
+    background-color: #ba68c8;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    margin-top: auto; /* Pousse le bouton vers le bas */
+}
+
+.product-card button:hover {
+    background-color: #d1a7d7; /* Couleur au survol */
+    color: #fff;
+}
+
+
+footer {
+    background-color: #673ab7;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+
+.footer-section {
+    display: inline-block;
+    width: 25%;
+    vertical-align: top;
+}
+
+footer h3 {
+    margin-bottom: 10px;
+}
+
+footer ul {
+    list-style-type: none;
+}
+
+footer ul li {
+    margin-bottom: 5px;
+}
+
+/* Positionnement du footer en bas de page */
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
