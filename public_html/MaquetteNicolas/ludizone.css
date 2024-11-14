@@ -147,8 +147,6 @@ body{
     justify-content: center;
 }
 
-
-
 .filtres{
     position: fixed;
     margin-top: -5em;
@@ -186,6 +184,12 @@ body{
     justify-content: center;
 }
 
+.liFiltres:hover{
+    background-color: #e2e0e0;
+    color: #bf69f9;
+    cursor: pointer;
+}
+
 .ludizone{
     position: relative;
     margin-top: 6em;
@@ -206,8 +210,6 @@ body{
     border: 1em solid transparent;
     border-radius: 2em;
     position: relative;
-    right: 5em;
-    top: 0.5em;
 }
 
 .coupDeCoeur{
@@ -353,8 +355,6 @@ body{
     margin-top: -0.3em;
 }
 
-
-
 .titreLudiGame {
     position: relative;
     margin-top: 12.5em;
@@ -376,14 +376,27 @@ body{
     position: relative;
 }
 
-
 .ludiEvent {
     position: relative;
     margin-top: 0.5em;
     margin-left: 0.5em;
     padding: 0.1em;
-    height: 4em;
-    width: 90em;
+    height: 27em;
+    width: 80em;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.ludiEvent::-webkit-scrollbar {
+    height: 0.5em;
+}
+
+.ludiEvent::-webkit-scrollbar-thumb {
+    background-color: #bf69f9;
+    border: 1em solid transparent;
+    border-radius: 2em; 
+    position: relative; 
 }
 
 .titreLudiEvent {
@@ -406,7 +419,7 @@ body{
     margin-left: 1em;
     padding: 0;
     overflow: hidden;
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
@@ -427,6 +440,31 @@ body{
 
 }
 
+.btnParticipe {
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    width: 13em;
+    font-size: 1em;
+    text-align: center;
+    font-family: poppins;
+    background-color: #bf69f9;
+    border: none;
+    color: #e2e0e0;
+    height: 4em;
+    border-radius: 5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnParticipe:hover {
+    background-color: #e2e0e0;
+    color: #bf69f9;
+    cursor: pointer;
+}
+
 .imgEvent1 {
     background-image: url('images/Event1.jpg');
     border-radius: 2em;
@@ -438,23 +476,104 @@ body{
     position: relative;
 }
 
-.btnParticipe {
+.imgEvent2 {
+    background-image: url('images/Event2.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgEvent3 {
+    background-image: url('images/Event3.png');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgEvent4 {
+    background-image: url('images/Event4.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgEvent5 {
+    background-image: url('images/Event5.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.vide{
     position: relative;
     margin-top: 0.5em;
     margin-left: 0.5em;
     padding: 0.1em;
-    width: 13em;
-    height: 6em;
-    font-size: 1em;
-    text-align: center;
-    font-family: poppins;
-    background-color: #bf69f9;
-    border: solid 0.5em #bf69f9;
-    color: #e2e0e0;
-    height: 2em;
-    border-radius: 1em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 4em;
+    width: 90em;
+}
 
+
+
+.footer {
+    background-color: #9c4fff; /* Couleur de fond */
+    padding: 2em;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.footer-sections {
+    display: flex;
+    justify-content: space-around;
+    gap: 2em;
+    text-align: left;
+    padding-bottom: 1em;
+}
+
+.footer-column h3 {
+    color: white;
+    font-size: 1.1em;
+    margin-bottom: 0.5em;
+}
+
+.footer-column ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 0.5em;
+}
+
+.footer-column ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-column ul li a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 0.8em;
+    color: #e0e0e0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 1em;
 }
