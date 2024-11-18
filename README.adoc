@@ -212,14 +212,17 @@ De plus ce fichier `README.adoc` devra être à jour des informations suivantes 
 - Indicateurs de qualité du code (dette technique)
 - ... tout autre élément que vous jugerez utiles pour démontrer la qualité de votre application
 
-Voici un exemple d'évaluation :
+=== Evaluation bi-hebdomadaire :
 
 ifdef::env-github[]
-image:https://docs.google.com/spreadsheets/d/e/2PACX-1vTc3HJJ9iSI4aa2I9a567wX1AUEmgGrQsPl7tHGSAJ_Z-lzWXwYhlhcVIhh5vCJxoxHXYKjSLetP6NS/pubchart?oid=1850914734&amp;format=image[link=https://docs.google.com/spreadsheets/d/e/2PACX-1vTc3HJJ9iSI4aa2I9a567wX1AUEmgGrQsPl7tHGSAJ_Z-lzWXwYhlhcVIhh5vCJxoxHXYKjSLetP6NS/pubchart?oid=1850914734&amp;format=image]
+image:https://docs.google.com/spreadsheets/d/e/2PACX-1vSACcYeKaH_ims3faegSLAFJ9s5_Kd9Fbyi4ODEb8BTN5OnUXWenVGhlVPo84yQDhTkTj3f9nXiluh1/pubchart?oid=1950296416&amp;format=image[link=https://docs.google.com/spreadsheets/d/e/2PACX-1vSACcYeKaH_ims3faegSLAFJ9s5_Kd9Fbyi4ODEb8BTN5OnUXWenVGhlVPo84yQDhTkTj3f9nXiluh1/pubchart?oid=1950296416&amp;format=image]
 endif::[]
 
 ifndef::env-github[]
 ++++
-<iframe width="786" height="430" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTc3HJJ9iSI4aa2I9a567wX1AUEmgGrQsPl7tHGSAJ_Z-lzWXwYhlhcVIhh5vCJxoxHXYKjSLetP6NS/pubchart?oid=1850914734&amp;format=image"></iframe>
+<iframe width="786" height="430" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSACcYeKaH_ims3faegSLAFJ9s5_Kd9Fbyi4ODEb8BTN5OnUXWenVGhlVPo84yQDhTkTj3f9nXiluh1/pubchart?oid=1950296416&amp;format=interactive"></iframe>
 ++++
 endif::[]
+
+=== retour intialisation dépôt/ sprint 1 
+Mettre les rôles de chacun dans le readme. Mettre le contexte du projet. Backlog produit ok. Issues/ US du sprint : ok mais préciser les différents tâches/TASK qui doivet ensuite apparaitre dans le TO DO ! Les docs doivent être initialisées avec liens depuis le readme, je devrais au moins avoir la doc de conception. Je n'ai pas de tests (mais j'ai au moins des critères d'acceptabilité c'est un début), je n'ai pas de realase ou au moins une date de release du premier sprint. Il y a du travail à faire  !!!
