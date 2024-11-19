@@ -108,6 +108,8 @@ def save_data():
             with open(path, 'w+') as f:
                 json.dump(data, f)
 
+    print('Sauvegarde des données effectuée.')
+
 
 def periodic_save(interval):
     """
