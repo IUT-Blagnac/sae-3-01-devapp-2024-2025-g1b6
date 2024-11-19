@@ -18,7 +18,7 @@ body{
     position: relative;
     margin: 0em;
 
-    background-color: #bf69f9;
+    background-color: #8A2BE2;
     color: #fff;
     font-size: 0.8em;;
     height: 1.7em;
@@ -80,9 +80,9 @@ body{
     height: 2em;
     width: 70em;
 
-    border: 2px solid #e2e0e0; 
+    border: 2px solid #F0F0F0; 
     border-radius: 2em;
-    background-color: #e2e0e0;
+    background-color: #F0F0F0;
     display: flex;
     color: #767676;
     padding: 0.1em;
@@ -93,7 +93,7 @@ body{
 
 .barreRecherche:focus {
     outline: none; 
-    border-color: #e2e0e0; 
+    border-color: #F0F0F0; 
 }
 
 .imgLoc{
@@ -137,8 +137,8 @@ body{
     margin-top: 0.5em;
     margin-left: 0.5em;
     padding: 0.1em;
-    background-color: #bf69f9;
-    color: #e2e0e0;
+    background-color: #8A2BE2;
+    color: #F0F0F0;
     height: 4em;
     width: 9em;
     text-align: center;
@@ -174,8 +174,8 @@ body{
     margin-top: 0.5em;
     margin-left: 0.5em;
     padding: 0.1em;
-    background-color: #bf69f9;
-    color: #e2e0e0;
+    background-color: #8A2BE2;
+    color: #F0F0F0;
     height: 4em;
     width: 9em;
     text-align: center;
@@ -185,8 +185,8 @@ body{
 }
 
 .liFiltres:hover{
-    background-color: #e2e0e0;
-    color: #bf69f9;
+    background-color: #F0F0F0;
+    color: #8A2BE2;
     cursor: pointer;
 }
 
@@ -206,10 +206,19 @@ body{
 }
 
 .ludizone::-webkit-scrollbar-thumb {
-    background-color: #bf69f9;
+    background-color: #8A2BE2;
     border: 1em solid transparent;
     border-radius: 2em;
     position: relative;
+}
+
+.titreLudizone {
+    position: relative;
+    left: 35%;
+    padding: 0.1em;
+    width: 16em;
+    font-size: 2em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .coupDeCoeur{
@@ -228,7 +237,7 @@ body{
     padding: 0.1em;
     width: 15em;
     font-size: 1.5em;
-    border-bottom: #a526fa solid 0.15em;
+    border-bottom: #8A2BE2 solid 0.15em;
 }
 
 .listeCDC{
@@ -362,7 +371,7 @@ body{
     padding: 0.1em;
     width: 15em;
     font-size: 1.5em;
-    border-bottom: #a526fa solid 0.15em;
+    border-bottom: #8A2BE2 solid 0.15em;
 }
 
 .imgLudiGame{
@@ -393,7 +402,7 @@ body{
 }
 
 .ludiEvent::-webkit-scrollbar-thumb {
-    background-color: #bf69f9;
+    background-color: #8A2BE2;
     border: 1em solid transparent;
     border-radius: 2em; 
     position: relative; 
@@ -405,7 +414,7 @@ body{
     padding: 0.1em;
     width: 6em;
     font-size: 1.5em;
-    border-bottom: #a526fa solid 0.15em;
+    border-bottom: #8A2BE2 solid 0.15em;
     justify-content: center;
     align-items: center;
     display: flex;
@@ -449,9 +458,9 @@ body{
     font-size: 1em;
     text-align: center;
     font-family: poppins;
-    background-color: #bf69f9;
+    background-color: #8A2BE2;
     border: none;
-    color: #e2e0e0;
+    color: #F0F0F0;
     height: 4em;
     border-radius: 5em;
     display: flex;
@@ -460,8 +469,8 @@ body{
 }
 
 .btnParticipe:hover {
-    background-color: #e2e0e0;
-    color: #bf69f9;
+    background-color: #F0F0F0;
+    color: #8A2BE2;
     cursor: pointer;
 }
 
@@ -532,9 +541,9 @@ body{
 
 
 .footer {
-    background-color: #9c4fff; /* Couleur de fond */
+    background-color: #8A2BE2; /* Couleur de fond */
     padding: 2em;
-    color: white;
+    color: #F0F0F0;
     font-family: Arial, sans-serif;
 }
 
@@ -547,7 +556,7 @@ body{
 }
 
 .footer-column h3 {
-    color: white;
+    color: #F0F0F0;
     font-size: 1.1em;
     margin-bottom: 0.5em;
 }
@@ -562,7 +571,7 @@ body{
 }
 
 .footer-column ul li a {
-    color: white;
+    color: #F0F0F0;
     text-decoration: none;
 }
 
