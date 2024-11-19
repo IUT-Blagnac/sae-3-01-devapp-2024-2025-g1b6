@@ -10,7 +10,30 @@ Projet est réalisé par::
 
 Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.fr[JMB]
 
-=== Backlog Produit : Ludorama
+== Contexte du Projet
+
+**Ludorama**, acteur mondial du divertissement avec plus de 2 000 magasins et 27 000 employés, nous a confié la **modernisation de son site internet**. Fondée en 1978 à Toulouse, l’entreprise mise sur l’innovation, la qualité et la proximité client.
+
+=== Objectif
+
+Moderniser le site tout en respectant l’identité graphique et en :
+- Offrant une expérience fluide pour toutes les cibles : enfants, parents, jeunes adultes et seniors.
+- Intégrant **LudiZone**, une nouvelle section dédiée aux produits pour enfants de moins de 6 ans, avec une charte graphique adaptée.
+- Proposant une interface attractive, accessible et stable.
+
+=== Enjeux Techniques
+
+- Développement en **PHP** et **MySQL** pour s’intégrer aux systèmes actuels.
+- Répondre aux exigences de **qualité**, **stabilité**, **innovation** et **développement durable**.
+
+=== Rôles et Échéances
+
+- **Nous (MOE)** : développement et livrables.
+- **Ludorama (MOA)** : contrôle et validation réguliers.
+
+
+
+== Backlog Produit : Ludorama
 
 |===
 | **Priorité** | **ID** | **User Story** | **Description / Détail** | **Critères d'acceptation** | **Etat**
