@@ -92,23 +92,30 @@ def save_data():
         else:
             path = './data/' + di[1]['Building'] + '/' + di[1]['room'] + '.json'
 
+        # Extrait le chemin du dossier à partir du chemin complet
+        directory = os.path.dirname(path)
+
+        # Crée le dossier s'il n'existe pas
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
         try:
             # Ouvre le fichier JSON correspondant en mode lecture-écriture
-            with open(path, 'w+') as f:
-                # Non optimisé 
+            with open(path, 'r+') as f:
                 # Charge les données existantes
                 data = json.load(f)
                 # Ajoute le nouveau message aux données
                 data.append(di)
                 # Sauvegarde les données mises à jour
                 json.dump(data, f)
-        except json.decoder.JSONDecodeError:
-            # Si le fichier est vide ou corrompu, crée une nouvelle liste de données
+        except (json.decoder.JSONDecodeError, FileNotFoundError):
+            # Si le fichier est vide, corrompu ou n'existe pas, crée une nouvelle liste de données
             data = [di]
-            with open(path, 'w+') as f:
+            with open(path, 'w') as f:
                 json.dump(data, f)
 
     print('Sauvegarde des données effectuée.')
+
 
 
 def periodic_save(interval):
