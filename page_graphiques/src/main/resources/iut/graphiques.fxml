@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="iut.GraphiquesController">
+    <!-- Conteneur principal pour organiser les graphiques -->
+    <VBox>
+        <!-- Barre de navigation entre les différents graphiques -->
+        <TabPane>
+            <!-- Premier onglet pour un graphique en barres -->
+            <Tab text="Graphique en Barres">
+                <BarChart fx:id="barChart" title="Graphique en Barres">
+                    <xAxis>
+                        <CategoryAxis label="Catégories" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Valeur" />
+                    </yAxis>
+                </BarChart>
+            </Tab>
+
+            <!-- Deuxième onglet pour un graphique en lignes -->
+            <Tab text="Graphique en Lignes">
+                <LineChart fx:id="lineChart" title="Graphique en Lignes">
+                    <xAxis>
+                        <NumberAxis label="Temps" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Valeur" />
+                    </yAxis>
+                </LineChart>
+            </Tab>
+
+            <!-- Troisième onglet pour un graphique en secteurs -->
+            <Tab text="Graphique en Secteurs">
+                <PieChart fx:id="pieChart" title="Répartition">
+                    <!-- Vous ajouterez ici des données dynamiquement via le contrôleur -->
+                </PieChart>
+            </Tab>
+        </TabPane>
+    </VBox>
+</AnchorPane>
