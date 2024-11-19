@@ -95,6 +95,7 @@ def save_data():
         try:
             # Ouvre le fichier JSON correspondant en mode lecture-écriture
             with open(path, 'w+') as f:
+                # Non optimisé 
                 # Charge les données existantes
                 data = json.load(f)
                 # Ajoute le nouveau message aux données
