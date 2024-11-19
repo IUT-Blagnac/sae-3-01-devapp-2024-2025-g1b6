@@ -1,8 +1,8 @@
 /* Palette de couleurs */
 :root {
-    --dark-purple: #4B0082;
+    --dark-purple: linear-gradient( #6d00b0, #b06bdc);
     --medium-purple: #8A2BE2;
-    --light-purple: #D8BFD8;
+    --light-purple: #e6d1f2;
     --accent-pink: #FF69B4;
     --white: #FFFFFF;
     --light-gray: #F0F0F0;
@@ -21,9 +21,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--dark-purple);
+    background: var(--dark-purple);
     color: var(--white);
-    padding: 10px 20px;
+    padding: 30px 20px;
 }
 
 .logo {
@@ -56,7 +56,7 @@ body {
 }
 
 .btn-search:hover {
-    background-color: var(--dark-purple);
+    background: var(--dark-purple);
 }
 
 .header-icons .icon {
@@ -176,7 +176,7 @@ body {
 
 .product-details .btn-store:hover,
 .product-details .btn-cart:hover {
-    background-color: var(--dark-purple);
+    background: var(--dark-purple);
 }
 
 .product-details .shipping-info {
@@ -226,7 +226,7 @@ body {
 .footer {
     display: flex;
     justify-content: space-around;
-    background-color: var(--dark-purple);
+    background: var(--dark-purple);
     color: var(--white);
     padding: 20px;
     border-top: 5px solid var(--medium-purple);
