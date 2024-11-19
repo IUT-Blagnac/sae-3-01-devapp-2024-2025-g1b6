@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <HBox prefHeight="414.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="383.0" prefWidth="101.0">
+               <children>
+                  <Label text="Général:" />
+                  <Label text="Hôte :" />
+                  <TextField text="chirpstack.iut-blagnac.fr" />
+                  <Label text="Fréquence (en min)" />
+                  <TextField />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="383.0" prefWidth="150.0">
+               <children>
+                  <Label alignment="TOP_CENTER" text="Capteurs :" />
+                  <Label alignment="TOP_CENTER" text="S'abonner à tout" />
+                  <HBox prefHeight="12.0" prefWidth="100.0">
+                     <children>
+                        <RadioButton contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Oui" textAlignment="CENTER">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </RadioButton>
+                        <RadioButton contentDisplay="CENTER" mnemonicParsing="false" text="Non">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="12.0" prefWidth="100.0">
+                     <children>
+                        <MenuButton mnemonicParsing="false" text="Salle">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="A011" />
+                            <MenuItem mnemonicParsing="false" text="Amphi 1" />
+                              <MenuItem mnemonicParsing="false" text="Amphi 2" />
+                              <MenuItem mnemonicParsing="false" text="Amphi 3" />
+                              <MenuItem mnemonicParsing="false" text="B004" />
+                              <MenuItem mnemonicParsing="false" text="B005" />
+                              <MenuItem mnemonicParsing="false" text="B006" />
+                              <MenuItem mnemonicParsing="false" text="B007" />
+                              <MenuItem mnemonicParsing="false" text="B008" />
+                              <MenuItem mnemonicParsing="false" text="B009" />
+                              <MenuItem mnemonicParsing="false" text="B010" />
+                              <MenuItem mnemonicParsing="false" text="B101" />
+                              <MenuItem mnemonicParsing="false" text="B102" />
+                              <MenuItem mnemonicParsing="false" text="B103" />
+                              <MenuItem mnemonicParsing="false" text="B104" />
+                              <MenuItem mnemonicParsing="false" text="B105" />
+                              <MenuItem mnemonicParsing="false" text="B106" />
+                              <MenuItem mnemonicParsing="false" text="B112" />
+                              <MenuItem mnemonicParsing="false" text="B113" />
+                              <MenuItem mnemonicParsing="false" text="B115" />
+                              <MenuItem mnemonicParsing="false" text="B219" />
+                              <MenuItem mnemonicParsing="false" text="EXT" />
+                              <MenuItem mnemonicParsing="false" text="Labo" />
+                          </items>
+                        </MenuButton>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="TOP_CENTER" text="Panneaux Solaires :" />
+                  <Label alignment="TOP_CENTER" text="S'abonner à tout" />
+                  <HBox prefHeight="12.0" prefWidth="100.0">
+                     <children>
+                        <RadioButton contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Oui" textAlignment="CENTER">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </RadioButton>
+                        <RadioButton contentDisplay="CENTER" mnemonicParsing="false" text="Non">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <MenuButton mnemonicParsing="false" text="Panneaux : ">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Amphi 1" />
+                        <MenuItem mnemonicParsing="false" text="Salle anechoique" />
+                        <MenuItem mnemonicParsing="false" text="B110" />
+                        <MenuItem mnemonicParsing="false" text="EXT" />
+                     </items>
+                  </MenuButton>
+               </children>
+            </VBox>
+            <VBox prefHeight="328.0" prefWidth="153.0">
+               <children>
+                  <Label text="Seuils Alerte" />
+                  <Label text="CO2Min :" />
+                  <TextField text="400" />
+                  <Label layoutX="10.0" layoutY="27.0" text="CO2 Max" />
+                  <TextField layoutX="10.0" layoutY="44.0" text="1000" />
+                  <Label layoutX="10.0" layoutY="27.0" text="Temp min" />
+                  <TextField layoutX="10.0" layoutY="44.0" text="13" />
+                  <Label layoutX="10.0" layoutY="69.0" text="Temp Max" />
+                  <TextField layoutX="10.0" layoutY="86.0" text="27" />
+                  <Label layoutX="10.0" layoutY="27.0" text="Humidité min:" />
+                  <TextField layoutX="10.0" layoutY="44.0" text="40" />
+                  <Label layoutX="10.0" layoutY="69.0" text="Humidité max:" />
+                  <TextField layoutX="10.0" layoutY="86.0" text="60" />
+                  <Label layoutX="10.0" layoutY="111.0" text="Activité min:" />
+                  <TextField layoutX="10.0" layoutY="128.0" />
+                  <Label layoutX="10.0" layoutY="153.0" text="Activité max:" />
+                  <TextField layoutX="10.0" layoutY="170.0" text="0" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <top>
+      <Label text="Config" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="30.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="20.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+</BorderPane>
