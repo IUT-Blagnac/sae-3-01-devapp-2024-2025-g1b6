@@ -178,8 +178,9 @@ Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.
 
 |===
 
-=== Document de Conception
+== Documentation
 
+=== Document de conception
 link:Doc_Conception.adoc[Lien vers le document de conception]
 
 
