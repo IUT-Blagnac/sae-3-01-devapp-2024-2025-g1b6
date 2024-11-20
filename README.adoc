@@ -209,7 +209,7 @@ link:Doc_Conception.adoc[Lien vers le document de conception]
 
 
 [[liensUtiles]]
-=== Liens utiles
+== Liens utiles
 
 - Le https://webetud.iut-blagnac.fr/course/view.php?id=841[cours Moodle] sur la SAE
 - Le dépôt https://github.com/IUT-Blagnac/sae3-01-template[template] qui sert de base à tous les dépôts étudiants.
