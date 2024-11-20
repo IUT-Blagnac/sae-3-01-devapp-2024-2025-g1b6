@@ -1,37 +1,46 @@
 @startuml
-left to right direction
+skinparam {
+    actorBackgroundColor LightBlue
+    packageBackgroundColor LightBlue 
+    usecaseBorderColor Black
+    arrowColor DarkBlue
+    UsecaseRectangleRounded true
+}
 
 actor Client
-actor Administrateur
 
-' Account Management
-Client --> (Se connecter / Déconnecter)
-Client --> (Créer compte client)
+left to right direction
 
-' Product Management
-Client --> (Rechercher produits)
-Client --> (Visualiser liste produits)
-Client --> (Trier liste produits)
-Client --> (Visualiser détail produit)
+package "Gestion du compte" {
+    Client -u-> (Créer un compte)
+    Client -u-> (Se connecter)
+    Client -u-> (Se déconnecter)
+    Client -u-> (Rester connecté)
+}
 
-' Wishlist and Loyalty
-Client --> (Gérer liste de souhaits)
-Client --> (Gérer points fidélité)
+package "Navigation et filtres" {
+    Client --> (Naviguer via un menu global)
+    Client --> (Naviguer par regroupements de produits)
+    Client --> (Voir les produits par catégorie)
+    Client --> (Filtrer les produits par prix)
+}
 
-' Order History and Reviews
-Client --> (Visualiser commandes passées)
-Client --> (Rédiger avis)
+package "Consultation des produits" {
+    Client --> (Faire défiler les articles sur la page d'accueil)
+    Client --> (Consulter la description des produits)
+    Client --> (Voir la quantité de stock disponible)
+    Client --> (Voir les produits en rupture de stock)
+    Client --> (Choisir la couleur du produit)
+}
 
-' Cart Management
-Client --> (Ajouter au panier)
-Client --> (Gérer panier)
+package "Achat" {
+    Client -u-> (Acheter un lot)
+    Client -u-> (Payer une commande)
+    Client -u-> (Choisir le moyen de paiement)
+}
 
-' Administrator Console
-Administrateur --> (Ajouter / Supprimer produit)
-Administrateur --> (Gérer les produits)
-Administrateur --> (Répondre aux avis)
-
-' Relation between Reviews and Responses
-(Rédiger avis) <-- (Répondre aux avis)
-
+package "Avis" {
+    Client -u-> (Déposer un avis)
+    Client -u-> (Consulter les avis)
+}
 @enduml
