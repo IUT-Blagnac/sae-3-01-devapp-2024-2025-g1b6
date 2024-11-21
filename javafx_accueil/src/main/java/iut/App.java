@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 
@@ -14,12 +15,25 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    private Stage primaryStage;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
-        stage.setScene(scene);
-        stage.show();
+
+        this.primaryStage = stage;
+        
+
+        FXMLLoader loader = new FXMLLoader(AccueilController.class.getResource("primary.fxml"));
+        BorderPane root = loader.load();
+
+        Scene scene = new Scene(root);
+        this.primaryStage.setScene(scene);
+        this.primaryStage.setTitle("Accueil");
+
+        AccueilController controller = loader.getController();
+        controller.initContext(this.primaryStage);
+        controller.displayDialog();
+
     }
 
     static void setRoot(String fxml) throws IOException {
