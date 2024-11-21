@@ -5,6 +5,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.chart.PieChart.Data;
 
 public class GraphiquesController {
@@ -15,7 +16,8 @@ public class GraphiquesController {
     private LineChart<Number, Number> lineChart;
     @FXML
     private PieChart pieChart;
-
+    @FXML
+    private Button buttonretour;
     // Cette méthode est appelée pour initialiser les graphiques
     public void initialize() {
         // Données tests
@@ -39,6 +41,12 @@ public class GraphiquesController {
         PieChart.Data slice2 = new Data("Secteur B", 40);
         PieChart.Data slice3 = new Data("Secteur C", 30);
         pieChart.getData().addAll(slice1, slice2, slice3);
+    }
+
+
+    @FXML
+    private void handleButtonRetour() {
+        System.out.println("A faire : retour à la page précédente");
     }
 }
 
