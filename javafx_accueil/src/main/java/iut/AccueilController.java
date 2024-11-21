@@ -68,23 +68,125 @@ public class AccueilController {
 
     @FXML
     private void actionTesterCo() {
-        System.out.println("Action tester connexion");
+        Stage newStage = new Stage();
+        newStage.setTitle("Tester MQTT");
+
+        Button btn = new Button("Fermer");
+        btn.setOnAction(event -> newStage.close());
+
+        javafx.scene.layout.VBox vbox = new javafx.scene.layout.VBox(btn);
+        vbox.setAlignment(javafx.geometry.Pos.CENTER);
+        vbox.setPadding(new javafx.geometry.Insets(10));
+
+        javafx.scene.Scene scene = new javafx.scene.Scene(vbox, 300, 200);
+        newStage.setScene(scene);
+        newStage.show();
     }
 
     @FXML
     private void actionLancer() {
-        System.out.println("Action lancer");
+        Stage newStage = new Stage();
+        newStage.setTitle("Lancer");
+
+        Button btn = new Button("Fermer");
+        btn.setOnAction(event -> newStage.close());
+
+        javafx.scene.layout.VBox vbox = new javafx.scene.layout.VBox(btn);
+        vbox.setAlignment(javafx.geometry.Pos.CENTER);
+        vbox.setPadding(new javafx.geometry.Insets(10));
+
+        javafx.scene.Scene scene = new javafx.scene.Scene(vbox, 300, 200);
+        newStage.setScene(scene);
+        newStage.show();
     }
 
     @FXML
-    private void actionManuel() {
-        System.out.println("Action manuel");
-    }
+private void actionManuel() {
+    // Crée une nouvelle fenêtre (Stage)
+    Stage newStage = new Stage();
+    newStage.setTitle("Manuel");
+
+    // Titre du manuel
+    javafx.scene.control.Label manuelTitre = new javafx.scene.control.Label(
+        "Voici le manuel d'utilisation de l'application :"
+    );
+    manuelTitre.setWrapText(true); // Permet le retour à la ligne automatique
+    manuelTitre.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-alignment: center;");
+    manuelTitre.setAlignment(javafx.geometry.Pos.CENTER);
+
+    // Contenu du manuel
+    javafx.scene.control.Label manuelText = new javafx.scene.control.Label(
+        "\n"
+        + "1. Pour tester la connexion MQTT, cliquez sur le bouton 'Tester la connexion'.\n"
+        + "2. Pour lancer l'application, cliquez sur le bouton 'Lancer'."
+    );
+    manuelText.setWrapText(true); // Permet le retour à la ligne automatique
+    manuelText.setStyle("-fx-font-size: 14px; -fx-text-alignment: justify;");
+    manuelText.setAlignment(javafx.geometry.Pos.TOP_LEFT);
+
+    // Conteneur pour le texte
+    javafx.scene.layout.VBox textContainer = new javafx.scene.layout.VBox(manuelTitre, manuelText);
+    textContainer.setSpacing(10); // Espace entre le titre et le texte
+    textContainer.setPadding(new javafx.geometry.Insets(10));
+    textContainer.setAlignment(javafx.geometry.Pos.TOP_CENTER);
+
+    // Bouton "Fermer" en bas à droite
+    Button closeButton = new Button("Fermer");
+    closeButton.setOnAction(event -> newStage.close());
+    javafx.scene.layout.HBox buttonContainer = new javafx.scene.layout.HBox(closeButton);
+    buttonContainer.setAlignment(javafx.geometry.Pos.BOTTOM_RIGHT);
+    buttonContainer.setPadding(new javafx.geometry.Insets(10));
+
+    // Organisation de la fenêtre avec un BorderPane
+    javafx.scene.layout.BorderPane layout = new javafx.scene.layout.BorderPane();
+    layout.setCenter(textContainer); // Place le texte au centre
+    layout.setBottom(buttonContainer); // Place le bouton en bas
+
+    // Création et configuration de la scène
+    javafx.scene.Scene scene = new javafx.scene.Scene(layout, 500, 300);
+    newStage.setScene(scene);
+    newStage.show();
+}
+
+
 
     @FXML
     private void actionCredits() {
-        System.out.println("Action credits");
-    }
+        // Crée une nouvelle fenêtre (Stage)
+        Stage newStage = new Stage();
+        newStage.setTitle("Crédits");
 
+        // Texte statique au centre
+        javafx.scene.control.Label creditsText = new javafx.scene.control.Label(
+            "Cette application à été réalisé par : \n"
+            + "Nicolas Ruiz\n"  
+            + "Marwane Ibrahim\n"
+            + "Yassir Boulouiha Gnaoui\n"
+            + "Alex Lovin\n"
+        );
+        creditsText.setWrapText(true); // Permet le retour à la ligne automatique
+        creditsText.setStyle("-fx-font-size: 14px; -fx-text-alignment: center;"); 
+        creditsText.setAlignment(javafx.geometry.Pos.CENTER);
+
+        // Bouton "Fermer" en bas à droite
+        Button closeButton = new Button("Fermer");
+        closeButton.setOnAction(event -> newStage.close());
+        closeButton.setAlignment(javafx.geometry.Pos.CENTER_RIGHT);
+
+        // Conteneur pour positionner le bouton en bas à droite
+        javafx.scene.layout.HBox buttonContainer = new javafx.scene.layout.HBox(closeButton);
+        buttonContainer.setAlignment(javafx.geometry.Pos.BOTTOM_RIGHT);
+        buttonContainer.setPadding(new javafx.geometry.Insets(10));
+
+        // Organisation de la fenêtre avec un BorderPane
+        javafx.scene.layout.BorderPane layout = new javafx.scene.layout.BorderPane();
+        layout.setCenter(creditsText); // Place le texte au centre
+        layout.setBottom(buttonContainer); // Place le bouton en bas
+
+        // Création et configuration de la scène
+        javafx.scene.Scene scene = new javafx.scene.Scene(layout, 400, 200); // Largeur: 400, Hauteur: 200
+        newStage.setScene(scene);
+        newStage.show();
+    }
 
 }

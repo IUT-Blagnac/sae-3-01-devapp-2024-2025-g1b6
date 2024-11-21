@@ -23,7 +23,7 @@ public class App extends Application {
         this.primaryStage = stage;
         
 
-        FXMLLoader loader = new FXMLLoader(AccueilController.class.getResource("primary.fxml"));
+        FXMLLoader loader = new FXMLLoader(AccueilController.class.getResource("accueilView.fxml"));
         BorderPane root = loader.load();
 
         Scene scene = new Scene(root);
