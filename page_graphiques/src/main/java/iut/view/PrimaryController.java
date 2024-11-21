@@ -1,6 +1,8 @@
-package iut;
+package iut.view;
 
 import java.io.IOException;
+
+import iut.App;
 import javafx.fxml.FXML;
 
 public class PrimaryController {

@@ -18,13 +18,13 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Charger la scène principale avec le fichier FXML des graphiques
-        scene = new Scene(loadFXML("graphiques"), 800, 600); // Ajustez la taille selon vos besoins
+        scene = new Scene(loadFXML("view/graphiques"), 800, 600); // Ajustez la taille selon vos besoins
         stage.setScene(scene);
         stage.setTitle("Application de Graphiques");
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
