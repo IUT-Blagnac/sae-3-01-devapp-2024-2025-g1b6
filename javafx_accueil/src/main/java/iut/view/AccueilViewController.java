@@ -1,4 +1,4 @@
-package iut;
+package iut.view;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -7,9 +7,10 @@ import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import iut.App;
 
 
-public class AccueilController {
+public class AccueilViewController {
 
     private Stage containingStage;
 
@@ -24,13 +25,7 @@ public class AccueilController {
     @FXML
     private Button btnQuitter;
 
-    @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
-    }
-
-
-
+    
     public void initContext(Stage _containingStage) {
         this.containingStage = _containingStage;
         configure();
