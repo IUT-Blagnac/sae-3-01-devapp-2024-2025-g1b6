@@ -1,14 +1,4 @@
-= SAE 3.01 DevApp 2024-2025
-== Equipe
-
-Projet est réalisé par::
-
-- https://github.com/Marwane-Ibrahim[Marwane Ibrahim] : Développeur
-- https://github.com/NicolasRuiz2005[Nicolas Ruiz] : Product Owner
-- https://github.com/yssrbnl[Yassir Boulouiha Gnaoui] : Scrum Master
-- https://github.com/imalexlov1[Alex Lovin] : Développeur
-
-Tuteur/tutrice enseignant(e) de l'équipe:: mailto:jean-michel.bruel@univ-tlse2.fr[JMB]
+= Cahier de Recette | SAE 3.01 DevApp 2024-2025
 
 == Contexte du Projet
 
@@ -21,15 +11,6 @@ Moderniser le site tout en respectant l’identité graphique et en :
 - Intégrant **LudiZone**, une nouvelle section dédiée aux produits pour enfants de moins de 6 ans, avec une charte graphique adaptée.
 - Proposant une interface attractive, accessible et stable.
 
-=== Enjeux Techniques
-
-- Développement en **PHP** et **MySQL** pour s’intégrer aux systèmes actuels.
-- Répondre aux exigences de **qualité**, **stabilité**, **innovation** et **développement durable**.
-
-=== Rôles et Échéances
-
-- **Nous (MOE)** : développement et livrables.
-- **Ludorama (MOA)** : contrôle et validation réguliers.
 
 == Rappel du Backlog Produit : Ludorama
 
