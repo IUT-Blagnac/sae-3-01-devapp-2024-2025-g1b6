@@ -7,6 +7,7 @@
 === Objectif
 
 Moderniser le site tout en respectant l’identité graphique et en :
+
 - Offrant une expérience fluide pour toutes les cibles : enfants, parents, jeunes adultes et seniors.
 - Intégrant **LudiZone**, une nouvelle section dédiée aux produits pour enfants de moins de 6 ans, avec une charte graphique adaptée.
 - Proposant une interface attractive, accessible et stable.
