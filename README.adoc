@@ -204,6 +204,10 @@ Moderniser le site tout en respectant l’identité graphique et en :
 
 |===
 
+== Gestion de projet & Qualité
+
+- Version courante : https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/releases/tag/Doc-Release[v0.1]
+
 == Documentation
 
 === Document de conception
@@ -212,6 +216,8 @@ link:Doc_Conception.adoc[Lien vers le document de conception]
 === Cahier de Recette
 link:Cahier_Recette.adoc[Lien vers le cahier de recette]
 
+=== ODJ et CRs
+link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/tree/master/ODJ%20et%20CRs[Lien vers le dossier]
 
 
 [[liensUtiles]]
@@ -221,26 +227,9 @@ link:Cahier_Recette.adoc[Lien vers le cahier de recette]
 - Le dépôt https://github.com/IUT-Blagnac/sae3-01-template[template] qui sert de base à tous les dépôts étudiants.
 - Le lien https://classroom.github.com/a/OUF7gxEa[classroom] si besoin.
 
-TIP: Pensez à utiliser les salons Discord dédiés pour poser vos questions.
-
 == Réalisations 
 
 TIP: Mettez ici toutes les informations nécessaire à l'utilisation de votre dépôt (comment on installe votre application, où sont les docs, etc.)
-
-== Gestion de projet & Qualité
-
-Chaque sprint (semaine) vous devrez livrer une nouvelle version de votre application (release).
-Utilisez pour cela les fonctionnalités de GitHub pour les https://docs.github.com/en/repositories/releasing-projects-on-github[Releases].
-
-De plus ce fichier `README.adoc` devra être à jour des informations suivantes :
-
-- Version courante : https://github.com/IUT-Blagnac/sae3-01-template/releases/tag/v0.1.2[v0.1.2]
-- Lien vers la doc technique
-- Lien vers la doc utilisateur
-- Liste des (ou lien vers les) User Stories (ToDo/Ongoing/Done) et % restant
-- Tests unitaires et plans de test
-- Indicateurs de qualité du code (dette technique)
-- ... tout autre élément que vous jugerez utiles pour démontrer la qualité de votre application
 
 === Evaluation bi-hebdomadaire :
 
