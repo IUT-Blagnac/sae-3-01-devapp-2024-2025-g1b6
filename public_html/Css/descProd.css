@@ -16,53 +16,7 @@ body {
     background-color: var(--light-gray);
 }
 
-/* En-tête */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--dark-purple);
-    color: var(--white);
-    padding: 30px 20px;
-}
 
-.logo {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-.search-bar {
-    display: flex;
-    width: 70%;
-}
-
-.search-bar input {
-    width: 100%;
-    padding: 5px;
-    border-radius: 5px 0 0 5px;
-    border: none;
-    outline: none;
-    font-size: 1em;
-}
-
-.btn-search {
-    padding: 5px 10px;
-    border: none;
-    background-color: var(--medium-purple);
-    color: var(--white);
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-search:hover {
-    background: var(--dark-purple);
-}
-
-.header-icons .icon {
-    margin-left: 20px;
-    cursor: pointer;
-}
 
 /* Contenu principal */
 .main-content {
@@ -177,6 +131,7 @@ body {
 .product-details .btn-store:hover,
 .product-details .btn-cart:hover {
     background: var(--dark-purple);
+    color: var(--accent-pink);
 }
 
 .product-details .shipping-info {
@@ -200,6 +155,11 @@ body {
     transition: background-color 0.3s ease;
     margin-right: 5px;
     border-radius: 5px;
+}
+
+.tab-link:hover {
+    background: var(--dark-purple);
+    color: var(--accent-pink);
 }
 
 .tab-link.active {

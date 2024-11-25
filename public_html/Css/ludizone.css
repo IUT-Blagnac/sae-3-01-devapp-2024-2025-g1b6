@@ -1,153 +1,21 @@
-body{
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
+/* Palette de couleurs */
+:root {
+    --dark-purple: linear-gradient( #6d00b0, #b06bdc);
+    --dark-purple-inverse:linear-gradient(#b06bdc, #6d00b0);
+    --clair-purple: #c267ff;
+    --medium-purple: #8A2BE2;
+    --light-purple: #e6d1f2;
+    --accent-pink: #FF69B4;
+    --white: #FFFFFF;   
+    --light-gray: #F0F0F0;
 }
 
-.body{
-    background-color: #fff;
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #fff;
-    display: flex;
-    overflow: hidden;
+.lienAccueil {
+    text-decoration: none;
+    
 }
 
-.header{
-    position: relative;
-    margin: 0em;
-
-    background-color: #8A2BE2;
-    color: #fff;
-    font-size: 0.8em;;
-    height: 1.7em;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.barreMenu{
-    position: relative;
-    margin-top: 0.5em;
-    margin-left: -0.5em;
-
-    background-color: #fff;
-    color: #000;
-    padding: 0.1em;
-    text-align: center;
-    width: 100vw;
-    height: 3em;
-}
-
-.menuListe{
-    position: relative;
-    list-style-type: none;
-    margin: -0.1em;
-    padding: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    justify-content: flex-start;
-}
-
-.imgMenu{
-    background-image: url('images/menu_deroulant.png');
-    width: 4em;
-    height: 4em;
-    margin-right: 0.5em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.titreLudorama{
-    position: relative;
-    margin-top: 0.4em;
-
-    background-color: #fff;
-    color: #000;
-    height: 3em;
-}
-
-.barreRecherche {
-    position: relative;
-    margin-top: 0.9em;
-    margin-left: 2em;
-    height: 2em;
-    width: 70em;
-
-    border: 2px solid #F0F0F0; 
-    border-radius: 2em;
-    background-color: #F0F0F0;
-    display: flex;
-    color: #767676;
-    padding: 0.1em;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-}
-
-.barreRecherche:focus {
-    outline: none; 
-    border-color: #F0F0F0; 
-}
-
-.imgLoc{
-    background-image: url('images/location.png');
-    margin-top: 0.4em;
-    margin-left: 0.5em;
-
-    width: 2.8em;
-    height: 2.8em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.imgPanier{
-    background-image: url('images/panier.png');
-    margin-top: 0.6em;
-    margin-left: 0.5em;
-
-    width: 2.5em;
-    height: 2.5em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.imgCompte{
-    background-image: url('images/user.png');
-    margin-top: 0.6em;
-    margin-left: 1em;
-
-    width: 2.7em;
-    height: 2.7em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.principal{
-    position: relative;
-    margin-top: 0.5em;
-    margin-left: 0.5em;
-    padding: 0.1em;
-    background-color: #8A2BE2;
-    color: #F0F0F0;
-    height: 4em;
-    width: 9em;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.filtres{
+.filtres {
     position: fixed;
     margin-top: -5em;
     left: 0;
@@ -156,7 +24,7 @@ body{
     text-align: center;
 }
 
-.listFiltres{
+.listFiltres {
     position: relative;
     list-style-type: none;
     margin-top: -1em;
@@ -169,13 +37,13 @@ body{
     justify-content: flex-start;
 }
 
-.liFiltres{
+.liFiltres {
     position: relative;
     margin-top: 0.5em;
     margin-left: 0.5em;
     padding: 0.1em;
-    background-color: #8A2BE2;
-    color: #F0F0F0;
+    background-color: var(--medium-purple);
+    color: var(--white);
     height: 4em;
     width: 9em;
     text-align: center;
@@ -184,32 +52,18 @@ body{
     justify-content: center;
 }
 
-.liFiltres:hover{
-    background-color: #F0F0F0;
-    color: #8A2BE2;
+.liFiltres:hover {
+    background: var(--dark-purple);
+    color: var(--accent-pink);
     cursor: pointer;
 }
 
-.ludizone{
+
+.ludizone {
     position: relative;
     margin-top: 6em;
-    margin-left: 11.5em;
-    height: 40em;
+    margin-left: 12.5em;
     width: 84.3em;
-    flex-wrap: wrap;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}   
-
-.ludizone::-webkit-scrollbar {
-    width: 0.5em;
-}
-
-.ludizone::-webkit-scrollbar-thumb {
-    background-color: #8A2BE2;
-    border: 1em solid transparent;
-    border-radius: 2em;
-    position: relative;
 }
 
 .titreLudizone {
@@ -221,7 +75,7 @@ body{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.coupDeCoeur{
+.coupDeCoeur {
     position: relative;
     margin-top: 0.5em;
     margin-left: 0.5em;
@@ -230,33 +84,32 @@ body{
     width: 90em;
 }
 
-.titreCDC{
+.titreCDC {
     position: relative;
     margin-top: 0;
     margin-left: 0;
     padding: 0.1em;
     width: 15em;
     font-size: 1.5em;
-    border-bottom: #8A2BE2 solid 0.15em;
+    border-bottom: var(--medium-purple) solid 0.15em;
 }
 
-.listeCDC{
+.listeCDC {
     position: relative;
     list-style-type: none;
     margin-top: 0.5em;
-    margin-left:1em;
+    margin-left: 1em;
     padding: 0;
     overflow: hidden;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
     justify-content: flex-start;
+    align-items: flex-start;
 }
 
-.jeuCDC{
+.jeuCDC {
     position: relative;
-    background-color: #e0bff6;
+    background-color: var(--light-purple);
     margin-right: 5em;
     width: 16em;
     height: 18em;
@@ -267,7 +120,7 @@ body{
 }
 
 .imgJeuCDC1 {
-    background-image: url('images/jeu1.jpg');
+    background-image: url('../images/jeu1.jpg');
     border-radius: 2em;
     margin-top: 1em;
     width: 9em;
@@ -278,7 +131,7 @@ body{
 }
 
 .imgJeuCDC2 {
-    background-image: url('images/Jeu2.jpg');
+    background-image: url('../images/Jeu2.jpg');
     border-radius: 2em;
     margin-top: 1em;
     width: 9em;
@@ -289,7 +142,7 @@ body{
 }
 
 .imgJeuCDC3 {
-    background-image: url('images/Jeu3.jpg');
+    background-image: url('../images/Jeu3.jpg');
     border-radius: 2em;
     margin-top: 1em;
     width: 12em;
@@ -300,7 +153,7 @@ body{
 }
 
 .imgJeuCDC4 {
-    background-image: url('images/Jeu4.jpg');
+    background-image: url('../images/Jeu4.jpg');
     border-radius: 2em;
     margin-top: 1em;
     width: 12em;
@@ -310,7 +163,7 @@ body{
     position: relative;
 }
 
-.nomJeu{
+.nomJeu {
     position: relative;
     margin-top: 1em;
     margin-left: 0.5em;
@@ -318,10 +171,10 @@ body{
     width: 15em;
     font-size: 1em;
     text-align: center;
-    font-family: poppins;
+    font-family: 'Poppins', sans-serif;
 }
 
-.prixCDC{
+.prixCDC {
     position: relative;
     margin-top: 0.5em;
     margin-left: 10em;
@@ -329,28 +182,28 @@ body{
     width: 15em;
     font-size: 1em;
     text-align: center;
-    font-family: poppins;
+    font-family: 'Poppins', sans-serif;
 }
 
 .listeDisponibilites {
     position: relative;
     list-style-type: none;
     width: 14em;
-    border-radius:1em;
+    border-radius: 1em;
     margin-top: 0.5em;
     margin-left: 0.5em;
     padding: 0;
     overflow: hidden;
     display: flex;
     flex-direction: row;
-    justify-content: left;
-    background-color: #c267ff;
+    justify-content: flex-start;
+    background: var(--clair-purple);
     word-spacing: 2em;
 }
 
 .elementDispo {
     position: relative;
-    margin:0.5em;
+    margin: 0.5em;
     padding: 0.1em;
     width: 15em;
 }
@@ -371,11 +224,11 @@ body{
     padding: 0.1em;
     width: 15em;
     font-size: 1.5em;
-    border-bottom: #8A2BE2 solid 0.15em;
+    border-bottom: var(--medium-purple) solid 0.15em;
 }
 
-.imgLudiGame{
-    background-image: url('images/LudiGame.webp');
+.imgLudiGame {
+    background-image: url('../images/LudiGame.webp');
     border-radius: 2em;
     margin-top: 1em;
     width: 70em;
@@ -402,7 +255,7 @@ body{
 }
 
 .ludiEvent::-webkit-scrollbar-thumb {
-    background-color: #8A2BE2;
+    background-color: var(--medium-purple);
     border: 1em solid transparent;
     border-radius: 2em; 
     position: relative; 
@@ -414,11 +267,10 @@ body{
     padding: 0.1em;
     width: 6em;
     font-size: 1.5em;
-    border-bottom: #8A2BE2 solid 0.15em;
+    border-bottom: var(--medium-purple) solid 0.15em;
     justify-content: center;
     align-items: center;
     display: flex;
-
 }
 
 .listeEvent {
@@ -430,9 +282,8 @@ body{
     overflow: hidden;
     display: inline-flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
     justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .Event {
@@ -441,12 +292,10 @@ body{
     padding: 0.1em;
     height: 20em;
     width: 20em;
-
     justify-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
-
 }
 
 .btnParticipe {
@@ -457,10 +306,10 @@ body{
     width: 13em;
     font-size: 1em;
     text-align: center;
-    font-family: poppins;
-    background-color: #8A2BE2;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--medium-purple);
     border: none;
-    color: #F0F0F0;
+    color: var(--light-gray);
     height: 4em;
     border-radius: 5em;
     display: flex;
@@ -469,13 +318,14 @@ body{
 }
 
 .btnParticipe:hover {
-    background-color: #F0F0F0;
-    color: #8A2BE2;
+    background: var(--dark-purple);
+    color: var(--accent-pink);
     cursor: pointer;
 }
 
+
 .imgEvent1 {
-    background-image: url('images/Event1.jpg');
+    background-image: url('../images/Event1.jpg');
     border-radius: 2em;
     margin-top: 1em;
     width: 18em;
@@ -486,7 +336,7 @@ body{
 }
 
 .imgEvent2 {
-    background-image: url('images/Event2.jpg');
+    background-image: url('../images/Event2.jpg');
     border-radius: 2em;
     margin-top: 1em;
     width: 18em;
@@ -497,7 +347,7 @@ body{
 }
 
 .imgEvent3 {
-    background-image: url('images/Event3.png');
+    background-image: url('../images/Event3.png');
     border-radius: 2em;
     margin-top: 1em;
     width: 18em;
@@ -508,7 +358,7 @@ body{
 }
 
 .imgEvent4 {
-    background-image: url('images/Event4.jpg');
+    background-image: url('../images/Event4.jpg');
     border-radius: 2em;
     margin-top: 1em;
     width: 18em;
@@ -519,7 +369,7 @@ body{
 }
 
 .imgEvent5 {
-    background-image: url('images/Event5.jpg');
+    background-image: url('../images/Event5.jpg');
     border-radius: 2em;
     margin-top: 1em;
     width: 18em;
@@ -539,50 +389,8 @@ body{
 }
 
 
-
 .footer {
-    background-color: #8A2BE2; /* Couleur de fond */
-    padding: 2em;
-    color: #F0F0F0;
-    font-family: Arial, sans-serif;
+    top:0em;
 }
 
-.footer-sections {
-    display: flex;
-    justify-content: space-around;
-    gap: 2em;
-    text-align: left;
-    padding-bottom: 1em;
-}
 
-.footer-column h3 {
-    color: #F0F0F0;
-    font-size: 1.1em;
-    margin-bottom: 0.5em;
-}
-
-.footer-column ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.footer-column ul li {
-    margin-bottom: 0.5em;
-}
-
-.footer-column ul li a {
-    color: #F0F0F0;
-    text-decoration: none;
-}
-
-.footer-column ul li a:hover {
-    text-decoration: underline;
-}
-
-.footer-bottom {
-    text-align: center;
-    font-size: 0.8em;
-    color: #e0e0e0;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding-top: 1em;
-}

@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="ludizone.css">
+    <link rel="stylesheet" href="../Css/all.css">
+    <link rel="stylesheet" href="../Css/ludizone.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -12,22 +13,19 @@
 <body>
     
 <header class="header">
-    <nav >
-        <p >Noël arrive prépare ta liste pour le Père Noël !</p>
-    </nav>
+    <div class="barreMenu">
+        <ul class="menuListe">
+            <li> <div class="imgMenu"></div> </li>
+            <li> <a class="lienAccueil" href="index.html"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
+            <li> <input class="barreRecherche" type="text" placeholder="Barre de recherche ..."> </li>
+            <li> <div class="imgLoc"></div> </li>
+            <li> <div class="imgPanier"></div> </li>
+            <li> <div class="imgCompte"></div> </li>
+        </ul>
+    </div>
 </header>
 
 
-<div class="barreMenu">
-    <ul class="menuListe">
-        <li> <div class="imgMenu"></div> </li>
-        <li> <h1 class="titreLudorama"> Ludorama </h1> </li>
-        <li> <input class="barreRecherche" type="text" placeholder="Barre de recherche ..."> </li>
-        <li> <div class="imgLoc"></div> </li>
-        <li> <div class="imgPanier"></div> </li>
-        <li> <div class="imgCompte"></div> </li>
-    </ul>
-</div>
 
 <div class="principale">
 
@@ -56,7 +54,7 @@
                         <ul class="listeDisponibilites">
                             <li class="elementDispo">Web Magasin</li>
                             <li class="elementDispo">disponible disponible</li>
-                            <li> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"></li>
+                            <li> <img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"></li>
                         </ul>
                     </div>
                 </li>
@@ -69,7 +67,7 @@
                         <ul class="listeDisponibilites">
                             <li class="elementDispo">Web Magasin</li>
                             <li class="elementDispo">disponible disponible</li>
-                            <li> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"></li>
+                            <li> <img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"></li>
                         </ul>
                     </div>
                 </li>
@@ -82,7 +80,7 @@
                         <ul class="listeDisponibilites">
                             <li class="elementDispo">Web Magasin</li>
                             <li class="elementDispo">disponible disponible</li>
-                            <li> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"></li>
+                            <li> <img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"></li>
                         </ul>
                     </div>
                 </li>
@@ -95,7 +93,7 @@
                         <ul class="listeDisponibilites">
                             <li class="elementDispo">Web Magasin</li>
                             <li class="elementDispo">disponible disponible</li>
-                            <li> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"></li>
+                            <li> <img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"></li>
                         </ul>
                     </div>
                 </li>
@@ -154,58 +152,54 @@
 
         </div>
 
-        <footer class="footer">
-            <div class="footer-sections">
-                <div class="footer-column">
-                    <h3>Qui sommes-nous ?</h3>
-                    <ul>
-                        <li><a href="#">Ludorama.com</a></li>
-                        <li><a href="#">Nos Magasins</a></li>
-                        <li><a href="#">Cartes cadeaux</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>En ce moment</h3>
-                    <ul>
-                        <li><a href="#">Christmas vibes</a></li>
-                        <li><a href="#">Nouveautés</a></li>
-                        <li><a href="#">Rejoins la LudiSphère !</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Marques de jouets</h3>
-                    <ul>
-                        <li><a href="#">Lego</a></li>
-                        <li><a href="#">Playmobil</a></li>
-                        <li><a href="#">Toutes les marques</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Personnages jouets</h3>
-                    <ul>
-                        <li><a href="#">Pokemon</a></li>
-                        <li><a href="#">Jurassic Park</a></li>
-                        <li><a href="#">Tous les personnages</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Nos sites</h3>
-                    <ul>
-                        <li><a href="#">France</a></li>
-                        <li><a href="#">Allemagne</a></li>
-                        <li><a href="#">Tous nos sites</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>Magasins Environnement Contactez-nous Conditions générales de vente Mentions légales Données personnelles Utilisation cookies</p>
-            </div>
-        </footer>   
-
     </div>
+    
+</div>  
 
-</div>
 
+<footer class="footer">
+    <div class="footer-column">
+        <h3>Qui sommes-nous ?</h3>
+        <ul>
+            <li><a href="#">Ludorama.com</a></li>
+            <li><a href="#">Nos magasins</a></li>
+            <li><a href="#">Cartes cadeaux</a></li>
+        </ul>
+    </div>
+    <div class="footer-column">
+        <h3>En ce moment</h3>
+        <ul>
+            <li><a href="#">Ambiance de Noël</a></li>
+            <li><a href="#">Nouveautés</a></li>
+            <li><a href="#">Rejoignez LudiSphere !</a></li>
+        </ul>
+    </div>
+    <div class="footer-column">
+        <h3>Marques</h3>
+        <ul>
+            <li><a href="#">Lego</a></li>
+            <li><a href="#">Playmobil</a></li>
+            <li><a href="#">Jurassic Park</a></li>
+        </ul>
+    </div>
+    <div class="footer-column">
+        <h3>Personnages jouets</h3>
+        <ul>
+            <li><a href="#">Pokemon</a></li>
+            <li><a href="#">Tous les personnages</a></li>
+        </ul>
+    </div>
+    <div class="footer-column">
+        <h3>Nos sites</h3>
+        <ul>
+            <li><a href="#">France</a></li>
+            <li><a href="#">Allemagne</a></li>
+            <li><a href="#">Tous nos sites</a></li>
+        </ul>
+    </div>
+</footer> 
 
 </body>
+
+
 </html>
