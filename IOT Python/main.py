@@ -1,4 +1,5 @@
 import json
+import os
 import re
 
 import paho.mqtt.client as mqtt
@@ -80,42 +81,81 @@ def on_message(client, userdata, msg):
     print(msg.topic + " " + str(msg.payload))
     # Désérialisation du message reçu
     jsonDict = json.loads(msg.payload)
+    # Ajoute le message désérialisé au tableau des valeurs
     tabValues.append(jsonDict)
 
 
+def write_data(path, di):
+    """
+    Écrit les données dans un fichier JSON.
+
+    Args:
+        path (str): Le chemin du fichier JSON.
+        di (dict): Les données à écrire.
+    """
+    # Extrait le chemin du dossier à partir du chemin complet
+    directory = os.path.dirname(path)
+
+    # Crée le dossier s'il n'existe pas
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    try:
+        # Ouvre le fichier JSON correspondant en mode lecture-écriture
+        with open(path, 'r+') as f:
+            # Charge les données existantes
+            data = json.load(f)
+            # Ajoute le nouveau message aux données
+            data.append(di)
+            # Sauvegarde les données mises à jour
+            f.seek(0)
+            json.dump(data, f)
+            f.truncate()
+    except (json.decoder.JSONDecodeError, FileNotFoundError):
+        # Si le fichier est vide, corrompu ou n'existe pas, crée une nouvelle liste de données
+        data = [di]
+        with open(path, 'w') as f:
+            json.dump(data, f)
+
+
 def save_data():
+    """
+    Sauvegarde périodiquement les données de tabValues dans des fichiers JSON.
+    """
     global tabValues
 
+    # Parcourt chaque dictionnaire de données dans tabValues
     for di in tabValues:
-        if re.match(r"^triphaso[0-9]+", di[1]['deviceName']):
-            path = './data/SolarPanels/' + di[1]['Room'] + '.json'
-        else:
+        # Récupère le type de données depuis le fichier de configuration
+        tab_data_t = parser.get('Capteurs', 'data_type')
+        alertpath = None
+        # Détermine le chemin de sauvegarde en fonction du type de dispositif
+        if len(di) == 2:
             path = './data/' + di[1]['Building'] + '/' + di[1]['room'] + '.json'
+            alert_di = [{}, di[1]]
+            # Utilisation d'un itérateur pour parcourir et modifier les valeurs
+            for datatype, value in list(di[0].items()):
+                if datatype not in tab_data_t:
+                    # Supprime le type de donnée si non présent dans tab_data_t
+                    del di[0][datatype]
+                elif not (parser.getfloat('Seuils Alerte', datatype + 'Min') <= value <= parser.getfloat('Seuils Alerte', datatype + 'Max')):
+                    # Ajoute aux alertes si les seuils sont dépassés
+                    alertpath = './data/' + di[1]['Building'] + '/Alert/' + di[1]['room'] + '.json'
+                    alert_di[0][datatype] = value
+                    del di[0][datatype]
+        else:
+            path = './data/SolarPanel/solar.json'
 
-        # Extrait le chemin du dossier à partir du chemin complet
-        directory = os.path.dirname(path)
+        # Écrit les données filtrées par les seuils d'alerte dans le fichier JSON approprié
+        write_data(path, di)
 
-        # Crée le dossier s'il n'existe pas
-        if not os.path.exists(directory):
-            os.makedirs(directory)
+        # Si des seuils d'alerte sont dépassés, écrit les données d'alerte dans un fichier JSON
+        if alertpath is not None:
+            write_data(alertpath, alert_di)
 
-        try:
-            # Ouvre le fichier JSON correspondant en mode lecture-écriture
-            with open(path, 'r+') as f:
-                # Charge les données existantes
-                data = json.load(f)
-                # Ajoute le nouveau message aux données
-                data.append(di)
-                # Sauvegarde les données mises à jour
-                json.dump(data, f)
-        except (json.decoder.JSONDecodeError, FileNotFoundError):
-            # Si le fichier est vide, corrompu ou n'existe pas, crée une nouvelle liste de données
-            data = [di]
-            with open(path, 'w') as f:
-                json.dump(data, f)
-
+    # Vide le tableau des valeurs après sauvegarde
+    tabValues.clear()
     print('Sauvegarde des données effectuée.')
-
 
 
 def periodic_save(interval):
@@ -126,20 +166,33 @@ def periodic_save(interval):
         interval (int): L'intervalle en secondes entre chaque appel de save_data().
     """
     while True:
-        save_data()
+        # Attend l'intervalle spécifié avant de commencer
         time.sleep(interval)
+        # Appelle la fonction save_data pour sauvegarder les données
+        save_data()
 
 
-# Gère les sections "Capteurs" et "Panneaux Solaires" du fichier de configuration
-handle_section(parser, 'Capteurs', 'salles', 'AM107/')
-handle_section(parser, 'Panneaux Solaires', 'panneaux', 'Triphaso/')
+# Vérifie si l'abonnement à tous les topics est nécessaire
+if not parser.getboolean('Capteurs', 'subscribe_all'):
+    # Récupère les items de la section
+    items = parser.get('Capteurs', 'salles')
+    for item in items:
+        # Ajoute chaque item au tableau des topics
+        tabTopics.append((f'AM107/by-room/{item}/data', 1))
+else:
+    # Ajoute un topic générique pour souscrire à tous les sous-topics
+    tabTopics.append((f'AM107/by-room/+/data', 1))
+
+if parser.getboolean('Panneaux Solaires', 'subscribe'):
+    # Ajout du topic des panneaux solaires
+    tabTopics.append(('solaredge/blagnac/overview',1))
 
 # Crée une instance client MQTT avec la version 2 de l'API de callback
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 # Se connecte au broker MQTT avec l'hôte et le port définis
 client.connect(host, 1883, 60)
 
-# Associe-les callbacks de connexion et de message au client MQTT
+# Associe les callbacks de connexion et de message au client MQTT
 client.on_connect = on_connect
 client.on_message = on_message
 
