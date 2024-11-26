@@ -13,12 +13,19 @@
     <header class="header">
         <div class="barreMenu">
             <ul class="menuListe">
-                <li> <div class="imgMenu"></div> </li>
+                <li> <div class="imgMenu" id="menuToggle">
+                    <ul class="categories hidden">
+                        <li><a href="#">Catégorie 1</a></li>
+                        <li><a href="#">Catégorie 2</a></li>
+                        <li><a href="#">Catégorie 3</a></li>
+                        <li><a href="#">Catégorie 4</a></li>
+                    </ul>   
+                </div> </li>
                 <li> <h1 class="titreLudorama"> Ludorama </h1> </li>
                 <li> <input class="barreRecherche" type="text" placeholder="Barre de recherche ..."> </li>
                 <li> <div class="imgLoc"></div> </li>
                 <li> <div class="imgPanier"></div> </li>
-                <li> <div class="imgCompte"></div> </li>
+                <li> <a href="connexion.html"><div class="imgCompte"></div></a> </li>
             </ul>
         </div>
     </header>
@@ -233,6 +240,27 @@
             </ul>
         </div>
     </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menuToggle');
+            const categoriesMenu = menuToggle.querySelector('.categories');
+    
+            menuToggle.addEventListener('click', () => {
+                categoriesMenu.classList.toggle('visible');
+            });
+    
+            // Optionnel : Fermer le menu en cliquant en dehors
+            document.addEventListener('click', (event) => {
+                if (!menuToggle.contains(event.target)) {
+                    categoriesMenu.classList.remove('visible');
+                }
+            });
+        });
+    </script>
+    
+
     
 </body>
 </html>
