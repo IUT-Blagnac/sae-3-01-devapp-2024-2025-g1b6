@@ -20,6 +20,7 @@ public class App extends Application {
         // Charger la scène principale avec le fichier FXML des graphiques
         scene = new Scene(loadFXML("view/graphiques"), 800, 600); // Ajustez la taille selon vos besoins
         stage.setScene(scene);
+        scene.getStylesheets().add(App.class.getResource("css/styles.css").toExternalForm());
         stage.setTitle("Application de Graphiques");
         stage.show();
     }
