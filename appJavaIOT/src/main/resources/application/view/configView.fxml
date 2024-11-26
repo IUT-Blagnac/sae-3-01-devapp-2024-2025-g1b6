@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -72,12 +73,15 @@
                         </Label>
                         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="NEVER">
                            <children>
-                              <RadioButton fx:id="btnOuiCapteur" mnemonicParsing="false" text="Oui">
+                              <RadioButton fx:id="btnOuiCapteur" mnemonicParsing="false" onAction="#handleToggleCapteur" text="Oui">
                                  <HBox.margin>
                                     <Insets left="100.0" top="20.0" />
                                  </HBox.margin>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="groupCapteurs" />
+                                 </toggleGroup>
                               </RadioButton>
-                              <RadioButton fx:id="btnNonCapteur" mnemonicParsing="false" text="Non">
+                              <RadioButton fx:id="btnNonCapteur" mnemonicParsing="false" onAction="#handleToggleCapteur" text="Non" toggleGroup="$groupCapteurs">
                                  <HBox.margin>
                                     <Insets left="10.0" top="20.0" />
                                  </HBox.margin>
@@ -110,8 +114,11 @@
                                  <HBox.margin>
                                     <Insets left="100.0" top="20.0" />
                                  </HBox.margin>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="groupPanneaux" />
+                                 </toggleGroup>
                               </RadioButton>
-                              <RadioButton fx:id="btnNonPanneau" mnemonicParsing="false" text="Non">
+                              <RadioButton fx:id="btnNonPanneau" mnemonicParsing="false" text="Non" toggleGroup="$groupPanneaux">
                                  <HBox.margin>
                                     <Insets left="10.0" top="20.0" />
                                  </HBox.margin>
@@ -132,7 +139,7 @@
          <bottom>
             <HBox BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btnAlerte" mnemonicParsing="false" text="Seuils d'alerte" />
+                  <Button fx:id="btnAlerte" mnemonicParsing="false" onAction="#handleOpenAlerte" text="Seuils d'alerte" />
                </children>
             </HBox>
          </bottom>

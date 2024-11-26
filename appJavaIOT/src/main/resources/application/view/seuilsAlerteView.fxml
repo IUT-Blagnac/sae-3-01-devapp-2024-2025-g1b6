@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.seuilsViewController">
    <top>
       <Label text="Seuils d'alerte" BorderPane.alignment="CENTER">
          <font>
@@ -32,7 +32,7 @@
             </HBox>
             <HBox>
                <children>
-                  <MenuButton mnemonicParsing="false" text="Type de donnée">
+                  <MenuButton fx:id="typeDonnees" mnemonicParsing="false" text="Type de données">
                     <items>
                       <MenuItem mnemonicParsing="false" text="CO2" />
                       <MenuItem mnemonicParsing="false" text="Température" />
@@ -48,14 +48,14 @@
                </children>
             </HBox>
             <Label text="Seuil minimum" />
-            <TextField />
+            <TextField fx:id="seuilsMin" />
             <Label layoutX="10.0" layoutY="27.0" text="Seuil maximum" />
-            <TextField layoutX="10.0" layoutY="44.0" />
+            <TextField fx:id="SeuilMax" layoutX="10.0" layoutY="44.0" />
          </children>
       </VBox>
    </center>
    <bottom>
-      <Button mnemonicParsing="false" text="Retour config" BorderPane.alignment="BOTTOM_LEFT">
+      <Button fx:id="btnRetour" mnemonicParsing="false" text="Retour config" BorderPane.alignment="BOTTOM_LEFT">
          <BorderPane.margin>
             <Insets bottom="5.0" />
          </BorderPane.margin>
