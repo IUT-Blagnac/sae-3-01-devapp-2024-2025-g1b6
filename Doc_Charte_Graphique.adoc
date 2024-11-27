@@ -35,8 +35,9 @@ Pour développer le site Ludorama une palette de couleur nous a été imposer : 
 == 3. Copie écran et explication
 Analysons maintenant les copies écran du site Ludorama et expliquons les choix graphiques qui ont été faits.
 
-- La page d'accueil : 
+- La page d'accueil : +
 
+image::/images/CharteGraphique_WEB/Accueil.png []
 
 
 
