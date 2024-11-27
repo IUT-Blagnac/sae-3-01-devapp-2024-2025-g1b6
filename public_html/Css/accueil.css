@@ -342,29 +342,7 @@ main {
     padding: 20px;
 }
 
-/* Center the search bar container */
-.search-bar-container {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-}
 
-/* Styling for the search bar */
-.search-bar {
-    width: 1000px;
-    padding: 10px;
-    border-radius: 20px;
-    background-color: var(--light-gray);
-    border: none;
-    text-align: center;
-    font-size: 16px;
-    color: #706f6f;
-}
-
-.search-bar::placeholder {
-    color: #706f6f;
-    font-style: italic;
-}
 
 /* Styling for the navigation container */
 .navigation-container {
@@ -420,10 +398,11 @@ main {
     justify-content: center;
     align-items: center;
     gap: 20px;
+    
 }
 
 .hero-section img {
-    width: 40%;
+    width: 60%;
     max-width: 400px;
     height: auto;
     border-radius: 10px;
