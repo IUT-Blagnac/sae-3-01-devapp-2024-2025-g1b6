@@ -4,7 +4,6 @@ import iut.App;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -20,8 +19,12 @@ import com.google.gson.JsonParser;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class GraphiquesController {
 
@@ -35,9 +38,21 @@ public class GraphiquesController {
 
     public void initialize() {
         try {
-            // Charger les données JSON
-            String filePath = App.class.getResource("data/B/B108.json").getPath();
-            loadJsonData(filePath);
+            // Chemin du répertoire contenant les fichiers JSON
+            Path dataDir = Paths.get(App.class.getResource("data/B").toURI());
+
+            // Lister tous les fichiers JSON dans le répertoire
+            try (Stream<Path> paths = Files.list(dataDir)) {
+                paths.filter(Files::isRegularFile)
+                    .filter(path -> path.toString().endsWith(".json"))
+                    .forEach(path -> {
+                        try {
+                            loadJsonData(path.toString());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+            }
 
             // Créer dynamiquement des graphiques pour chaque donnée
             for (Map.Entry<String, Double> entry : sensorData.entrySet()) {
@@ -55,7 +70,7 @@ public class GraphiquesController {
 
                 tabPane.getTabs().add(tab);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -84,7 +99,7 @@ public class GraphiquesController {
                     for (String key : jsonObject.keySet()) {
                         try {
                             double value = jsonObject.get(key).getAsDouble();
-                            sensorData.put(key, value); // Ajouter au Map
+                            sensorData.merge(key, value, Double::sum); // Ajouter au Map en combinant les valeurs
                         } catch (Exception e) {
                             // Ignorer les valeurs non numériques
                         }

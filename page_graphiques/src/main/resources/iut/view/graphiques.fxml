@@ -10,8 +10,9 @@
     <TabPane fx:id="tabPane" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="50.0" 
              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
 
-    <!-- Bouton retour positionné en bas -->
+    <!-- Bouton retour positionné en bas à gauche -->
     <Button fx:id="buttonretour" mnemonicParsing="false" onAction="#handleButtonRetour" text="Retour" 
             AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" 
             maxWidth="150" />
+
 </AnchorPane>
