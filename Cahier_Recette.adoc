@@ -1,0 +1,375 @@
+= Cahier de Recette | SAE 3.01 DevApp 2024-2025
+
+== Contexte du Projet
+
+**Ludorama**, acteur mondial du divertissement avec plus de 2 000 magasins et 27 000 employés, nous a confié la **modernisation de son site internet**. Fondée en 1978 à Toulouse, l’entreprise mise sur l’innovation, la qualité et la proximité client.
+
+=== Objectif
+
+Moderniser le site tout en respectant l’identité graphique et en :
+
+- Offrant une expérience fluide pour toutes les cibles : enfants, parents, jeunes adultes et seniors.
+- Intégrant **LudiZone**, une nouvelle section dédiée aux produits pour enfants de moins de 6 ans, avec une charte graphique adaptée.
+- Proposant une interface attractive, accessible et stable.
+
+
+== Rappel du Backlog Produit : Ludorama
+
+[cols="1,1,2,3,3,1"]
+|===
+| **Priorité** | **ID** | **User Story** | **Description / Détail** | **Critères d'acceptation** | **Etat**
+
+| Moyenne
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/5[US1]
+| En tant que **client**, je souhaite **avoir accès à des jeux/objets adaptés à mon âge, et non à des produits inadaptés** afin de pouvoir faire ma commande rapidement et efficacement (ex : armes d’airsoft pour un enfant, ou dinette pour un adulte).
+| Mettre en place un système de filtrage ou de tri par âge pour le catalogue de produits, avec une option de personnalisation selon l’âge de l’utilisateur.
+| 
+- Les produits sont classés par tranches d'âge +
+- Mise en place d’un filtre d'âge obligatoire pour les utilisateurs non connectés +
+- Interface qui limite l'affichage des produits inadaptés pour les comptes enfants/adultes +
+- Affichage d’un message d’avertissement pour les produits sensibles
+| ToDo
+
+| Moyenne
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/3[US2]
+| En tant que **client enfant**, je souhaite pouvoir **visualiser facilement le catalogue** afin de **trouver les jouets à commander au Père Noël**.
+| Créer une interface simplifiée, visuellement attrayante et facile à naviguer pour les enfants, avec des catégories adaptées (par âge, type de jouet, etc.)
+| 
+- Affichage visuel adapté aux enfants +
+- Navigation intuitive avec icônes et couleurs +
+| ToDo
+
+| Basse
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/1[US3]
+| En tant que **client (adulte)**, je souhaite **avoir une liste de souhaits** pour noter ce que mon enfant désire.
+| Ajouter une fonctionnalité permettant aux utilisateurs connectés de créer et gérer une liste de souhaits. Les items doivent être ajoutables depuis la page de catalogue ou de description.
+| 
+- Création d’une liste de souhaits +
+- Ajouter / supprimer des articles facilement +
+- Persistance de la liste même après déconnexion +
+- Possibilité de trier ou filtrer la liste de souhaits 
+| ToDo
+
+| Basse
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/2[US4]
+| En tant que **client (adulte)**, je souhaite **avoir un système de fidélisation** afin d’avoir accès facilement aux produits que mon enfant désire.
+| Mettre en place un système de points de fidélité qui récompense les achats et permet d’obtenir des réductions ou accès anticipés à des jouets exclusifs.
+| 
+- Système de points attribués pour chaque achat +
+- Interface pour consulter le solde de points +
+- Récompenses disponibles (réductions, produits exclusifs) +
+- Email de notification en cas d’avantages disponibles 
+| ToDo
+
+| Haute
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/4[US5]
+| En tant que **client (adulte)**, je souhaite **avoir une description complète** (avec fiche technique) pour être sûr de ce que j’achète.
+| Ajouter des fiches techniques détaillées pour chaque jouet : dimensions, matériaux, âge recommandé, et autres informations pertinentes.
+| 
+- Page produit avec fiche technique détaillée +
+- Présentation des caractéristiques clés (matériaux, dimensions) +
+- Affichage clair et bien structuré pour chaque fiche produit
+| ToDo
+
+| Haute
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/7[US6]
+| En tant que **client**, je souhaite pouvoir **filtrer les produits** par intervalles de prix, marques, catégories, groupes, et avis/notes afin de trouver rapidement des produits correspondant à mes critères.
+| Permettre le filtrage des produits sur la page catalogue selon plusieurs critères de recherche.
+| 
+- Mise en place des filtres par prix, marque, groupement (soldes, nouveautés, meilleures ventes), et avis/notes +
+- Affichage des résultats correspondant en temps réel +
+- Indicateurs visuels montrant quels filtres sont actifs
+| ToDo
+
+| Moyenne
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/7[US7]
+| En tant que **client**, je souhaite **voir les produits en rupture de stock** mais être empêché de les commander.
+| Afficher les produits en rupture de stock sur la page catalogue, avec une indication claire de leur disponibilité.
+| 
+- Les produits en rupture de stock sont affichés, mais désactivés pour l’ajout au panier +
+- Un message indique l’impossibilité de commander les produits en rupture de stock +
+- Possibilité d’ajouter le produit à une liste de souhaits ou de recevoir une alerte de réapprovisionnement
+| ToDo
+
+| Basse
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/9[US8]
+| En tant que **client (adulte)**, je souhaite **pouvoir laisser un avis ou une note sur un produit acheté** dans une commande livrée afin de partager mon expérience.
+| Ajouter une fonctionnalité pour laisser des avis et notes après livraison d’une commande contenant le produit.
+| 
+- Possibilité de déposer un avis après réception d'une commande +
+- Affichage des avis et notes sur chaque fiche produit +
+- Interface pour trier les avis (meilleurs, plus récents)
+| ToDo
+
+| Haute
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/10[US9]
+| En tant que **client**, je souhaite **visualiser les produits regroupés** par catégorie spéciale (soldes, nouveautés, meilleures ventes, made in France) pour repérer plus facilement les produits intéressants.
+| Ajouter une section dédiée aux groupes de produits sur la page d'accueil et dans les filtres de la page catalogue.
+| 
+- Présence des sections spéciales sur la page d'accueil (soldes, nouveautés, meilleures ventes, made in France) +
+- Filtres de recherche spécifiques pour afficher chaque groupe +
+- Indicateurs visuels pour chaque groupe sur les vignettes produit
+| ToDo
+
+| Basse
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/10[US10]
+| En tant que **client**, je souhaite pouvoir **visualiser les variantes de produits (coloris et/ou tailles)** pour choisir le modèle qui convient le mieux à mes besoins.
+| Afficher les variations de taille et de couleur sur chaque fiche produit lorsque plusieurs options sont disponibles.
+| 
+- Affichage des options de couleur et de taille sur la fiche produit +
+- Sélection facile d'une variation et ajout direct au panier +
+- Mise à jour de la disponibilité par variante (ex. taille ou couleur indisponible)
+| ToDo
+
+| Moyenne
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/12[US11]
+| En tant que **gestionnaire de stock**, je souhaite **visualiser les quantités en stock (actuel, minimum, maximum)** pour optimiser les niveaux de réapprovisionnement.
+| Mettre en place un tableau de bord permettant de suivre les quantités en stock, et signaler les articles nécessitant un réapprovisionnement.
+| 
+- Affichage des niveaux de stock actuels, minimum et maximum pour chaque produit +
+- Notification pour le réapprovisionnement automatique lorsque le stock minimum est atteint +
+- Interface de gestion des alertes pour les niveaux de stock
+| ToDo
+
+| Moyenne
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/13[US12]
+| En tant que **client**, je souhaite **utiliser différents types de paiement** (CB, PayPal…) pour avoir plus de flexibilité au moment de payer ma commande.
+| Intégrer plusieurs options de paiement sécurisées pour offrir aux utilisateurs différentes méthodes de paiement.
+| 
+- Options de paiement par carte bancaire, PayPal et autres options locales +
+- Interface sécurisée pour le processus de paiement +
+- Vérification automatique de la validité des informations de paiement
+| ToDo
+
+| Basse
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/14[US13]
+| En tant que **client**, je souhaite **pouvoir commander des lots de produits** pour acheter des ensembles complets.
+| Ajouter une fonctionnalité permettant de regrouper des produits en lot pour des achats groupés, avec des tarifs spéciaux.
+| 
+- Fiche produit dédiée pour les lots de produits (ex. lot de petites voitures) +
+- Indication du contenu du lot sur la fiche produit +
+- Tarification ajustée en fonction du lot
+| ToDo
+
+| Basse
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/15[US14]
+| En tant que **client**, je souhaite **pouvoir voir des avis et notes clients** pour m'assurer de la qualité des produits avant de les acheter.
+| Permettre aux clients d'accéder aux avis et aux notes des autres clients pour chaque produit sur la page de description.
+| 
+- Section dédiée aux avis clients et notes pour chaque produit +
+- Tri des avis par pertinence, date ou note +
+- Affichage d'une moyenne des notes sur la fiche produit
+| ToDo
+
+| Haute
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/16[US15]
+| En tant que **client**, je souhaite pouvoir **chercher des produits par mots-clés ** afin de trouver rapidement les produits recherchés.
+| Implémenter une barre de recherche simple.
+| 
+- Barre de recherche simple recherchant les mots clés dans les noms des différents produits +
+| ToDo
+
+| Moyenne
+| link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/issues/17[US16]
+| En tant que **client**, je souhaite pouvoir **chercher des produits par mots-clés et filtres (prix, marques, notes)** afin de trouver rapidement les produits recherchés.
+| Implémenter une barre de recherche avec des filtres combinés pour permettre des recherches précises et rapides.
+| 
+- Barre de recherche avec suggestions de mots-clés +
+- Filtres avancés pour affiner les résultats (prix, notes, marques, etc.) +
+- Affichage rapide des résultats en fonction des critères choisis
+| ToDo
+
+
+|===
+
+== Tests d'acceptation
+
+=== US1: Filtrage par âge
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US1-T1** | Classement par tranches d'âge | Vérifier que les produits apparaissent dans les tranches d'âge appropriées. | Les produits doivent apparaître dans les tranches d'âge appropriées (ex: 0-3 ans, 4-6 ans, etc.).
+
+| **US1-T2** | Filtre d'âge obligatoire pour utilisateurs non connectés | Vérifier que le filtre d'âge s'affiche automatiquement pour les utilisateurs non connectés avant l'affichage des produits. | Le filtre d'âge doit apparaître automatiquement pour les utilisateurs non connectés avant l'affichage des produits.
+
+| **US1-T3** | Interface pour comptes enfants/adultes | Vérifier que les comptes enfants ne montrent pas de produits inadaptés et que les comptes adultes montrent tous les produits. | Les comptes enfants ne doivent pas afficher de produits inadaptés (ex: armes d’airsoft). Les comptes adultes doivent avoir accès à l'ensemble des produits.
+
+| **US1-T4** | Message d'avertissement pour produits sensibles | Vérifier qu'un message d'avertissement clair s'affiche pour les produits sensibles. | Un message d'avertissement clair doit apparaître pour les produits sensibles, expliquant les restrictions ou les précautions nécessaires.
+|===
+
+=== US2: Interface adaptée aux enfants
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US2-T1** | Affichage visuel adapté | Vérifier que l'interface utilise des icônes et des couleurs attrayantes pour les enfants. | L'interface doit utiliser des icônes et des couleurs attrayantes pour les enfants. Les catégories doivent être facilement compréhensibles par les enfants.
+
+| **US2-T2** | Navigation intuitive | Vérifier que la navigation est simple et fluide pour les enfants. | La navigation doit être simple et fluide, permettant aux enfants de trouver rapidement les jouets.
+|===
+
+=== US3: Liste de souhaits
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US3-T1** | Création de liste de souhaits | Vérifier que l'utilisateur peut ajouter des articles à la liste de souhaits depuis la page catalogue ou la page de description du produit. | L'utilisateur doit pouvoir ajouter des articles à la liste de souhaits depuis la page catalogue ou la page de description du produit.
+
+| **US3-T2** | Gestion des articles dans la liste | Vérifier que les articles peuvent être ajoutés et supprimés facilement de la liste. | Les articles doivent pouvoir être ajoutés et supprimés facilement de la liste.
+
+| **US3-T3** | Persistance de la liste | Vérifier que la liste de souhaits est sauvegardée et disponible après la déconnexion. | La liste de souhaits doit être sauvegardée et disponible même après la déconnexion de l'utilisateur.
+
+| **US3-T4** | Tri et filtrage de la liste | Vérifier que l'utilisateur peut trier et filtrer les articles de la liste selon différents critères. | L'utilisateur doit pouvoir trier et filtrer les articles de la liste selon différents critères.
+|===
+
+=== US4: Programme de fidélité
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US4-T1** | Système de points de fidélité | Vérifier que les points de fidélité sont correctement attribués pour chaque achat. | Les points de fidélité doivent être correctement attribués pour chaque achat.
+
+| **US4-T2** | Consultation du solde de points | Vérifier que l'utilisateur peut consulter facilement son solde de points de fidélité. | L'utilisateur doit pouvoir consulter facilement son solde de points de fidélité.
+
+| **US4-T3** | Récompenses et avantages | Vérifier que les récompenses sont clairement affichées et accessibles en fonction du solde de points. | Les récompenses doivent être clairement affichées et accessibles en fonction du solde de points. L'utilisateur doit recevoir des notifications par email lorsque des avantages sont disponibles.
+|===
+
+=== US5: Fiches techniques détaillées
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US5-T1** | Fiche technique détaillée | Vérifier que les fiches techniques incluent des informations détaillées sur les dimensions, matériaux, âge recommandé, etc. | Les fiches techniques doivent inclure des informations détaillées sur les dimensions, matériaux, âge recommandé, etc.
+
+| **US5-T2** | Présentation des caractéristiques clés | Vérifier que les caractéristiques clés sont clairement présentées et bien structurées sur chaque fiche produit. | Les caractéristiques clés doivent être clairement présentées et bien structurées sur chaque fiche produit.
+|===
+
+=== US6: Système de filtres
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US6-T1** | Filtres de recherche | Vérifier que les filtres fonctionnent correctement et affichent les résultats correspondants en temps réel. | Les filtres doivent fonctionner correctement et afficher les résultats correspondants en temps réel.
+
+| **US6-T2** | Indicateurs de filtres actifs | Vérifier que les filtres actifs sont clairement indiqués sur l'interface. | Les filtres actifs doivent être clairement indiqués sur l'interface, permettant à l'utilisateur de savoir quels critères sont appliqués.
+|===
+
+=== US7: Gestion des produits en rupture de stock
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US7-T1** | Affichage des produits en rupture de stock | Vérifier que les produits en rupture de stock sont affichés mais désactivés pour l'ajout au panier. | Les produits en rupture de stock doivent être affichés, mais désactivés pour l'ajout au panier.
+
+| **US7-T2** | Message d'indisponibilité | Vérifier qu'un message clair indique l'impossibilité de commander les produits en rupture de stock. | Un message clair doit indiquer l'impossibilité de commander les produits en rupture de stock.
+
+| **US7-T3** | Alerte de réapprovisionnement | Vérifier que l'utilisateur peut ajouter le produit à une liste de souhaits ou recevoir une alerte lorsqu'il est à nouveau disponible. | L'utilisateur doit pouvoir ajouter le produit à une liste de souhaits ou recevoir une alerte lorsqu'il est à nouveau disponible.
+|===
+
+=== US8: Avis et notations
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US8-T1** | Déposer un avis après réception | Vérifier que les utilisateurs peuvent laisser un avis ou une note après avoir reçu leur commande. | Les utilisateurs doivent pouvoir laisser un avis ou une note après avoir reçu leur commande.
+
+| **US8-T2** | Affichage des avis et notes | Vérifier que les avis et notes sont visibles sur chaque fiche produit. | Les avis et notes doivent être visibles sur chaque fiche produit.
+
+| **US8-T3** | Tri des avis | Vérifier que les utilisateurs peuvent trier les avis par différents critères. | Les utilisateurs doivent pouvoir trier les avis par différents critères, tels que les meilleurs avis ou les plus récents.
+|===
+
+=== US9: Sections spéciales
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US9-T1** | Sections spéciales sur la page d'accueil | Vérifier que les sections spéciales sont clairement visibles et accessibles depuis la page d'accueil. | Les sections spéciales doivent être clairement visibles et accessibles depuis la page d'accueil.
+
+| **US9-T2** | Filtres spécifiques pour chaque groupe | Vérifier que les filtres permettent d'afficher uniquement les produits des catégories spéciales sélectionnées. | Les filtres doivent permettre d'afficher uniquement les produits des catégories spéciales sélectionnées.
+
+| **US9-T3** | Indicateurs visuels sur les vignettes produit | Vérifier que les vignettes produit affichent des indicateurs visuels pour les catégories spéciales. | Les vignettes produit doivent afficher des indicateurs visuels pour les catégories spéciales (soldes, nouveautés, meilleures ventes, made in France).
+|===
+
+=== US10: Variantes de produit
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US10-T1** | Affichage des options de couleur et de taille | Vérifier que les options de couleur et de taille sont clairement affichées sur la fiche produit. | Les options de couleur et de taille doivent être clairement affichées sur la fiche produit.
+
+| **US10-T2** | Sélection et ajout au panier | Vérifier que les utilisateurs peuvent sélectionner une variante et l'ajouter directement au panier. | Les utilisateurs doivent pouvoir sélectionner une variante et l'ajouter directement au panier.
+
+| **US10-T3** | Disponibilité par variante | Vérifier que la disponibilité des variantes est mise à jour en temps réel. | La disponibilité des variantes doit être mise à jour en temps réel, indiquant les tailles ou couleurs indisponibles.
+|===
+
+=== US11: Gestion des quantités en stock
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US11-T1** | Affichage des niveaux de stock | Vérifier que les niveaux de stock actuels, minimum et maximum sont affichés pour chaque produit. | Les niveaux de stock actuels, minimum et maximum doivent être affichés pour chaque produit.
+
+| **US11-T2** | Notification de réapprovisionnement | Vérifier que des notifications pour le réapprovisionnement sont générées automatiquement lorsque le stock minimum est atteint. | Les notifications de réapprovisionnement doivent être générées automatiquement lorsque le stock minimum est atteint.
+
+| **US11-T3** | Interface de gestion des alertes | Vérifier que l'interface permet de gérer les alertes de niveaux de stock. | L'interface doit permettre de gérer les alertes de niveaux de stock.
+|===
+
+=== US12: Options de paiement
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US12-T1** | Options de paiement disponibles | Vérifier que les options de paiement par carte bancaire, PayPal et autres sont disponibles. | Les options de paiement par carte bancaire, PayPal et autres doivent être disponibles.
+
+| **US12-T2** | Interface de paiement sécurisée | Vérifier que l'interface de paiement est sécurisée. | L'interface de paiement doit être sécurisée.
+
+| **US12-T3** | Vérification des informations de paiement | Vérifier que les informations de paiement sont vérifiées automatiquement. | Les informations de paiement doivent être vérifiées automatiquement.
+|===
+
+=== US13: Commande de lots de produits
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US13-T1** | Fiche produit pour les lots | Vérifier que les fiches produits dédiées aux lots sont disponibles. | Les fiches produits dédiées aux lots doivent être disponibles.
+
+| **US13-T2** | Contenu du lot | Vérifier que le contenu du lot est indiqué sur la fiche produit. | Le contenu du lot doit être indiqué sur la fiche produit.
+
+| **US13-T3** | Tarification des lots | Vérifier que la tarification est ajustée en fonction du lot. | La tarification doit être ajustée en fonction du lot.
+|===
+
+=== US14: Avis et notes clients
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US14-T1** | Section avis et notes | Vérifier que chaque produit a une section dédiée aux avis et notes clients. | Chaque produit doit avoir une section dédiée aux avis et notes clients.
+
+| **US14-T2** | Tri des avis | Vérifier que les avis peuvent être triés par pertinence, date ou note. | Les avis doivent pouvoir être triés par pertinence, date ou note.
+
+| **US14-T3** | Affichage de la moyenne des notes | Vérifier que la moyenne des notes est affichée sur la fiche produit. | La moyenne des notes doit être affichée sur la fiche produit.
+|===
+
+=== US15: Recherche par mots-clés
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US15-T1** | Barre de recherche | Vérifier que la barre de recherche permet de chercher des produits par mots-clés. | La barre de recherche doit permettre de chercher des produits par mots-clés.
+|===
+
+=== US16: Recherche par mots-clés et filtres
+
+|===
+| ID de Test | Test | Description du test | Critères d'acceptation
+
+| **US16-T1** | Suggestions de mots-clés | Vérifier que la barre de recherche propose des suggestions de mots-clés. | La barre de recherche doit proposer des suggestions de mots-clés.
+
+| **US16-T2** | Filtres avancés | Vérifier que les filtres permettent d'affiner les résultats par prix, notes, marques, etc. | Les filtres doivent permettre d'affiner les résultats par prix, notes, marques, etc.
+
+| **US16-T3** | Affichage rapide des résultats | Vérifier que les résultats sont affichés rapidement en fonction des critères choisis. | Les résultats doivent être affichés rapidement en fonction des critères choisis.
+|===
+
+== Conclusion
+
+Ces tests d'acceptation permettent de garantir que chaque user story répond aux critères d'acceptabilité définis dans le backlog produit. Ils assurent également que le produit final livré à Ludorama est conforme aux attentes et aux besoins des utilisateurs finaux.

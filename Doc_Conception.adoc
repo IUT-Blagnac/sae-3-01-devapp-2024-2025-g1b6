@@ -20,8 +20,6 @@ Ce document de conception vise à fournir une compréhension claire et détaill�
 
 == 2. Description Fonctionnelle
 
-== 2. Description Fonctionnelle
-
 === 2.1 User Stories et Cas d'utilisation
 
 |===
