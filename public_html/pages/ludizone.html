@@ -15,12 +15,19 @@
 <header class="header">
     <div class="barreMenu">
         <ul class="menuListe">
-            <li> <div class="imgMenu"></div> </li>
+            <li> <div class="imgMenu" id="menuToggle">
+                <ul class="categories hidden">
+                    <li><a href="#">Catégorie 1</a></li>
+                    <li><a href="#">Catégorie 2</a></li>
+                    <li><a href="#">Catégorie 3</a></li>
+                    <li><a href="#">Catégorie 4</a></li>
+                </ul>   
+            </div> </li>
             <li> <a class="lienAccueil" href="index.html"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
             <li> <input class="barreRecherche" type="text" placeholder="Barre de recherche ..."> </li>
             <li> <div class="imgLoc"></div> </li>
-            <li> <div class="imgPanier"></div> </li>
-            <li> <div class="imgCompte"></div> </li>
+            <li> <a href="panier.html"><div class="imgPanier"></div></a></li>
+            <li> <a href="connexion.html"><div class="imgCompte"></div></a> </li>
         </ul>
     </div>
 </header>
@@ -60,14 +67,16 @@
                 </li>
                 
                 <li class="jeuCDC">
+                    <a href="DescriptionProduit.html">
                     <div class="imgJeuCDC2"></div> 
-                    <div class="nomJeuCDC">Kapla</div> 
-                    <div class="prixCDC">27€</div> 
+                    </a>
+                    <div class="nomJeuCDC">Nerf </div> 
+                    <div class="prixCDC">29.99€</div> 
                     <div class="dsiponibiliteCDC"> 
                         <ul class="listeDisponibilites">
                             <li class="elementDispo">Web Magasin</li>
                             <li class="elementDispo">disponible disponible</li>
-                            <li> <img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"></li>
+                            <li><img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"></li>
                         </ul>
                     </div>
                 </li>

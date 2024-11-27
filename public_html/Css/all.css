@@ -76,16 +76,13 @@ html::-webkit-scrollbar-thumb {
 }
 
 .menuListe {    
-    overflow: visible;
     position: relative;
     list-style-type: none;
     margin: -0.1em;
     left: 0.5em;
     padding: 0;
-    overflow: hidden;
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: flex-start;
     justify-content: flex-start;
 }
@@ -171,21 +168,20 @@ html::-webkit-scrollbar-thumb {
 
 /* test menu déroulant*/
 .categories {
-    overflow: visible;
-    position: absolute;
-    top: 4em;
+    overflow-y: auto; /* Active un défilement uniquement si nécessaire */
+    position: absolute; /* Positionne par rapport à l'élément parent */
+    top: 4em; /* Ajuste en fonction de ton design */
     left: 0;
-    background-color: var(--dark-purple);
+    background-color: var(--clair-purple);
     list-style-type: none;
     margin: 0;
     padding: 0;
     border: 1px solid var(--light-gray);
     border-radius: 5px;
-    width: 10em; /* Largeur ajustée */
-    height: 50em;
+    width: 10em;
+    max-height: 20em; /* Limite la hauteur pour éviter un débordement excessif */
     z-index: 1000;
     display: none; /* Caché par défaut */
-    overflow: hidden; /* Permet d'éviter un débordement */
 }
 
 .categories.visible {
@@ -197,16 +193,19 @@ html::-webkit-scrollbar-thumb {
     padding: 0.5em;
     text-align: left;
     white-space: nowrap; /* Empêche le texte de se couper */
+    transition: background 0.3s;
 }
 
 .categories li a {
     text-decoration: none;
-    color: var(--accent-pink);
+    color: var(--light-purple);
+    font-size: 1.2em;
     display: block;
 }
 
 .categories li:hover {
     background-color: var(--medium-purple);
+    transition: background 0.3s;
 }
 
 

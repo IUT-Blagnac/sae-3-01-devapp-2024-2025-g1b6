@@ -3,74 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Css/panier.css">
     <link rel="stylesheet" href="../Css/all.css">
-    <link rel="stylesheet" href="../Css/compte.css">
-    <title>Compte</title>
+    <title>Panier</title>
 </head>
 <body>
-    
+
+    <!-- Barre de navigation -->
     <header class="header">
         <div class="barreMenu">
             <ul class="menuListe">
-                <li> <div class="imgMenu"></div> </li>
+                <li> <div class="imgMenu" id="menuToggle"></div> </li>
                 <li> <a class="lienAccueil" href="index.html"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
                 <li> <div class="imgLoc"></div> </li>
-                <li> <a href="panier.html"><div class="imgPanier"></div></a></li>
+                <li> <a href="connexion.html"><div class="imgCompte"></div></a> </li>
             </ul>
         </div>
     </header>
 
 
-
     <main>
-
         <div class="container">
-            <ul class="listeCompte">
-                <li>
-                    <div class="compte">
-                        <div class="imgProfil"></div>
-                        <h1 class="titreCompte">Mon compte</h1>
-                        <div class="infosCompte">
-                            <div class="infosPerso">
-                                <div class="infos">
-                                    <p class="info">Nom : Ibrahim </p>
-                                    <p class="info">Prénom : Marwane </p>
-                                    <p class="info">Adresse : 11 Rue du quai</p>
-                                    <p class="info">Code postal : 31300</p>
-                                    <p class="info">Ville : Toulouse </p>
-                                    <p class="info">Téléphone : 06 64 80 54 85</p>
-                                    <p class="info">Email : marwane.prime@gmail.com</p>
-                                </div>
+            <div class="titrePanier">Votre panier contient 1 produit</div>
+            <div class="contenuPanier">
+                <div class="produits">
+                    <ul>
+                        <li><div class="prodPanier">
+                            <h3>Nerf Fortnite edition 2024</h3>
+                            <p>31779 - Marque : XYZ - Dès 5 ans</p>
+                            <img class="imgNerf" src="../images/nerfFortnite.jpg" alt="nerfFortnite">
+                            <div class="checkboxPanier">
+                                <label for="nerfFortnite">Sélectionner</label>
+                                <input type="checkbox" id="nerfFortnite" name="nerfFortnite" checked>
                             </div>
-                        </div>
-                        <div class="modifier"> Modifier</div>
+                        </div> </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="resumePanier">
+                    <h4>Résumé du panier</h4>
+                    <div class="sousTotal">
+                        <p>Sous-total</p>
+                        <p>29.99 €</p>
                     </div>
-                </li>
-
-                <li>
-                    <div class="commandes">
-                        <div class="imgCommande"></div>
-                        <h1 class="titreCommande">Mes commandes</h1>
-                        <div class="infosCommande">
-                            <ul class="listeCommandes">
-                                <li class="liCommandes">Croque-Carotte</li>
-                                <li class="liCommandes">Monopoly</li>
-                                <li class="liCommandes">Figurine batman</li>
-                                <li class="liCommandes">Le Prime</li>
-                            </ul>
-                        </div>     
+                    <div class="livraison">
+                        <p>Livraison</p>
+                        <p>Gratuit</p>
                     </div>
-                </li>
-
-
-            </ul>
-
-
+                    <div class="total">
+                        <p>Total</p>
+                        <p>29.99 €</p>
+                    </div>
+                    <a href="paiement.html"><button class="btnPaiement">Paiement</button></a> 
+                </div>
         </div>
+
 
     </main>
 
-    <!-- Pied de page -->
+
+
+
+
+
+<!-- Pied de page -->
     <footer class="footer">
         <div class="footer-column">
             <h3>Qui sommes-nous ?</h3>
@@ -112,6 +110,6 @@
             </ul>
         </div>
     </footer>
-
+    
 </body>
 </html>

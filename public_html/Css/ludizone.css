@@ -109,7 +109,7 @@
 
 .jeuCDC {
     position: relative;
-    background-color: var(--light-purple);
+    background-color: var(--clair-purple);
     margin-right: 5em;
     width: 16em;
     height: 18em;
@@ -117,6 +117,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.jeuCDC a {
+    text-decoration: none;  
+    width: 15em;
+}
+
+.jeuCDC:hover {
+    box-shadow: 0 0 10px var(--medium-purple);
+    cursor: pointer;
 }
 
 .imgJeuCDC1 {
@@ -131,9 +141,10 @@
 }
 
 .imgJeuCDC2 {
-    background-image: url('../images/Jeu2.jpg');
+    background-image: url('../images/nerf1.png');
     border-radius: 2em;
     margin-top: 1em;
+    margin-left: 3em;
     width: 9em;
     height: 9em;
     background-size: cover;
@@ -197,7 +208,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    background: var(--clair-purple);
+    background: var(--medium-purple);
     word-spacing: 2em;
 }
 

@@ -24,7 +24,7 @@
                 <li> <h1 class="titreLudorama"> Ludorama </h1> </li>
                 <li> <input class="barreRecherche" type="text" placeholder="Barre de recherche ..."> </li>
                 <li> <div class="imgLoc"></div> </li>
-                <li> <div class="imgPanier"></div> </li>
+                <li> <a href="panier.html"><div class="imgPanier"></div></a></li>
                 <li> <a href="connexion.html"><div class="imgCompte"></div></a> </li>
             </ul>
         </div>
@@ -106,14 +106,16 @@
         </li>
         
         <li class="jeuCDC">
+            <a href="DescriptionProduit.html">
             <div class="imgJeuCDC2"></div> 
-            <div class="nomJeuCDC">Kapla</div> 
-            <div class="prixCDC">27€</div> 
+            </a>
+            <div class="nomJeuCDC">Nerf </div> 
+            <div class="prixCDC">29.99€</div> 
             <div class="dsiponibiliteCDC"> 
                 <ul class="listeDisponibilites">
                     <li class="elementDispo">Web Magasin</li>
                     <li class="elementDispo">disponible disponible</li>
-                    <li> <img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"></li>
+                    <li><img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="../images/pointVert.png" alt="ptVert"></li>
                 </ul>
             </div>
         </li>
@@ -246,21 +248,18 @@
         document.addEventListener('DOMContentLoaded', () => {
             const menuToggle = document.getElementById('menuToggle');
             const categoriesMenu = menuToggle.querySelector('.categories');
-    
-            menuToggle.addEventListener('click', () => {
+
+            menuToggle.addEventListener('click', (event) => {
+                event.stopPropagation(); // Évite que le clic se propage
                 categoriesMenu.classList.toggle('visible');
             });
-    
-            // Optionnel : Fermer le menu en cliquant en dehors
-            document.addEventListener('click', (event) => {
-                if (!menuToggle.contains(event.target)) {
-                    categoriesMenu.classList.remove('visible');
-                }
+
+            // Fermer la liste déroulante en cliquant ailleurs
+            document.addEventListener('click', () => {
+                categoriesMenu.classList.remove('visible');
             });
         });
     </script>
-    
-
     
 </body>
 </html>
