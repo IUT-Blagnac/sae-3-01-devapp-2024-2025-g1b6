@@ -36,7 +36,7 @@
                               <Insets right="20.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="hote" text="chirpstack.iut-blagnac.fr">
+                        <TextField fx:id="hote" text="mqtt.iut-blagnac.fr">
                            <HBox.margin>
                               <Insets right="20.0" />
                            </HBox.margin>
@@ -73,7 +73,7 @@
                         </Label>
                         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="NEVER">
                            <children>
-                              <RadioButton fx:id="btnOuiCapteur" mnemonicParsing="false" onAction="#handleToggleCapteur" text="Oui">
+                              <RadioButton fx:id="btnOuiCapteur" mnemonicParsing="false" onAction="#handleSubscribeAllCapteurs" text="Oui">
                                  <HBox.margin>
                                     <Insets left="100.0" top="20.0" />
                                  </HBox.margin>
@@ -103,7 +103,7 @@
                               <Insets left="110.0" />
                            </VBox.margin>
                         </Label>
-                        <Label text="S'abonner à tout">
+                        <Label text="S'abonner aux panneaux">
                            <VBox.margin>
                               <Insets left="110.0" />
                            </VBox.margin>
@@ -125,12 +125,11 @@
                               </RadioButton>
                            </children>
                         </HBox>
-                        <Label text="Panneau(x) séléctionné(s)">
+                        <Label>
                            <VBox.margin>
                               <Insets left="90.0" top="5.0" />
                            </VBox.margin>
                         </Label>
-                        <ListView fx:id="listPanneau" prefHeight="189.0" prefWidth="296.0" />
                      </children>
                   </VBox>
                </children>

@@ -55,7 +55,7 @@
       </VBox>
    </center>
    <bottom>
-      <Button fx:id="btnRetour" mnemonicParsing="false" text="Retour config" BorderPane.alignment="BOTTOM_LEFT">
+      <Button fx:id="btnRetour" mnemonicParsing="false" onAction="#handleOpenConfig" text="Retour config" BorderPane.alignment="BOTTOM_LEFT">
          <BorderPane.margin>
             <Insets bottom="5.0" />
          </BorderPane.margin>
