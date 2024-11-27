@@ -1,0 +1,36 @@
+= Document détaillant la Charte Graphique du Site e-commerce Ludorama
+
+== 1. Rapelle contexte et objectifs
+
+=== 1.1 Contexte
+Le projet consiste à créer un site e-commerce pour la vente de jouets en tout genre. Le site s'appelle Ludorama. +
+La force de Ludorama est de proposer des jouets de qualité, originaux et surtout pour tout le monde, pour tous les ages et pour toutes les envies. +
+Le site doit être attractif, ludique et facile d'utilisation. Il doit donner envie de naviguer et de découvrir les produits. +
+Le site doit être responsive et s'adapter à tous les supports (PC, tablette, smartphone). +
+Le site doit être sécurisé et respecter les normes RGPD. +
+Le site doit être évolutif et permettre l'ajout de nouvelles fonctionnalités.
+
+=== 1.2 Objectifs
+Les objectifs du site sont les suivants : +
+- Présenter les produits de manière claire et attractive +
+- Offrir aux utilisateurs une expérience personnalisée et sécurisée. +
+- Répondre aux besoins des clients adultes en leur permettant de noter et de consulter les souhaits de leurs enfants. +
+- Faciliter la navigation pour les clients enfants en leur permettant de trouver des jouets adaptés à leur âge. +
+- Mettre en place un système de fidélisation pour récompenser les clients réguliers. +
+- Assurer une gestion efficace et intuitive des avis et des évaluations des produits. +
+- Intégrer des fonctionnalités de filtrage avancées pour simplifier la recherche de produits. +
+- Fournir des informations complètes et détaillées sur chaque produit pour aider les clients à faire des choix informés. +
+
+== 2. Couleurs 
+Pour développer le site Ludorama une palette de couleur nous a été imposer : +
+ 
+    --dark-purple: linear-gradient( #6d00b0, #b06bdc) +
+    --clair-purple: #c267ff +
+    --medium-purple: #8A2BE2 +
+    --light-purple: #e6d1f2 +
+    --accent-pink: #FF69B4 +
+    --white: #FFFFFF +
+    --light-gray: #F0F0F0 +
+
+== 3. Copie écran et explication
+Analysons maintenant les copies écran du site Ludorama et expliquons les choix graphiques qui ont été faits.
