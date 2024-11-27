@@ -1,6 +1,5 @@
 import json
 import os
-import re
 
 import paho.mqtt.client as mqtt
 from configparser import ConfigParser
@@ -45,7 +44,7 @@ def handle_section(parser, section, key, topic):
 
 def afficher_metriques():
     """
-    Fonction pour afficher les métriques (à implémenter).
+    Fonction pour afficher les métriques .
     """
     #TODO
     pass
