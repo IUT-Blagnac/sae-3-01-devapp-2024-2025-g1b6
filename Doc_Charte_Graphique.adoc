@@ -33,11 +33,19 @@ Pour développer le site Ludorama une palette de couleur nous a été imposer : 
     --light-gray: #F0F0F0 +
 
 == 3. Copie écran et explication
-Analysons maintenant les copies écran du site Ludorama et expliquons les choix graphiques qui ont été faits.
+Analysons maintenant les copies écran du site Ludorama et expliquons les choix graphiques qui ont été faits. +
+(noter que toutes les pages n'ont pas encore été développer étant donnée que nous avons simplement fais la charte graphique du site, puisque nous n'avions pas les codes du serveur php)
 
 - La page d'accueil : +
 
-image::/images/CharteGraphique_WEB/Accueil.png []
+image::/images/CharteGraphique_WEB/Accueil.png[] 
+
+Voici le haut de la page d'accueil sur laquelle nous pouvons voir le header, élément important du site qui permet de visualiser toutes les catégories, et de voyager vers d'autres page (connexion/compte, panier, localisation des magasin). +
+De plus ce header est composé ici d'une barre de recherche qui permet naturellement de rechercher des produits à sa guise. +
+En haut à gauche du header se trouve un menu déroulant permettant de filtrer les produits par catégories +
+La page d'accueil affiche la toute dernière collection de Ludorama au premier plan. En dessous nous avons la possibilité de voyager vers différentes zone catégorisée selon l'âge (pour l'instant uniquement la zone des enfants à été développer). L'une des zones les plus importantes est la LudiZone, la zone des enfants.
+
+
 
 
 
