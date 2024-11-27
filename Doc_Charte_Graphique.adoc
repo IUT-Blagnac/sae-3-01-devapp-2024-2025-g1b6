@@ -1,4 +1,4 @@
-= Document détaillant la Charte Graphique du Site e-commerce Ludorama
+= Document Charte Graphique du Site e-commerce Ludorama
 
 == 1. Rapelle contexte et objectifs
 
@@ -34,3 +34,9 @@ Pour développer le site Ludorama une palette de couleur nous a été imposer : 
 
 == 3. Copie écran et explication
 Analysons maintenant les copies écran du site Ludorama et expliquons les choix graphiques qui ont été faits.
+
+- La page d'accueil : 
+
+
+
+
