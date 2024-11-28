@@ -3,14 +3,12 @@ package iut.view;
 import iut.App;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.LineChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -28,7 +26,8 @@ import java.util.stream.Stream;
 
 public class GraphiquesController {
 
-    private Map<String, Double> sensorData = new HashMap<>();
+    // Stockage centralisé des données : clé = type de donnée (ex. "temperature")
+    private Map<String, Map<String, Double>> sensorData = new HashMap<>();
 
     @FXML
     private TabPane tabPane;
@@ -38,36 +37,25 @@ public class GraphiquesController {
 
     public void initialize() {
         try {
-            // Chemin du répertoire contenant les fichiers JSON
-            Path dataDir = Paths.get(App.class.getResource("data/B").toURI());
+            // Lecture des fichiers JSON dans le répertoire "data"
+            Path dataDir = Paths.get(App.class.getResource("data").toURI());
 
-            // Lister tous les fichiers JSON dans le répertoire
-            try (Stream<Path> paths = Files.list(dataDir)) {
-                paths.filter(Files::isRegularFile)
-                    .filter(path -> path.toString().endsWith(".json"))
-                    .forEach(path -> {
-                        try {
-                            loadJsonData(path.toString());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
+            try (Stream<Path> paths = Files.walk(dataDir)) {
+                paths.filter(Files::isRegularFile) // Seulement les fichiers
+                     .filter(path -> path.toString().endsWith(".json")) // Filtrer les JSON
+                     .forEach(path -> {
+                         try {
+                             loadJsonData(path); // Charger chaque fichier
+                         } catch (IOException e) {
+                             e.printStackTrace();
+                         }
+                     });
             }
 
-            // Créer dynamiquement des graphiques pour chaque donnée
-            for (Map.Entry<String, Double> entry : sensorData.entrySet()) {
-                String key = entry.getKey();
-                Double value = entry.getValue();
-
-                Tab tab = new Tab(key); // Créer un onglet pour chaque donnée
-
-                // Décider quel type de graphique afficher
-                if (isLineChartKey(key)) {
-                    tab.setContent(createLineChart(key, value));
-                } else {
-                    tab.setContent(createBarChart(key, value));
-                }
-
+            // Créer les onglets pour chaque type de donnée
+            for (String key : sensorData.keySet()) {
+                Tab tab = new Tab(key);
+                tab.setContent(createBarChart(key, sensorData.get(key))); // Générer un graphique
                 tabPane.getTabs().add(tab);
             }
         } catch (Exception e) {
@@ -76,98 +64,70 @@ public class GraphiquesController {
     }
 
     /**
-     * Charge les données JSON à partir d'un fichier donné.
-     *
-     * @param filePath chemin du fichier JSON
-     * @throws IOException en cas de problème de lecture
+     * Lecture et traitement des données d'un fichier JSON.
      */
-    private void loadJsonData(String filePath) throws IOException {
-        JsonElement rootElement = JsonParser.parseReader(new FileReader(filePath));
-
+    private void loadJsonData(Path filePath) throws IOException {
+        JsonElement rootElement = JsonParser.parseReader(new FileReader(filePath.toFile()));
+    
+        // Vérifier que la racine est un tableau
         if (!rootElement.isJsonArray()) {
-            throw new IllegalStateException("Le fichier JSON doit être un tableau.");
+            throw new IllegalStateException("Le fichier JSON doit être un tableau racine.");
         }
-
-        JsonArray jsonArray = rootElement.getAsJsonArray();
-
-        for (JsonElement element : jsonArray) {
-            if (element.isJsonObject()) {
-                JsonObject jsonObject = element.getAsJsonObject();
-
-                // Si c'est un objet contenant des données de capteurs, on les ajoute
-                if (jsonObject.has("temperature")) {
-                    for (String key : jsonObject.keySet()) {
-                        try {
-                            double value = jsonObject.get(key).getAsDouble();
-                            sensorData.merge(key, value, Double::sum); // Ajouter au Map en combinant les valeurs
-                        } catch (Exception e) {
-                            // Ignorer les valeurs non numériques
-                        }
-                    }
-                }
-            }
+    
+        JsonArray rootArray = rootElement.getAsJsonArray();
+        if (rootArray.size() != 1) {
+            throw new IllegalStateException("Le fichier JSON doit contenir un tableau unique avec deux objets.");
         }
-    }
+    
+        // Accéder au tableau imbriqué
+        JsonArray nestedArray = rootArray.get(0).getAsJsonArray();
+        if (nestedArray.size() != 2) {
+            throw new IllegalStateException("Le tableau imbriqué doit contenir exactement deux objets.");
+        }
+    
+        // Extraire les deux objets
+        JsonObject dataObject = nestedArray.get(0).getAsJsonObject();
+        JsonObject metadataObject = nestedArray.get(1).getAsJsonObject();
+    
+        // Obtenir uniquement le nom de la salle
+        String room = metadataObject.get("room").getAsString();
+    
+        // Parcourir les données des capteurs
+        for (Map.Entry<String, JsonElement> entry : dataObject.entrySet()) {
+            String key = entry.getKey();
+            double value = entry.getValue().getAsDouble();
+    
+            // Utiliser uniquement le nom de la salle (pas "bâtiment + salle")
+            String sensorKey = key + " (" + room + ")";
+            sensorData.computeIfAbsent(key, k -> new HashMap<>()).put(sensorKey, value); // Ajouter ou mettre à jour
+        }
+    }        
+    
 
     /**
-     * Crée un BarChart pour une donnée spécifique.
-     *
-     * @param key   nom de la donnée
-     * @param value valeur associée
-     * @return un graphique à barres
+     * Créer un BarChart pour une donnée spécifique.
      */
-    private BarChart<String, Number> createBarChart(String key, double value) {
+    private BarChart<String, Number> createBarChart(String key, Map<String, Double> data) {
         BarChart<String, Number> barChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
-        barChart.setTitle("Graphique : " + key);
+        barChart.setTitle("Données : " + key);
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.getData().add(new XYChart.Data<>(key, value));
-        series.setName("Valeur");
+        series.setName(key);
+
+        // Ajouter les valeurs des salles au graphique
+        for (Map.Entry<String, Double> entry : data.entrySet()) {
+            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+        }
 
         barChart.getData().add(series);
         return barChart;
     }
 
     /**
-     * Crée un LineChart pour une donnée spécifique.
-     *
-     * @param key   nom de la donnée
-     * @param value valeur associée
-     * @return un graphique en lignes
-     */
-    private LineChart<Number, Number> createLineChart(String key, double value) {
-        LineChart<Number, Number> lineChart = new LineChart<>(new NumberAxis(), new NumberAxis());
-        lineChart.setTitle("Graphique : " + key);
-
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.getData().add(new XYChart.Data<>(1, value)); // Ajouter un point (exemple)
-        series.setName("Valeur");
-
-        lineChart.getData().add(series);
-        return lineChart;
-    }
-
-    /**
-     * Vérifie si une clé doit être affichée sous forme de LineChart.
-     *
-     * @param key clé à vérifier
-     * @return true si c'est un LineChart, sinon false
-     */
-    private boolean isLineChartKey(String key) {
-        return key.equalsIgnoreCase("temperature")
-                || key.equalsIgnoreCase("humidity")
-                || key.equalsIgnoreCase("pressure");
-    }
-
-    /**
-     * Gestionnaire du bouton "Retour".
+     * Gestion du bouton "Retour".
      */
     @FXML
     private void handleButtonRetour() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText(null);
-        alert.setContentText("Retour à la page précédente.");
-        alert.showAndWait();
+        System.out.println("Retour à l'écran précédent.");
     }
 }
