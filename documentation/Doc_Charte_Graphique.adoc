@@ -36,6 +36,8 @@ Pour développer le site Ludorama une palette de couleur nous a été imposer : 
 Analysons maintenant les copies écran du site Ludorama et expliquons les choix graphiques qui ont été faits. +
 (noter que toutes les pages n'ont pas encore été développer étant donnée que nous avons simplement fais la charte graphique du site, puisque nous n'avions pas les codes du serveur php)
 
+'''
+
 - La page d'accueil : +
 
 image::/images/CharteGraphique_WEB/Accueil.png[] 
@@ -53,7 +55,8 @@ En descendant un peu on vois les quatres coups de coeur des clients qui sont aff
 image::/images/CharteGraphique_WEB/footer.png[] 
 
 Pour finir, voici le footer, qui est aussi présent sur toutes les pages du site. Ce dernier permet d'avoir beaucoup plus d'informations sur le site en se renseignant sur les différents magasin physiques, l'histoire de Ludorama, etc... Il donne des renseignement sur les événements du moments et les nouveautés. Il permet aussi de filtrer par certaines marques les plus connues ou type de produits les plus demandés et permet aussi de voir les sites des différents pays. +
- 
+
+'''
 
 
 - La page de la LudiZone : +
@@ -67,13 +70,15 @@ image::/images/CharteGraphique_WEB/ludiZone_bas.png[]
 Ici on affiche le dernier jeu créer par Ludorama et quand l'utilisateur clique dessus il est redirigé vers tout les jouets créer directement par Ludorama. 
 Le reste de la page estcomposé de l'exposition des ludi'Events et du footer comme la page d'accueil. +
  
+'''
 
 - La page de Description d'un produit :  +
 
 image::/images/CharteGraphique_WEB/descProd.png[] 
 
 Ici nous avons la page de desciption d'un produit en particulier qui affiche plusieurs images du produit ainsi que toutes les informations associées à ce dernier. La page propose la possibilité d'ajouter le produits au panier ou dans sa liste de souhait mais encore de choisir un magasin pour vérifier les disponibilités du produits ou le commander.  +
- 
+
+'''
 
 - La page panier : +
 
@@ -81,6 +86,7 @@ image::/images/CharteGraphique_WEB/panier.png[]
 
 La page panier permet de visualiser le panier du client. Elle permet à l'utilisateur de séléctionner les différents produits de son panier et cela affiche le total a payer en fonction, depuis là, le client peut voyager vers la page de paiement. +
 
+'''
 
 - La page depaiement : +
 
@@ -88,6 +94,7 @@ image::/images/CharteGraphique_WEB/paiement.png[]
 
 La page de paiement permet à l'utilisateur de payer son panier en choisissant toutes les informations, tels que la livraison ou la récupération en magasin. +
 
+'''
 
 - La page de connexion : +
 
@@ -102,6 +109,10 @@ La page de création de compte permet à un utilisateur de créer son compte en 
 image::/images/CharteGraphique_WEB/compte.png[]
 
 Une fois la connexion effectuer ou le compte créée, l'utilisateur est redirigé vers la page de son compte. cette dernière affiche toutes les informations le concernant et lui permet aussi de les modifier en cliquant sur le bouton "modifier". La page affiche aussi les dernières commandes du clients et lui permet de les parcourrir en détail.
+
+'''
+
+== Conclusion 
 
 
 
