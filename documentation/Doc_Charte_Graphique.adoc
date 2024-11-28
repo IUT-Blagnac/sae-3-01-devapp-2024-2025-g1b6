@@ -43,7 +43,65 @@ image::/images/CharteGraphique_WEB/Accueil.png[]
 Voici le haut de la page d'accueil sur laquelle nous pouvons voir le header, élément important du site qui permet de visualiser toutes les catégories, et de voyager vers d'autres page (connexion/compte, panier, localisation des magasin). +
 De plus ce header est composé ici d'une barre de recherche qui permet naturellement de rechercher des produits à sa guise. +
 En haut à gauche du header se trouve un menu déroulant permettant de filtrer les produits par catégories +
-La page d'accueil affiche la toute dernière collection de Ludorama au premier plan. En dessous nous avons la possibilité de voyager vers différentes zone catégorisée selon l'âge (pour l'instant uniquement la zone des enfants à été développer). L'une des zones les plus importantes est la LudiZone, la zone des enfants.
+La page d'accueil affiche la toute dernière collection de Ludorama au premier plan. En dessous nous avons la possibilité de voyager vers différentes zone catégorisée selon l'âge (pour l'instant uniquement la zone des enfants à été développer). L'une des zones les plus importantes est la LudiZone, la zone des enfants. +
+<br> 
+
+image::/images/CharteGraphique_WEB/Accueil_bas.png[] 
+
+En descendant un peu on vois les quatres coups de coeur des clients qui sont affiché à la une, mais aussi l'exposition des événements (Ludi'Events), qui mennent vers d'autres pages, qui n'ont pas encore était développées.  +
+
+image::/images/CharteGraphique_WEB/footer.png[] 
+
+Pour finir, voici le footer, qui est aussi présent sur toutes les pages du site. Ce dernier permet d'avoir beaucoup plus d'informations sur le site en se renseignant sur les différents magasin physiques, l'histoire de Ludorama, etc... Il donne des renseignement sur les événements du moments et les nouveautés. Il permet aussi de filtrer par certaines marques les plus connues ou type de produits les plus demandés et permet aussi de voir les sites des différents pays. +
+<br> 
+
+
+- La page de la LudiZone : +
+
+image::/images/CharteGraphique_WEB/ludiZone_haut.png[] 
+
+Voici le haut de la LudiZone, autrement dit la zone réservé aux enfants qui regroupe les meilleurs jouets pour les enfants et affiches les coups de coeur de ces derniers. La LudiZone propose la possibilités de filtrer les produits selon les envies du client que ce soit par prix, par catégorie, par marque ou par avis. +
+
+image::/images/CharteGraphique_WEB/ludiZone_bas.png[] 
+
+Ici on affiche le dernier jeu créer par Ludorama et quand l'utilisateur clique dessus il est redirigé vers tout les jouets créer directement par Ludorama. 
+Le reste de la page estcomposé de l'exposition des ludi'Events et du footer comme la page d'accueil. +
+<br> 
+
+- La page de Description d'un produit :  +
+
+image::/images/CharteGraphique_WEB/descProd.png[] 
+
+Ici nous avons la page de desciption d'un produit en particulier qui affiche plusieurs images du produit ainsi que toutes les informations associées à ce dernier. La page propose la possibilité d'ajouter le produits au panier ou dans sa liste de souhait mais encore de choisir un magasin pour vérifier les disponibilités du produits ou le commander.  +
+<br> 
+
+- La page panier : +
+
+image::/images/CharteGraphique_WEB/panier.png[] 
+
+La page panier permet de visualiser le panier du client. Elle permet à l'utilisateur de séléctionner les différents produits de son panier et cela affiche le total a payer en fonction, depuis là, le client peut voyager vers la page de paiement. +
+<br>
+
+- La page depaiement : +
+
+image::/images/CharteGraphique_WEB/paiement.png[] 
+
+La page de paiement permet à l'utilisateur de payer son panier en choisissant toutes les informations, tels que la livraison ou la récupération en magasin. +
+<br>
+
+- La page de connexion : +
+
+image::/images/CharteGraphique_WEB/connexion.png[] 
+
+La page de connexion permet à l'utilisateur de se connecter à son compte Ludorama ou à un client visiteur de se créer un compte en cliquant sur "Créer un compte". +
+
+image::/images/CharteGraphique_WEB/creerCompte.png[]
+
+La page de création de compte permet à un utilisateur de créer son compte en remplissant toutes les informations nécessaire. +
+
+image::/images/CharteGraphique_WEB/compte.png[]
+
+Une fois la connexion effectuer ou le compte créée, l'utilisateur est redirigé vers la page de son compte. cette dernière affiche toutes les informations le concernant et lui permet aussi de les modifier en cliquant sur le bouton "modifier". La page affiche aussi les dernières commandes du clients et lui permet de les parcourrir en détail.
 
 
 
