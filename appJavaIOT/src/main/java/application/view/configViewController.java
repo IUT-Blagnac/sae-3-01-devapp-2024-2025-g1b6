@@ -3,6 +3,8 @@ package application.view;
 import java.io.IOException;
 import application.ConfigManager;
 import application.LaunchApp;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +17,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 public class configViewController {
+
+    private final ConfigManager configManager = new ConfigManager();
 
     @FXML
     private TextField hote;
@@ -49,79 +53,85 @@ public class configViewController {
     @FXML
     private RadioButton btnNonPanneau;
 
+    private final ObservableList<String> sallesCapteurs = FXCollections.observableArrayList(
+            "B112", "C002", "B217", "E001", "B108", "C102", "E007", "amphi1",
+            "B203", "E208", "E210", "E207", "B103", "E101", "C006", "E100",
+            "hall-amphi", "hall-entrée-principale", "E103", "E102", "B110",
+            "B106", "B001", "E004", "E106", "Local-velo", "B202", "C004",
+            "Foyer-personnels", "B201", "B109", "C001", "B002", "Salle-conseil",
+            "B105", "Foyer-etudiants-entrée", "C101", "B111", "B113", "E006",
+            "E104", "E209", "E003");
+
     @FXML
     private void initialize() {
-        // Assurez-vous que le fichier config.ini est prêt
-        ConfigManager.checkOrCreateConfigFile();
-
         try {
-            // Charger les valeurs depuis le fichier config.ini
-            hote.setText(ConfigManager.readConfig("General", "host"));
-            frequence.setText(ConfigManager.readConfig("General", "frequence"));
+            configManager.loadConfig();
 
-            // Définir les boutons Oui/Non en fonction de la configuration
-            String subscribeAll = ConfigManager.readConfig("Capteurs", "subscribe_all");
-            if ("on".equalsIgnoreCase(subscribeAll)) {
+            // Initialiser les champs texte
+            hote.setText(configManager.readConfig("General.host"));
+            frequence.setText(configManager.readConfig("General.frequence"));
+
+            // Initialiser les boutons radio pour les capteurs
+            String subscribeAllCapteurs = configManager.readConfig("Capteurs.subscribe_all");
+            if ("on".equalsIgnoreCase(subscribeAllCapteurs)) {
                 btnOuiCapteur.setSelected(true);
+                listCapteur.setDisable(true); // Désactiver la liste si "Oui" est sélectionné
             } else {
                 btnNonCapteur.setSelected(true);
+                listCapteur.setDisable(false);
             }
+
+            // Initialiser les boutons radio pour les panneaux solaires
+            String subscribeAllPanneaux = configManager.readConfig("Panneaux Solaires.subscribe_all");
+            if ("on".equalsIgnoreCase(subscribeAllPanneaux)) {
+                btnOuiPanneau.setSelected(true);
+            } else {
+                btnNonPanneau.setSelected(true);
+            }
+
+            // Charger les salles dans la ListView
+            listCapteur.setItems(sallesCapteurs);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // Ajouter des listeners pour mettre à jour les valeurs automatiquement
+        // Ajouter des listeners pour les modifications en temps réel
         hote.textProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                ConfigManager.updateConfig("General", "host", newValue);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            configManager.updateConfig("General.host", newValue);
+            saveConfig();
         });
 
         frequence.textProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                ConfigManager.updateConfig("General", "frequence", newValue);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            configManager.updateConfig("General.frequence", newValue);
+            saveConfig();
         });
     }
+
     @FXML
     private void handleSubscribeAllCapteurs() {
-        try {
-            String value = btnOuiCapteur.isSelected() ? "on" : "off";
-            ConfigManager.updateConfig("Capteurs", "subscribe_all", value);
-            System.out.println("Valeur de subscribe_all mise à jour : " + value);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        boolean isOn = btnOuiCapteur.isSelected();
+        configManager.updateConfig("Capteurs.subscribe_all", isOn ? "on" : "off");
+        listCapteur.setDisable(isOn); // Activer/Désactiver la liste selon le choix
+        saveConfig();
     }
-    
+
     @FXML
-    private void handleToggleCapteur() {
-        try {
-            // Mettre à jour subscribe_all en fonction du bouton sélectionné
-            String value = btnOuiCapteur.isSelected() ? "on" : "off";
-            ConfigManager.updateConfig("Capteurs", "subscribe_all", value);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void handleSubscribeAllPanneaux() {
+        boolean isOn = btnOuiPanneau.isSelected();
+        configManager.updateConfig("Panneaux Solaires.subscribe_all", isOn ? "on" : "off");
+        saveConfig();
     }
 
     @FXML
     private void handleAddCapteur() {
-        // Ajouter une salle sélectionnée dans la liste
         String selectedSalle = listCapteur.getSelectionModel().getSelectedItem();
         if (selectedSalle != null) {
-            try {
-                String salles = ConfigManager.readConfig("Capteurs", "salles");
-                if (!salles.contains(selectedSalle)) {
-                    String updatedSalles = salles.isEmpty() ? "'" + selectedSalle + "'" : salles + ", '" + selectedSalle + "'";
-                    ConfigManager.updateConfig("Capteurs", "salles", updatedSalles);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            String existingSalles = configManager.readConfig("Capteurs.salles");
+            if (!existingSalles.contains(selectedSalle)) {
+                String updatedSalles = existingSalles.isEmpty() ? "'" + selectedSalle + "'" : existingSalles + ", '" + selectedSalle + "'";
+                configManager.updateConfig("Capteurs.salles", updatedSalles);
+                saveConfig();
             }
         }
     }
@@ -129,18 +139,23 @@ public class configViewController {
     @FXML
     private void handleOpenAlerte() {
         try {
-            // Charger une nouvelle vue pour gérer les seuils
             FXMLLoader fxmlLoader = new FXMLLoader(LaunchApp.class.getResource("view/seuilsAlerteView.fxml"));
             Parent alertePage = fxmlLoader.load();
 
-            // Créer une nouvelle fenêtre pour afficher la vue
             Stage stage = new Stage();
             stage.setTitle("Seuils Alerte");
             stage.setScene(new Scene(alertePage));
             stage.show();
 
-            // Optionnel : fermer la fenêtre actuelle
             ((Stage) btnAlerte.getScene().getWindow()).close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveConfig() {
+        try {
+            configManager.saveConfig();
         } catch (IOException e) {
             e.printStackTrace();
         }
