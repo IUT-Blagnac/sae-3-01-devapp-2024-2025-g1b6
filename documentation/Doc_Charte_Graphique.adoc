@@ -50,11 +50,11 @@ La page d'accueil affiche la toute dernière collection de Ludorama au premier p
 
 image::/images/CharteGraphique_WEB/Accueil_bas.png[] 
 
-En descendant un peu on vois les quatres coups de coeur des clients qui sont affiché à la une, mais aussi l'exposition des événements (Ludi'Events), qui mennent vers d'autres pages, qui n'ont pas encore était développées.  +
+En descendant un peu, on voit les quatres coups de cœur des clients qui sont affichés à la une, mais aussi l'exposition des événements (Ludi'Events), qui mènent vers d'autres pages, qui n'ont pas encore été développées. +
 
 image::/images/CharteGraphique_WEB/footer.png[] 
 
-Pour finir, voici le footer, qui est aussi présent sur toutes les pages du site. Ce dernier permet d'avoir beaucoup plus d'informations sur le site en se renseignant sur les différents magasin physiques, l'histoire de Ludorama, etc... Il donne des renseignement sur les événements du moments et les nouveautés. Il permet aussi de filtrer par certaines marques les plus connues ou type de produits les plus demandés et permet aussi de voir les sites des différents pays. +
+Pour finir, voici le footer, qui est aussi présent sur toutes les pages du site. Ce dernier permet d'avoir beaucoup plus d'informations sur le site en se renseignant sur les différents magasins physiques, l'histoire de Ludorama, etc... Il donne également des renseignements sur les événements du moment et les nouveautés. Il permet aussi de filtrer par certaines marques les plus connues ou type de produits les plus demandés et permet aussi de voir les sites des différents pays.  +
 
 '''
 
@@ -67,9 +67,9 @@ Voici le haut de la LudiZone, autrement dit la zone réservé aux enfants qui re
 
 image::/images/CharteGraphique_WEB/ludiZone_bas.png[] 
 
-Ici on affiche le dernier jeu créer par Ludorama et quand l'utilisateur clique dessus il est redirigé vers tout les jouets créer directement par Ludorama. 
-Le reste de la page estcomposé de l'exposition des ludi'Events et du footer comme la page d'accueil. +
- 
+Ici on affiche le dernier jeu créé par Ludorama et quand l'utilisateur clique dessus il est redirigé vers tous les jouets créés directement par Ludorama. 
+Le reste de la page est composé de l'exposition des ludi'Events et du footer comme la page d'accueil. +
+
 '''
 
 - La page de Description d'un produit :  +
@@ -84,7 +84,7 @@ Ici nous avons la page de desciption d'un produit en particulier qui affiche plu
 
 image::/images/CharteGraphique_WEB/panier.png[] 
 
-La page panier permet de visualiser le panier du client. Elle permet à l'utilisateur de séléctionner les différents produits de son panier et cela affiche le total a payer en fonction, depuis là, le client peut voyager vers la page de paiement. +
+La page panier permet de visualiser le panier du client. Elle permet à l'utilisateur de sélectionner les différents produits de son panier et cela affiche le total à payer en fonction. Depuis là, le client peut voyager vers la page de paiement en cliquant sur le bouton adéquat.  +
 
 '''
 
@@ -92,8 +92,7 @@ La page panier permet de visualiser le panier du client. Elle permet à l'utilis
 
 image::/images/CharteGraphique_WEB/paiement.png[] 
 
-La page de paiement permet à l'utilisateur de payer son panier en choisissant toutes les informations, tels que la livraison ou la récupération en magasin. +
-
+La page de paiement permet à l'utilisateur de payer son panier en choisissant toutes les informations, telles que la livraison ou la récupération en magasin. +
 '''
 
 - La page de connexion : +
@@ -104,11 +103,11 @@ La page de connexion permet à l'utilisateur de se connecter à son compte Ludor
 
 image::/images/CharteGraphique_WEB/creerCompte.png[]
 
-La page de création de compte permet à un utilisateur de créer son compte en remplissant toutes les informations nécessaire. +
+La page de création de compte permet à un utilisateur de créer son compte en remplissant toutes les informations nécessaires. +
 
 image::/images/CharteGraphique_WEB/compte.png[]
 
-Une fois la connexion effectuer ou le compte créée, l'utilisateur est redirigé vers la page de son compte. cette dernière affiche toutes les informations le concernant et lui permet aussi de les modifier en cliquant sur le bouton "modifier". La page affiche aussi les dernières commandes du clients et lui permet de les parcourrir en détail.
+Une fois la connexion effectuée ou le compte créé, l'utilisateur est redirigé vers la page de son compte. Cette dernière affiche toutes les informations le concernant et lui permet aussi de les modifier en cliquant sur le bouton "modifier". La page affiche aussi les dernières commandes du client et lui permet de les parcourir en détail.
 
 '''
 
