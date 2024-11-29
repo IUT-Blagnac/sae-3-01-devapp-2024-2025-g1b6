@@ -114,6 +114,8 @@ Une fois la connexion effectuer ou le compte créée, l'utilisateur est redirig�
 
 == Conclusion 
 
+Tout ce qui vous a été présenté n'est que la cahrte graphique et c'est pourquoi toutes les pages ne sont pas présentes ou encore pourquoi il manque certains éléments. N'ayant pas encore les codes de connexion au serveur php nous n'avons pas pu afficher convenablement les produits de notre base de données. +
+Le site actuel n'est donc qu'une maquette faites uniquement en HTML et CSS, dont l'entiéreté du code et toutes les pages peuvent être retrouvé dans la branche "WEB" de notre github.
 
 
 
