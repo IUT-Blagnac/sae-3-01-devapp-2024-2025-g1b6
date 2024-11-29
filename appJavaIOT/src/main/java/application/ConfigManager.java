@@ -14,17 +14,20 @@ public class ConfigManager {
         checkOrCreateConfigFile();
     }
 
+    // Vérifie ou crée le fichier config.ini
     public void checkOrCreateConfigFile() {
         File configFile = new File(CONFIG_FILE);
         if (!configFile.exists()) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(configFile))) {
                 writer.write(getDefaultConfig());
+                System.out.println("Fichier config.ini créé avec succès.");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    // Charger le contenu de config.ini
     public void loadConfig() throws IOException {
         configMap.clear();
         comments.setLength(0);
@@ -34,31 +37,35 @@ public class ConfigManager {
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("#") || line.trim().isEmpty()) {
                     comments.append(line).append("\n");
-                } else if (line.contains(":") || line.contains("=")) {
-                    String[] parts = line.split("[:=]", 2);
+                } else if (line.contains(":")) {
+                    String[] parts = line.split(":", 2);
                     configMap.put(parts[0].trim(), parts[1].trim());
                 }
             }
         }
     }
 
+    // Lire une valeur
+    public String readConfig(String key) {
+        return configMap.getOrDefault(key, "");
+    }
+
+    // Mettre à jour une valeur
     public void updateConfig(String key, String value) {
         configMap.put(key, value);
     }
 
+    // Sauvegarder dans config.ini
     public void saveConfig() throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(CONFIG_FILE))) {
-            writer.write(getDefaultConfig()); // Réécrit le fichier avec les commentaires initiaux.
+            writer.write(comments.toString());
             for (Map.Entry<String, String> entry : configMap.entrySet()) {
-                String section = "[" + entry.getKey().split("\\.")[0] + "]";
-                if (!comments.toString().contains(section)) {
-                    writer.write("\n" + section + "\n");
-                }
                 writer.write(entry.getKey() + " : " + entry.getValue() + "\n");
             }
         }
     }
 
+    // Configuration par défaut
     private String getDefaultConfig() {
         return """
             [General]
@@ -71,6 +78,7 @@ public class ConfigManager {
             # Permet de s'abonner a toutes les salles comportant des capteurs à l'iut
             # Valeurs possibles {on, off}
             subscribe_all : off
+            salles : ''
 
             [Panneaux Solaires]
             # Permet de s'abonner au topic des panneaux solaires
@@ -78,20 +86,11 @@ public class ConfigManager {
             subscribe_all : off
 
             [Seuils Alerte]
-            # Définit la valeur minimum et maximum pour chaque type de données toutes les valeurs en dehors de l'interval [min, max]
-            # seront enregistrées dans un dossier spécifique regroupant toutes les mesures au dessus ou en dessous d'un seuil d'alerte min ou max
+            # Définit la valeur minimum et maximum pour chaque type de données
             co2Min : 400
             co2Max : 1000
-            temperatureMin : 80
-            temperatureMax : 0
-            humidityMin : 40
-            humidityMax : 60
-            activityMin : 0
-            activityMax : 100
+            temperatureMin : 13
+            temperatureMax : 27
             """;
-    }
-
-    public String readConfig(String key) {
-        return configMap.getOrDefault(key, "");
     }
 }

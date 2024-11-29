@@ -1,6 +1,10 @@
 package application.view;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import application.ConfigManager;
 import application.LaunchApp;
 import javafx.collections.FXCollections;
@@ -9,12 +13,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.stage.Stage;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 
 public class configViewController {
 
@@ -62,6 +66,8 @@ public class configViewController {
             "B105", "Foyer-etudiants-entrée", "C101", "B111", "B113", "E006",
             "E104", "E209", "E003");
 
+    private final Set<String> selectedSalles = new HashSet<>();
+
     @FXML
     private void initialize() {
         try {
@@ -81,22 +87,34 @@ public class configViewController {
                 listCapteur.setDisable(false);
             }
 
-            // Initialiser les boutons radio pour les panneaux solaires
-            String subscribeAllPanneaux = configManager.readConfig("Panneaux Solaires.subscribe_all");
-            if ("on".equalsIgnoreCase(subscribeAllPanneaux)) {
-                btnOuiPanneau.setSelected(true);
-            } else {
-                btnNonPanneau.setSelected(true);
+            // Charger les salles sélectionnées
+            String existingSalles = configManager.readConfig("Capteurs.salles");
+            if (!existingSalles.isEmpty()) {
+                String[] salles = existingSalles.replace("'", "").split(", ");
+                Collections.addAll(selectedSalles, salles);
             }
 
-            // Charger les salles dans la ListView
+            // Configurer la ListView avec des CheckBox
+            FXCollections.sort(sallesCapteurs);
             listCapteur.setItems(sallesCapteurs);
+            listCapteur.setCellFactory(CheckBoxListCell.forListView(item -> {
+                BooleanProperty checked = new SimpleBooleanProperty(selectedSalles.contains(item));
+                checked.addListener((obs, wasChecked, isNowChecked) -> {
+                    if (isNowChecked) {
+                        selectedSalles.add(item);
+                    } else {
+                        selectedSalles.remove(item);
+                    }
+                    updateSallesInConfig();
+                });
+                return checked;
+            }));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // Ajouter des listeners pour les modifications en temps réel
+        // Listeners pour les champs texte
         hote.textProperty().addListener((observable, oldValue, newValue) -> {
             configManager.updateConfig("General.host", newValue);
             saveConfig();
@@ -123,16 +141,17 @@ public class configViewController {
         saveConfig();
     }
 
-    @FXML
-    private void handleAddCapteur() {
-        String selectedSalle = listCapteur.getSelectionModel().getSelectedItem();
-        if (selectedSalle != null) {
-            String existingSalles = configManager.readConfig("Capteurs.salles");
-            if (!existingSalles.contains(selectedSalle)) {
-                String updatedSalles = existingSalles.isEmpty() ? "'" + selectedSalle + "'" : existingSalles + ", '" + selectedSalle + "'";
-                configManager.updateConfig("Capteurs.salles", updatedSalles);
-                saveConfig();
-            }
+    private void updateSallesInConfig() {
+        String updatedSalles = String.join(", ", selectedSalles).replaceAll("([^,]+)", "'$1'");
+        configManager.updateConfig("Capteurs.salles", updatedSalles);
+        saveConfig();
+    }
+
+    private void saveConfig() {
+        try {
+            configManager.saveConfig();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -148,14 +167,6 @@ public class configViewController {
             stage.show();
 
             ((Stage) btnAlerte.getScene().getWindow()).close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void saveConfig() {
-        try {
-            configManager.saveConfig();
         } catch (IOException e) {
             e.printStackTrace();
         }
