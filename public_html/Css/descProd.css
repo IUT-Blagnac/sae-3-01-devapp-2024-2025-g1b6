@@ -4,6 +4,7 @@
     --medium-purple: #8A2BE2;
     --light-purple: #e6d1f2;
     --accent-pink: #FF69B4;
+    --backpurple: #d3bce6;
     --white: #FFFFFF;
     --light-gray: #F0F0F0;
 }
@@ -16,6 +17,21 @@ body {
     background-color: var(--light-gray);
 }
 
+.imgLoc {
+    position: relative;
+    left: 97em;
+}
+
+.imgPanier {
+    position: relative;
+    left: 97em;
+}
+
+.imgCompte {
+    position: relative;
+    left: 97em;
+}
+
 
 
 /* Contenu principal */
@@ -23,7 +39,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background-color: var(--white);
+    background-color: var(--backpurple);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 20px;
@@ -97,6 +113,7 @@ body {
     background-color: var(--light-purple);
     border-radius: 10px;
     text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .product-details h1 {
@@ -147,19 +164,25 @@ body {
 }
 
 .tab-link {
-    background-color: var(--light-purple);
-    color: var(--dark-purple);
+    color: var(--medium-purple);
+    border: 2px solid var(--light-gray);
+    border-radius: 2em;
+    background-color: var(--light-gray);
     padding: 10px;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-right: 5px;
     border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .tab-link:hover {
-    background: var(--dark-purple);
-    color: var(--accent-pink);
+    background: var(--clair-purple);
+    transition: background 0.3s;
+    cursor: pointer;
+    color: var(--white);
+    border-color: var(--clair-purple);
 }
 
 .tab-link.active {
