@@ -84,15 +84,8 @@ Ici nous avons la page de desciption d'un produit en particulier qui affiche plu
 
 image::/images/CharteGraphique_WEB/panier.png[] 
 
-La page panier permet de visualiser le panier du client. Elle permet à l'utilisateur de sélectionner les différents produits de son panier et cela affiche le total à payer en fonction. Depuis là, le client peut voyager vers la page de paiement en cliquant sur le bouton adéquat.  +
+La page panier permet de visualiser le panier du client. Elle permet à l'utilisateur de sélectionner les différents produits de son panier et cela affiche le total à payer en fonction. Depuis là, le client peut continuer vers le paiement du produit en suivant toutes les étapes.  +
 
-'''
-
-- La page depaiement : +
-
-image::/images/CharteGraphique_WEB/paiement.png[] 
-
-La page de paiement permet à l'utilisateur de payer son panier en choisissant toutes les informations, telles que la livraison ou la récupération en magasin. +
 '''
 
 - La page de connexion : +
