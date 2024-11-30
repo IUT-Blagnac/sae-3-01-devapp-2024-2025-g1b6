@@ -1,115 +1,87 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Css/panier.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panier Page</title>
+  <link rel="stylesheet" href="../Css/paiement.css">
     <link rel="stylesheet" href="../Css/all.css">
-    <title>Panier</title>
 </head>
 <body>
 
-    <!-- Barre de navigation -->
     <header class="header">
         <div class="barreMenu">
             <ul class="menuListe">
-                <li> <div class="imgMenu" id="menuToggle"></div> </li>
                 <li> <a class="lienAccueil" href="index.html"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
-                <li> <div class="imgLoc"></div> </li>
+                <li> <div class="imgLoc"></div> </li>   
                 <li> <a href="connexion.html"><div class="imgCompte"></div></a> </li>
             </ul>
         </div>
+
+        <div class="nav">
+        <div class="tab active">Panier</div>
+        <div class="tab">Identification</div>
+        <div class="tab">Livraison</div>
+        <div class="tab">Paiement</div>
+        </div>
     </header>
 
+    <!-- Breadcrumb and Cart -->
+    <main class="container">
 
-    <main>
-        <div class="container">
-            <div class="titrePanier">Votre panier contient 1 produit</div>
-            <div class="contenuPanier">
-                <div class="produits">
-                    <ul>
-                        <li><div class="prodPanier">
-                            <h3>Nerf Fortnite edition 2024</h3>
-                            <p>31779 - Marque : XYZ - Dès 5 ans</p>
-                            <img class="imgNerf" src="../images/nerfFortnite.jpg" alt="nerfFortnite">
-                            <div class="checkboxPanier">
-                                <label for="nerfFortnite">Sélectionner</label>
-                                <input type="checkbox" id="nerfFortnite" name="nerfFortnite" checked>
-                            </div>
-                        </div> </li>
-                    </ul>
-                </div>
+        <div class="cartContainer">
+        <!-- Product List Section -->
+        <div class="productList">
+            <div class="cartHeader">
+            <h2 class="cartTitle">Panier</h2>
+            <button class="clearCartButton">Vider le panier</button>
             </div>
-
-            <div class="sidebar">
-                <div class="resumePanier">
-                    <h4>Résumé du panier</h4>
-                    <div class="sousTotal">
-                        <p>Sous-total</p>
-                        <p>29.99 €</p>
-                    </div>
-                    <div class="livraison">
-                        <p>Livraison</p>
-                        <p>Gratuit</p>
-                    </div>
-                    <div class="total">
-                        <p>Total</p>
-                        <p>29.99 €</p>
-                    </div>
-                    <a href="paiement.html"><button class="btnPaiement">Paiement</button></a> 
-                </div>
+            <div class="product">
+            <div class="productImage">
+                <img src="../images/nerfFortnite.jpg" alt="Nerf Fortnite edition 2024">
+            </div>
+            <div class="productDetails">
+                <h3>Nerf Fortnite edition 2024</h3>
+                <p>31779 - Marque : XYZ - Dès 5 ans</p>
+                <p>Livraison</p>
+            </div>
+            <div class="productQuantity">
+                <button>-</button>
+                1
+                <button>+</button>
+            </div>
+            <div class="productPrice">
+            29.99 €
+            </div>
+            </div>
         </div>
 
-
+        <!-- Sidebar Section -->
+        <div class="sidebar">
+            <h4>Nerf Fortnite edition 2024</h4>
+            <p>31779 - Marque : XYZ - Dès 5 ans</p>
+            <div class="priceSummary">
+            <button class="btn subtotal">Sous-total</button>
+            <span class="price">29.99 €</span>
+            </div>
+            <button class="btn retrait">Retrait magasin</button>
+            <button class="btn validate">Valider le panier</button>
+            <div class="paymentSecurity">
+            <p>Paiement 100% sécurisé</p>
+            <div class="paymentIcons">
+                <img src="../images/visa.png" alt="Visa">
+                <img src="../images/mastercard.png" alt="MasterCard">
+                <img src="../images/paypal.png" alt="PayPal">
+            </div>
+            </div>
+        </div>
+        </div>
     </main>
 
 
-
-
-
-
-<!-- Pied de page -->
-    <footer class="footer">
-        <div class="footer-column">
-            <h3>Qui sommes-nous ?</h3>
-            <ul>
-                <li><a href="#">Ludorama.com</a></li>
-                <li><a href="#">Nos magasins</a></li>
-                <li><a href="#">Cartes cadeaux</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>En ce moment</h3>
-            <ul>
-                <li><a href="#">Ambiance de Noël</a></li>
-                <li><a href="#">Nouveautés</a></li>
-                <li><a href="#">Rejoignez LudiSphere !</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Marques</h3>
-            <ul>
-                <li><a href="#">Lego</a></li>
-                <li><a href="#">Playmobil</a></li>
-                <li><a href="#">Jurassic Park</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Personnages jouets</h3>
-            <ul>
-                <li><a href="#">Pokemon</a></li>
-                <li><a href="#">Tous les personnages</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Nos sites</h3>
-            <ul>
-                <li><a href="#">France</a></li>
-                <li><a href="#">Allemagne</a></li>
-                <li><a href="#">Tous nos sites</a></li>
-            </ul>
-        </div>
-    </footer>
-    
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Magasin Environnement Contactez-nous Conditions générales de vente ... Utilisation cookies</p>
+  </footer>
 </body>
 </html>

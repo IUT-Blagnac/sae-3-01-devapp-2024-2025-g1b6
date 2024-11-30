@@ -66,7 +66,7 @@ body {
 
 .jeuCDC {
     position: relative;
-    background-color: var(--clair-purple);
+    background-color: var(--backpurple);
     margin-right: 5em;
     width: 16em;
     height: 18em;
@@ -82,7 +82,7 @@ body {
 }
 
 .jeuCDC:hover {
-    box-shadow: 0 0 10px var(--medium-purple);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
 
@@ -165,7 +165,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    background: var(--medium-purple);
+    background: var(--clair-purple);
     word-spacing: 2em;
 }
 
@@ -382,9 +382,10 @@ main {
 }
 
 .hero-section h1 {
-    font-size: 32px;
+    font-size: 4em;
     font-weight: bold;
     margin-bottom: 10px;
+    color: var(--medium-purple);
 }
 
 .hero-section p {

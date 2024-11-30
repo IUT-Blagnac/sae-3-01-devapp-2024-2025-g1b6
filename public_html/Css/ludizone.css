@@ -6,6 +6,7 @@
     --medium-purple: #8A2BE2;
     --light-purple: #e6d1f2;
     --accent-pink: #FF69B4;
+    --backpurple: #d3bce6;
     --white: #FFFFFF;   
     --light-gray: #F0F0F0;
 }
@@ -68,11 +69,12 @@
 
 .titreLudizone {
     position: relative;
-    left: 35%;
+    left: 25%;
     padding: 0.1em;
     width: 16em;
-    font-size: 2em;
+    font-size: 2.5em;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: var(--medium-purple);
 }
 
 .coupDeCoeur {
@@ -109,7 +111,7 @@
 
 .jeuCDC {
     position: relative;
-    background-color: var(--clair-purple);
+    background-color: var(--backpurple);
     margin-right: 5em;
     width: 16em;
     height: 18em;
@@ -125,7 +127,7 @@
 }
 
 .jeuCDC:hover {
-    box-shadow: 0 0 10px var(--medium-purple);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
 
@@ -208,8 +210,8 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    background: var(--medium-purple);
-    word-spacing: 2em;
+    background: var(--clair-purple);
+    word-spacing: 2em;  
 }
 
 .elementDispo {
@@ -258,11 +260,11 @@
     width: 80em;
     overflow-x: scroll;
     overflow-y: hidden;
-    white-space: nowrap;
+    white-space: nowrap;    
 }
 
 .ludiEvent::-webkit-scrollbar {
-    height: 0.5em;
+    height: 0.3em;
 }
 
 .ludiEvent::-webkit-scrollbar-thumb {

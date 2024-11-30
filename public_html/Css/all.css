@@ -5,6 +5,7 @@
     --medium-purple: #8A2BE2;
     --light-purple: #e6d1f2;
     --accent-pink: #FF69B4;
+    --backpurple: #d3bce6;
     --white: #FFFFFF;   
     --light-gray: #F0F0F0;
 }
@@ -61,7 +62,6 @@ html::-webkit-scrollbar-thumb {
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 .barreMenu {
@@ -146,8 +146,8 @@ html::-webkit-scrollbar-thumb {
     margin-top: 1em;
     margin-left: 1em;
 
-    width: 2.5em;
-    height: 2.5em;
+    width: 3em;
+    height: 3em;
     background-size: cover;
     background-repeat: no-repeat;
     position: relative;
@@ -166,11 +166,72 @@ html::-webkit-scrollbar-thumb {
 }
 
 
-/* test menu déroulant*/
+.burger {
+    position: relative;
+    width: 3.2em;
+    height: 2.5em;
+    background: transparent;
+    cursor: pointer;
+    display: block;
+    top: 0.6em;
+    margin-right: 0.5em;
+}
+
+.burger input {
+    display: none;
+}
+
+.burger span {
+    display: block;
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    background: var(--white);
+    border-radius: 9px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: 0.25s ease-in-out;
+}
+
+.burger span:nth-of-type(1) {
+    top: 0px;
+    transform-origin: left center;
+}
+
+.burger span:nth-of-type(2) {
+    top: 50%;
+    transform: translateY(-50%);
+    transform-origin: left center;
+}
+
+.burger span:nth-of-type(3) {
+    top: 100%;
+    transform-origin: left center;
+    transform: translateY(-100%);
+}
+
+.burger input:checked ~ span:nth-of-type(1) {
+    transform: rotate(45deg);
+    top: 0px;
+    left: 5px;
+}
+
+.burger input:checked ~ span:nth-of-type(2) {
+    width: 0%;
+    opacity: 0;
+}
+
+.burger input:checked ~ span:nth-of-type(3) {
+    transform: rotate(-45deg);
+    top: 28px;
+    left: 5px;
+}
+
 .categories {
-    overflow-y: auto; /* Active un défilement uniquement si nécessaire */
-    position: absolute; /* Positionne par rapport à l'élément parent */
-    top: 4em; /* Ajuste en fonction de ton design */
+    overflow-y: auto;
+    position: absolute;
+    top: 4em;
     left: 0;
     background-color: var(--clair-purple);
     list-style-type: none;
@@ -178,21 +239,20 @@ html::-webkit-scrollbar-thumb {
     padding: 0;
     border: 1px solid var(--light-gray);
     border-radius: 5px;
-    width: 10em;
-    max-height: 20em; /* Limite la hauteur pour éviter un débordement excessif */
+    width: 13em;
+    max-height: 20em;
     z-index: 1000;
-    display: none; /* Caché par défaut */
+    display: none;
 }
 
-.categories.visible {
-    display: block; /* Affiche tous les enfants */
+.burger input:checked ~ .categories {
+    display: block;
 }
 
 .categories li {
-    z-index: 1000;
     padding: 0.5em;
     text-align: left;
-    white-space: nowrap; /* Empêche le texte de se couper */
+    white-space: nowrap;
     transition: background 0.3s;
 }
 

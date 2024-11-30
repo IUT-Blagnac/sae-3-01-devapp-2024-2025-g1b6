@@ -15,14 +15,18 @@
 <header class="header">
     <div class="barreMenu">
         <ul class="menuListe">
-            <li> <div class="imgMenu" id="menuToggle">
-                <ul class="categories hidden">
-                    <li><a href="#">Catégorie 1</a></li>
-                    <li><a href="#">Catégorie 2</a></li>
-                    <li><a href="#">Catégorie 3</a></li>
-                    <li><a href="#">Catégorie 4</a></li>
-                </ul>   
-            </div> </li>
+            <li> <label class="burger" for="burgerToggle">
+                <input type="checkbox" id="burgerToggle">
+                <ul class="categories">
+                  <li><a href="#">Catégorie 1</a></li>
+                  <li><a href="#">Catégorie 2</a></li>
+                  <li><a href="#">Catégorie 3</a></li>
+                  <li><a href="#">Catégorie 4</a></li>
+                </ul>
+                <span></span>
+                <span></span>
+                <span></span>
+              </label> </li>
             <li> <a class="lienAccueil" href="index.html"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
             <li> <input class="barreRecherche" type="text" placeholder="Barre de recherche ..."> </li>
             <li> <div class="imgLoc"></div> </li>
@@ -207,6 +211,28 @@
         </ul>
     </div>
 </footer> 
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const burgerToggle = document.getElementById('burgerToggle');
+    const categoriesMenu = document.querySelector('.categories');
+
+    // Fermer le menu déroulant si on clique ailleurs
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('.burger')) {
+            burgerToggle.checked = false; // Décocher la checkbox pour fermer le menu
+        }
+    });
+
+    // Empêcher le clic sur le menu burger de se propager
+    burgerToggle.addEventListener('click', (event) => {
+        event.stopPropagation();
+    });
+});
+</script>
+
+
 
 </body>
 

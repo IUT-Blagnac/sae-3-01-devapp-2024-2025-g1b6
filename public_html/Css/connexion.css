@@ -5,13 +5,20 @@
     --medium-purple: #8A2BE2;
     --light-purple: #e6d1f2;
     --accent-pink: #FF69B4;
+    --backpurple: #d3bce6;
     --white: #FFFFFF;
     --light-gray: #F0F0F0;
 }
 
 
 .imgLoc {
-    margin-left: 98em;
+    position: relative;
+    left: 97em;
+}
+
+.imgPanier {
+    position: relative;
+    left: 97em;
 }
 
 .container {
@@ -28,7 +35,7 @@
     align-items: center;
     justify-content: center;
     margin-top: 5em;
-    background-color: var(--clair-purple);
+    background-color: var(--backpurple);
     width: 30em;
     height: 40em;
     border-radius: 3em;
@@ -49,7 +56,7 @@
     position: relative;
     margin-top: 0.4em;
     background: transparent;
-    color: var(--white);
+    color: var(--medium-purple);
     height: 3em;
     left: 30%;
     margin-top: -1em;
