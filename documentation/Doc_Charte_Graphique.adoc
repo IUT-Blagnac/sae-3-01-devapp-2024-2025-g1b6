@@ -32,7 +32,12 @@ Pour développer le site Ludorama une palette de couleur nous a été imposer : 
     --white: #FFFFFF +
     --light-gray: #F0F0F0 +
 
-== 3. Copie écran et explication
+== 3. Schéma d'enchaînement des pages 
+
+image::/documentation/diagramme/diagramme_navigation.png[]
+
+
+== 4. Copie écran et explication
 Analysons maintenant les copies écran du site Ludorama et expliquons les choix graphiques qui ont été faits. +
 (noter que toutes les pages n'ont pas encore été développer étant donnée que nous avons simplement fais la charte graphique du site, puisque nous n'avions pas les codes du serveur php)
 
@@ -104,7 +109,7 @@ Une fois la connexion effectuée ou le compte créé, l'utilisateur est redirig�
 
 '''
 
-== Conclusion 
+== 5. Conclusion 
 
 Tout ce qui vous a été présenté n'est que la cahrte graphique et c'est pourquoi toutes les pages ne sont pas présentes ou encore pourquoi il manque certains éléments. N'ayant pas encore les codes de connexion au serveur php nous n'avons pas pu afficher convenablement les produits de notre base de données. +
 Le site actuel n'est donc qu'une maquette faites uniquement en HTML et CSS, dont l'entiéreté du code et toutes les pages peuvent être retrouvé dans la branche "WEB" de notre github.
