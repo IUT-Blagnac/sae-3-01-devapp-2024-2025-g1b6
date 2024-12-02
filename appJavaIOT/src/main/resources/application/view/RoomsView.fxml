@@ -47,7 +47,7 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="btnVoirMesures" mnemonicParsing="false" text="Voir les dernières mesures" textOverrun="CENTER_ELLIPSIS" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                <Button fx:id="btnVoirMesures" mnemonicParsing="false" onAction="#onBtnVoirMesures" text="Voir les dernières mesures" textOverrun="CENTER_ELLIPSIS" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                     <GridPane.margin>
                                         <Insets bottom="10.0" top="10.0" />
                                     </GridPane.margin>
@@ -55,7 +55,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Button>
-                                <Button fx:id="btnVoirGraphiques" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Voir graphiques" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                <Button fx:id="btnVoirGraphiques" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBtnVoirGraphiques" text="Voir graphiques" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
@@ -73,7 +73,7 @@
     <bottom>
         <HBox prefHeight="75.0" prefWidth="734.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnRetour" mnemonicParsing="false" text="Retour Page d'accueil">
+                <Button fx:id="btnRetour" mnemonicParsing="false" onAction="#onBtnRetour" text="Retour Page d'accueil">
                     <font>
                         <Font size="15.0" />
                     </font>
