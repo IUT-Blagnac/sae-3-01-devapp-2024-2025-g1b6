@@ -61,6 +61,29 @@ public class AccueilViewController {
     }
 
 
+    
+    private int testerConnexion(){
+        int exitCode = null;
+        try {
+            // Commande pour exécuter le script Python
+            String[] command = {"python3", "script.py"};
+
+            // Créer le processus
+            ProcessBuilder pb = new ProcessBuilder(command);
+            Process process = pb.start();
+
+            // Attendre que le processus se termine et obtenir le code de retour
+            exitCode = process.waitFor();
+            return exitCode;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return exitCode;
+    }
+
+
     @FXML
     private void actionTesterCo() {
         Stage newStage = new Stage();

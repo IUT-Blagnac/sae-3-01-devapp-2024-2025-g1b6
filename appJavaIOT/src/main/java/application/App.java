@@ -6,7 +6,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import iut.view.AccueilViewController;
 
@@ -18,8 +20,9 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         this.primaryStage = stage;
 
+        
         // Chargement du fichier FXML
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/iut/view/accueilView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/accueilView.fxml"));
         BorderPane root = loader.load();
 
         // Configuration de la scène
