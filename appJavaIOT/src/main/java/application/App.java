@@ -1,4 +1,4 @@
-package iut;
+package application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import iut.view.AccueilViewController;
+import application.view.AccueilViewController;
 
 public class App extends Application {
 

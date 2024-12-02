@@ -1,4 +1,4 @@
-package iut.view;
+package application.view;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import iut.App;
+import application.App;
 
 
 public class AccueilViewController {
@@ -63,42 +63,40 @@ public class AccueilViewController {
 
     
     private int testerConnexion(){
-        int exitCode = null;
-        try {
-            // Commande pour exécuter le script Python
-            String[] command = {"python3", "script.py"};
+        int exitCode = -1; 
+    try {
+        String[] command = {"python3", "../Python/script.py"};
 
-            // Créer le processus
-            ProcessBuilder pb = new ProcessBuilder(command);
-            Process process = pb.start();
+        ProcessBuilder pb = new ProcessBuilder(command);
+        Process process = pb.start();
 
-            // Attendre que le processus se termine et obtenir le code de retour
-            exitCode = process.waitFor();
-            return exitCode;
+        exitCode = process.waitFor();
+    } catch (IOException | InterruptedException e) {
+        e.printStackTrace();
+    }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return exitCode;
+    return exitCode;
     }
 
 
     @FXML
     private void actionTesterCo() {
-        Stage newStage = new Stage();
-        newStage.setTitle("Tester MQTT");
+        int result = testerConnexion();
 
-        Button btn = new Button("Fermer");
-        btn.setOnAction(event -> newStage.close());
+        // Préparer une alerte pour afficher le résultat
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Résultat de la connexion MQTT");
 
-        javafx.scene.layout.VBox vbox = new javafx.scene.layout.VBox(btn);
-        vbox.setAlignment(javafx.geometry.Pos.CENTER);
-        vbox.setPadding(new javafx.geometry.Insets(10));
+        if (result == 0) {
+            alert.setHeaderText("Connexion réussie !");
+            alert.setContentText("La connexion au serveur MQTT a été établie avec succès.");
+        } else {
+            alert.setHeaderText("Échec de la connexion");
+            alert.setContentText("Une erreur est survenue lors de la connexion au serveur MQTT.\n"
+                                + "Code de retour : " + result);
+        }
 
-        javafx.scene.Scene scene = new javafx.scene.Scene(vbox, 300, 200);
-        newStage.setScene(scene);
-        newStage.show();
+        alert.showAndWait();
     }
 
     @FXML
