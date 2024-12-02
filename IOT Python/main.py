@@ -1,10 +1,13 @@
 import json
 import os
+import sys
 
 import paho.mqtt.client as mqtt
 from configparser import ConfigParser
 import threading
 import time
+
+
 
 # Création d'un objet ConfigParser pour lire le fichier de configuration
 parser = ConfigParser()
@@ -12,6 +15,8 @@ parser.read('config.ini')
 
 # Récupération de l'hôte à partir du fichier de configuration
 host = parser.get('General', 'host')
+
+
 
 # Tableau contenant les topics MQTT à souscrire
 tabTopics = []
@@ -61,9 +66,16 @@ def on_connect(client, userdata, flags, reason_code, properties=None):
         reason_code (int): Le code de résultat de la connexion.
         properties: Les propriétés de connexion (non utilisé).
     """
-    print(f"Connected with result code {reason_code}")
-    # Souscrit aux topics spécifiés dans tabTopics
-    client.subscribe(tabTopics)
+    if reason_code == 0:
+        if len(sys.argv) and sys.argv[1] == 'conTest':
+            exit(0)
+        print(f"Connected with result code {reason_code}")
+        # Souscrit aux topics spécifiés dans tabTopics
+        client.subscribe(tabTopics)
+    else:
+        if len(sys.argv) and sys.argv[1] == 'conTest':
+            exit(1)
+        print(f"Connected with result code {reason_code}")
 
 
 def on_message(client, userdata, msg):
