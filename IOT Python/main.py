@@ -67,13 +67,13 @@ def on_connect(client, userdata, flags, reason_code, properties=None):
         properties: Les propriétés de connexion (non utilisé).
     """
     if reason_code == 0:
-        if len(sys.argv) and sys.argv[1] == 'conTest':
+        if len(sys.argv) == 2 and sys.argv[1] == 'conTest':
             exit(0)
         print(f"Connected with result code {reason_code}")
         # Souscrit aux topics spécifiés dans tabTopics
         client.subscribe(tabTopics)
     else:
-        if len(sys.argv) and sys.argv[1] == 'conTest':
+        if len(sys.argv) == 2 and sys.argv[1] == 'conTest':
             exit(1)
         print(f"Connected with result code {reason_code}")
 
@@ -113,7 +113,7 @@ def write_data(path, di):
 
     try:
         # Ouvre le fichier JSON correspondant en mode lecture-écriture
-        with open(path, 'r+') as f:
+        with open(path, 'r+', encoding='utf-8') as f:
             # Charge les données existantes
             data = json.load(f)
             # Ajoute le nouveau message aux données
@@ -125,7 +125,7 @@ def write_data(path, di):
     except (json.decoder.JSONDecodeError, FileNotFoundError):
         # Si le fichier est vide, corrompu ou n'existe pas, crée une nouvelle liste de données
         data = [di]
-        with open(path, 'w') as f:
+        with open(path, 'w', encoding='utf-8') as f:
             json.dump(data, f)
 
 
