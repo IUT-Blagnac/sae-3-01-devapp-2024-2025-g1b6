@@ -34,15 +34,15 @@
                <children>
                   <MenuButton fx:id="typeDonnees" mnemonicParsing="false" text="Type de données">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="CO2" />
-                      <MenuItem mnemonicParsing="false" text="Température" />
-                        <MenuItem mnemonicParsing="false" text="Humidité" />
-                        <MenuItem mnemonicParsing="false" text="Activité" />
-                        <MenuItem mnemonicParsing="false" text="COV" />
-                        <MenuItem mnemonicParsing="false" text="Eclairage" />
-                        <MenuItem mnemonicParsing="false" text="Infrarouge" />
-                        <MenuItem mnemonicParsing="false" text="Infrarouge et visible" />
-                        <MenuItem mnemonicParsing="false" text="Pression" />
+                      <MenuItem fx:id="menuCo2" mnemonicParsing="false" text="CO2" />
+                      <MenuItem fx:id="menuTemperature" mnemonicParsing="false" text="Température" />
+                        <MenuItem fx:id="menuHumidity" mnemonicParsing="false" text="Humidité" />
+                        <MenuItem fx:id="menuActivity" mnemonicParsing="false" text="Activité" />
+                        <MenuItem fx:id="menuTvoc" mnemonicParsing="false" text="COV" />
+                        <MenuItem fx:id="menuIllumination" mnemonicParsing="false" text="Eclairage" />
+                        <MenuItem fx:id="menuInfrared" mnemonicParsing="false" text="Infrarouge" />
+                        <MenuItem fx:id="menuInfraredAndVisible" mnemonicParsing="false" text="Infrarouge et visible" />
+                        <MenuItem fx:id="menuPressure" mnemonicParsing="false" text="Pression" />
                     </items>
                   </MenuButton>
                </children>
@@ -50,7 +50,7 @@
             <Label text="Seuil minimum" />
             <TextField fx:id="seuilsMin" />
             <Label layoutX="10.0" layoutY="27.0" text="Seuil maximum" />
-            <TextField fx:id="SeuilMax" layoutX="10.0" layoutY="44.0" />
+            <TextField fx:id="seuilsMax" layoutX="10.0" layoutY="44.0" />
          </children>
       </VBox>
    </center>
