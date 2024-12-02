@@ -43,7 +43,7 @@
 
 .imgProfil {
     position: relative;
-    background-image: url("../Images/Profil.png");
+    background-image: url("../images/Profil.png");
     left: 27%;
     top: -3%;
     background-size: cover;

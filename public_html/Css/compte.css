@@ -57,7 +57,7 @@
 
 .imgProfil{
     position: relative;
-    background-image: url("../Images/Profil.png");
+    background-image: url("../images/Profil.png");
     left: 27%;
     top: -3%;
     background-size: cover;
@@ -145,7 +145,7 @@
 
 .imgCommande {
     position: relative;
-    background-image: url("../Images/Commande.png");
+    background-image: url("../images/Commande.png");
     left: 38%;
     top: 1%;
     background-size: cover;

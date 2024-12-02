@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Css/all.css">
-    <link rel="stylesheet" href="../Css/compte.css">
-    <title>Compte</title>
+    <link rel="stylesheet" href="Css/inscription.css">
+    <link rel="stylesheet" href="Css/all.css">
+    <title>Inscription</title>
 </head>
 <body>
     
@@ -23,42 +23,40 @@
 
     <main>
         <div class="container">
-            <ul class="listeCompte">
-                <li><div class="compte">
-                        <div class="imgProfil"></div>
-                        <h1 class="titreCompte">Mon compte</h1>
-                        <div class="infosCompte">
-                            <div class="infosPerso">
-                                <div class="infos">
-                                    <p class="info">Nom : Ibrahim </p>
-                                    <p class="info">Prénom : Marwane </p>
-                                    <p class="info">Adresse : 11 Rue du quai</p>
-                                    <p class="info">Code postal : 31300</p>
-                                    <p class="info">Ville : Toulouse </p>
-                                    <p class="info">Téléphone : 06 64 80 54 85</p>
-                                    <p class="info">Email : marwane.prime@gmail.com</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modifier"> Modifier</div>
-                    </div></li>
-                <li>
-                    <div class="commandes">
-                        <div class="imgCommande"></div>
-                        <h1 class="titreCommande">Mes commandes</h1>
-                        <div class="infosCommande">
-                            <ul class="listeCommandes">
-                                <li class="liCommandes">Croque-Carotte</li>
-                                <li class="liCommandes">Monopoly</li>
-                                <li class="liCommandes">Figurine batman</li>
-                                <li class="liCommandes">Voirure</li>
-                            </ul>
-                        </div>     
-                    </div>
-                </li>
-            </ul>
+            <div class="inscription">
+                <h1 class="titreCompte">Créer un compte </h1>
+                <div class="infos">
+                    <form class="formInscription" action="compte.html" method="post">
+                        <label for="nom">Nom</label>
+                        <input class="nom" type="text" id="nom" name="nom" required>
+                        <label for="prenom">Prénom</label>
+                        <input class="nom" type="text" id="prenom" name="prenom" required>
+                        <label for="telephone">Téléphone</label>
+                        <input class="tel" type="text" id="telephone" name="telephone" required>
+                        <br>
+                        <label for="email">Email</label>
+                        <input class="mail" type="email" id="email" name="email" required>
+                        <br>
+                        <label for="dtn">Date de naissance</label>
+                        <input class="dtn" type="date" id="dtn" name="dtn" required>
+                        <br>
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" required>
+                        <br>
+                        <label for="password2">Confirmer le mot de passe</label>
+                        <input type="password" id="password2" name="password2" required>
+                        <a href="compte.html"><button type="submit">Créer un compte</button></a> 
+                    </form>
+                </div>
+                <div class="seConnecter">
+                    <p>Vous avez déjà un compte ?</p>
+                    <a href="connexion.html">Se connecter</a>
+                </div>  
+            </div>
         </div>
     </main>
+
+
 
     <!-- Pied de page -->
     <footer class="footer">
@@ -102,6 +100,7 @@
             </ul>
         </div>
     </footer>
+
 
 </body>
 </html>
