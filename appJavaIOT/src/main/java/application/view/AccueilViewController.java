@@ -104,13 +104,24 @@ public class AccueilViewController {
         Stage newStage = new Stage();
         newStage.setTitle("Lancer");
 
+        // Créer un label pour le titre
+        javafx.scene.control.Label lancerTitre = new javafx.scene.control.Label(
+            "Redirigé vers l'application quand tout sera dans le même fichier"
+        );
+        lancerTitre.setWrapText(true); // Permet le retour à la ligne automatique
+        lancerTitre.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-alignment: center;");
+        lancerTitre.setAlignment(javafx.geometry.Pos.CENTER);
+
+        // Créer un bouton pour fermer la fenêtre
         Button btn = new Button("Fermer");
         btn.setOnAction(event -> newStage.close());
 
-        javafx.scene.layout.VBox vbox = new javafx.scene.layout.VBox(btn);
+        // Ajouter le titre et le bouton dans un VBox
+        javafx.scene.layout.VBox vbox = new javafx.scene.layout.VBox(10, lancerTitre, btn);
         vbox.setAlignment(javafx.geometry.Pos.CENTER);
         vbox.setPadding(new javafx.geometry.Insets(10));
 
+        // Définir la scène et l'afficher
         javafx.scene.Scene scene = new javafx.scene.Scene(vbox, 300, 200);
         newStage.setScene(scene);
         newStage.show();
@@ -134,7 +145,8 @@ private void actionManuel() {
     javafx.scene.control.Label manuelText = new javafx.scene.control.Label(
         "\n"
         + "1. Pour tester la connexion MQTT, cliquez sur le bouton 'Tester la connexion'.\n"
-        + "2. Pour lancer l'application, cliquez sur le bouton 'Lancer'."
+        + "2. Pour lancer l'application, cliquez sur le bouton 'Lancer'.\n"
+        + "3. L'application ne peut pas être lancée si la connexion MQTT ne fonctionne pas correctement.\n"
     );
     manuelText.setWrapText(true); // Permet le retour à la ligne automatique
     manuelText.setStyle("-fx-font-size: 14px; -fx-text-alignment: justify;");
