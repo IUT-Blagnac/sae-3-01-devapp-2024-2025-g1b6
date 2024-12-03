@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iut.view.GraphiquesController">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.GraphiquesController">
     
     <!-- Onglets pour contenir les graphiques générés dynamiquement -->
     <TabPane fx:id="tabPane" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="50.0" 

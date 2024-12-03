@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iut.view.SalleDetailsController">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.SalleDetailsController">
     
     <!-- Onglets pour afficher les graphiques spécifiques à une salle -->
     <TabPane fx:id="tabPaneDetails" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="50.0" 
