@@ -4,20 +4,16 @@ import java.util.Map;
 
 public class Measure {
 
-    private final Map<String, Float> valuesMap;
-    private final Map<String, String> infoMap;
+    private final Map<String, Object> valuesMap;
+    private boolean alertMeasure;
 
-    public Measure (Map<String, Float> pfValMap, Map<String, String> pfInfoMap, int pfFloor){
+    public Measure (Map<String, Object> pfValMap, boolean pfAlertMeasure){
         this.valuesMap = pfValMap;
-        this.infoMap = pfInfoMap;
+        this.alertMeasure = pfAlertMeasure;
     }
 
-    public Map<String, Float> getValues(){
+    public Map<String, Object> getValues(){
         return this.valuesMap;
-    }
-
-    public Map<String, String> getInfo(){
-        return this.infoMap;
     }
 
 }
