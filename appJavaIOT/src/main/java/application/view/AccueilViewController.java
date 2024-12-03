@@ -1,6 +1,9 @@
 package application.view;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -62,31 +65,45 @@ public class AccueilViewController {
 
 
     
-    private int testerConnexion(){
-        int exitCode = -1; 
+    private int testerConnexion() {
+    int exitCode = -1; 
+    Process process = null;
     try {
-        String[] command = {"python3", "../Python/script.py"};
-
+        // Assurez-vous que chaque partie de la commande est bien séparée
+        String[] command = {"python3", "src/main/python/main.py", "conTest"};
         ProcessBuilder pb = new ProcessBuilder(command);
-        Process process = pb.start();
+        pb.redirectErrorStream(true); // Pour rediriger les erreurs dans la sortie standard (utile pour debug)
+        process = pb.start();
 
-        exitCode = process.waitFor();
+        // Lire la sortie du processus pour debug
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line); // Affiche la sortie du script Python
+            }
+        }
+
+        exitCode = process.waitFor(); // Attendre la fin du processus
     } catch (IOException | InterruptedException e) {
         e.printStackTrace();
+    } finally {
+        if (process != null) {
+            process.destroy(); // Arrêter le processus si toujours en cours
+        }
     }
-
+    
     return exitCode;
-    }
+}
 
-
+    
     @FXML
     private void actionTesterCo() {
         int result = testerConnexion();
-
+    
         // Préparer une alerte pour afficher le résultat
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Résultat de la connexion MQTT");
-
+    
         if (result == 0) {
             alert.setHeaderText("Connexion réussie !");
             alert.setContentText("La connexion au serveur MQTT a été établie avec succès.");
@@ -95,9 +112,10 @@ public class AccueilViewController {
             alert.setContentText("Une erreur est survenue lors de la connexion au serveur MQTT.\n"
                                 + "Code de retour : " + result);
         }
-
+    
         alert.showAndWait();
     }
+    
 
     @FXML
     private void actionLancer() {
