@@ -23,6 +23,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Stream;
 
+/**
+ * Contrôleur pour la gestion des graphiques dans l'application.
+ * Ce contrôleur charge les données à partir des fichiers JSON, les affiche sous forme de graphiques et surveille les alertes.
+ */
 public class GraphiquesController {
 
     private Map<String, Map<String, Double>> sensorData = new HashMap<>();
@@ -31,11 +35,15 @@ public class GraphiquesController {
     private volatile boolean running = true;
 
     @FXML
-    private TabPane tabPane;
+    private TabPane tabPane; // Conteneur pour les onglets
 
     @FXML
-    private Button buttonRetour;
+    private Button buttonRetour; // Bouton de retour
 
+    /**
+     * Méthode d'initialisation qui charge les fichiers JSON, crée les graphiques
+     * et lance les threads pour surveiller les alertes et les nouveaux fichiers.
+     */
     public void initialize() {
         try {
             Path dataDir = Paths.get(App.class.getResource("data").toURI());
@@ -70,11 +78,26 @@ public class GraphiquesController {
         }
     }
 
+    /**
+     * Vérifie si le fichier donné se trouve dans le répertoire des alertes.
+     * 
+     * @param baseDir Le répertoire de base des données
+     * @param filePath Le chemin du fichier à vérifier
+     * @return True si le fichier est dans le répertoire des alertes, sinon False
+     */
     private boolean isInAlertDirectory(Path baseDir, Path filePath) {
         Path relativePath = baseDir.relativize(filePath);
         return relativePath.getParent() != null && relativePath.getParent().toString().contains("Alert");
     }
 
+    /**
+     * Charge les données d'un fichier JSON et met à jour la carte des données du capteur.
+     * Si le fichier est un fichier d'alerte, une alerte sera affichée.
+     * 
+     * @param filePath Le chemin du fichier JSON à charger
+     * @param isAlertFile True si c'est un fichier d'alerte, sinon False
+     * @throws IOException Si une erreur de lecture du fichier se produit
+     */
     private void loadJsonData(Path filePath, boolean isAlertFile) throws IOException {
         JsonElement rootElement = JsonParser.parseReader(new FileReader(filePath.toFile()));
 
@@ -109,6 +132,13 @@ public class GraphiquesController {
         }
     }
 
+    /**
+     * Affiche une alerte si les données du fichier d'alerte sont critiques.
+     * 
+     * @param key La clé de la donnée
+     * @param room Le nom de la salle
+     * @param value La valeur de la donnée
+     */
     private void showAlert(String key, String room, double value) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -119,6 +149,11 @@ public class GraphiquesController {
         });
     }
 
+    /**
+     * Surveille le répertoire des alertes et charge les fichiers JSON d'alerte lorsqu'ils sont créés.
+     * 
+     * @param alertDir Le répertoire des alertes à surveiller
+     */
     private void startAlertMonitoring(Path alertDir) {
         alertExecutor = Executors.newSingleThreadExecutor();
 
@@ -168,6 +203,12 @@ public class GraphiquesController {
         });
     }
 
+    /**
+     * Surveille le répertoire des données et charge les fichiers JSON lorsqu'ils sont créés.
+     * Met également à jour les graphiques avec les nouvelles données.
+     * 
+     * @param dataDir Le répertoire des données à surveiller
+     */
     private void startDataMonitoring(Path dataDir) {
         dataExecutor = Executors.newSingleThreadExecutor();
 
@@ -231,6 +272,13 @@ public class GraphiquesController {
         });
     }
 
+    /**
+     * Crée un graphique en fonction du type de donnée (barres ou lignes).
+     * 
+     * @param key La clé de la donnée à afficher
+     * @param data Les données à afficher
+     * @return Le graphique créé (BarChart ou LineChart)
+     */
     private Chart createChart(String key, Map<String, Double> data) {
         if (key.equalsIgnoreCase("pressure") || key.equalsIgnoreCase("temperature")) {
             return createLineChart(key, data); // LineChart pour les séries continues
@@ -239,6 +287,13 @@ public class GraphiquesController {
         }
     }
 
+    /**
+     * Crée un BarChart pour afficher les données sous forme de barres.
+     * 
+     * @param key La clé de la donnée à afficher
+     * @param data Les données à afficher
+     * @return Le BarChart créé
+     */
     private BarChart<String, Number> createBarChart(String key, Map<String, Double> data) {
         BarChart<String, Number> barChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
         barChart.setTitle("Données : " + key);
@@ -254,6 +309,13 @@ public class GraphiquesController {
         return barChart;
     }
 
+    /**
+     * Crée un LineChart pour afficher les données sous forme de lignes.
+     * 
+     * @param key La clé de la donnée à afficher
+     * @param data Les données à afficher
+     * @return Le LineChart créé
+     */
     private LineChart<String, Number> createLineChart(String key, Map<String, Double> data) {
         LineChart<String, Number> lineChart = new LineChart<>(new CategoryAxis(), new NumberAxis());
         lineChart.setTitle("Données : " + key);
@@ -269,11 +331,17 @@ public class GraphiquesController {
         return lineChart;
     }
 
+    /**
+     * Gère le bouton de retour à l'écran précédent.
+     */
     @FXML
     private void handleButtonRetour() {
         System.out.println("Retour à l'écran précédent.");
     }
 
+    /**
+     * Arrête les exécuteurs et libère les ressources utilisées.
+     */
     public void stop() {
         try {
             if (alertExecutor != null && !alertExecutor.isShutdown()) {
