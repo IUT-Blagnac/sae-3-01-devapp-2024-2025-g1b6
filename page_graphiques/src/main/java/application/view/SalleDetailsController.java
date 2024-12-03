@@ -1,4 +1,4 @@
-package iut.view;
+package application.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;

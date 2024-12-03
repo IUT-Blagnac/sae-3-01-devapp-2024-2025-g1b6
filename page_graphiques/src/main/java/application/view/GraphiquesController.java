@@ -1,6 +1,5 @@
-package iut.view;
+package application.view;
 
-import iut.App;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
@@ -8,11 +7,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import application.App;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,19 +27,20 @@ public class GraphiquesController {
 
     private Map<String, Map<String, Double>> sensorData = new HashMap<>();
     private ExecutorService alertExecutor;
+    private ExecutorService dataExecutor;
     private volatile boolean running = true;
 
     @FXML
     private TabPane tabPane;
 
     @FXML
-    private Button buttonretour;
+    private Button buttonRetour;
 
     public void initialize() {
         try {
             Path dataDir = Paths.get(App.class.getResource("data").toURI());
 
-            // Charger les fichiers de données
+            // Charger les fichiers de données existants
             try (Stream<Path> paths = Files.walk(dataDir)) {
                 paths.filter(Files::isRegularFile)
                      .filter(path -> path.toString().endsWith(".json"))
@@ -60,8 +61,10 @@ public class GraphiquesController {
                 tabPane.getTabs().add(tab);
             }
 
-            // Lancer le thread pour surveiller les alertes
+            // Lancer les threads pour surveiller les alertes et les nouveaux fichiers JSON
             startAlertMonitoring(dataDir.resolve("Alert"));
+            startDataMonitoring(dataDir);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -118,17 +121,17 @@ public class GraphiquesController {
 
     private void startAlertMonitoring(Path alertDir) {
         alertExecutor = Executors.newSingleThreadExecutor();
-    
+
         alertExecutor.submit(() -> {
             try {
                 if (!Files.exists(alertDir)) {
                     Files.createDirectories(alertDir);
                 }
-    
+
                 WatchService watchService = FileSystems.getDefault().newWatchService();
                 alertDir.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
-    
-                while (running) { // Utilise le drapeau pour vérifier si le thread doit continuer
+
+                while (running) {
                     WatchKey key;
                     try {
                         key = watchService.poll(); // Utiliser poll() pour éviter le blocage
@@ -140,10 +143,10 @@ public class GraphiquesController {
                         Thread.currentThread().interrupt();
                         break;
                     }
-    
+
                     for (WatchEvent<?> event : key.pollEvents()) {
                         WatchEvent.Kind<?> kind = event.kind();
-    
+
                         if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
                             Path filePath = alertDir.resolve((Path) event.context());
                             Platform.runLater(() -> {
@@ -157,19 +160,79 @@ public class GraphiquesController {
                     }
                     key.reset();
                 }
-    
+
                 watchService.close(); // Fermer proprement le WatchService
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
     }
-    
+
+    private void startDataMonitoring(Path dataDir) {
+        dataExecutor = Executors.newSingleThreadExecutor();
+
+        dataExecutor.submit(() -> {
+            try {
+                WatchService watchService = FileSystems.getDefault().newWatchService();
+                dataDir.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+
+                while (running) {
+                    WatchKey key;
+                    try {
+                        key = watchService.poll(); // Utiliser poll() pour éviter le blocage
+                        if (key == null) {
+                            Thread.sleep(100); // Pause pour éviter de surcharger le CPU
+                            continue;
+                        }
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    }
+
+                    for (WatchEvent<?> event : key.pollEvents()) {
+                        WatchEvent.Kind<?> kind = event.kind();
+
+                        if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
+                            Path filePath = dataDir.resolve((Path) event.context());
+                            Platform.runLater(() -> {
+                                try {
+                                    boolean isAlertFile = isInAlertDirectory(dataDir, filePath);
+                                    loadJsonData(filePath, isAlertFile);
+                                    if (!isAlertFile) {
+                                        // Si ce n'est pas un fichier d'alerte, mettez à jour les graphiques
+                                        updateCharts(filePath);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                        }
+                    }
+                    key.reset();
+                }
+
+                watchService.close(); // Fermer proprement le WatchService
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    /**
+     * Mise à jour des graphiques avec les nouvelles données.
+     */
+    private void updateCharts(Path filePath) {
+        // Pour chaque type de donnée, vous pouvez vérifier et mettre à jour les graphiques correspondants
+        Platform.runLater(() -> {
+            for (Tab tab : tabPane.getTabs()) {
+                // Vous pouvez choisir de mettre à jour les graphiques en fonction du fichier.
+                // Par exemple, en comparant les clés de sensorData avec les noms des onglets.
+            }
+        });
+    }
 
     private Chart createChart(String key, Map<String, Double> data) {
-        if (key.equalsIgnoreCase("humidity") || key.equalsIgnoreCase("tvoc")) {
-            return createPieChart(key, data); // PieChart pour les pourcentages
-        } else if (key.equalsIgnoreCase("pressure") || key.equalsIgnoreCase("temperature")) {
+        if (key.equalsIgnoreCase("pressure") || key.equalsIgnoreCase("temperature")) {
             return createLineChart(key, data); // LineChart pour les séries continues
         } else {
             return createBarChart(key, data); // BarChart par défaut
@@ -206,29 +269,21 @@ public class GraphiquesController {
         return lineChart;
     }
 
-    private PieChart createPieChart(String key, Map<String, Double> data) {
-        PieChart pieChart = new PieChart();
-        pieChart.setTitle("Données : " + key);
-
-        for (Map.Entry<String, Double> entry : data.entrySet()) {
-            pieChart.getData().add(new PieChart.Data(entry.getKey(), entry.getValue()));
-        }
-
-        return pieChart;
-    }
-
     @FXML
     private void handleButtonRetour() {
         System.out.println("Retour à l'écran précédent.");
     }
 
-public void stop() {
-    try {
-        if (alertExecutor != null && !alertExecutor.isShutdown()) {
-            alertExecutor.shutdownNow();
+    public void stop() {
+        try {
+            if (alertExecutor != null && !alertExecutor.isShutdown()) {
+                alertExecutor.shutdownNow();
+            }
+            if (dataExecutor != null && !dataExecutor.isShutdown()) {
+                dataExecutor.shutdownNow();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
     }
-}
 }

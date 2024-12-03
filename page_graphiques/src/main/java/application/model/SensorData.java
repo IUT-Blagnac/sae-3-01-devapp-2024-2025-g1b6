@@ -1,4 +1,4 @@
-package iut.model;
+package application.model;
 
 public class SensorData {
     private double temperature;

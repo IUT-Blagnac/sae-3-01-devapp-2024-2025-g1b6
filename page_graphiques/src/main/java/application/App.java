@@ -1,4 +1,4 @@
-package iut;
+package application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,20 +8,32 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import application.view.GraphiquesController;
+
 /**
  * JavaFX App
  */
 public class App extends Application {
 
     private static Scene scene;
+    private GraphiquesController graphiquesController;
 
     @Override
     public void start(Stage stage) throws IOException {
-        // Charger la scène principale avec le fichier FXML des graphiques
-        scene = new Scene(loadFXML("view/graphiques"), 800, 600); // Ajustez la taille selon vos besoins
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("view/graphiques.fxml"));
+        Parent root = fxmlLoader.load();
+        graphiquesController = fxmlLoader.getController(); // Récupérer le contrôleur
+
+        scene = new Scene(root, 800, 600); // Ajustez la taille selon vos besoins
         stage.setScene(scene);
         scene.getStylesheets().add(App.class.getResource("css/styles.css").toExternalForm());
         stage.setTitle("Application de Graphiques");
+
+        stage.setOnCloseRequest(event -> {
+            graphiquesController.stop(); // Arrêter les threads du contrôleur
+            System.exit(0); // Forcer la fermeture complète de l'application
+        });
+
         stage.show();
     }
 
@@ -37,5 +49,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }

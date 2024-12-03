@@ -1,11 +1,12 @@
-package iut.util;
+package application.util;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import iut.model.SensorData;
-import iut.model.DeviceMetaData;
+
+import application.model.DeviceMetaData;
+import application.model.SensorData;
 
 import java.io.FileReader;
 import java.io.IOException;
