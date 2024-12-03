@@ -1,0 +1,196 @@
+/* Palette de couleurs */
+:root {
+    --dark-purple: linear-gradient(#6d00b0, #b06bdc);
+    --clair-purple: #c267ff;
+    --medium-purple: #8A2BE2;
+    --light-purple: #e6d1f2;
+    --accent-pink: #FF69B4;
+    --backpurple: #d3bce6;
+    --white: #FFFFFF;
+    --light-gray: #F0F0F0;
+}
+
+.imgLoc {
+    position: relative;
+    left: 97em;
+}
+
+.imgPanier {
+    position: relative;
+    left: 97em;
+}
+
+.lienAccueil {
+    text-decoration: none;
+}
+
+.container {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: -4em;
+}
+
+
+.listeCompte {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5em;
+}
+
+
+.compte{
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5em;
+    background-color:var(--backpurple);
+    width: 30em;
+    height: 40em;
+    border-radius: 3em;
+}
+
+.imgProfil{
+    position: relative;
+    background-image: url("../images/Profil.png");
+    left: 27%;
+    top: -3%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 13em;
+    height: 13em;
+}
+
+.titreCompte{
+    position: relative;
+    text-align: center;
+    font-size: 2em;
+    margin-top: -1em;
+    color: var(--medium-purple);
+}
+
+.infosCompte {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: -2em;
+}
+
+.infos {
+    position: relative;
+    background: var(--light-purple);
+    width: 25em;
+    height: 19em;
+    border-radius: 1em;
+    margin-top: 1em;
+    margin-left: 0em;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info {
+    position: relative;
+    width: 20em;
+    height: 1em;
+    border-radius: 1em;    
+    margin-left: 2.5em;
+    margin-top: 1.5em;
+    top: 1em;
+    color: var(--clair-purple);
+}
+
+.modifier {
+    position: relative;
+    width: 10em;
+    height: 2em;
+    border-radius: 1em;
+    margin-top: 1em;
+    margin-left: 9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--light-gray);
+    color: var(--medium-purple);
+    border-radius: 2em;
+    background-color: var(--light-gray);
+    transition: background 0.3s;
+}
+
+.modifier:hover {
+    background: var(--clair-purple);
+    transition: background 0.3s;
+    cursor: pointer;
+    color: var(--white);
+    border-color: var(--clair-purple);
+}
+
+.commandes {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5em;
+    background-color:var(--light-purple);
+    width: 30em;
+    height: 40em;
+    border-radius: 3em;
+}
+
+.imgCommande {
+    position: relative;
+    background-image: url("../images/Commande.png");
+    left: 38%;
+    top: 1%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 9.5em;
+    height: 9.5em;  
+}
+
+.titreCommande {
+    position: relative;
+    text-align: center;
+    font-size: 2em;
+    margin-top:0.8em;
+    color: var(--medium-purple);
+}
+
+.listeCommandes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: -1em;
+}
+
+.liCommandes {
+    position: relative;
+    background: var(--clair-purple);
+    width: 15em;
+    height: 3em;
+    border-radius: 1em;
+    margin-top: 1em;
+    margin-left: -2em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-purple);
+    text-align: center;
+    font-size: 1.5em;
+    transition: background 0.3s;
+}
+
+.liCommandes:hover {
+    background: var(--medium-purple);
+    transition: background 0.3s;
+}
+

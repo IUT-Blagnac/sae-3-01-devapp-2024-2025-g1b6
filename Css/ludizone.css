@@ -1,0 +1,409 @@
+/* Palette de couleurs */
+:root {
+    --dark-purple: linear-gradient( #6d00b0, #b06bdc);
+    --dark-purple-inverse:linear-gradient(#b06bdc, #6d00b0);
+    --clair-purple: #c267ff;
+    --medium-purple: #8A2BE2;
+    --light-purple: #e6d1f2;
+    --accent-pink: #FF69B4;
+    --backpurple: #d3bce6;
+    --white: #FFFFFF;   
+    --light-gray: #F0F0F0;
+}
+
+.lienAccueil {
+    text-decoration: none;
+    
+}
+
+.filtres {
+    position: fixed;
+    margin-top: -5em;
+    left: 0;
+    height: 15em;
+    width: 10em;
+    text-align: center;
+}
+
+.listFiltres {
+    position: relative;
+    list-style-type: none;
+    margin-top: -1em;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.liFiltres {
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    background-color: var(--medium-purple);
+    color: var(--white);
+    height: 4em;
+    width: 9em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.liFiltres:hover {
+    background: var(--dark-purple);
+    color: var(--accent-pink);
+    cursor: pointer;
+}
+
+
+.ludizone {
+    position: relative;
+    margin-top: 6em;
+    margin-left: 12.5em;
+    width: 84.3em;
+}
+
+.titreLudizone {
+    position: relative;
+    left: 25%;
+    padding: 0.1em;
+    width: 16em;
+    font-size: 2.5em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: var(--medium-purple);
+}
+
+.coupDeCoeur {
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    height: 4em;
+    width: 90em;
+}
+
+.titreCDC {
+    position: relative;
+    margin-top: 0;
+    margin-left: 0;
+    padding: 0.1em;
+    width: 15em;
+    font-size: 1.5em;
+    border-bottom: var(--medium-purple) solid 0.15em;
+}
+
+.listeCDC {
+    position: relative;
+    list-style-type: none;
+    margin-top: 0.5em;
+    margin-left: 1em;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.jeuCDC {
+    position: relative;
+    background-color: var(--backpurple);
+    margin-right: 5em;
+    width: 16em;
+    height: 18em;
+    border-radius: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.jeuCDC a {
+    text-decoration: none;  
+    width: 15em;
+}
+
+.jeuCDC:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.imgJeuCDC1 {
+    background-image: url('../images/Jeu1.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 9em;
+    height: 9em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgJeuCDC2 {
+    background-image: url('../images/nerf1.png');
+    border-radius: 2em;
+    margin-top: 1em;
+    margin-left: 3em;
+    width: 9em;
+    height: 9em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgJeuCDC3 {
+    background-image: url('../images/Jeu3.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 12em;
+    height: 9em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgJeuCDC4 {
+    background-image: url('../images/Jeu4.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 12em;
+    height: 9em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.nomJeu {
+    position: relative;
+    margin-top: 1em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    width: 15em;
+    font-size: 1em;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.prixCDC {
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 10em;
+    padding: 0.1em;
+    width: 15em;
+    font-size: 1em;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.listeDisponibilites {
+    position: relative;
+    list-style-type: none;
+    width: 14em;
+    border-radius: 1em;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    background: var(--clair-purple);
+    word-spacing: 2em;  
+}
+
+.elementDispo {
+    position: relative;
+    margin: 0.5em;
+    padding: 0.1em;
+    width: 15em;
+}
+
+.elementDispoImg {
+    width: 1.5em;
+    height: 1.5em;
+    position: relative;
+    left: -1em;
+    top: 0.6em;
+    margin-top: -0.3em;
+}
+
+.titreLudiGame {
+    position: relative;
+    margin-top: 12.5em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    width: 15em;
+    font-size: 1.5em;
+    border-bottom: var(--medium-purple) solid 0.15em;
+}
+
+.imgLudiGame {
+    background-image: url('../images/LudiGame.webp');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 70em;
+    height: 35em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.ludiEvent {
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    height: 27em;
+    width: 80em;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;    
+}
+
+.ludiEvent::-webkit-scrollbar {
+    height: 0.3em;
+}
+
+.ludiEvent::-webkit-scrollbar-thumb {
+    background-color: var(--medium-purple);
+    border: 1em solid transparent;
+    border-radius: 2em; 
+    position: relative; 
+}
+
+.titreLudiEvent {
+    position: relative;
+    left: 35%;
+    padding: 0.1em;
+    width: 6em;
+    font-size: 1.5em;
+    border-bottom: var(--medium-purple) solid 0.15em;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.listeEvent {
+    position: relative;
+    list-style-type: none;
+    margin-top: 0.5em;
+    margin-left: 1em;
+    padding: 0;
+    overflow: hidden;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.Event {
+    margin-top: 1em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    height: 20em;
+    width: 20em;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.btnParticipe {
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    width: 13em;
+    font-size: 1em;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--medium-purple);
+    border: none;
+    color: var(--light-gray);
+    height: 4em;
+    border-radius: 5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnParticipe:hover {
+    background: var(--dark-purple);
+    color: var(--accent-pink);
+    cursor: pointer;
+}
+
+
+.imgEvent1 {
+    background-image: url('../images/Event1.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgEvent2 {
+    background-image: url('../images/Event2.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgEvent3 {
+    background-image: url('../images/Event3.png');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgEvent4 {
+    background-image: url('../images/Event4.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgEvent5 {
+    background-image: url('../images/Event5.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.vide{
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    height: 4em;
+    width: 90em;
+}
+
+
+.footer {
+    top:0em;
+}
+
+
