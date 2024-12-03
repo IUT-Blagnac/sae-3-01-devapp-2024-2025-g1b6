@@ -70,9 +70,9 @@ public class ConfigManager {
         return """
             [General]
             # Hôte mqtt sur le quel se connecter
-            host : mqtt.iut-blagnac.fr
+            General.host : mqtt.iut-blagnac.fr
             # Fréquence à laquelle seront sauvegardées les données en minutes
-            frequence : 1
+            General.frequence : 1
 
             [Capteurs]
             # Permet de s'abonner a toutes les salles comportant des capteurs à l'iut
@@ -83,14 +83,14 @@ public class ConfigManager {
             [Panneaux Solaires]
             # Permet de s'abonner au topic des panneaux solaires
             # Valeurs possibles {on, off}
-            subscribe_all : off
+            Panneaux Solaires.subscribe_all : off
 
             [Seuils Alerte]
             # Définit la valeur minimum et maximum pour chaque type de données
-            co2Min : 400
-            co2Max : 1000
-            temperatureMin : 13
-            temperatureMax : 27
+            Seuils Alerte.co2Min : 400
+            Seuils Alerte.co2Max : 1000
+            Seuils Alerte.temperatureMin : 13
+            Seuils Alerte.temperatureMax : 27
             """;
     }
 }

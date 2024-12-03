@@ -49,6 +49,7 @@ public class seuilsViewController {
     private MenuItem menuInfraredAndVisible;
     @FXML
     private MenuItem menuPressure;
+
     private final ConfigManager configManager = new ConfigManager();
     private String selectedType = null; // Type actuellement sélectionné
 
@@ -74,6 +75,9 @@ public class seuilsViewController {
     }
 
     private void handleTypeSelection(String type, String label) {
+        // Sauvegarder les valeurs actuelles avant de changer de type
+        saveCurrentSeuils();
+
         // Mettre à jour le type sélectionné
         selectedType = type;
         typeDonnees.setText(label);
@@ -88,8 +92,7 @@ public class seuilsViewController {
         }
     }
 
-    @FXML
-    private void handleSaveSeuils() {
+    private void saveCurrentSeuils() {
         // Sauvegarder les valeurs Min et Max dans config.ini
         if (selectedType != null) {
             String minKey = selectedType + "Min";
@@ -100,11 +103,17 @@ public class seuilsViewController {
 
             try {
                 configManager.saveConfig();
-                System.out.println("Les valeurs ont été enregistrées dans le fichier config.ini.");
+                System.out.println("Les valeurs pour " + selectedType + " ont été enregistrées.");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    @FXML
+    private void handleSaveSeuils() {
+        // Appelé explicitement si l'utilisateur clique sur un bouton "Enregistrer"
+        saveCurrentSeuils();
     }
 
     @FXML

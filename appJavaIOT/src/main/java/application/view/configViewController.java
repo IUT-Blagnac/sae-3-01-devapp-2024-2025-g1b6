@@ -87,6 +87,20 @@ public class configViewController {
                 listCapteur.setDisable(false);
             }
 
+            // Initialiser les boutons radio pour les panneaux solaires
+            String subscribeAllPanneaux = configManager.readConfig("Panneaux Solaires.subscribe_all");
+            if ("on".equalsIgnoreCase(subscribeAllPanneaux)) {
+                btnOuiPanneau.setSelected(true);
+            } else {
+                btnNonPanneau.setSelected(true);
+                if (subscribeAllPanneaux.isEmpty()) {
+                    // Si aucune valeur n'existe, définir par défaut
+                    btnNonPanneau.setSelected(true);
+                    configManager.updateConfig("Panneaux Solaires.subscribe_all", "off");
+                    saveConfig();
+                }
+            }
+
             // Charger les salles sélectionnées
             String existingSalles = configManager.readConfig("Capteurs.salles");
             if (!existingSalles.isEmpty()) {
