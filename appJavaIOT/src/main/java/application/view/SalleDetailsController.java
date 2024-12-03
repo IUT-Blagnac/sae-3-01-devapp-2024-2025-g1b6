@@ -1,94 +1,263 @@
 package application.view;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import application.App;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.*;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Stream;
 
 public class SalleDetailsController {
 
+    private Map<String, Map<String, Double>> sensorData = new HashMap<>();
+    private ExecutorService alertExecutor;
+    private ExecutorService dataExecutor;
+    private volatile boolean running = true;
+
     @FXML
-    private TabPane tabPaneDetails; // Pane pour afficher les graphiques
+    private TabPane tabPane;
 
-    private String roomName;
-    private Map<String, Double> roomData; // Données de la salle
+    @FXML
+    private Button buttonRetour;
 
-    public void setRoomData(String roomName, Map<String, Double> roomData) {
-        this.roomName = roomName;
-        this.roomData = roomData;
-        createCharts(); // Générer les graphiques
-    }
+    public void initialize() {
+        try {
+            Path dataDir = Paths.get(App.class.getResource("data").toURI());
 
-    /**
-     * Crée un graphique pour chaque donnée de la salle.
-     */
-    private void createCharts() {
-        for (Map.Entry<String, Double> entry : roomData.entrySet()) {
-            String key = entry.getKey();
-            Double value = entry.getValue();
-
-            Tab tab = new Tab(key); // Créer un onglet pour chaque donnée
-
-            if (isLineChartKey(key)) {
-                tab.setContent(createLineChart(key, value));
-            } else {
-                tab.setContent(createBarChart(key, value));
+            
+            try (Stream<Path> paths = Files.walk(dataDir)) {
+                paths.filter(Files::isRegularFile)
+                     .filter(path -> path.toString().endsWith(".json"))
+                     .forEach(path -> {
+                         try {
+                             boolean isAlertFile = isInAlertDirectory(dataDir, path);
+                             loadJsonData(path, isAlertFile);
+                         } catch (IOException e) {
+                             e.printStackTrace();
+                         }
+                     });
             }
 
-            tabPaneDetails.getTabs().add(tab);
+            // Lancer les threads pour surveiller les alertes et les nouveaux fichiers JSON
+            startAlertMonitoring(dataDir.resolve("Alert"));
+            startDataMonitoring(dataDir);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private BarChart<String, Number> createBarChart(String key, double value) {
+    private boolean isInAlertDirectory(Path baseDir, Path filePath) {
+        Path relativePath = baseDir.relativize(filePath);
+        return relativePath.getParent() != null && relativePath.getParent().toString().contains("Alert");
+    }
+
+    private void loadJsonData(Path filePath, boolean isAlertFile) throws IOException {
+        JsonElement rootElement = JsonParser.parseReader(new FileReader(filePath.toFile()));
+
+        if (!rootElement.isJsonArray()) {
+            throw new IllegalStateException("Le fichier JSON doit être un tableau racine.");
+        }
+
+        JsonArray rootArray = rootElement.getAsJsonArray();
+        if (rootArray.size() != 1) {
+            throw new IllegalStateException("Le fichier JSON doit contenir un tableau unique avec deux objets.");
+        }
+
+        JsonArray nestedArray = rootArray.get(0).getAsJsonArray();
+        if (nestedArray.size() != 2) {
+            throw new IllegalStateException("Le tableau imbriqué doit contenir exactement deux objets.");
+        }
+
+        JsonObject dataObject = nestedArray.get(0).getAsJsonObject();
+        JsonObject metadataObject = nestedArray.get(1).getAsJsonObject();
+
+        String room = metadataObject.get("room").getAsString();
+
+        // Enregistrer les données par type de capteur et salle
+        for (Map.Entry<String, JsonElement> entry : dataObject.entrySet()) {
+            String key = entry.getKey();
+            double value = entry.getValue().getAsDouble();
+
+            sensorData.computeIfAbsent(key, k -> new HashMap<>()).put(room, value);
+        }
+
+        // Créer un onglet pour chaque salle
+        createRoomTab(room, dataObject);
+    }
+
+    private void showAlert(String key, String room, double value) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Alerte : Données critiques");
+            alert.setHeaderText(null);
+            alert.setContentText("La donnée \"" + key + "\" pour la salle \"" + room + "\" est hors seuil : " + value);
+            alert.show();
+        });
+    }
+
+    private void createRoomTab(String roomName, JsonObject dataObject) {
+        Platform.runLater(() -> {
+            // Créer un onglet dont le titre est le nom de la salle
+            Tab tab = new Tab(roomName);
+            tab.setContent(createRoomChart(roomName, dataObject));
+            tabPane.getTabs().add(tab);
+        });
+    }
+
+    private Chart createRoomChart(String roomName, JsonObject dataObject) {
+        // Créer un graphique pour la salle, ici un graphique à barres
         BarChart<String, Number> barChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
-        barChart.setTitle("BarChart : " + key);
+        barChart.setTitle("Données pour la salle : " + roomName);
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Valeur");
-        series.getData().add(new XYChart.Data<>(key, value));
+        series.setName(roomName);
+
+        // Ajouter les données liées à la salle au graphique
+        for (Map.Entry<String, JsonElement> entry : dataObject.entrySet()) {
+            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue().getAsDouble()));
+        }
 
         barChart.getData().add(series);
         return barChart;
     }
 
-    private LineChart<Number, Number> createLineChart(String key, double value) {
-        LineChart<Number, Number> lineChart = new LineChart<>(new NumberAxis(), new NumberAxis());
-        lineChart.setTitle("LineChart : " + key);
+    private void startAlertMonitoring(Path alertDir) {
+        alertExecutor = Executors.newSingleThreadExecutor();
 
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName("Valeur");
-        series.getData().add(new XYChart.Data<>(1, value));
+        alertExecutor.submit(() -> {
+            try {
+                if (!Files.exists(alertDir)) {
+                    Files.createDirectories(alertDir);
+                }
 
-        lineChart.getData().add(series);
-        return lineChart;
+                WatchService watchService = FileSystems.getDefault().newWatchService();
+                alertDir.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+
+                while (running) {
+                    WatchKey key;
+                    try {
+                        key = watchService.poll(); // Utiliser poll() pour éviter le blocage
+                        if (key == null) {
+                            Thread.sleep(100); // Pause pour éviter de surcharger le CPU
+                            continue;
+                        }
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    }
+
+                    for (WatchEvent<?> event : key.pollEvents()) {
+                        WatchEvent.Kind<?> kind = event.kind();
+
+                        if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
+                            Path filePath = alertDir.resolve((Path) event.context());
+                            Platform.runLater(() -> {
+                                try {
+                                    loadJsonData(filePath, true);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                        }
+                    }
+                    key.reset();
+                }
+
+                watchService.close(); // Fermer proprement le WatchService
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
-    private boolean isLineChartKey(String key) {
-        return key.equalsIgnoreCase("temperature")
-                || key.equalsIgnoreCase("humidity")
-                || key.equalsIgnoreCase("pressure");
+    private void startDataMonitoring(Path dataDir) {
+        dataExecutor = Executors.newSingleThreadExecutor();
+
+        dataExecutor.submit(() -> {
+            try {
+                WatchService watchService = FileSystems.getDefault().newWatchService();
+                dataDir.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+
+                while (running) {
+                    WatchKey key;
+                    try {
+                        key = watchService.poll(); // Utiliser poll() pour éviter le blocage
+                        if (key == null) {
+                            Thread.sleep(100); // Pause pour éviter de surcharger le CPU
+                            continue;
+                        }
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    }
+
+                    for (WatchEvent<?> event : key.pollEvents()) {
+                        WatchEvent.Kind<?> kind = event.kind();
+
+                        if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
+                            Path filePath = dataDir.resolve((Path) event.context());
+                            Platform.runLater(() -> {
+                                try {
+                                    boolean isAlertFile = isInAlertDirectory(dataDir, filePath);
+                                    loadJsonData(filePath, isAlertFile);
+                                    if (!isAlertFile) {
+                                        // Si ce n'est pas un fichier d'alerte, mettez à jour les graphiques
+                                        updateCharts(filePath);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                        }
+                    }
+                    key.reset();
+                }
+
+                watchService.close(); // Fermer proprement le WatchService
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void updateCharts(Path filePath) {
+        Platform.runLater(() -> {
+            // Mettre à jour les graphiques avec les nouvelles données si nécessaire
+        });
     }
 
     @FXML
-    private void handleRetourGeneral() {
-        tabPaneDetails.getScene().getWindow().hide(); // Fermer la fenêtre actuelle
+    private void handleButtonRetour() {
+        System.out.println("Retour à l'écran précédent.");
     }
 
-    @FXML
-    private void handleQuitter() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Quitter");
-        alert.setHeaderText("Fermeture de l'application");
-        alert.setContentText("Fermeture de l'application");
-        alert.showAndWait();
-        System.exit(0);
+    public void stop() {
+        try {
+            if (alertExecutor != null && !alertExecutor.isShutdown()) {
+                alertExecutor.shutdownNow();
+            }
+            if (dataExecutor != null && !dataExecutor.isShutdown()) {
+                dataExecutor.shutdownNow();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
 }
