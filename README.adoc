@@ -244,6 +244,7 @@ TIP: Mettez ici toutes les informations nécessaire à l'utilisation de votre d�
 ==== Evaluation semaine 48
 Mettre les liens directs vers les derniers comptes rendus , je n'ai pas à chercher dans le dossier ! ODJ : Préciser qui est en charge de quelle rubrique, qui prendra des notes. Lieu : préciser la salle et l'heure et durée totale ! CR : Manque bilan rdv client, manque analyse difficulés-réussites. Structurer en fonction du plan de l'ODJ. Manque lieu, durée, présents, absents. Manque qui s'occupe de la suivante.
 note: 1,3/3
+
 === Evaluation bi-hebdomadaire :
 
 ifdef::env-github[]
