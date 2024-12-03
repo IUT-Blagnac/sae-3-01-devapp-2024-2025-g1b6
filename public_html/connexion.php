@@ -1,12 +1,3 @@
-<?php
-
-
-
-?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,12 +27,12 @@
             <div class="imgProfil"></div>
                 <h1 class="titreCompte">Se connecter </h1>
                 <div class="infos">
-                    <form class="formConnexion" action="compte.html" method="post">
+                    <form class="formConnexion" action="traitConnexion.php" method="post">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" required>
                         <label for="password">Mot de passe</label>
                         <input type="password" id="password" name="password" required>
-                        <a href="compte.html"><button type="submit">Se connecter</button></a> 
+                        <button type="submit">Se connecter</button>
                     </form>
                 </div>
                 <div class="creerCompte">
