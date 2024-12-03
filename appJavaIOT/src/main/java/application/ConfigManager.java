@@ -25,13 +25,12 @@ public class ConfigManager {
                 e.printStackTrace();
             }
         }
-    }
+    }    
 
     // Charger le contenu de config.ini
     public void loadConfig() throws IOException {
         configMap.clear();
         comments.setLength(0);
-
         try (BufferedReader reader = new BufferedReader(new FileReader(CONFIG_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -44,7 +43,7 @@ public class ConfigManager {
             }
         }
     }
-
+    
     // Lire une valeur
     public String readConfig(String key) {
         return configMap.getOrDefault(key, "");
@@ -58,11 +57,56 @@ public class ConfigManager {
     // Sauvegarder dans config.ini
     public void saveConfig() throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(CONFIG_FILE))) {
-            writer.write(comments.toString());
-            for (Map.Entry<String, String> entry : configMap.entrySet()) {
-                writer.write(entry.getKey() + " : " + entry.getValue() + "\n");
-            }
+            writer.write(getFormattedConfig());
         }
+    }
+
+    // Générer le fichier config formaté
+    private String getFormattedConfig() {
+        StringBuilder formattedConfig = new StringBuilder();
+
+        // [General]
+        formattedConfig.append("[General]\n");
+        formattedConfig.append("# Hôte mqtt sur le quel se connecter\n");
+        formattedConfig.append("host : ").append(configMap.getOrDefault("General.host", "mqtt.iut-blagnac.fr")).append("\n");
+        formattedConfig.append("# Fréquence à laquelle seront sauvegardées les données en minutes\n");
+        formattedConfig.append("frequence : ").append(configMap.getOrDefault("General.frequence", "1")).append("\n\n");
+
+        // [Capteurs]
+        formattedConfig.append("[Capteurs]\n");
+        formattedConfig.append("# Permet de s'abonner a toutes les salles comportant des capteurs à l'iut\n");
+        formattedConfig.append("# Valeurs possibles {on, off}\n");
+        formattedConfig.append("subscribe_all : ").append(configMap.getOrDefault("Capteurs.subscribe_all", "off")).append("\n");
+        formattedConfig.append("# Valeurs Possibles :\n");
+        formattedConfig.append("# 'B112', 'C002', ...\n");
+        formattedConfig.append("salles : ").append(configMap.getOrDefault("Capteurs.salles", "''")).append("\n\n");
+
+        // [Panneaux Solaires]
+        formattedConfig.append("[Panneaux Solaires]\n");
+        formattedConfig.append("# Permet de s'abonner au topic des panneaux solaires\n");
+        formattedConfig.append("# Valeurs possibles {on, off}\n");
+        formattedConfig.append("subscribe_all : ").append(configMap.getOrDefault("Panneaux Solaires.subscribe_all", "off")).append("\n\n");
+
+        // [Seuils Alerte]
+        formattedConfig.append("[Seuils Alerte]\n");
+        formattedConfig.append("# Définit la valeur minimum et maximum pour chaque type de données\n");
+        appendSeuils(formattedConfig, "co2");
+        appendSeuils(formattedConfig, "temperature");
+        appendSeuils(formattedConfig, "humidity");
+        appendSeuils(formattedConfig, "activity");
+        appendSeuils(formattedConfig, "tvoc");
+        appendSeuils(formattedConfig, "illumination");
+        appendSeuils(formattedConfig, "infrared");
+        appendSeuils(formattedConfig, "infrared_and_visible");
+        appendSeuils(formattedConfig, "pressure");
+
+        return formattedConfig.toString();
+    }
+
+    private void appendSeuils(StringBuilder formattedConfig, String type) {
+        formattedConfig.append("# ").append(type).append(" (valeur numérique positive)\n");
+        formattedConfig.append(type).append("Min : ").append(configMap.getOrDefault(type + "Min", "0")).append("\n");
+        formattedConfig.append(type).append("Max : ").append(configMap.getOrDefault(type + "Max", "0")).append("\n");
     }
 
     // Configuration par défaut
@@ -70,9 +114,9 @@ public class ConfigManager {
         return """
             [General]
             # Hôte mqtt sur le quel se connecter
-            General.host : mqtt.iut-blagnac.fr
+            host : mqtt.iut-blagnac.fr
             # Fréquence à laquelle seront sauvegardées les données en minutes
-            General.frequence : 1
+            frequence : 1
 
             [Capteurs]
             # Permet de s'abonner a toutes les salles comportant des capteurs à l'iut
@@ -83,14 +127,14 @@ public class ConfigManager {
             [Panneaux Solaires]
             # Permet de s'abonner au topic des panneaux solaires
             # Valeurs possibles {on, off}
-            Panneaux Solaires.subscribe_all : off
+            subscribe_all : off
 
             [Seuils Alerte]
             # Définit la valeur minimum et maximum pour chaque type de données
-            Seuils Alerte.co2Min : 400
-            Seuils Alerte.co2Max : 1000
-            Seuils Alerte.temperatureMin : 13
-            Seuils Alerte.temperatureMax : 27
+            co2Min : 400
+            co2Max : 1000
+            temperatureMin : 13
+            temperatureMax : 27
             """;
     }
 }

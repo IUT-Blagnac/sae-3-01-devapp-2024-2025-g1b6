@@ -69,76 +69,76 @@ public class configViewController {
     private final Set<String> selectedSalles = new HashSet<>();
 
     @FXML
-    private void initialize() {
-        try {
-            configManager.loadConfig();
-
-            // Initialiser les champs texte
-            hote.setText(configManager.readConfig("General.host"));
-            frequence.setText(configManager.readConfig("General.frequence"));
-
-            // Initialiser les boutons radio pour les capteurs
-            String subscribeAllCapteurs = configManager.readConfig("Capteurs.subscribe_all");
-            if ("on".equalsIgnoreCase(subscribeAllCapteurs)) {
-                btnOuiCapteur.setSelected(true);
-                listCapteur.setDisable(true); // Désactiver la liste si "Oui" est sélectionné
-            } else {
-                btnNonCapteur.setSelected(true);
-                listCapteur.setDisable(false);
-            }
-
-            // Initialiser les boutons radio pour les panneaux solaires
-            String subscribeAllPanneaux = configManager.readConfig("Panneaux Solaires.subscribe_all");
-            if ("on".equalsIgnoreCase(subscribeAllPanneaux)) {
-                btnOuiPanneau.setSelected(true);
-            } else {
-                btnNonPanneau.setSelected(true);
-                if (subscribeAllPanneaux.isEmpty()) {
-                    // Si aucune valeur n'existe, définir par défaut
-                    btnNonPanneau.setSelected(true);
-                    configManager.updateConfig("Panneaux Solaires.subscribe_all", "off");
-                    saveConfig();
-                }
-            }
-
-            // Charger les salles sélectionnées
-            String existingSalles = configManager.readConfig("Capteurs.salles");
-            if (!existingSalles.isEmpty()) {
-                String[] salles = existingSalles.replace("'", "").split(", ");
-                Collections.addAll(selectedSalles, salles);
-            }
-
-            // Configurer la ListView avec des CheckBox
-            FXCollections.sort(sallesCapteurs);
-            listCapteur.setItems(sallesCapteurs);
-            listCapteur.setCellFactory(CheckBoxListCell.forListView(item -> {
-                BooleanProperty checked = new SimpleBooleanProperty(selectedSalles.contains(item));
-                checked.addListener((obs, wasChecked, isNowChecked) -> {
-                    if (isNowChecked) {
-                        selectedSalles.add(item);
-                    } else {
-                        selectedSalles.remove(item);
-                    }
-                    updateSallesInConfig();
-                });
-                return checked;
-            }));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Listeners pour les champs texte
-        hote.textProperty().addListener((observable, oldValue, newValue) -> {
-            configManager.updateConfig("General.host", newValue);
-            saveConfig();
-        });
-
-        frequence.textProperty().addListener((observable, oldValue, newValue) -> {
-            configManager.updateConfig("General.frequence", newValue);
-            saveConfig();
-        });
+private void initialize() {
+    try {
+        configManager.loadConfig();  // Charger la configuration depuis le fichier
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+
+    // Initialiser les champs texte avec les valeurs lues du fichier de configuration
+    String hostValue = configManager.readConfig("General.host");
+    hote.setText(hostValue.isEmpty() ? "mqtt.iut-blagnac.fr" : hostValue);  // Valeur par défaut si vide
+    
+    String frequenceValue = configManager.readConfig("General.frequence");
+    frequence.setText(frequenceValue.isEmpty() ? "1" : frequenceValue);  // Valeur par défaut si vide
+
+    // Initialiser les boutons radio pour les capteurs
+    String subscribeAllCapteurs = configManager.readConfig("Capteurs.subscribe_all");
+    if (subscribeAllCapteurs.isEmpty()) {
+        subscribeAllCapteurs = "on";  // Définit une valeur par défaut si vide
+        configManager.updateConfig("Capteurs.subscribe_all", subscribeAllCapteurs);
+        saveConfig();
+    }
+    btnOuiCapteur.setSelected("on".equalsIgnoreCase(subscribeAllCapteurs));
+    btnNonCapteur.setSelected("off".equalsIgnoreCase(subscribeAllCapteurs));
+    listCapteur.setDisable(btnOuiCapteur.isSelected());
+
+    // Initialiser les boutons radio pour les panneaux solaires
+    String subscribeAllPanneaux = configManager.readConfig("Panneaux Solaires.subscribe_all");
+    if (subscribeAllPanneaux.isEmpty()) {
+        subscribeAllPanneaux = "off";  // Définit une valeur par défaut si vide
+        configManager.updateConfig("Panneaux Solaires.subscribe_all", subscribeAllPanneaux);
+        saveConfig();
+    }
+    btnOuiPanneau.setSelected("on".equalsIgnoreCase(subscribeAllPanneaux));
+    btnNonPanneau.setSelected("off".equalsIgnoreCase(subscribeAllPanneaux));
+
+    // Charger les salles sélectionnées
+    selectedSalles.clear();
+    String existingSalles = configManager.readConfig("Capteurs.salles");
+    if (!existingSalles.isEmpty()) {
+        String[] salles = existingSalles.replace("'", "").split(", ");
+        Collections.addAll(selectedSalles, salles);
+    }
+
+    // Configurer la ListView avec des CheckBox
+    FXCollections.sort(sallesCapteurs);
+    listCapteur.setItems(sallesCapteurs);
+    listCapteur.setCellFactory(CheckBoxListCell.forListView(item -> {
+        BooleanProperty checked = new SimpleBooleanProperty(selectedSalles.contains(item));
+        checked.addListener((obs, wasChecked, isNowChecked) -> {
+            if (isNowChecked) {
+                selectedSalles.add(item);
+            } else {
+                selectedSalles.remove(item);
+            }
+            updateSallesInConfig();
+        });
+        return checked;
+    }));
+
+    // Listeners pour détecter les modifications dans les champs texte
+    hote.textProperty().addListener((observable, oldValue, newValue) -> {
+        configManager.updateConfig("General.host", newValue);
+        saveConfig();
+    });
+
+    frequence.textProperty().addListener((observable, oldValue, newValue) -> {
+        configManager.updateConfig("General.frequence", newValue);
+        saveConfig();
+    });
+}
 
     @FXML
     private void handleSubscribeAllCapteurs() {
@@ -168,7 +168,36 @@ public class configViewController {
             e.printStackTrace();
         }
     }
-
+    
+    public void reloadView() {
+        try {
+            configManager.loadConfig();  // Charger la configuration depuis le fichier
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+        // Recharger les valeurs dans les champs texte
+        hote.setText(configManager.readConfig("General.host"));
+        frequence.setText(configManager.readConfig("General.frequence"));
+    
+        // Recharger les valeurs pour les boutons radio
+        String subscribeAllCapteurs = configManager.readConfig("Capteurs.subscribe_all");
+        btnOuiCapteur.setSelected("on".equalsIgnoreCase(subscribeAllCapteurs));
+        btnNonCapteur.setSelected("off".equalsIgnoreCase(subscribeAllCapteurs));
+        listCapteur.setDisable(btnOuiCapteur.isSelected());
+    
+        String subscribeAllPanneaux = configManager.readConfig("Panneaux Solaires.subscribe_all");
+        btnOuiPanneau.setSelected("on".equalsIgnoreCase(subscribeAllPanneaux));
+        btnNonPanneau.setSelected("off".equalsIgnoreCase(subscribeAllPanneaux));
+    
+        // Recharger les salles sélectionnées
+        selectedSalles.clear();
+        String existingSalles = configManager.readConfig("Capteurs.salles");
+        if (!existingSalles.isEmpty()) {
+            String[] salles = existingSalles.replace("'", "").split(", ");
+            Collections.addAll(selectedSalles, salles);
+        }
+    }
     @FXML
     private void handleOpenAlerte() {
         try {

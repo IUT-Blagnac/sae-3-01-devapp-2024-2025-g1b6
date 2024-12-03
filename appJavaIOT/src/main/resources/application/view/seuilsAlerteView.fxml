@@ -51,6 +51,7 @@
             <TextField fx:id="seuilsMin" />
             <Label layoutX="10.0" layoutY="27.0" text="Seuil maximum" />
             <TextField fx:id="seuilsMax" layoutX="10.0" layoutY="44.0" />
+            <Button fx:id="valider" mnemonicParsing="false" onAction="#handleSaveSeuils" text="Valider" />
          </children>
       </VBox>
    </center>
