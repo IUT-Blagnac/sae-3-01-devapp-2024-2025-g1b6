@@ -29,7 +29,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             try {
                 // Vérifier si l'email existe déjà dans la base de données
+<<<<<<< HEAD
                 $stmt = $pdo->prepare("SELECT * FROM CLIENT WHERE email = :email");
+=======
+                $stmt = $pdo->prepare("SELECT * FROM client WHERE email = :email");
+>>>>>>> 9c63628609383197f7a62b91fbe22b2918e6e1d6
                 $stmt->execute(["email" => $email]);
                 $user = $stmt->fetch();
 
