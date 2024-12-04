@@ -90,10 +90,23 @@ def on_message(client, userdata, msg):
     global tabValues
 
     print(msg.topic + " " + str(msg.payload))
-    # Désérialisation du message reçu
+  # Désérialisation du message reçu
     jsonDict = json.loads(msg.payload)
-    # Ajoute le message désérialisé au tableau des valeurs
-    tabValues.append(jsonDict)
+    # Vérification spécifique pour les données des panneaux solaires
+    if 'lastUpdateTime' in jsonDict:
+        # Vérifie si un dictionnaire avec le même 'lastUpdateTime' existe déjà dans tabValues
+        existing = next((item for item in tabValues if item.get('lastUpdateTime') == jsonDict['lastUpdateTime']), None)
+
+        if existing is not None:
+            # Si l'élément existe déjà, on ne l'ajoute pas à tabValues
+            print(f"Doublon trouvé pour lastUpdateTime {jsonDict['lastUpdateTime']}, ajout ignoré.")
+        else:
+            # Si l'élément n'existe pas, on l'ajoute à tabValues
+            tabValues.append(jsonDict)
+    else:
+        # Si 'lastUpdateTime' n'est pas dans les données, ajouter le message sans vérification
+        tabValues.append(jsonDict)
+
 
 
 def write_data(path, di):
