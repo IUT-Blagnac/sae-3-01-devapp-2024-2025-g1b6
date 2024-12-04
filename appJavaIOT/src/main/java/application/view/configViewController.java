@@ -71,38 +71,41 @@ public class configViewController {
     @FXML
 private void initialize() {
     try {
-        configManager.loadConfig();  // Charger la configuration depuis le fichier
+        configManager.loadConfig(); // Charger le fichier de configuration
     } catch (IOException e) {
         e.printStackTrace();
     }
 
-    // Initialiser les champs texte avec les valeurs lues du fichier de configuration
-    String hostValue = configManager.readConfig("General.host");
-    hote.setText(hostValue.isEmpty() ? "mqtt.iut-blagnac.fr" : hostValue);  // Valeur par défaut si vide
+    // Charger les valeurs actuelles du fichier ou laisser les valeurs précédentes si elles sont vides
+   // Lire et afficher les valeurs dans hote et frequence
+String hostValue = configManager.readConfig("General.host");
+System.out.println("Valeur lue pour host : " + hostValue);
+hote.setText(hostValue.isEmpty() ? "" : hostValue);
+
+String frequenceValue = configManager.readConfig("General.frequence");
+System.out.println("Valeur lue pour frequence : " + frequenceValue);
+frequence.setText(frequenceValue.isEmpty() ? "" : frequenceValue);
+
+
     
-    String frequenceValue = configManager.readConfig("General.frequence");
-    frequence.setText(frequenceValue.isEmpty() ? "1" : frequenceValue);  // Valeur par défaut si vide
+    // Boutons radio pour capteurs
+String subscribeAllCapteurs = configManager.readConfig("Capteurs.subscribe_all");
+if ("on".equalsIgnoreCase(subscribeAllCapteurs)) {
+    btnOuiCapteur.setSelected(true);
+    listCapteur.setDisable(true);
+} else {
+    btnNonCapteur.setSelected(true);
+    listCapteur.setDisable(false);
+}
 
-    // Initialiser les boutons radio pour les capteurs
-    String subscribeAllCapteurs = configManager.readConfig("Capteurs.subscribe_all");
-    if (subscribeAllCapteurs.isEmpty()) {
-        subscribeAllCapteurs = "on";  // Définit une valeur par défaut si vide
-        configManager.updateConfig("Capteurs.subscribe_all", subscribeAllCapteurs);
-        saveConfig();
-    }
-    btnOuiCapteur.setSelected("on".equalsIgnoreCase(subscribeAllCapteurs));
-    btnNonCapteur.setSelected("off".equalsIgnoreCase(subscribeAllCapteurs));
-    listCapteur.setDisable(btnOuiCapteur.isSelected());
+// Boutons radio pour panneaux solaires
+String subscribeAllPanneaux = configManager.readConfig("Panneaux Solaires.subscribe_all");
+if ("on".equalsIgnoreCase(subscribeAllPanneaux)) {
+    btnOuiPanneau.setSelected(true);
+} else {
+    btnNonPanneau.setSelected(true);
+}
 
-    // Initialiser les boutons radio pour les panneaux solaires
-    String subscribeAllPanneaux = configManager.readConfig("Panneaux Solaires.subscribe_all");
-    if (subscribeAllPanneaux.isEmpty()) {
-        subscribeAllPanneaux = "off";  // Définit une valeur par défaut si vide
-        configManager.updateConfig("Panneaux Solaires.subscribe_all", subscribeAllPanneaux);
-        saveConfig();
-    }
-    btnOuiPanneau.setSelected("on".equalsIgnoreCase(subscribeAllPanneaux));
-    btnNonPanneau.setSelected("off".equalsIgnoreCase(subscribeAllPanneaux));
 
     // Charger les salles sélectionnées
     selectedSalles.clear();
@@ -140,13 +143,15 @@ private void initialize() {
     });
 }
 
-    @FXML
+
+   @FXML
     private void handleSubscribeAllCapteurs() {
         boolean isOn = btnOuiCapteur.isSelected();
         configManager.updateConfig("Capteurs.subscribe_all", isOn ? "on" : "off");
         listCapteur.setDisable(isOn); // Activer/Désactiver la liste selon le choix
         saveConfig();
     }
+
 
     @FXML
     private void handleSubscribeAllPanneaux() {
@@ -160,6 +165,7 @@ private void initialize() {
         configManager.updateConfig("Capteurs.salles", updatedSalles);
         saveConfig();
     }
+    
 
     private void saveConfig() {
         try {
