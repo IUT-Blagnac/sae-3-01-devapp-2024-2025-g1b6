@@ -26,11 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"]) && isset($_PO
             header("Location: connexion.php?error=1");
         }
     }
-
-
-
 }
-
-
 
 ?>

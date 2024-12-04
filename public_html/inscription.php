@@ -12,9 +12,9 @@
     <header class="header">
         <div class="barreMenu">
             <ul class="menuListe">
-                <li> <a class="lienAccueil" href="index.html"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
+                <li> <a class="lienAccueil" href="index.php"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
                 <li> <div class="imgLoc"></div> </li>
-                <li> <a href="panier.html"><div class="imgPanier"></div></a></li>
+                <li> <a href="panier.php"><div class="imgPanier"></div></a></li>
             </ul>
         </div>
     </header>
@@ -26,7 +26,7 @@
             <div class="inscription">
                 <h1 class="titreCompte">Créer un compte </h1>
                 <div class="infos">
-                    <form class="formInscription" action="compte.html" method="post">
+                    <form class="formInscription" action="compte.php" method="post">
                         <label for="nom">Nom</label>
                         <input class="nom" type="text" id="nom" name="nom" required>
                         <label for="prenom">Prénom</label>
@@ -45,12 +45,12 @@
                         <br>
                         <label for="password2">Confirmer le mot de passe</label>
                         <input type="password" id="password2" name="password2" required>
-                        <a href="compte.html"><button type="submit">Créer un compte</button></a> 
+                        <a href="compte.php"><button type="submit">Créer un compte</button></a> 
                     </form>
                 </div>
                 <div class="seConnecter">
                     <p>Vous avez déjà un compte ?</p>
-                    <a href="connexion.html">Se connecter</a>
+                    <a href="connexion.php">Se connecter</a>
                 </div>  
             </div>
         </div>
