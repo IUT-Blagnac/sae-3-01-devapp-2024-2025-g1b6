@@ -13,10 +13,10 @@
     <header class="header">
         <div class="barreMenu">
             <ul class="menuListe">
-                <li> <a class="lienAccueil" href="index.html"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
+                <li> <a class="lienAccueil" href="index.php"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
                 <li> <div class="imgLoc"></div> </li>
-                <li> <a href="panier.html"><div class="imgPanier"></div></a></li>
-                <li> <a href="connexion.html"><div class="imgCompte"></div></a> </li>
+                <li> <a href="panier.php"><div class="imgPanier"></div></a></li>
+                <li> <a href="connexion.php"><div class="imgCompte"></div></a> </li>
             </ul>
         </div>
     </header>  
