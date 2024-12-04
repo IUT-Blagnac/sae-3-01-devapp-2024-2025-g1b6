@@ -71,41 +71,36 @@ public class configViewController {
     @FXML
 private void initialize() {
     try {
-        configManager.loadConfig(); // Charger le fichier de configuration
+        configManager.loadConfig(); // Charger la configuration
     } catch (IOException e) {
         e.printStackTrace();
     }
 
-    // Charger les valeurs actuelles du fichier ou laisser les valeurs précédentes si elles sont vides
-   // Lire et afficher les valeurs dans hote et frequence
-String hostValue = configManager.readConfig("General.host");
-System.out.println("Valeur lue pour host : " + hostValue);
-hote.setText(hostValue.isEmpty() ? "" : hostValue);
+    // Charger les valeurs actuelles dans les champs texte
+    String hostValue = configManager.readConfig("General.host");
+    hote.setText(hostValue.isEmpty() ? "mqtt.iut-blagnac.fr" : hostValue); // Utiliser une valeur par défaut si vide
 
-String frequenceValue = configManager.readConfig("General.frequence");
-System.out.println("Valeur lue pour frequence : " + frequenceValue);
-frequence.setText(frequenceValue.isEmpty() ? "" : frequenceValue);
+    String frequenceValue = configManager.readConfig("General.frequence");
+    frequence.setText(frequenceValue.isEmpty() ? "1" : frequenceValue); // Valeur par défaut
 
-
-    
     // Boutons radio pour capteurs
-String subscribeAllCapteurs = configManager.readConfig("Capteurs.subscribe_all");
-if ("on".equalsIgnoreCase(subscribeAllCapteurs)) {
-    btnOuiCapteur.setSelected(true);
-    listCapteur.setDisable(true);
-} else {
-    btnNonCapteur.setSelected(true);
-    listCapteur.setDisable(false);
-}
+    String subscribeAllCapteurs = configManager.readConfig("Capteurs.subscribe_all");
+    System.out.println("subscribeAllCapteurs: " + subscribeAllCapteurs);
+    if ("on".equalsIgnoreCase(subscribeAllCapteurs)) {
+        btnOuiCapteur.setSelected(true);
+        listCapteur.setDisable(true);
+    } else {
+        btnNonCapteur.setSelected(true);
+        listCapteur.setDisable(false);
+    }
 
-// Boutons radio pour panneaux solaires
-String subscribeAllPanneaux = configManager.readConfig("Panneaux Solaires.subscribe_all");
-if ("on".equalsIgnoreCase(subscribeAllPanneaux)) {
-    btnOuiPanneau.setSelected(true);
-} else {
-    btnNonPanneau.setSelected(true);
-}
-
+    // Boutons radio pour panneaux solaires
+    String subscribeAllPanneaux = configManager.readConfig("Panneaux Solaires.subscribe_all");
+    if ("on".equalsIgnoreCase(subscribeAllPanneaux)) {
+        btnOuiPanneau.setSelected(true);
+    } else {
+        btnNonPanneau.setSelected(true);
+    }
 
     // Charger les salles sélectionnées
     selectedSalles.clear();
@@ -206,18 +201,37 @@ if ("on".equalsIgnoreCase(subscribeAllPanneaux)) {
     }
     @FXML
     private void handleOpenAlerte() {
+        // Lire la valeur de "Capteurs.subscribe_all" et "Capteurs.salles"
+        String subscribeAllCapteurs = configManager.readConfig("Capteurs.subscribe_all");
+        String salles = configManager.readConfig("Capteurs.salles");
+    
+        // Vérifier si "Capteurs.subscribe_all" est "off" et "Capteurs.salles" est vide
+        System.out.println("subscribeAllCapteurs: " + subscribeAllCapteurs);
+        System.out.println(salles);
+        if ("off".equalsIgnoreCase(subscribeAllCapteurs) && salles.equals("''")) {
+            // Afficher un message d'alerte si la condition n'est pas remplie
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Alerte");
+            alert.setHeaderText("Conditions non remplies");
+            alert.setContentText("Vous devez activer l'abonnement aux capteurs ou sélectionner des salles pour accéder aux seuils d'alerte.");
+            alert.showAndWait();
+            return; // Ne pas ouvrir la page de seuils d'alerte
+        }
+    
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LaunchApp.class.getResource("view/seuilsAlerteView.fxml"));
             Parent alertePage = fxmlLoader.load();
-
+    
             Stage stage = new Stage();
             stage.setTitle("Seuils Alerte");
             stage.setScene(new Scene(alertePage));
             stage.show();
-
+    
+            // Fermer la fenêtre actuelle
             ((Stage) btnAlerte.getScene().getWindow()).close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
 }
