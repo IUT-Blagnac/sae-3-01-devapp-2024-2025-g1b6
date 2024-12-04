@@ -10,11 +10,6 @@
     <TabPane fx:id="tabPaneDetails" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="50.0" 
              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
 
-    <!-- Bouton pour retourner à l'affichage général -->
-    <Button fx:id="buttonRetourGeneral" mnemonicParsing="false" onAction="#handleRetourGeneral" text="Retour à l'affichage général" 
-            AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" 
-            maxWidth="250" />
-
     <!-- Bouton pour quitter -->
     <Button fx:id="buttonQuitter" mnemonicParsing="false" onAction="#handleQuitter" text="Quitter" 
             AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" 
