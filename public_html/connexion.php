@@ -12,37 +12,49 @@
     <header class="header">
         <div class="barreMenu">
             <ul class="menuListe">
-                <li> <a class="lienAccueil" href="index.html"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
+                <li> <a class="lienAccueil" href="index.php"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
                 <li> <div class="imgLoc"></div> </li>
-                <li> <a href="panier.html"><div class="imgPanier"></div></a></li>
+                <li> <a href="panier.php"><div class="imgPanier"></div></a></li>
             </ul>
         </div>
     </header>
 
 
-    <main>
 
+
+    <?php
+    // Vérifiez si des cookies existent
+    $email = isset($_COOKIE['email']) ? $_COOKIE['email'] : '';
+    $password = isset($_COOKIE['password']) ? $_COOKIE['password'] : '';
+    ?>
+    <main>
         <div class="container">
             <div class="compte">
-            <div class="imgProfil"></div>
-                <h1 class="titreCompte">Se connecter </h1>
+                <h1 class="titreCompte">Se connecter</h1>
                 <div class="infos">
                     <form class="formConnexion" action="traitConnexion.php" method="post">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" value="<?= htmlspecialchars($email) ?>" required>
+                        
                         <label for="password">Mot de passe</label>
-                        <input type="password" id="password" name="password" required>
+                        <input type="password" id="password" name="password" value="<?= htmlspecialchars($password) ?>" required>
+                        
+                        <div class="checkbox_container">
+                            <input type="checkbox" id="remember_me" name="remember_me" <?= $email ? 'checked' : '' ?>>
+                            <label for="remember_me">Se souvenir de moi</label>
+                        </div>
+                        
                         <button type="submit">Se connecter</button>
                     </form>
                 </div>
                 <div class="creerCompte">
                     <p>Vous n'avez pas de compte ?</p>
-                    <a href="inscription.html">Créer un compte</a>
+                    <a href="inscription.php">Créer un compte</a>
                 </div>
             </div>
         </div>
-                
     </main>
+
 
 
 <!-- Pied de page -->

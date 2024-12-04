@@ -20,41 +20,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($password != $password2) {
         $error = "Les mots de passe ne correspondent pas.";
     } else {
-        // Hachage du mot de passe
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        // Vérifier si l'email existe déjà dans la base de données
-        $stmt = $pdo->prepare("SELECT * FROM client WHERE email = :email");
-        $stmt->execute(["email" => $email]);
-        $user = $stmt->fetch();
-
-        if ($user) {
-            $error = "Un compte avec cet email existe déjà.";
+        // Vérifier la validité du mot de passe (min 8 caractères, une majuscule, un caractère spécial)
+        if (!preg_match('/^(?=.*[A-Z])(?=.*\W)(?=.*\d)[A-Za-z\d\W]{8,}$/', $password)) {
+            $error = "Le mot de passe doit comporter au moins 8 caractères, une majuscule, et un caractère spécial.";
         } else {
-            // Insertion du nouvel utilisateur dans la base de données
-            $stmt = $pdo->prepare("INSERT INTO client (nom, prenom, telephone, email, dtn, password) 
-                                   VALUES (:nom, :prenom, :telephone, :email, :dtn, :password)");
-            $stmt->execute([
-                "nom" => $nom,
-                "prenom" => $prenom,
-                "telephone" => $telephone,
-                "email" => $email,
-                "dtn" => $dtn,
-                "password" => $hashedPassword
-            ]);
+            // Hachage du mot de passe
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            // Redirection après succès
-            $_SESSION["user"] = [
-                "nom" => $nom,
-                "prenom" => $prenom,
-                "email" => $email
-            ];
-            header("Location: compte.php");
-            exit;
+            try {
+                // Vérifier si l'email existe déjà dans la base de données
+                $stmt = $pdo->prepare("SELECT * FROM client WHERE email = :email");
+                $stmt->execute(["email" => $email]);
+                $user = $stmt->fetch();
+
+                if ($user) {
+                    $error = "Un compte avec cet email existe déjà.";
+                } else {
+                    // Récupérer le idClient maximum dans la base de données
+                    $stmt = $pdo->query("SELECT MAX(idClient) AS maxIdClient FROM client");
+                    $maxIdClient = $stmt->fetchColumn();
+                    $newIdClient = $maxIdClient ? $maxIdClient + 1 : 1; // Si aucun client, commence à 1
+
+                    // Récupérer la date actuelle pour l'insertion
+                    $dateInscription = date('Y-m-d');
+
+                    // Préparer la requête d'insertion
+                    $stmt = $pdo->prepare("INSERT INTO CLIENT (IDCLIENT, NOMCLIENT, PRENOMCLIENT, NUMTEL, EMAIL, PASSWORD, DATEN, DATEINSCRIPTION) 
+                                        VALUES (:idClient, :nom, :prenom, :telephone, :email, :password, :dtn, :dateInscription)");
+
+                    // Exécution de l'insertion
+                    $stmt->execute([
+                        "idClient" => $newIdClient,
+                        "nom" => $nom,
+                        "prenom" => $prenom,
+                        "telephone" => $telephone,
+                        "email" => $email,
+                        "password" => $hashedPassword,
+                        "dtn" => $dtn,
+                        "dateInscription" => $dateInscription
+                    ]);
+
+                    // Redirection après succès
+                    $_SESSION["user"] = [
+                        "nom" => $nom,
+                        "prenom" => $prenom,
+                        "email" => $email
+                    ];
+                    header("Location: compte.php");
+                    exit;
+                }
+            } catch (PDOException $e) {
+                // Gérer l'exception pour la base de données
+                $error = "Une erreur est survenue, veuillez réessayer plus tard.";
+                // Optionnel : log de l'erreur dans un fichier de log
+                error_log("Erreur PDO: " . $e->getMessage());
+            }
         }
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -77,9 +102,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </ul>
         </div>
     </header>
-
-
-
     
     <main>
         <div class="container">
