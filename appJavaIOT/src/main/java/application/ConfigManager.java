@@ -63,7 +63,6 @@ public class ConfigManager {
                 }
             }
         }
-        System.out.println("Fichier config.ini chargé avec succès : " + configMap);
     }
     
     
@@ -136,8 +135,8 @@ public class ConfigManager {
     
     private void appendSeuils(StringBuilder formattedConfig, String type) {
         formattedConfig.append("# ").append(type).append(" (valeur numérique positive)\n");
-        formattedConfig.append(type).append("Min : ").append(configMap.getOrDefault(type + "Min", "0")).append("\n");
-        formattedConfig.append(type).append("Max : ").append(configMap.getOrDefault(type + "Max", "0")).append("\n");
+        formattedConfig.append(type).append("Min : ").append(configMap.getOrDefault("Seuils Alerte."+type + "Min", "0")).append("\n");
+        formattedConfig.append(type).append("Max : ").append(configMap.getOrDefault("Seuils Alerte."+type + "Max", "0")).append("\n");
     }
     
 
