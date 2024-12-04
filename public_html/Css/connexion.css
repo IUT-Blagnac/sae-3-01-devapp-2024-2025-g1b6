@@ -11,15 +11,6 @@
 }
 
 
-.imgLoc {
-    position: relative;
-    left: 97em;
-}
-
-.imgPanier {
-    position: relative;
-    left: 97em;
-}
 
 .container {
     flex: 1;
@@ -44,7 +35,7 @@
 
 .titreCompte {
     position: relative;
-    top: 3em;
+    top: 1em;
     background: transparent;
     color: var(--medium-purple);
     height: 3em;
@@ -53,7 +44,7 @@
 
 .infos {
     position: relative;
-    margin-top: 1em;
+    margin-top: 2em;
     margin-left: 2em;
     display: flex;
     flex-direction: column;
@@ -61,6 +52,8 @@
 }
 
 .formConnexion {
+    position: relative;
+    top: 2em;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -135,7 +128,7 @@
 
 
 /* Styles pour la checkbox et son conteneur */
-.formConnexion .checkbox-container {
+.formConnexion .checkbox_container {
     display: flex;
     align-items: center;
     margin-top: 1em;
@@ -144,7 +137,10 @@
     color: var(--medium-purple);
 }
 
-.formConnexion .checkbox-container input[type="checkbox"] {
+.formConnexion .checkbox_container input[type="checkbox"] {
+    position: relative;
+    left: 15em;
+    top: 0.5em;
     margin-right: 10px;
     width: 18px;
     height: 18px;
@@ -157,16 +153,28 @@
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.formConnexion .checkbox-container input[type="checkbox"]:checked {
+.formConnexion .checkbox_container input[type="checkbox"]:checked {
     background-color: var(--clair-purple);
     box-shadow: 0 0 10px var(--clair-purple);
+    border-color: var(--clair-purple);
 }
 
-.formConnexion .checkbox-container input[type="checkbox"]:hover {
+.formConnexion .checkbox_container input[type="checkbox"]:checked::before {
+    content: "✓";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: var(--white);  
+    border-color: var(--clair-purple);
+}
+
+.formConnexion .checkbox_container input[type="checkbox"]:hover {
     border-color: var(--medium-purple);
 }
 
-.formConnexion .checkbox-container label {
+.formConnexion .checkbox_container label {
     cursor: pointer;
 }
 
@@ -180,7 +188,7 @@
 
 .creerCompte {
     position: relative;
-    margin-top: 1em;
+    top: 3em;
     left: 15%;
     display: flex;
     width: 20em;

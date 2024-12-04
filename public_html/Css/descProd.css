@@ -17,22 +17,6 @@ body {
     background-color: var(--light-gray);
 }
 
-.imgLoc {
-    position: relative;
-    left: 97em;
-}
-
-.imgPanier {
-    position: relative;
-    left: 97em;
-}
-
-.imgCompte {
-    position: relative;
-    left: 97em;
-}
-
-
 
 /* Contenu principal */
 .main-content {

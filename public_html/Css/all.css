@@ -49,6 +49,17 @@ html::-webkit-scrollbar-thumb {
 
 
 
+/* Gestion des erreurs */
+
+.error {
+    color: #fff;
+    background-color: #e74c3c;
+    padding: 10px;
+    border-radius: 1em;
+}
+
+
+
 .header {
     overflow: visible;
     position: relative;
@@ -228,31 +239,41 @@ html::-webkit-scrollbar-thumb {
     left: 5px;
 }
 
+/* Par défaut, le menu est caché */
 .categories {
     overflow-y: auto;
-    position: absolute;
-    top: 4em;
-    left: 0;
+    position: relative;
+    top: 5em;
+    left: -0.5em;
     background-color: var(--clair-purple);
     list-style-type: none;
     margin: 0;
     padding: 0;
-    border: 1px solid var(--light-gray);
-    border-radius: 5px;
-    width: 13em;
+    width: 100vw;
     max-height: 20em;
     z-index: 1000;
-    display: none;
+    display: none; /* Cacher le menu par défaut */
+    justify-content: flex-start; /* Alignement des éléments en ligne */
 }
 
 .burger input:checked ~ .categories {
-    display: block;
+    display: flex; /* Afficher le menu lorsque le checkbox est coché */
+}
+
+.categories ul {
+    list-style-type: none;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Afficher les éléments en ligne */
 }
 
 .categories li {
+    position: relative;
+    height: auto;
+    width: 10em;
     padding: 0.5em;
     text-align: left;
-    white-space: nowrap;
     transition: background 0.3s;
 }
 
@@ -266,7 +287,13 @@ html::-webkit-scrollbar-thumb {
 .categories li:hover {
     background-color: var(--medium-purple);
     transition: background 0.3s;
+    height: 15em;
 }
+
+
+
+
+
 
 
 

@@ -13,28 +13,46 @@
 <body>
     
 <header class="header">
-    <div class="barreMenu">
-        <ul class="menuListe">
-            <li> <label class="burger" for="burgerToggle">
-                <input type="checkbox" id="burgerToggle">
-                <ul class="categories">
-                  <li><a href="#">Catégorie 1</a></li>
-                  <li><a href="#">Catégorie 2</a></li>
-                  <li><a href="#">Catégorie 3</a></li>
-                  <li><a href="#">Catégorie 4</a></li>
-                </ul>
-                <span></span>
-                <span></span>
-                <span></span>
-              </label> </li>
-            <li> <a class="lienAccueil" href="index.php"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
-            <li> <input class="barreRecherche" type="text" placeholder="Barre de recherche ..."> </li>
-            <li> <div class="imgLoc"></div> </li>
-            <li> <a href="panier.php"><div class="imgPanier"></div></a></li>
-            <li> <a href="connexion.php"><div class="imgCompte"></div></a> </li>
-        </ul>
-    </div>
-</header>
+        <div class="barreMenu">
+            <ul class="menuListe">
+                <li> 
+                    <label class="burger" for="burgerToggle">
+                        <input type="checkbox" id="burgerToggle">
+                        <ul class="categories">
+                            <?php
+                            include ("connect.inc.php");
+                            $stmt = $pdo->prepare("SELECT * FROM CATEGORIE WHERE IDCATEG_CATPERE IS NULL");
+                            $stmt->execute();
+                            $categories = $stmt->fetchAll();
+                            foreach ($categories as $categorie) {
+                                echo "<li><a href='categorie.php?id=".$categorie['IDCATEG']."'>".$categorie['NOMCATEG']."</a></li>";
+                            }
+                            ?>
+                        </ul>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </label> 
+                </li>
+                <li> <a class="lienAccueil" href="index.php"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
+                <li> <input class="barreRecherche" type="text" placeholder="Barre de recherche ..."> </li>
+                <li> <div class="imgLoc"></div> </li>
+                <li> <a href="panier.php"><div class="imgPanier"></div></a></li>
+                <li> <?php
+                        // Vérification de la session utilisateur
+                        if (isset($_SESSION["user"])) {
+                            $id_client = $_SESSION["user"]["IDCLIENT"];
+                            // Si l'utilisateur est connecté, on le redirige vers son compte
+                            echo '<a href="compte.php?id_client=' . $id_client . '"><div class="imgCompte"></div></a>';
+                        } else {
+                            // Sinon, on le redirige vers la page de connexion
+                            echo '<a href="connexion.php"><div class="imgCompte"></div></a>';
+                        }
+                    ?> 
+                </li>
+            </ul>
+        </div>
+    </header>
 
 
 

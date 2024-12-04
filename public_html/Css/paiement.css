@@ -26,20 +26,6 @@ html, body {
 }
 
 
-.barreMenu {
-    left: 10em;
-}
-
-.imgLoc {
-    position: relative;
-    left: 99em;
-}
-
-.imgCompte {
-    position: relative;
-    left: 99em;
-}
-
 .container {
     flex: 1; 
     display: flex;
