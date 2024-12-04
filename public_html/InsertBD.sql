@@ -18,6 +18,10 @@ INSERT INTO CATEGORIE (IDCATEG, IDCATEG_CATPERE, NOMCATEG, DESCCATEG) VALUES
 (8, NULL, 'Extérieur', 'Jeux pour l’extérieur'),
 (9, NULL, 'Créativité', 'Jeux pour développer la créativité'),
 (10, NULL, 'Construction', 'Jeux de construction pour tous les âges');
+(20, NULL, 'Enfants', 'Jeux pour enfants');
+(21, NULL, 'Ado', 'Jeux pour ados');
+(22, NULL, 'Jeune-adulte', 'Jeux pour jeunes adultes');
+(23, NULL, 'Adulte', 'Jeux pour adultes');
 
 -- Sous-catégories (au moins 2 par catégorie)
 INSERT INTO CATEGORIE (IDCATEG, IDCATEG_CATPERE, NOMCATEG, DESCCATEG) VALUES
@@ -58,6 +62,7 @@ INSERT INTO MARQUE (IDMARQUE, NOMMARQUE, DESCMARQUE) VALUES
 (18, 'Step2', 'Marque de jouets d’extérieur et de jeux de rôle.'),
 (19, 'Hape', 'Marque de jouets en bois et de jeux éducatifs.'),
 (20, 'Janod', 'Marque de jouets en bois et de jeux éducatifs.');
+(21, 'Ludorama', 'Marque de jouets ludorama qui vend de tout.');
 
 -- Insertion des produits
 INSERT INTO PRODUIT (IDPROD, IDMARQUE, NOMPROD, DESCPROD, PRIXHT, COULEUR, COMPOSITION, POIDSPRODUIT, QTESTOCK) VALUES

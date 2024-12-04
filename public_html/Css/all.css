@@ -271,7 +271,6 @@ html::-webkit-scrollbar-thumb {
 .categories li {
     position: relative;
     height: auto;
-    width: 10em;
     padding: 0.5em;
     text-align: left;
     transition: background 0.3s;
@@ -287,7 +286,6 @@ html::-webkit-scrollbar-thumb {
 .categories li:hover {
     background-color: var(--medium-purple);
     transition: background 0.3s;
-    height: 15em;
 }
 
 
