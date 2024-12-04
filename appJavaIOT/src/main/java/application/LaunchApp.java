@@ -12,7 +12,6 @@ public class LaunchApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         RoomsPane rp = new RoomsPane(null);
-
         rp.show();
     }
 

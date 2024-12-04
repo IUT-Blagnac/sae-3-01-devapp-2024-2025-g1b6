@@ -1,7 +1,6 @@
 package application.control;
 
 import application.LaunchApp;
-import application.tools.StageManagement;
 import application.view.RoomsViewControler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,18 +10,35 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * La classe RoomsPane est responsable de la gestion de la vue des salles.
+ * Elle charge la vue des salles à partir d'un fichier FXML et configure la scène et la fenêtre.
+ *
+ * <p>Cette classe utilise {@link RoomsViewControler} pour gérer les interactions utilisateur avec la vue.
+ *
+ * @see application.LaunchApp
+ * @see application.tools.StageManagement
+ * @see application.view.RoomsViewControler
+ *
+ * @author Yassir Boulouiha Gnaoui
+ */
 public class RoomsPane {
 
     private Stage rpStage;
     private RoomsViewControler rpViewController;
 
-
-    public RoomsPane(Stage parentStage){
+    /**
+     * Constructeur de RoomsPane.
+     * Initialise la fenêtre de la vue des salles et configure ses paramètres.
+     *
+     * @param parentStage La scène parente de cette fenêtre.
+     */
+    public RoomsPane(Stage parentStage) {
         try {
             FXMLLoader loader = new FXMLLoader(LaunchApp.class.getResource("view/RoomsView.fxml"));
             BorderPane root = loader.load();
 
-            Scene scene = new Scene(root, root.getPrefWidth() +20, root.getPrefHeight() + 10);
+            Scene scene = new Scene(root, root.getPrefWidth() + 20, root.getPrefHeight() + 10);
 
             this.rpStage = new Stage();
             this.rpStage.initModality(Modality.WINDOW_MODAL);
@@ -33,13 +49,16 @@ public class RoomsPane {
             this.rpViewController = loader.getController();
             this.rpViewController.initContext(this.rpStage);
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void show(){
+    /**
+     * Affiche la fenêtre des salles.
+     * Appelle la méthode {@link RoomsViewControler#show()} du contrôleur de la vue des salles.
+     */
+    public void show() {
         this.rpViewController.show();
     }
-
 }

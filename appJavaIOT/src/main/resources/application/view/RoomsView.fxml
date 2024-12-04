@@ -22,7 +22,7 @@
             <top>
                 <FlowPane alignment="CENTER" prefHeight="70.0" prefWidth="534.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Label contentDisplay="CENTER" text="Menu des Capteurs">
+                        <Label contentDisplay="CENTER" text="Menu des Salles">
                             <font>
                                 <Font name="System Bold" size="19.0" />
                             </font>
