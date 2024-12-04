@@ -20,18 +20,30 @@
     </header>
 
 
-    <main>
 
+
+    <?php
+    // Vérifiez si des cookies existent
+    $email = isset($_COOKIE['email']) ? $_COOKIE['email'] : '';
+    $password = isset($_COOKIE['password']) ? $_COOKIE['password'] : '';
+    ?>
+    <main>
         <div class="container">
             <div class="compte">
-            <div class="imgProfil"></div>
-                <h1 class="titreCompte">Se connecter </h1>
+                <h1 class="titreCompte">Se connecter</h1>
                 <div class="infos">
                     <form class="formConnexion" action="traitConnexion.php" method="post">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" value="<?= htmlspecialchars($email) ?>" required>
+                        
                         <label for="password">Mot de passe</label>
-                        <input type="password" id="password" name="password" required>
+                        <input type="password" id="password" name="password" value="<?= htmlspecialchars($password) ?>" required>
+                        
+                        <div>
+                            <input type="checkbox" id="remember_me" name="remember_me" <?= $email ? 'checked' : '' ?>>
+                            <label for="remember_me">Se souvenir de moi</label>
+                        </div>
+                        
                         <button type="submit">Se connecter</button>
                     </form>
                 </div>
@@ -41,8 +53,8 @@
                 </div>
             </div>
         </div>
-                
     </main>
+
 
 
 <!-- Pied de page -->

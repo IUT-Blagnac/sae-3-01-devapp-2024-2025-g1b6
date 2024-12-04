@@ -34,32 +34,21 @@
     position: relative;
     align-items: center;
     justify-content: center;
-    margin-top: 5em;
+    margin-top: 8em;
     background-color: var(--backpurple);
     width: 30em;
     height: 40em;
     border-radius: 3em;
 }
 
-.imgProfil {
-    position: relative;
-    background-image: url("../images/Profil.png");
-    left: 27%;
-    top: -3%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 13em;
-    height: 13em;
-}
 
 .titreCompte {
     position: relative;
-    margin-top: 0.4em;
+    top: 3em;
     background: transparent;
     color: var(--medium-purple);
     height: 3em;
     left: 30%;
-    margin-top: -1em;
 }
 
 .infos {
@@ -142,6 +131,47 @@
     color: var(--white);
     border-color: var(--clair-purple);
 }
+
+
+
+/* Styles pour la checkbox et son conteneur */
+.formConnexion .checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-top: 1em;
+    margin-left: 2em;
+    font-size: 0.9em;
+    color: var(--medium-purple);
+}
+
+.formConnexion .checkbox-container input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    border: 2px solid var(--light-gray);
+    border-radius: 4px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: var(--light-gray);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.formConnexion .checkbox-container input[type="checkbox"]:checked {
+    background-color: var(--clair-purple);
+    box-shadow: 0 0 10px var(--clair-purple);
+}
+
+.formConnexion .checkbox-container input[type="checkbox"]:hover {
+    border-color: var(--medium-purple);
+}
+
+.formConnexion .checkbox-container label {
+    cursor: pointer;
+}
+
+
+
 
 .formConnexion a {
     text-decoration: none;
