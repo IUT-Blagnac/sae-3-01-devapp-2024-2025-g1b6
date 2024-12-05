@@ -20,7 +20,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("view/solarpanel.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("view/graphiques.fxml"));
         Parent root = fxmlLoader.load();
         graphiquesController = fxmlLoader.getController(); // Récupérer le contrôleur
 

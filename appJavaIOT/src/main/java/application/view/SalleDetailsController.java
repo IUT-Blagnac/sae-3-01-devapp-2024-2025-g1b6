@@ -7,12 +7,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import application.model.Measure;
+import application.model.Room;
+import application.model.SyncData;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import application.App;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,15 +22,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Stream;
 
 /**
  * Contrôleur pour afficher les détails d'une salle et gérer les graphiques des données de capteurs.
- * Cette classe est responsable de charger les fichiers JSON, afficher les alertes et créer des graphiques pour chaque salle.
  */
 public class SalleDetailsController {
 
-    private Map<String, Map<String, Double>> sensorData = new HashMap<>();
     private ExecutorService alertExecutor;
     private ExecutorService dataExecutor;
     private volatile boolean running = true;
@@ -41,97 +39,27 @@ public class SalleDetailsController {
     private Button buttonRetour; // Bouton de retour
 
     /**
-     * Méthode d'initialisation qui charge les fichiers JSON, crée les graphiques pour chaque salle,
-     * et lance les threads pour surveiller les alertes et les nouveaux fichiers JSON.
+     * Méthode d'initialisation qui charge les données des salles et crée les graphiques.
      */
     public void initialize() {
         try {
-            Path dataDir = Paths.get(App.class.getResource("data").toURI());
+            SyncData syncData = SyncData.getInstance();
+            syncData.fillRoomList();  // Charger les données des salles
 
-            // Charger les fichiers de données existants
-            try (Stream<Path> paths = Files.walk(dataDir)) {
-                paths.filter(Files::isRegularFile)
-                     .filter(path -> path.toString().endsWith(".json"))
-                     .forEach(path -> {
-                         try {
-                             boolean isAlertFile = isInAlertDirectory(dataDir, path);
-                             loadJsonData(path, isAlertFile);
-                         } catch (IOException e) {
-                             e.printStackTrace();
-                         }
-                     });
+            // Créer les onglets pour chaque salle
+            for (Room room : syncData.getRoomsMap().values()) {
+                createRoomTab(room);
             }
 
             // Lancer les threads pour surveiller les alertes et les nouveaux fichiers JSON
-            startAlertMonitoring(dataDir.resolve("Alert"));
-            startDataMonitoring(dataDir);
+            startAlertMonitoring(Paths.get("src/main/resources/application/data/Alert"));
+            startDataMonitoring(Paths.get("src/main/resources/application/data"));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    /**
-     * Vérifie si le fichier donné se trouve dans le répertoire des alertes.
-     * 
-     * @param baseDir Le répertoire de base des données
-     * @param filePath Le chemin du fichier à vérifier
-     * @return True si le fichier est dans le répertoire des alertes, sinon False
-     */
-    private boolean isInAlertDirectory(Path baseDir, Path filePath) {
-        Path relativePath = baseDir.relativize(filePath);
-        return relativePath.getParent() != null && relativePath.getParent().toString().contains("Alert");
-    }
-
-    /**
-     * Charge les données d'un fichier JSON et met à jour la carte des données du capteur.
-     * Si le fichier est un fichier d'alerte, une alerte sera affichée.
-     * 
-     * @param filePath Le chemin du fichier JSON à charger
-     * @param isAlertFile True si c'est un fichier d'alerte, sinon False
-     * @throws IOException Si une erreur de lecture du fichier se produit
-     */
-    private void loadJsonData(Path filePath, boolean isAlertFile) throws IOException {
-        JsonElement rootElement = JsonParser.parseReader(new FileReader(filePath.toFile()));
-
-        if (!rootElement.isJsonArray()) {
-            throw new IllegalStateException("Le fichier JSON doit être un tableau racine.");
-        }
-
-        JsonArray rootArray = rootElement.getAsJsonArray();
-        if (rootArray.size() != 1) {
-            throw new IllegalStateException("Le fichier JSON doit contenir un tableau unique avec deux objets.");
-        }
-
-        JsonArray nestedArray = rootArray.get(0).getAsJsonArray();
-        if (nestedArray.size() != 2) {
-            throw new IllegalStateException("Le tableau imbriqué doit contenir exactement deux objets.");
-        }
-
-        JsonObject dataObject = nestedArray.get(0).getAsJsonObject();
-        JsonObject metadataObject = nestedArray.get(1).getAsJsonObject();
-
-        String room = metadataObject.get("room").getAsString();
-
-        // Enregistrer les données par type de capteur et salle
-        for (Map.Entry<String, JsonElement> entry : dataObject.entrySet()) {
-            String key = entry.getKey();
-            double value = entry.getValue().getAsDouble();
-
-            sensorData.computeIfAbsent(key, k -> new HashMap<>()).put(room, value);
-        }
-
-        // Créer un onglet pour chaque salle
-        createRoomTab(room, dataObject);
-    }
-
-    /**
-     * Affiche une alerte si les données du fichier d'alerte sont critiques.
-     * 
-     * @param key La clé de la donnée
-     * @param room Le nom de la salle
-     * @param value La valeur de la donnée
-     */
+    
     private void showAlert(String key, String room, double value) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -142,49 +70,6 @@ public class SalleDetailsController {
         });
     }
 
-    /**
-     * Crée un onglet pour chaque salle et l'ajoute au TabPane.
-     * 
-     * @param roomName Le nom de la salle à afficher
-     * @param dataObject Les données à afficher pour cette salle
-     */
-    private void createRoomTab(String roomName, JsonObject dataObject) {
-        Platform.runLater(() -> {
-            // Créer un onglet dont le titre est le nom de la salle
-            Tab tab = new Tab(roomName);
-            tab.setContent(createRoomChart(roomName, dataObject));
-            tabPane.getTabs().add(tab);
-        });
-    }
-
-    /**
-     * Crée un graphique pour une salle donnée, ici un graphique à barres représentant les données du capteur.
-     * 
-     * @param roomName Le nom de la salle
-     * @param dataObject Les données à afficher pour la salle
-     * @return Le graphique créé (ici un BarChart)
-     */
-    private Chart createRoomChart(String roomName, JsonObject dataObject) {
-        BarChart<String, Number> barChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
-        barChart.setTitle("Données pour la salle : " + roomName);
-
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName(roomName);
-
-        // Ajouter les données liées à la salle au graphique
-        for (Map.Entry<String, JsonElement> entry : dataObject.entrySet()) {
-            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue().getAsDouble()));
-        }
-
-        barChart.getData().add(series);
-        return barChart;
-    }
-
-    /**
-     * Surveille le répertoire des alertes et charge les fichiers JSON d'alerte lorsqu'ils sont créés.
-     * 
-     * @param alertDir Le répertoire des alertes à surveiller
-     */
     private void startAlertMonitoring(Path alertDir) {
         alertExecutor = Executors.newSingleThreadExecutor();
 
@@ -200,9 +85,9 @@ public class SalleDetailsController {
                 while (running) {
                     WatchKey key;
                     try {
-                        key = watchService.poll(); // Utiliser poll() pour éviter le blocage
+                        key = watchService.poll();
                         if (key == null) {
-                            Thread.sleep(100); // Pause pour éviter de surcharger le CPU
+                            Thread.sleep(100);
                             continue;
                         }
                     } catch (InterruptedException e) {
@@ -211,23 +96,16 @@ public class SalleDetailsController {
                     }
 
                     for (WatchEvent<?> event : key.pollEvents()) {
-                        WatchEvent.Kind<?> kind = event.kind();
-
-                        if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
+                        if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
                             Path filePath = alertDir.resolve((Path) event.context());
-                            Platform.runLater(() -> {
-                                try {
-                                    loadJsonData(filePath, true);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            });
+                            // Chargement des alertes (implémentez selon votre logique)
+                            // loadAlertData(filePath);
                         }
                     }
                     key.reset();
                 }
 
-                watchService.close(); // Fermer proprement le WatchService
+                watchService.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -235,45 +113,91 @@ public class SalleDetailsController {
     }
 
     /**
+     * Crée un onglet pour chaque salle et l'ajoute au TabPane.
+     */
+    private void createRoomTab(Room room) {
+        Tab tab = new Tab(room.getRoomName());
+        tab.setContent(createRoomChart(room));
+        tabPane.getTabs().add(tab);
+    }
+
+    /**
+     * Crée un graphique pour la salle donnée.
+     */
+    private Chart createRoomChart(Room room) {
+        BarChart<String, Number> barChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
+        barChart.setTitle("Données pour la salle : " + room.getRoomName());
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName(room.getRoomName());
+
+        for (Measure measure : room.getRoomValues()) {
+            for (Map.Entry<String, Object> entry : measure.getValues().entrySet()) {
+                String key = entry.getKey();
+                Double value = ((Number) entry.getValue()).doubleValue();
+                series.getData().add(new XYChart.Data<>(key, value));
+
+        
+            }
+        }
+
+        barChart.getData().add(series);
+        return barChart;
+    }
+
+
+    /**
+     * Charge les données d'un fichier de capteur.
+     */
+    private void loadSensorData(Path filePath) throws IOException {
+        JsonElement rootElement = JsonParser.parseReader(new FileReader(filePath.toFile()));
+        if (rootElement.isJsonArray()) {
+            JsonArray rootArray = rootElement.getAsJsonArray();
+            for (JsonElement element : rootArray) {
+                JsonObject dataObject = element.getAsJsonObject();
+                String roomName = dataObject.get("room").getAsString();
+                JsonArray measures = dataObject.getAsJsonArray("measures");
+
+                for (JsonElement measureElement : measures) {
+                    JsonObject measureObject = measureElement.getAsJsonObject();
+                    Map<String, Object> valuesMap = new HashMap<>();
+                    boolean alertMeasure = measureObject.get("alertMeasure").getAsBoolean();
+
+                    for (Map.Entry<String, JsonElement> entry : measureObject.entrySet()) {
+                        if (!entry.getKey().equals("alertMeasure")) {
+                            valuesMap.put(entry.getKey(), entry.getValue().getAsDouble());
+                        }
+                    }
+
+                    Measure measure = new Measure(valuesMap, alertMeasure);
+                    Room room = findRoomByName(roomName);
+                    if (room != null) {
+                        room.addRoomValue(measure);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Surveille le répertoire des données et charge les fichiers JSON lorsqu'ils sont créés.
-     * Met également à jour les graphiques avec les nouvelles données.
-     * 
-     * @param dataDir Le répertoire des données à surveiller
      */
     private void startDataMonitoring(Path dataDir) {
         dataExecutor = Executors.newSingleThreadExecutor();
-
         dataExecutor.submit(() -> {
             try {
                 WatchService watchService = FileSystems.getDefault().newWatchService();
                 dataDir.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
 
                 while (running) {
-                    WatchKey key;
-                    try {
-                        key = watchService.poll(); // Utiliser poll() pour éviter le blocage
-                        if (key == null) {
-                            Thread.sleep(100); // Pause pour éviter de surcharger le CPU
-                            continue;
-                        }
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        break;
-                    }
-
+                    WatchKey key = watchService.take();
                     for (WatchEvent<?> event : key.pollEvents()) {
-                        WatchEvent.Kind<?> kind = event.kind();
-
-                        if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
+                        if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
                             Path filePath = dataDir.resolve((Path) event.context());
                             Platform.runLater(() -> {
                                 try {
-                                    boolean isAlertFile = isInAlertDirectory(dataDir, filePath);
-                                    loadJsonData(filePath, isAlertFile);
-                                    if (!isAlertFile) {
-                                        // Si ce n'est pas un fichier d'alerte, mettez à jour les graphiques
-                                        updateCharts(filePath);
-                                    }
+                                    loadSensorData(filePath);
+                                    updateCharts(); // Met à jour les graphiques
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -282,22 +206,23 @@ public class SalleDetailsController {
                     }
                     key.reset();
                 }
-
-                watchService.close(); // Fermer proprement le WatchService
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
         });
     }
 
     /**
-     * Met à jour les graphiques avec les nouvelles données si nécessaire.
-     * 
-     * @param filePath Le chemin du fichier qui contient les nouvelles données
+     * Met à jour les graphiques avec les nouvelles données.
      */
-    private void updateCharts(Path filePath) {
+    private void updateCharts() {
         Platform.runLater(() -> {
-            // Mettre à jour les graphiques avec les nouvelles données si nécessaire
+            for (Tab tab : tabPane.getTabs()) {
+                Room room = findRoomByName(tab.getText()); // Récupérer la salle associée
+                if (room != null) {
+                    tab.setContent(createRoomChart(room)); // Mettre à jour le graphique
+                }
+            }
         });
     }
 
@@ -313,15 +238,14 @@ public class SalleDetailsController {
      * Arrête les exécuteurs et libère les ressources utilisées.
      */
     public void stop() {
-        try {
-            if (alertExecutor != null && !alertExecutor.isShutdown()) {
-                alertExecutor.shutdownNow();
-            }
-            if (dataExecutor != null && !dataExecutor.isShutdown()) {
-                dataExecutor.shutdownNow();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        running = false;
+        if (alertExecutor != null) alertExecutor.shutdownNow();
+        if (dataExecutor != null) dataExecutor.shutdownNow();
+    }
+
+    // Méthode fictive pour trouver une salle par son nom
+    private Room findRoomByName(String roomName) {
+        SyncData syncData = SyncData.getInstance();
+        return syncData.getRoomsMap().get(roomName);
     }
 }

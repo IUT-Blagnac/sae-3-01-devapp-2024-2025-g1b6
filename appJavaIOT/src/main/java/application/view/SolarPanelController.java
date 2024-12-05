@@ -2,13 +2,15 @@ package application.view;
 
 import application.model.Solar;
 import application.model.SyncData;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 
 import java.util.List;
 
+/**
+ * Contrôleur pour gérer le graphique des panneaux solaires.
+ */
 public class SolarPanelController {
 
     @FXML
@@ -26,7 +28,17 @@ public class SolarPanelController {
         energySeries = new XYChart.Series<>();
         energySeries.setName("Énergie Produite");
 
-        // Charger les données des panneaux solaires depuis SyncData
+        // Charger les données des panneaux solaires
+        loadSolarData();
+
+        // Ajouter la série au graphique
+        energyChart.getData().add(energySeries);
+    }
+
+    /**
+     * Charge les données des panneaux solaires depuis SyncData.
+     */
+    private void loadSolarData() {
         List<Solar> solarPanels = SyncData.getInstance().getSolarPanelValues();
 
         // Vérifier s'il y a des données disponibles
@@ -35,17 +47,15 @@ public class SolarPanelController {
             return;
         }
 
-        // Ajouter les données du premier panneau solaire au graphique
-        Solar solar = solarPanels.get(0); // Exemple : le premier panneau
-        updateEnergyChart(solar);
-
-        // Ajouter la série au graphique
-        energyChart.getData().add(energySeries);
+        // Met à jour le graphique avec les données du premier panneau solaire
+        for (Solar solar : solarPanels) {
+            updateEnergyChart(solar);
+        }
     }
 
     /**
      * Met à jour le graphique avec les données d'un panneau solaire spécifique.
-     *
+     * 
      * @param solar Le panneau solaire dont les données doivent être affichées.
      */
     private void updateEnergyChart(Solar solar) {
@@ -53,13 +63,14 @@ public class SolarPanelController {
         energySeries.getData().clear();
 
         // Ajouter les nouvelles données
-        for (var entry : solar.getEnergyMap().entrySet()) {
-            String xValue = entry.getKey();    // Exemple : "lifeTimeData"
-            Float yValue = entry.getValue();  // Valeur associée
-
-            // Ajouter au graphique
+        solar.getEnergyMap().forEach((xValue, yValue) -> {
             System.out.println("Ajout au graphique : X = " + xValue + ", Y = " + yValue);
             energySeries.getData().add(new XYChart.Data<>(xValue, yValue));
+        });
+
+        // Vérifie si des données ont été ajoutées
+        if (energySeries.getData().isEmpty()) {
+            System.out.println("Aucune donnée ajoutée au graphique pour le panneau solaire.");
         }
     }
 

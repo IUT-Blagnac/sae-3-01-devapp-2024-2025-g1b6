@@ -7,21 +7,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import application.model.Measure;
+import application.model.Room;
+import application.model.SyncData;
 
-import application.App;
-
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Stream;
 
 public class GraphiquesController {
 
@@ -38,24 +33,20 @@ public class GraphiquesController {
 
     public void initialize() {
         try {
-            Path dataDir = Paths.get(App.class.getResource("data").toURI());
-
-            // Charger les fichiers de données existants en ignorant "solar.json"
-            try (Stream<Path> paths = Files.walk(dataDir)) {
-                paths.filter(Files::isRegularFile)
-                     .filter(path -> path.toString().endsWith(".json"))
-                     .filter(path -> !path.getFileName().toString().equalsIgnoreCase("solar.json")) // Ignorer "solar.json"
-                     .forEach(path -> {
-                         try {
-                             boolean isAlertFile = isInAlertDirectory(dataDir, path);
-                             loadJsonData(path, isAlertFile);
-                         } catch (IOException e) {
-                             e.printStackTrace();
-                         }
-                     });
-            }
+            SyncData syncData = SyncData.getInstance();
+            syncData.fillRoomList();  // Charger les données des salles et panneaux solaires
 
             // Créer les onglets pour chaque type de donnée
+            for (Room room : syncData.getRoomsMap().values()) {
+                for (Measure measure : room.getRoomValues()) {
+                    for (Map.Entry<String, Object> entry : measure.getValues().entrySet()) {
+                        String key = entry.getKey();
+                        double value = ((Number) entry.getValue()).doubleValue();
+                        sensorData.computeIfAbsent(key, k -> new HashMap<>()).put(room.getRoomName(), value);
+                    }
+                }
+            }
+
             for (String key : sensorData.keySet()) {
                 Tab tab = new Tab(key);
                 tab.setContent(createChart(key, sensorData.get(key)));
@@ -63,50 +54,11 @@ public class GraphiquesController {
             }
 
             // Lancer les threads pour surveiller les alertes et les nouveaux fichiers JSON
-            startAlertMonitoring(dataDir.resolve("Alert"));
-            startDataMonitoring(dataDir);
+            startAlertMonitoring(Paths.get("src/main/resources/application/data/Alert"));
+            startDataMonitoring(Paths.get("src/main/resources/application/data"));
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    private boolean isInAlertDirectory(Path baseDir, Path filePath) {
-        Path relativePath = baseDir.relativize(filePath);
-        return relativePath.getParent() != null && relativePath.getParent().toString().contains("Alert");
-    }
-
-    private void loadJsonData(Path filePath, boolean isAlertFile) throws IOException {
-        JsonElement rootElement = JsonParser.parseReader(new FileReader(filePath.toFile()));
-
-        if (!rootElement.isJsonArray()) {
-            throw new IllegalStateException("Le fichier JSON doit être un tableau racine.");
-        }
-
-        JsonArray rootArray = rootElement.getAsJsonArray();
-        if (rootArray.size() != 1) {
-            throw new IllegalStateException("Le fichier JSON doit contenir un tableau unique avec deux objets.");
-        }
-
-        JsonArray nestedArray = rootArray.get(0).getAsJsonArray();
-        if (nestedArray.size() != 2) {
-            throw new IllegalStateException("Le tableau imbriqué doit contenir exactement deux objets.");
-        }
-
-        JsonObject dataObject = nestedArray.get(0).getAsJsonObject();
-        JsonObject metadataObject = nestedArray.get(1).getAsJsonObject();
-
-        String room = metadataObject.get("room").getAsString();
-
-        for (Map.Entry<String, JsonElement> entry : dataObject.entrySet()) {
-            String key = entry.getKey();
-            double value = entry.getValue().getAsDouble();
-
-            if (isAlertFile) {
-                showAlert(key, room, value);
-            } else {
-                sensorData.computeIfAbsent(key, k -> new HashMap<>()).put(room, value);
-            }
         }
     }
 
@@ -146,17 +98,10 @@ public class GraphiquesController {
                     }
 
                     for (WatchEvent<?> event : key.pollEvents()) {
-                        WatchEvent.Kind<?> kind = event.kind();
-
-                        if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
+                        if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
                             Path filePath = alertDir.resolve((Path) event.context());
-                            Platform.runLater(() -> {
-                                try {
-                                    loadJsonData(filePath, true);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            });
+                            // Chargement des alertes (implémentez selon votre logique)
+                            // loadAlertData(filePath);
                         }
                     }
                     key.reset();
@@ -191,24 +136,10 @@ public class GraphiquesController {
                     }
 
                     for (WatchEvent<?> event : key.pollEvents()) {
-                        WatchEvent.Kind<?> kind = event.kind();
-
-                        if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
+                        if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
                             Path filePath = dataDir.resolve((Path) event.context());
-                            if (filePath.getFileName().toString().equalsIgnoreCase("solar.json")) {
-                                continue; // Ignorer "solar.json"
-                            }
-                            Platform.runLater(() -> {
-                                try {
-                                    boolean isAlertFile = isInAlertDirectory(dataDir, filePath);
-                                    loadJsonData(filePath, isAlertFile);
-                                    if (!isAlertFile) {
-                                        updateCharts(filePath);
-                                    }
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            });
+                            // Chargement des données des fichiers (implémentez selon votre logique)
+                            // loadSensorData(filePath);
                         }
                     }
                     key.reset();
@@ -217,14 +148,6 @@ public class GraphiquesController {
                 watchService.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            }
-        });
-    }
-
-    private void updateCharts(Path filePath) {
-        Platform.runLater(() -> {
-            for (Tab tab : tabPane.getTabs()) {
-                // Vous pouvez choisir de mettre à jour les graphiques en fonction du fichier.
             }
         });
     }
