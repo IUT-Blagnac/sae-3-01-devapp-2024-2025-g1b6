@@ -9,7 +9,7 @@ import time
 
 # Création d'un objet ConfigParser pour lire le fichier de configuration
 parser = ConfigParser()
-parser.read('config.ini')
+parser.read('src/main/python/config.ini')
 
 # Récupération de l'hôte à partir du fichier de configuration
 host = parser.get('General', 'host')
@@ -171,8 +171,6 @@ def save_data():
         # Si des seuils d'alerte sont dépassés, écrit les données d'alerte dans un fichier JSON
         if alertpath is not None:
             write_data(alertpath, alert_di)
-
-
     # Vide le tableau des valeurs après sauvegarde
     tabValues.clear()
     print('Sauvegarde des données effectuée.')
