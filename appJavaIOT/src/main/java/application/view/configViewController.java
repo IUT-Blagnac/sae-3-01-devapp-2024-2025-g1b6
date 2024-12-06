@@ -19,6 +19,12 @@ import javafx.stage.Stage;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import application.AppConstants;
+
+/**
+ * Contrôleur de la vue de configuration.
+ * Permet de gérer les paramètres généraux, les capteurs et les panneaux solaires.
+ * @author Alex LOVIN
+ */
 public class configViewController {
 
     private final ConfigManager configManager = new ConfigManager();
@@ -58,6 +64,11 @@ public class configViewController {
 
     private final Set<String> selectedSalles = new HashSet<>();
 
+    /**
+     * Initialise la vue de configuration.
+     * Charge les paramètres actuels depuis le fichier config.ini et configure les éléments de l'interface.
+     * @author Alex LOVIN
+     */
     @FXML
     private void initialize() {
         try {
@@ -94,7 +105,7 @@ public class configViewController {
         // Charger les salles sélectionnées
         selectedSalles.clear();
         String existingSalles = configManager.readConfig("Capteurs.salles").trim();
-        if (!existingSalles.equals("''")) { // Si ce n'est pas une chaîne vide, traiter les salles
+        if (!existingSalles.equals("''")) { 
             String[] salles = existingSalles.replace("'", "").split(",\\s*");
             Collections.addAll(selectedSalles, salles);
         }
@@ -128,6 +139,11 @@ public class configViewController {
         });
     }
 
+    /**
+     * Gère le comportement lors de la sélection de l'abonnement à tous les capteurs.
+     * Active ou désactive la liste en fonction de l'option choisie.
+     * @author Alex LOVIN
+     */
     @FXML
     private void handleSubscribeAllCapteurs() {
         boolean isOn = btnOuiCapteur.isSelected();
@@ -136,6 +152,10 @@ public class configViewController {
         saveConfig();
     }
 
+    /**
+     * Gère le comportement lors de la sélection de l'abonnement aux panneaux solaires.
+     * @author Alex LOVIN
+     */
     @FXML
     private void handleSubscribeAllPanneaux() {
         boolean isOn = btnOuiPanneau.isSelected();
@@ -143,6 +163,10 @@ public class configViewController {
         saveConfig();
     }
 
+    /**
+     * Met à jour les salles sélectionnées dans la configuration.
+     * @author Alex LOVIN
+     */
     private void updateSallesInConfig() {
         if (selectedSalles.isEmpty()) {
             configManager.updateConfig("Capteurs.salles", "''");
@@ -156,6 +180,10 @@ public class configViewController {
         saveConfig();
     }
 
+    /**
+     * Sauvegarde la configuration actuelle dans le fichier config.ini.
+     * @author Alex LOVIN
+     */
     private void saveConfig() {
         try {
             configManager.saveConfig();
@@ -164,10 +192,18 @@ public class configViewController {
         }
     }
 
+    /**
+     * Recharge la vue pour refléter les changements de configuration.
+     * @author Alex LOVIN
+     */
     public void reloadView() {
         initialize(); // Recharger les valeurs depuis l'initialize
     }
 
+    /**
+     * Ouvre la vue des seuils d'alerte si les conditions sont remplies.
+     * @author Alex LOVIN
+     */
     @FXML
     private void handleOpenAlerte() {
         String subscribeAllCapteurs = configManager.readConfig("Capteurs.subscribe_all");

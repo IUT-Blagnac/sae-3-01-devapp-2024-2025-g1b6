@@ -18,6 +18,12 @@ import application.ConfigManager;
 import application.LaunchApp;
 import javafx.scene.control.MenuItem;
 
+/**
+ * Contrôleur pour la gestion des seuils d'alerte.
+ * Permet de sélectionner un type de données et de modifier ses valeurs minimales et maximales.
+ * 
+ * @author Alex LOVIN
+ */
 public class seuilsViewController {
 
     @FXML
@@ -58,11 +64,16 @@ public class seuilsViewController {
     private String selectedType = null; // Type actuellement sélectionné
     private boolean hasUnsavedChanges = false; // Indicateur de changements non sauvegardés
 
+    /**
+     * Initialisation du contrôleur.
+     * Charge la configuration et configure les interactions pour les éléments du menu.
+     * 
+     * @author Alex LOVIN
+     */
     @FXML
     private void initialize() {
         try {
-            // Charger la configuration
-            configManager.loadConfig();
+            configManager.loadConfig(); // Charger la configuration
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,19 +92,27 @@ public class seuilsViewController {
         // Détecter les modifications dans les champs de texte
         seuilsMin.textProperty().addListener((observable, oldValue, newValue) -> {
             if (selectedType != null) {
-                String currentMin = configManager.readConfig("Seuils Alerte."+selectedType + "Min");
+                String currentMin = configManager.readConfig("Seuils Alerte." + selectedType + "Min");
                 hasUnsavedChanges = !newValue.trim().equals(currentMin);
             }
         });
 
         seuilsMax.textProperty().addListener((observable, oldValue, newValue) -> {
             if (selectedType != null) {
-                String currentMax = configManager.readConfig("Seuils Alerte."+selectedType + "Max");
+                String currentMax = configManager.readConfig("Seuils Alerte." + selectedType + "Max");
                 hasUnsavedChanges = !newValue.trim().equals(currentMax);
             }
         });
     }
 
+    /**
+     * Gère la sélection d'un type de données.
+     * Charge les valeurs minimales et maximales pour le type sélectionné.
+     * 
+     * @param type Le type de données sélectionné
+     * @param label Le libellé affiché dans le menu
+     * @author Alex LOVIN
+     */
     private void handleTypeSelection(String type, String label) {
         if (hasUnsavedChanges) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -120,6 +139,12 @@ public class seuilsViewController {
         reloadSelectedType(); // Recharger les valeurs Min et Max pour le type sélectionné
     }
 
+    /**
+     * Sauvegarde les seuils actuels dans le fichier de configuration.
+     * Valide les valeurs avant de les enregistrer.
+     * 
+     * @author Alex LOVIN
+     */
     private void saveCurrentSeuils() {
         if (selectedType != null) {
             try {
@@ -140,8 +165,8 @@ public class seuilsViewController {
                 }
 
                 // Mettre à jour et sauvegarder
-                configManager.updateConfig("Seuils Alerte."+selectedType + "Min", minValueStr);
-                configManager.updateConfig("Seuils Alerte."+selectedType + "Max", maxValueStr);
+                configManager.updateConfig("Seuils Alerte." + selectedType + "Min", minValueStr);
+                configManager.updateConfig("Seuils Alerte." + selectedType + "Max", maxValueStr);
                 configManager.saveConfig();
 
                 // Recharger la configuration après la sauvegarde pour garantir la mise à jour des données
@@ -164,29 +189,43 @@ public class seuilsViewController {
         }
     }
 
+    /**
+     * Recharge les valeurs minimales et maximales pour le type sélectionné.
+     * 
+     * @author Alex LOVIN
+     */
     private void reloadSelectedType() {
         if (selectedType != null) {
             String minKey = "Seuils Alerte." + selectedType + "Min";
             String maxKey = "Seuils Alerte." + selectedType + "Max";
 
-            // Lire les valeurs depuis configMap
             String minValue = configManager.readConfig(minKey);
             String maxValue = configManager.readConfig(maxKey);
 
-            // Log de débogage
             System.out.println("Reloading values for " + selectedType + ": Min=" + minValue + ", Max=" + maxValue);
 
-            // Mettre à jour les champs avec les valeurs chargées
             seuilsMin.setText(minValue);
             seuilsMax.setText(maxValue);
         }
     }
 
+    /**
+     * Action liée au bouton "Valider".
+     * Enregistre les modifications des seuils actuels.
+     * 
+     * @author Alex LOVIN
+     */
     @FXML
     private void handleSaveSeuils() {
-        saveCurrentSeuils(); // Appel à la méthode qui gère la validation et la sauvegarde
+        saveCurrentSeuils();
     }
 
+    /**
+     * Action liée au bouton "Retour".
+     * Ouvre la vue de configuration.
+     * 
+     * @author Alex LOVIN
+     */
     @FXML
     private void handleOpenConfig() {
         if (hasUnsavedChanges) {
@@ -209,13 +248,14 @@ public class seuilsViewController {
             FXMLLoader fxmlLoader = new FXMLLoader(LaunchApp.class.getResource("view/configView.fxml"));
             Parent configPage = fxmlLoader.load();
 
-            // Appeler reloadView() après le chargement
             configViewController controller = fxmlLoader.getController();
             controller.reloadView();
+
             Stage stage = new Stage();
             stage.setTitle("Configuration");
             stage.setScene(new Scene(configPage));
             stage.show();
+
             ((Stage) btnRetour.getScene().getWindow()).close();
         } catch (IOException e) {
             e.printStackTrace();
