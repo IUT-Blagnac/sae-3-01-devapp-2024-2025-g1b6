@@ -21,12 +21,7 @@
                         <ul class="categories">
                             <?php
                             include ("connect.inc.php");
-                            $stmt = $pdo->prepare("SELECT * FROM CATEGORIE WHERE IDCATEG_CATPERE IS NULL");
-                            $stmt->execute();
-                            $categories = $stmt->fetchAll();
-                            foreach ($categories as $categorie) {
-                                echo "<li><a href='categorie.php?id=".$categorie['IDCATEG']."'>".$categorie['NOMCATEG']."</a></li>";
-                            }
+                            include ("categories.php");
                             ?>
                         </ul>
                         <span></span>
@@ -74,61 +69,28 @@
             <h1 class="titreCDC">Coup de coeur</h1>
             
             <ul class="listeCDC">
-                
-                <li class="jeuCDC"> 
-                    <div class="imgJeuCDC1"></div> 
-                    <div class="nomJeuCDC">Croque-Carotte</div> 
-                    <div class="prixCDC">35€</div> 
-                    <div class="dsiponibiliteCDC"> 
-                        <ul class="listeDisponibilites">
-                            <li class="elementDispo">Web Magasin</li>
-                            <li class="elementDispo">disponible disponible</li>
-                            <li> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"></li>
-                        </ul>
-                    </div>
-                </li>
-                
-                <li class="jeuCDC">
-                    <a href="DescriptionProduit.php">
-                    <div class="imgJeuCDC2"></div> 
-                    </a>
-                    <div class="nomJeuCDC">Nerf </div> 
-                    <div class="prixCDC">29.99€</div> 
-                    <div class="dsiponibiliteCDC"> 
-                        <ul class="listeDisponibilites">
-                            <li class="elementDispo">Web Magasin</li>
-                            <li class="elementDispo">disponible disponible</li>
-                            <li><img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"></li>
-                        </ul>
-                    </div>
-                </li>
+    <?php
+    $stmt = $pdo->prepare("SELECT * FROM PRODUIT P, APPARTENIRCATEG AC WHERE P.IDPROD = AC.IDPROD AND AC.IDCATEG = 20");
+    $stmt->execute();
+    $produits = $stmt->fetchAll();
+    foreach ($produits as $produit): ?>
+        <li class="produit-item">
+            <div class="produit-card">
+                <!-- Image -->
+                <div class="produit-image">
+                    <img src="images/<?= htmlspecialchars($produit['IDPROD']) ?>.jpg" alt="<?= htmlspecialchars($produit['NOMPROD']) ?>">
+                </div>
+                <!-- Infos produit -->
+                <div class="produit-info">
+                    <h2 class="produit-nom"><?= htmlspecialchars($produit['NOMPROD']) ?></h2>
+                    <p class="produit-prix"><?= number_format($produit['PRIXHT'], 2) ?> €</p>
+                    <a href="descProduit.php?idProd=<?= $produit['IDPROD'] ?>" class="produit-lien">Voir le produit</a>
+                </div>
+            </div>
+        </li>
+    <?php endforeach; ?>
+</ul>
 
-                <li class="jeuCDC"> 
-                    <div class="imgJeuCDC3"></div> 
-                    <div class="nomJeuCDC">Docteur Maboul</div> 
-                    <div class="prixCDC">46€</div> 
-                    <div class="dsiponibiliteCDC"> 
-                        <ul class="listeDisponibilites">
-                            <li class="elementDispo">Web Magasin</li>
-                            <li class="elementDispo">disponible disponible</li>
-                            <li> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"></li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li class="jeuCDC"> 
-                    <div class="imgJeuCDC4"></div> 
-                    <div class="nomJeuCDC">Monoopoly</div> 
-                    <div class="prixCDC">30€</div> 
-                    <div class="dsiponibiliteCDC"> 
-                        <ul class="listeDisponibilites">
-                            <li class="elementDispo">Web Magasin</li>
-                            <li class="elementDispo">disponible disponible</li>
-                            <li> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"></li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
 
         </div>
 

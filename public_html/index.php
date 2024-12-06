@@ -19,18 +19,7 @@
                         <ul class="categories">
                             <?php
                                 include("connect.inc.php");
-
-                                // Récupérer les catégories principales
-                                $stmt = $pdo->prepare("SELECT * FROM CATEGORIE WHERE IDCATEG_CATPERE IS NULL");
-                                $stmt->execute();
-                                $categories = $stmt->fetchAll();
-
-                                foreach ($categories as $categorie) {
-                                    echo "<li>";
-                                    echo "<a href='categorie.php?id=" . $categorie['IDCATEG'] . "'>" . $categorie['NOMCATEG'] . "</a>";
-
-                                    echo "</li>";
-                                }
+                                include("categories.php");
                             ?>
                         </ul>
                         <span></span>
@@ -39,7 +28,7 @@
                     </label> 
                 </li>
                 <li> <a class="lienAccueil" href="index.php"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
-                <li> <input class="barreRecherche" type="text" placeholder="Barre de recherche ..."> </li>
+                <?php include("rechercheAvancee.php"); ?>
                 <li> <div class="imgLoc"></div> </li>
                 <li> <a href="panier.php"><div class="imgPanier"></div></a></li>
                 <li> <?php
@@ -134,7 +123,7 @@
         </li>
         
         <li class="jeuCDC">
-            <a href="DescriptionProduit.php">
+            <a href="descProduit.php">
             <div class="imgJeuCDC2"></div> 
             </a>
             <div class="nomJeuCDC">Nerf </div> 

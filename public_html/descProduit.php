@@ -1,3 +1,78 @@
+<?php
+include("connect.inc.php");
+session_start();
+
+// Vérification de la présence et de la validité de l'identifiant du produit
+if (!isset($_GET['idProd']) || empty($_GET['idProd'])) {
+    echo "Produit non spécifié.";
+    exit();
+}
+
+$idProd = intval($_GET['idProd']); // Sécurisation de l'entrée
+
+// Récupération des informations du produit depuis la base de données
+$stmt = $pdo->prepare("
+    SELECT p.*, 
+           m.NOMMARQUE, 
+           GROUP_CONCAT(c.NOMCATEG SEPARATOR ', ') AS CATEGORIES
+    FROM PRODUIT p
+    LEFT JOIN MARQUE m ON p.IDMARQUE = m.IDMARQUE
+    LEFT JOIN APPARTENIRCATEG ac ON p.IDPROD = ac.IDPROD
+    LEFT JOIN CATEGORIE c ON ac.IDCATEG = c.IDCATEG
+    WHERE p.IDPROD = ?
+    GROUP BY p.IDPROD
+");
+$stmt->execute([$idProd]);
+$produit = $stmt->fetch();
+
+if (!$produit) {
+    echo "Produit introuvable.";
+    exit();
+}
+
+// Définition de l'image principale du produit (colonne IMAGE dans PRODUIT)
+$imagePrincipale = $produit['IMAGE'] ?? 'images/default.png'; // Image par défaut si aucune image n'est trouvée
+
+// Vérification si l'utilisateur est connecté
+if (!isset($_SESSION["user"])) {
+    echo '<script>alert("Vous devez être connecté pour ajouter un produit au panier.");</script>';
+    header("Location: connexion.php");
+    exit();
+}
+
+$id_client = $_SESSION["user"]["IDCLIENT"]; // ID du client connecté
+
+// Ajouter au panier (si le formulaire est soumis après confirmation)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter'])) {
+    $quantite = intval($_POST['quantite']);
+    
+    if ($quantite > 0) {
+        // Vérifier si le produit existe déjà dans le panier
+        $stmtCheck = $pdo->prepare("SELECT * FROM PANIER WHERE IDCLIENT = ? AND IDPROD = ?");
+        $stmtCheck->execute([$id_client, $idProd]);
+        $existingItem = $stmtCheck->fetch();
+
+        if ($existingItem) {
+            // Si le produit est déjà dans le panier, on met à jour la quantité
+            $newQuantity = $existingItem['QUANTITEPROD'] + $quantite;
+            $stmtUpdate = $pdo->prepare("UPDATE PANIER SET QUANTITEPROD = ? WHERE IDCLIENT = ? AND IDPROD = ?");
+            $stmtUpdate->execute([$newQuantity, $id_client, $idProd]);
+        } else {
+            // Si le produit n'est pas dans le panier, on l'ajoute
+            $stmtInsert = $pdo->prepare("INSERT INTO PANIER (IDCLIENT, IDPROD, QUANTITEPROD) VALUES (?, ?, ?)");
+            $stmtInsert->execute([$id_client, $idProd, $quantite]);
+        }
+
+        // Message de confirmation et redirection vers le panier
+        echo '<script>alert("Produit ajouté au panier !");</script>';
+        header("Location: panier.php");
+        exit();
+    } else {
+        echo '<script>alert("Quantité invalide.");</script>';
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,195 +81,103 @@
     <title>Description du Produit - Ludorama</title>
     <link rel="stylesheet" href="Css/descProd.css">
     <link rel="stylesheet" href="Css/all.css">
-    <!-- Ajout de la bibliothèque de polices de Google -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
 </head>
 <body>
 <header class="header">
-        <div class="barreMenu">
-            <ul class="menuListe">
-                <li> 
-                    <label class="burger" for="burgerToggle">
-                        <input type="checkbox" id="burgerToggle">
-                        <ul class="categories">
-                            <?php
-                            include ("connect.inc.php");
-                            $stmt = $pdo->prepare("SELECT * FROM CATEGORIE WHERE IDCATEG_CATPERE IS NULL");
-                            $stmt->execute();
-                            $categories = $stmt->fetchAll();
-                            foreach ($categories as $categorie) {
-                                echo "<li><a href='categorie.php?id=".$categorie['IDCATEG']."'>".$categorie['NOMCATEG']."</a></li>";
-                            }
-                            ?>
-                        </ul>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </label> 
-                </li>
-                <li> <a class="lienAccueil" href="index.php"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
-                <li> <input class="barreRecherche" type="text" placeholder="Barre de recherche ..."> </li>
-                <li> <div class="imgLoc"></div> </li>
-                <li> <a href="panier.php"><div class="imgPanier"></div></a></li>
-                <li> <?php
-                        // Vérification de la session utilisateur
-                        if (isset($_SESSION["user"])) {
-                            $id_client = $_SESSION["user"]["IDCLIENT"];
-                            // Si l'utilisateur est connecté, on le redirige vers son compte
-                            echo '<a href="compte.php?id_client=' . $id_client . '"><div class="imgCompte"></div></a>';
-                        } else {
-                            // Sinon, on le redirige vers la page de connexion
-                            echo '<a href="connexion.php"><div class="imgCompte"></div></a>';
-                        }
-                    ?> 
-                </li>
-            </ul>
-        </div>
-    </header>
+    <div class="barreMenu">
+        <ul class="menuListe">
+            <li>
+                <label class="burger" for="burgerToggle">
+                    <input type="checkbox" id="burgerToggle">
+                    <ul class="categories">
+                        <?php
+                        include("categories.php");
+                        ?>
+                    </ul>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+            </li>
+            <li><a class="lienAccueil" href="index.php"><h1 class="titreLudorama">Ludorama</h1></a></li>
+            <li><input class="barreRecherche" type="text" placeholder="Barre de recherche ..."></li>
+            <li><div class="imgLoc"></div></li>
+            <li><a href="panier.php"><div class="imgPanier"></div></a></li>
+            <li>
+                <?php
+                if (isset($_SESSION["user"])) {
+                    $id_client = $_SESSION["user"]["IDCLIENT"];
+                    echo '<a href="compte.php?id_client=' . $id_client . '"><div class="imgCompte"></div></a>';
+                } else {
+                    echo '<a href="connexion.php"><div class="imgCompte"></div></a>';
+                }
+                ?>
+            </li>
+        </ul>
+    </div>
+</header>
 
-    <main class="main-content">
-
-        <div class="product-top">
-            <div class="product-gallery">
-                <div class="thumbnail-images">
-                    <img src="images/nerf2.png" alt="Vignette 1" class="thumbnail">
-                    <img src="images/nerf3.png" alt="Vignette 2" class="thumbnail">
-                    <img src="images/nerf4.png" alt="Vignette 3" class="thumbnail">
-                </div>
-                <div class="main-image">
-                    <img src="images/nerf1.png" alt="Image principale du produit" id="main-product-image">
-                    <span class="favorite">❤️</span>
-                </div>
-            </div>
-
-            <div class="product-details">
-                <h1>Nerf Fortnite Édition 2024</h1>
-                <p class="product-id">ID : 37770 | Marque : Nerf | Âge : 8+</p>
-                <p class="price">29.99 €</p>
-                <button class="btn-store">Choisir un magasin</button>
-                <button class="btn-cart">Ajouter au panier</button>
-                <p class="shipping-info">Livraison gratuite dès 50 € | Livraison prévue pour le 10/11/2024</p>
-            </div>
-
-        </div>
-        
-
-        <div class="tabs">
-            <button class="tab-link active" onclick="openTab(event, 'description')">Description</button>
-            <button class="tab-link" onclick="openTab(event, 'features')">Caractéristiques</button>
-            <button class="tab-link" onclick="openTab(event, 'shipping')">Livraison</button>
-            <button class="tab-link" onclick="openTab(event, 'reviews')">Avis</button>
-        </div>
-
-        <div id="description" class="tab-content active">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elitarn ullamcorper luctus et ullamcorper. Sed facilisis sed lorem porta tincidunt. Fusce efficitur efficitur eros.</p>
-        </div>
-
-        <div id="features" class="tab-content">
-            <ul>
-                <li>Référence : 0000</li>
-                <li>Marque : Nerf</li>
-                <li>Âge : 8+</li>
-                <li>Dimensions : 20x20x20 cm</li>
-                <li>Poids : 2kg</li>
-            </ul>
-        </div>
-        <div id="shipping" class="tab-content">
-            <div class="shipping-option">
-                <p>Retrait en magasin : Gratuit</p>
-            </div>
-            <div class="shipping-option">
-                <p>Point relais : 3.90 €</p>
-            </div>
-            <div class="shipping-option">
-                <p>Livraison à domicile : 7.90 €</p>
-            </div>
-            <div class="shipping-option">
-                <p>Livraison express : 9.90 €</p>
+<main class="main-content">
+    <div class="product-top">
+        <div class="product-gallery">
+            <div class="main-image">
+                <?php
+                echo '<img src="' . htmlspecialchars($imagePrincipale) . '" alt="Image principale du produit" id="main-product-image">';
+                ?>
+                <span class="favorite">❤️</span>
             </div>
         </div>
-        <div id="reviews" class="tab-content">
-            <p>Aucun avis pour l'instant.</p>
+
+        <div class="product-details">
+            <h1><?php echo htmlspecialchars($produit['NOMPROD']); ?></h1>
+            <p class="product-id">ID : <?php echo $produit['IDPROD']; ?> | Marque : <?php echo htmlspecialchars($produit['NOMMARQUE']); ?> | Catégories : <?php echo htmlspecialchars($produit['CATEGORIES']); ?></p>
+            <p class="price"><?php echo number_format($produit['PRIXHT'], 2, ',', ' '); ?> €</p>
+            <button class="btn-store">Choisir un magasin</button>
+            
+            <!-- Formulaire pour ajouter au panier avec confirmation -->
+            <form method="POST" action="">
+                <label for="quantite">Quantité :</label>
+                <input type="number" name="quantite" id="quantite" value="1" min="1" required>
+                <button type="button" id="confirm-add" class="btn-cart">Ajouter au panier</button>
+            </form>
+
+            <p class="shipping-info">Livraison gratuite dès 50 € | Livraison prévue pour le <?php echo date('d/m/Y', strtotime('+5 days')); ?></p>
         </div>
+    </div>
 
-    </main>
+    <div class="tabs">
+        <button class="tab-link active" onclick="openTab(event, 'description')">Description</button>
+        <button class="tab-link" onclick="openTab(event, 'features')">Caractéristiques</button>
+        <button class="tab-link" onclick="openTab(event, 'shipping')">Livraison</button>
+        <button class="tab-link" onclick="openTab(event, 'reviews')">Avis</button>
+    </div>
 
+    <div id="description" class="tab-content active">
+        <p><?php echo nl2br(htmlspecialchars($produit['DESCPROD'])); ?></p>
+    </div>
 
+    <div id="features" class="tab-content">
+        <ul>
+            <li>Marque : <?php echo htmlspecialchars($produit['NOMMARQUE']); ?></li>
+            <li>Couleur : <?php echo htmlspecialchars($produit['COULEUR']); ?></li>
+            <li>Composition : <?php echo htmlspecialchars($produit['COMPOSITION']); ?></li>
+            <li>Poids : <?php echo htmlspecialchars($produit['POIDSPRODUIT']); ?> kg</li>
+            <li>Stock disponible : <?php echo htmlspecialchars($produit['QTESTOCK']); ?></li>
+        </ul>
+    </div>
+</main>
 
-    <footer class="footer">
-        <div class="footer-column">
-            <h3>Qui sommes-nous ?</h3>
-            <ul>
-                <li><a href="#">Ludorama.com</a></li>
-                <li><a href="#">Nos magasins</a></li>
-                <li><a href="#">Cartes cadeaux</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>En ce moment</h3>
-            <ul>
-                <li><a href="#">Ambiance de Noël</a></li>
-                <li><a href="#">Nouveautés</a></li>
-                <li><a href="#">Rejoignez LudiSphere !</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Marques</h3>
-            <ul>
-                <li><a href="#">Lego</a></li>
-                <li><a href="#">Playmobil</a></li>
-                <li><a href="#">Jurassic Park</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Personnages jouets</h3>
-            <ul>
-                <li><a href="#">Pokemon</a></li>
-                <li><a href="#">Tous les personnages</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Nos sites</h3>
-            <ul>
-                <li><a href="#">France</a></li>
-                <li><a href="#">Allemagne</a></li>
-                <li><a href="#">Tous nos sites</a></li>
-            </ul>
-        </div>
-    </footer>
+<script>
+// JavaScript pour la confirmation avant l'ajout au panier
+document.getElementById("confirm-add").addEventListener("click", function() {
+    var quantite = document.getElementById("quantite").value;
+    var confirmAction = confirm("Voulez-vous vraiment ajouter ce produit au panier avec une quantité de " + quantite + " ?");
+    if (confirmAction) {
+        document.querySelector("form").submit(); // Soumettre le formulaire si confirmé
+    }
+});
+</script>
 
-
-    <!-- Script changement d'informations produit -->
-    <script>
-        // Fonction pour ouvrir les onglets
-        function openTab(event, tabName) {
-            var i, tabcontent, tablinks;
-            // Récupérer tous les éléments avec la classe "tab-content" et les cacher
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.remove('active');
-            }
-            // Récupérer tous les éléments avec la classe "tab-link" et retirer la classe "active"
-            tablinks = document.getElementsByClassName("tab-link");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            // Afficher l'onglet actuel, et ajouter une classe "active" au bouton qui a ouvert l'onglet
-            document.getElementById(tabName).classList.add('active');
-            event.currentTarget.className += " active";
-        }
-
-        // Ajouter un événement pour ouvrir le premier onglet par défaut
-        document.addEventListener('DOMContentLoaded', (event) => {
-            document.querySelector('.tab-link').click();
-        });
-
-        // Changer l'image principale au clic sur une vignette
-        document.querySelectorAll('.thumbnail').forEach(thumbnail => {
-            thumbnail.addEventListener('click', function() {
-                document.getElementById('main-product-image').src = this.src;
-            });
-        });
-    </script>
 </body>
 </html>
