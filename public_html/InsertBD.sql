@@ -91,32 +91,39 @@ INSERT INTO PRODUIT (IDPROD, IDMARQUE, NOMPROD, DESCPROD, PRIXHT, COULEUR, COMPO
 (23, 3, 'Figurine super-héros', 'Figurine de super-héros en plastique', 19.99, 'Bleu', 'Plastique', 0.4, 70),
 (24, 4, 'Peluche licorne', 'Peluche douce en forme de licorne', 24.99, 'Blanc', 'Tissu', 0.8, 60),
 (25, 5, 'Camion benne', 'Camion benne miniature', 34.99, 'Jaune', 'Métal et plastique', 2.5, 25),
-(26, 6, 'Tablette éducative', 'Tablette éducative pour enfants', 59.99, 'Noir', 'Plastique et électronique', 1.5, 20),
-(27, 7, 'Balançoire', 'Balançoire pour jardin', 79.99, 'Vert', 'Métal et plastique', 8.0, 10),
-(28, 8, 'Piscine gonflable', 'Piscine gonflable pour enfants', 49.99, 'Bleu', 'Plastique', 5.0, 20),
-(29, 9, 'Kit de bricolage', 'Kit de bricolage pour enfants', 29.99, 'Multicolore', 'Plastique et métal', 1.5, 30),
-(30, 10, 'Jeu de dominos', 'Jeu de dominos en bois', 19.99, 'Multicolore', 'Bois', 1.0, 50),
-(31, 1, 'Labyrinthe en bois', 'Labyrinthe éducatif en bois', 16.99, 'Multicolore', 'Bois', 0.8, 35),
-(32, 2, 'Jeu de mémoire', 'Jeu de mémoire pour enfants', 14.99, 'Multicolore', 'Carton', 0.5, 60),
-(33, 3, 'Figurine animal', 'Figurine d''animal en plastique', 12.99, 'Marron', 'Plastique', 0.3, 80),
-(34, 4, 'Peluche lapin', 'Peluche douce en forme de lapin', 19.99, 'Blanc', 'Tissu', 0.6, 70),
-(35, 5, 'Train électrique', 'Train électrique miniature', 49.99, 'Noir', 'Plastique et métal', 3.0, 20),
-(36, 6, 'Drone pour enfants', 'Drone télécommandé pour enfants', 69.99, 'Blanc', 'Plastique et électronique', 1.2, 15),
-(37, 7, 'Trottinette', 'Trottinette pour enfants', 39.99, 'Rouge', 'Métal et plastique', 3.5, 25),
-(38, 8, 'Ballon sauteur', 'Ballon sauteur pour enfants', 19.99, 'Rouge', 'Plastique', 1.0, 50),
-(39, 9, 'Kit de couture', 'Kit de couture pour enfants', 24.99, 'Multicolore', 'Tissu et plastique', 0.8, 40),
-(40, 10, 'Jeu de quilles', 'Jeu de quilles en bois', 29.99, 'Multicolore', 'Bois', 2.0, 30),
-(41, 1, 'Boîte à formes', 'Boîte à formes en bois', 14.99, 'Multicolore', 'Bois', 0.7, 50),
-(42, 2, 'Jeu de l''oie', 'Jeu de société classique', 19.99, 'Multicolore', 'Carton', 1.0, 40),
-(43, 3, 'Figurine chevalier', 'Figurine de chevalier en plastique', 14.99, 'Gris', 'Plastique', 0.4, 60),
-(44, 4, 'Peluche chien', 'Peluche douce en forme de chien', 19.99, 'Marron', 'Tissu', 0.6, 70),
-(45, 5, 'Hélicoptère télécommandé', 'Hélicoptère miniature télécommandé', 39.99, 'Bleu', 'Plastique et métal', 1.5, 30),
-(46, 6, 'Console de jeux', 'Console de jeux pour enfants', 59.99, 'Noir', 'Plastique et électronique', 1.2, 20),
-(47, 7, 'Bateau gonflable', 'Bateau gonflable pour enfants', 49.99, 'Jaune', 'Plastique', 3.0, 15),
-(48, 8, 'Cerf-volant', 'Cerf-volant pour enfants', 14.99, 'Multicolore', 'Tissu et plastique', 0.5, 50),
-(49, 9, 'Kit de jardinage', 'Kit de jardinage pour enfants', 19.99, 'Vert', 'Plastique et métal', 1.0, 30),
-(50, 2, 'Marionnettes en tissu', 'Ensemble de 4 marionnettes', 29.99, 'Multicolore', 'Tissu', 1.1, 25);
-
+(26, 19, 'Puzzle en bois Jungle', 'Puzzle éducatif pour enfants sur le thème de la jungle', 14.99, 'Multicolore', 'Bois', 0.5, 80), -- Enfant
+(27, 9, 'Arbalète Nerf Elite', 'Arbalète Nerf pour des aventures excitantes', 34.99, 'Bleu', 'Plastique', 1.4, 50), -- Ado
+(28, 14, 'Jeu de stratégie Catan', 'Jeu de société stratégique pour jeunes adultes', 39.99, 'Multicolore', 'Carton', 1.8, 40), -- Jeune-adulte
+(29, 15, 'Puzzle 2000 pièces Montagnes', 'Puzzle de 2000 pièces représentant des montagnes majestueuses', 29.99, 'Multicolore', 'Carton', 1.5, 30), -- Adulte
+(30, 13, 'Kit de crochet pour débutants', 'Kit créatif pour apprendre le crochet', 19.99, 'Multicolore', 'Laine et plastique', 0.6, 60), -- Adulte
+(31, 14, 'Puzzle 3D Tour Eiffel', 'Puzzle en 3D représentant la Tour Eiffel', 19.99, 'Gris', 'Carton', 0.8, 30),
+(32, 12, 'Figurine Cheval', 'Figurine réaliste de cheval', 12.99, 'Marron', 'Plastique', 0.3, 100),
+(33, 5, 'Ours en peluche', 'Peluches douce pour câlins', 24.99, 'Beige', 'Polyester', 0.5, 80),
+(34, 6, 'Tablette éducative VTech', 'Tablette éducative interactive pour enfants', 59.99, 'Bleu', 'Plastique', 0.9, 40),
+(35, 7, 'Voiture de course Hot Wheels', 'Voiture miniature de course rapide', 9.99, 'Rouge', 'Métal', 0.2, 200),
+(36, 17, 'Cuisinière extérieure Step2', 'Cuisinière pour jouer à l’extérieur', 99.99, 'Rose', 'Plastique', 8.0, 15),
+(37, 13, 'Kit de peinture pour enfants', 'Kit de peinture pour développer la créativité', 14.99, 'Multicolore', 'Plastique et peinture', 0.6, 70),
+(38, 10, 'Blocs de construction Mega Bloks', 'Blocs pour construire des structures amusantes', 34.99, 'Multicolore', 'Plastique', 1.5, 60),
+(39, 19, 'Tambourin en bois', 'Tambourin éducatif en bois', 15.99, 'Naturel', 'Bois et peau synthétique', 0.4, 45),
+(40, 20, 'Jeu de cartes Uno', 'Jeu de cartes familial et amusant', 9.99, 'Multicolore', 'Carton', 0.3, 150),
+(41, 8, 'Poupée Barbie', 'Poupée Barbie avec accessoires', 25.99, 'Rose', 'Plastique', 0.4, 100),
+(42, 15, 'Plateau de jeu Cluedo', 'Jeu de société classique Cluedo', 29.99, 'Multicolore', 'Carton', 1.2, 60),
+(43, 2, 'Château Playmobil', 'Château Playmobil pour des aventures fantastiques', 74.99, 'Gris', 'Plastique', 3.0, 30),
+(44, 1, 'Bateau pirate Lego', 'Bateau pirate à construire', 89.99, 'Noir', 'Plastique', 2.5, 25),
+(45, 14, 'Puzzle classique 500 pièces', 'Puzzle traditionnel de 500 pièces', 14.99, 'Multicolore', 'Carton', 0.7, 70),
+(46, 21, 'Kit de découverte scientifique', 'Kit éducatif pour expériences scientifiques', 49.99, 'Blanc', 'Plastique et métal', 2.0, 35),
+(47, 4, 'Nerf Blaster', 'Lanceur Nerf pour des batailles amusantes', 39.99, 'Orange', 'Plastique', 1.5, 50),
+(48, 3, 'Poupée Fisher-Price', 'Poupée éducative pour apprendre les couleurs', 19.99, 'Multicolore', 'Tissu', 0.8, 75),
+(49, 16, 'LeapFrog Laptop', 'Ordinateur éducatif interactif LeapFrog', 59.99, 'Vert', 'Plastique', 1.3, 40),
+(50, 12, 'Figurines d’animaux de ferme', 'Ensemble de figurines réalistes', 22.99, 'Multicolore', 'Plastique', 1.1, 80),
+(51, 18, 'Maison en plastique Little Tikes', 'Maison pour jouer dans le jardin', 159.99, 'Rouge', 'Plastique', 10.0, 10),
+(52, 9, 'Blocs aimantés créatifs', 'Blocs aimantés pour des créations originales', 39.99, 'Multicolore', 'Plastique', 1.7, 50),
+(53, 13, 'Ensemble de cuisine en bois', 'Cuisine miniature éducative en bois', 79.99, 'Naturel', 'Bois', 5.0, 20),
+(54, 15, 'Jeu de société innovant', 'Jeu de société Spin Master innovant et captivant', 34.99, 'Multicolore', 'Carton et plastique', 1.5, 40),
+(55, 21, 'Cubes d''éveil colorés', 'Cubes empilables pour les plus petits, avec des couleurs vives et des motifs amusants', 12.99, 'Multicolore', 'Plastique', 0.4, 100), -- Enfant
+(56, 21, 'Skateboard mini Ludorama', 'Skateboard compact et robuste pour débuter avec style', 29.99, 'Noir et rouge', 'Bois et plastique', 2.5, 50), -- Ado
+(57, 21, 'Jeu de rôles Donjons & Ludorama', 'Kit complet pour s''initier aux jeux de rôle en groupe', 49.99, 'Multicolore', 'Papier et plastique', 1.2, 40), -- Jeune-adulte
+(58, 21, 'Jeu d''échecs Deluxe', 'Échiquier en bois avec des pièces sculptées à la main', 59.99, 'Naturel', 'Bois', 2.0, 30); -- Adulte
 
 -- Insertion des packs
 INSERT INTO PACK (IDPACK, NOMPACK, DESCPACK) VALUES
@@ -156,14 +163,39 @@ INSERT INTO APPARTENIRCATEG (IDPROD, IDCATEG) VALUES
 (23, 13), -- Figurine super-héros -> Figurines
 (24, 15), -- Peluche licorne -> Puzzles en 3D
 (25, 7),  -- Camion benne -> Véhicules
-(26, 6),  -- Tablette éducative -> Électronique
-(27, 17), -- Balançoire -> Blocs de construction
-(28, 8),  -- Piscine gonflable -> Extérieur
-(29, 9),  -- Kit de bricolage -> Créativité
-(30, 10), -- Jeu de dominos -> Construction
-(31, 16), -- Labyrinthe en bois -> Puzzles classiques
-(32, 14), -- Jeu de mémoire -> Plateaux de jeux
-(33, 13); -- Figurine animal -> Figurines
+(26, 20), -- Puzzle en bois Jungle (Enfant)
+(27, 21), -- Arbalète Nerf Elite (Ado)
+(28, 22), -- Jeu de stratégie Catan (Jeune-adulte)
+(29, 23), -- Puzzle 2000 pièces Montagnes (Adulte)
+(30, 23),
+(31, 15), -- Puzzle 3D Tour Eiffel (Puzzles en 3D)
+(32, 3), -- Figurine Cheval (Figurines)
+(33, 5), -- Ours en peluche (Peluches)
+(34, 6), -- Tablette éducative VTech (Électronique)
+(35, 7), -- Voiture de course Hot Wheels (Véhicules)
+(36, 8), -- Cuisinière extérieure Step2 (Extérieur)
+(37, 9), -- Kit de peinture pour enfants (Créativité)
+(38, 17), -- Blocs de construction Mega Bloks (Blocs de construction)
+(39, 19), -- Tambourin en bois (Éveil musical)
+(40, 13), -- Jeu de cartes Uno (Jeux de cartes)
+(41, 21), -- Poupée Barbie (Ado)
+(42, 14), -- Plateau de jeu Cluedo (Plateaux de jeux)
+(43, 2), -- Château Playmobil (Jeux de Société)
+(44, 10), -- Bateau pirate Lego (Construction)
+(45, 16), -- Puzzle classique 500 pièces (Puzzles classiques)
+(46, 11), -- Kit de découverte scientifique (Jeux éducatifs)
+(47, 9), -- Nerf Blaster (Créativité)
+(48, 12), -- Poupée Fisher-Price (Jouets d’éveil)
+(49, 16), -- LeapFrog Laptop (Puzzles classiques)
+(50, 3), -- Figurines d’animaux de ferme (Figurines)
+(51, 8), -- Maison en plastique Little Tikes (Extérieur)
+(52, 18), -- Blocs aimantés créatifs (Modèles complexes)
+(53, 11), -- Ensemble de cuisine en bois (Jeux éducatifs)
+(54, 2); -- Jeu de société innovant (Jeux de Société)
+(55, 20), -- Cubes d'éveil colorés (Enfant)
+(56, 21), -- Skateboard mini Ludorama (Ado)
+(57, 22), -- Jeu de rôles Donjons & Ludorama (Jeune-adulte)
+(58, 23); -- Jeu d'échecs Deluxe (Adulte)
 
 
 -- Insertion de 50 clients répartis en France
@@ -437,3 +469,68 @@ INSERT INTO ASSOPACK (IDPROD, IDPACK) VALUES
 (23, 4), -- Figurine super-héros dans pack aventure
 (24, 2), -- Peluche licorne dans pack peluches
 (25, 3), -- Camion benne dans pack voitures
+
+
+INSERT INTO POSSEDERIP (NUMCB, IDCLIENT) VALUES ('0123456789012345', 1); -- Chloe Garcia
+INSERT INTO POSSEDERIP (NUMCB, IDCLIENT) VALUES ('1234567890123456', 2); -- Jean Dupont
+INSERT INTO POSSEDERIP (NUMCB, IDCLIENT) VALUES ('2345678901234567', 3); -- Sophie Martin
+INSERT INTO POSSEDERIP (NUMCB, IDCLIENT) VALUES ('3456789012345678', 4); -- Luc Bernard
+INSERT INTO POSSEDERIP (NUMCB, IDCLIENT) VALUES ('4567890123456789', 5); -- Marie Durand
+INSERT INTO POSSEDERIP (NUMCB, IDCLIENT) VALUES ('5678901234567890', 6); -- Paul Lefevre
+INSERT INTO POSSEDERIP (NUMCB, IDCLIENT) VALUES ('6789012345678901', 7); -- Julie Moreau
+INSERT INTO POSSEDERIP (NUMCB, IDCLIENT) VALUES ('7890123456789012', 8); -- Pierre Simon
+INSERT INTO POSSEDERIP (NUMCB, IDCLIENT) VALUES ('8901234567890123', 9); -- Emma Laurent
+INSERT INTO POSSEDERIP (NUMCB, IDCLIENT) VALUES ('9012345678901234', 10); -- Lucas Michel
+
+
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (42, 1); -- Dupont, Jean à Paris
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (43, 2); -- Martin, Sophie à Paris
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (44, 3); -- Bernard, Luc à Paris
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (45, 4); -- Durand, Marie à Paris
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (46, 5); -- Lefevre, Paul à Paris
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (47, 6); -- Moreau, Julie à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (48, 7); -- Simon, Pierre à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (49, 8); -- Laurent, Emma à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (50, 9); -- Michel, Lucas à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (41, 10); -- Garcia, Chloe à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (1, 11); -- Dupont, Jean à Marseille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (2, 12); -- Martin, Sophie à Marseille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (3, 13); -- Bernard, Luc à Marseille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (4, 14); -- Durand, Marie à Marseille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (5, 15); -- Lefevre, Paul à Marseille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (6, 16); -- Moreau, Julie à Lille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (7, 17); -- Simon, Pierre à Lille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (8, 18); -- Laurent, Emma à Lille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (9, 19); -- Michel, Lucas à Lille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (10, 20); -- Garcia, Chloe à Lille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (11, 21); -- Lefevre, Luc à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (12, 22); -- Lefevre, Paul à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (13, 23); -- Lefevre, Julie à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (14, 24); -- Lefevre, Pierre à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (15, 25); -- Lefevre, Simon à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (16, 26); -- Lefevre, Emma à Paris
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (17, 27); -- Lefevre, Marie à Paris
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (18, 28); -- Lefevre, Lucie à Paris
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (19, 29); -- Lefevre, Marc à Paris
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (20, 30); -- Lefevre, Paul à Paris
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (21, 31); -- Lefevre, Thomas à Marseille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (22, 32); -- Lefevre, Simon à Marseille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (23, 33); -- Lefevre, Sophie à Marseille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (24, 34); -- Lefevre, Marie à Marseille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (25, 35); -- Lefevre, Sophie à Marseille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (26, 36); -- Lefevre, Julie à Lille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (27, 37); -- Lefevre, Marc à Lille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (28, 38); -- Lefevre, Pierre à Lille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (29, 39); -- Lefevre, Claire à Lille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (30, 40); -- Lefevre, Thomas à Lille
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (31, 41); -- Lefevre, Thierry à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (32, 42); -- Lefevre, Pierre à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (33, 43); -- Lefevre, Claire à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (34, 44); -- Lefevre, Anne à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (35, 45); -- Lefevre, Thomas à Lyon
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (36, 46); -- Lefevre, Marie à Paris
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (37, 47); -- Lefevre, Marc à Paris
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (38, 48); -- Lefevre, Paul à Paris
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (39, 49); -- Lefevre, Claire à Paris
+INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES (40, 50); -- Lefevre, Sylvie à Paris
+
