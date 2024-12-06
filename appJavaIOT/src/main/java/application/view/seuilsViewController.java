@@ -125,10 +125,23 @@ public class seuilsViewController {
             try {
                 String minValueStr = seuilsMin.getText().trim();
                 String maxValueStr = seuilsMax.getText().trim();
-
+    
+                // Validation des valeurs
                 int minValue = Integer.parseInt(minValueStr);
                 int maxValue = Integer.parseInt(maxValueStr);
-
+    
+                // Vérification que les valeurs sont positives sauf pour la température
+                if (!selectedType.equals("temperature") && (minValue < 0 || maxValue < 0)) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Erreur de validation");
+                    alert.setHeaderText("Valeur impossible");
+                    alert.setContentText("Les valeurs doivent être positives, sauf pour la température.");
+                    alert.showAndWait();
+                    reloadSelectedType(); // Recharger les valeurs actuelles
+                    return;
+                }
+    
+                // Vérification que max >= min
                 if (maxValue < minValue) {
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Erreur de validation");
@@ -138,20 +151,20 @@ public class seuilsViewController {
                     reloadSelectedType(); // Recharger les valeurs actuelles
                     return;
                 }
-
+    
                 // Mettre à jour et sauvegarder
                 configManager.updateConfig("Seuils Alerte."+selectedType + "Min", minValueStr);
                 configManager.updateConfig("Seuils Alerte."+selectedType + "Max", maxValueStr);
                 configManager.saveConfig();
-
+    
                 // Recharger la configuration après la sauvegarde pour garantir la mise à jour des données
                 configManager.loadConfig();
-
+    
                 // Recharger l'affichage
                 reloadSelectedType();
-
+    
                 hasUnsavedChanges = false;
-
+    
             } catch (NumberFormatException e) {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Erreur de saisie");

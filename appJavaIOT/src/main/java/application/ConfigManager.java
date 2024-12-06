@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class ConfigManager {
 
-    private static final String CONFIG_FILE = "src/main/python/config.ini";
+    private static final String CONFIG_FILE = "appJavaIOT/src/main/python/config.ini";
     private final Map<String, String> configMap = new LinkedHashMap<>();
     private final StringBuilder comments = new StringBuilder();
 
@@ -17,6 +17,17 @@ public class ConfigManager {
     // Vérifie ou crée le fichier config.ini
     public void checkOrCreateConfigFile() {
         File configFile = new File(CONFIG_FILE);
+        File parentDir = configFile.getParentFile(); // Répertoire parent
+    
+        if (!parentDir.exists()) {
+            if (parentDir.mkdirs()) {
+                System.out.println("Répertoire " + parentDir.getAbsolutePath() + " créé avec succès.");
+            } else {
+                System.err.println("Impossible de créer le répertoire " + parentDir.getAbsolutePath());
+                return; // Quittez si le répertoire ne peut pas être créé
+            }
+        }
+    
         if (!configFile.exists()) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(configFile))) {
                 writer.write(getDefaultConfig());
@@ -32,7 +43,7 @@ public class ConfigManager {
                 e.printStackTrace();
             }
         }
-    }
+    }       
 
     // Charger le contenu de config.ini
     public void loadConfig() throws IOException {
