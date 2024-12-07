@@ -122,6 +122,10 @@ public class seuilsViewController {
 
     private void saveCurrentSeuils() {
         if (selectedType != null) {
+            if (!validateFields()) {
+                return; // Arrêter l'exécution si des champs sont vides
+            }
+    
             try {
                 String minValueStr = seuilsMin.getText().trim();
                 String maxValueStr = seuilsMax.getText().trim();
@@ -153,8 +157,8 @@ public class seuilsViewController {
                 }
     
                 // Mettre à jour et sauvegarder
-                configManager.updateConfig("Seuils Alerte."+selectedType + "Min", minValueStr);
-                configManager.updateConfig("Seuils Alerte."+selectedType + "Max", maxValueStr);
+                configManager.updateConfig("Seuils Alerte." + selectedType + "Min", minValueStr);
+                configManager.updateConfig("Seuils Alerte." + selectedType + "Max", maxValueStr);
                 configManager.saveConfig();
     
                 // Recharger la configuration après la sauvegarde pour garantir la mise à jour des données
@@ -176,6 +180,19 @@ public class seuilsViewController {
             }
         }
     }
+    
+    private boolean validateFields() {
+        if (seuilsMin.getText().trim().isEmpty() || seuilsMax.getText().trim().isEmpty()) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erreur de validation");
+            alert.setHeaderText("Champs vides");
+            alert.setContentText("Veuillez remplir les deux champs avant de valider.");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+    
 
     private void reloadSelectedType() {
         if (selectedType != null) {

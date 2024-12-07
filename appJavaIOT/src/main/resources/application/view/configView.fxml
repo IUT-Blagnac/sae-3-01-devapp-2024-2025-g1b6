@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.configViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.configViewController">
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <top>
@@ -108,7 +108,7 @@
                               <Insets left="110.0" />
                            </VBox.margin>
                         </Label>
-                        <HBox>
+                        <HBox prefHeight="37.0" prefWidth="330.0">
                            <children>
                               <RadioButton fx:id="btnOuiPanneau" mnemonicParsing="false" onAction="#handleSubscribeAllPanneaux" text="Oui">
                                  <HBox.margin>
@@ -125,11 +125,12 @@
                               </RadioButton>
                            </children>
                         </HBox>
-                        <Label>
+                        <Label text="Type de données">
                            <VBox.margin>
-                              <Insets left="90.0" top="5.0" />
+                              <Insets left="110.0" top="5.0" />
                            </VBox.margin>
                         </Label>
+                        <ListView fx:id="listDataType" prefHeight="194.0" prefWidth="132.0" />
                      </children>
                   </VBox>
                </children>
@@ -150,7 +151,7 @@
       </BorderPane>
    </center>
    <bottom>
-      <BorderPane BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="40.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <bottom>
             <HBox BorderPane.alignment="CENTER">
                <children>
@@ -161,7 +162,7 @@
                   </Button>
                </children>
                <BorderPane.margin>
-                  <Insets top="25.0" />
+                  <Insets />
                </BorderPane.margin>
                <padding>
                   <Insets bottom="5.0" />

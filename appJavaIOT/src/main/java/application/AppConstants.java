@@ -13,4 +13,9 @@ public class AppConstants {
         "B105", "Foyer-etudiants-entrée", "C101", "B111", "B113", "E006",
         "E104", "E209", "E003"
     );
+    // Initialiser la ListView pour les dataType
+    public static final ObservableList<String> DATA_TYPE = FXCollections.observableArrayList(
+        "co2", "temperature", "humidity", "activity", 
+        "tvoc", "illumination", "infrared", "infrared_and_visible", "pressure"
+    );
 }
