@@ -37,6 +37,18 @@ public class AccueilViewController {
         containingStage.show();
     }
 
+
+    /* Développer par RUIZ Nicolas 
+     * 
+     * Cette méthode permet de configurer les actions des boutons de l'interface graphique.
+     * Les actions sont les suivantes :
+     * - Tester la connexion MQTT
+     * - Lancer l'application
+     * - Afficher le manuel d'utilisation
+     * - Afficher les crédits
+     * - Quitter l'application
+     * 
+     */
     private void configure() {
         this.btnTesterCo.setOnAction(event -> actionTesterCo());
         this.btnLancer.setOnAction(event -> actionLancer());
@@ -51,6 +63,12 @@ public class AccueilViewController {
         btnLancer.setDisable(true); // Désactiver le bouton "Lancer" au démarrage
     }
 
+    /* Développer par RUIZ Nicolas 
+     * 
+     * Cette méthode permet de quitter l'application en affichant une boîte de dialogue de confirmation.
+     * Si l'utilisateur clique sur "Oui", l'application se ferme.
+     * 
+     */
     @FXML
     private void actionQuitter() {
         Alert alert = new Alert(AlertType.CONFIRMATION, "Êtes-vous sûr de vouloir quitter ?", ButtonType.YES, ButtonType.NO);
@@ -64,6 +82,14 @@ public class AccueilViewController {
         });
     }
 
+    /* Développer par RUIZ Nicolas 
+     * 
+     * Cette méthode permet de tester la connexion MQTT en exécutant un script Python.
+     * Le script Python se charge de tester la connexion et renvoie un code de retour.
+     * Si le code de retour est 0, la connexion est validée et le bouton "Lancer" est activé.
+     * Sinon, une alerte est affichée pour informer l'utilisateur de l'échec de la connexion.
+     * 
+     */
     private int testerConnexion() {
         int exitCode = -1; 
         Process process = null;
@@ -93,6 +119,13 @@ public class AccueilViewController {
         return exitCode;
     }
 
+
+    /* Développer par RUIZ Nicolas 
+     * 
+     * Cette méthode permet de tester la connexion MQTT en exécutant la méthode qui vérifie la connexion.
+     * Afin de pouvoir ici l'afficher à l'utilisateur.
+     * 
+     */
     @FXML
     private void actionTesterCo() {
         int result = testerConnexion();
@@ -117,6 +150,12 @@ public class AccueilViewController {
         alert.showAndWait();
     }
 
+
+    /* Développer par RUIZ Nicolas 
+     * 
+     * Cette méthode permet de lancer l'application. Elle redirige vers la suite de l'application
+     * 
+     */
     @FXML
     private void actionLancer() {
         if (!isConnectionValid) {
@@ -150,6 +189,13 @@ public class AccueilViewController {
         newStage.show();
     }
 
+
+    /* Développer par RUIZ Nicolas 
+     * 
+     * Cette méthode permet d'afficher le manuel d'utilisation de l'application.
+     * Le manuel est affiché dans une nouvelle fenêtre.
+     * 
+     */
     @FXML
     private void actionManuel() {
         Stage newStage = new Stage();
@@ -193,6 +239,13 @@ public class AccueilViewController {
         newStage.show();
     }
 
+
+    /* Développer par RUIZ Nicolas 
+     * 
+     * Cette méthode permet d'afficher les crédits de l'application.
+     * Les crédits sont affichés dans une nouvelle fenêtre.
+     * 
+     */
     @FXML
     private void actionCredits() {
         Stage newStage = new Stage();
