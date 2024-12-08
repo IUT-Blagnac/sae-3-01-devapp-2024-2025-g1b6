@@ -63,6 +63,14 @@
                   <Insets top="10.0" />
                </HBox.margin>
                 </Button>
+            <Button fx:id="btnVoirMesures1" mnemonicParsing="false" onAction="#onBtnMesuresAlerte" text="Mesures d'alerte" textOverrun="CENTER_ELLIPSIS">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </HBox.margin>
+            </Button>
                     <Button fx:id="btnVoirMesures" mnemonicParsing="false" onAction="#onBtnVueGlobale" text="Vue Globale" textOverrun="CENTER_ELLIPSIS">
                         <font>
                             <Font size="14.0" />

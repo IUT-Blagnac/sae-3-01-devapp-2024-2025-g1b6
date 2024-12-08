@@ -52,7 +52,6 @@ public class GraphiquesController {
     public void initialize() {
         try {
             SyncData syncData = SyncData.getInstance();
-            syncData.fillRoomList();  // Charger les données des salles et panneaux solaires
 
             // Créer les onglets pour chaque type de donnée
             for (Room room : syncData.getRoomsMap().values()) {
@@ -72,79 +71,12 @@ public class GraphiquesController {
                 tabPane.getTabs().add(tab);
             }
 
-            // Lancer les threads pour surveiller les alertes et les nouveaux fichiers JSON
-            startAlertMonitoring(Paths.get("src/main/resources/application/data/Alert"));
-            startDataMonitoring(Paths.get("src/main/resources/application/data"));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Affiche une alerte sous forme de fenêtre pop-up lorsque des données critiques sont détectées.
-     *
-     * @param key   Le nom de la donnée critique.
-     * @param room  Le nom de la salle où la donnée est hors seuil.
-     * @param value La valeur de la donnée qui est hors seuil.
-     */
-    private void showAlert(String key, String room, double value) {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Alerte : Données critiques");
-            alert.setHeaderText(null);
-            alert.setContentText("La donnée \"" + key + "\" pour la salle \"" + room + "\" est hors seuil : " + value);
-            alert.show();
-        });
-    }
-
-    /**
-     * Démarre la surveillance des alertes dans un répertoire spécifique, en créant un service de surveillance de fichiers.
-     * Lorsqu'un nouveau fichier est créé dans ce répertoire, il sera analysé pour détecter des alertes.
-     *
-     * @param alertDir Le répertoire à surveiller pour les fichiers d'alertes.
-     */
-    private void startAlertMonitoring(Path alertDir) {
-        alertExecutor = Executors.newSingleThreadExecutor();
-
-        alertExecutor.submit(() -> {
-            try {
-                if (!Files.exists(alertDir)) {
-                    Files.createDirectories(alertDir);
-                }
-
-                WatchService watchService = FileSystems.getDefault().newWatchService();
-                alertDir.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
-
-                while (running) {
-                    WatchKey key;
-                    try {
-                        key = watchService.poll();
-                        if (key == null) {
-                            Thread.sleep(100);
-                            continue;
-                        }
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        break;
-                    }
-
-                    for (WatchEvent<?> event : key.pollEvents()) {
-                        if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
-                            Path filePath = alertDir.resolve((Path) event.context());
-                            // Chargement des alertes (implémentez selon votre logique)
-                            // loadAlertData(filePath);
-                        }
-                    }
-                    key.reset();
-                }
-
-                watchService.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
 
     /**
      * Démarre la surveillance des fichiers de données dans un répertoire spécifique.
