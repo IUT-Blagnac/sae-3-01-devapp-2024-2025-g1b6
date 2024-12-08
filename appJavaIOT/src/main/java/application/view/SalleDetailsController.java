@@ -49,7 +49,7 @@ public class SalleDetailsController {
     public void setRoom(Room room) {
         this.room = room;
     }
-    
+
     /**
      * Crée un onglet avec un graphique pour afficher les données d'une salle.
      *
