@@ -34,3 +34,4 @@ bin/
 build/
 /bin1/
 java/build/**
+appJavaIOT/src/main/resources/python
