@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import application.SyncData;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,7 +22,11 @@ import javafx.stage.Stage;
 import application.config.ConfigManager;
 import application.LaunchApp;
 import javafx.scene.control.MenuItem;
-
+/**
+ * Contrôleur pour la gestion des seuils de données.
+ * Permet à l'utilisateur de configurer les seuils d'alerte pour différents types de données.
+ * @author Alex LOVIN
+ */
 public class seuilsViewController {
 
     @FXML
@@ -64,6 +67,11 @@ public class seuilsViewController {
     private String selectedType = null; // Type actuellement sélectionné
     private boolean hasUnsavedChanges = false; // Indicateur de changements non sauvegardés
 
+    /**
+     * Méthode d'initialisation appelée après le chargement du fichier FXML.
+     * Configure les actions des menus et détecte les changements dans les champs de texte.
+     * @author Alex LOVIN
+     */
     @FXML
     private void initialize() {
         try {
@@ -99,7 +107,13 @@ public class seuilsViewController {
             }
         });
     }
-
+    /**
+     * Gère la sélection d'un type de données dans le menu déroulant.
+     * Charge les valeurs associées au type sélectionné et demande de sauvegarder les changements non sauvegardés, le cas échéant.
+     * @param type Le type de données sélectionné.
+     * @param label L'étiquette affichée pour le type de données sélectionné.
+     * @author Alex LOVIN
+     */
     private void handleTypeSelection(String type, String label) {
         if (hasUnsavedChanges) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -125,7 +139,11 @@ public class seuilsViewController {
 
         reloadSelectedType(); // Recharger les valeurs Min et Max pour le type sélectionné
     }
-
+    /**
+     * Sauvegarde les seuils actuels pour le type sélectionné après validation.
+     * Inclut des vérifications pour s'assurer de la cohérence des données saisies par l'utilisateur.
+     * @author Alex LOVIN
+     */
     private void saveCurrentSeuils() {
         if (selectedType != null) {
             if (!validateFields()) {
@@ -193,6 +211,12 @@ public class seuilsViewController {
         }
     }
 
+    /**
+     * Valide les champs de seuils pour s'assurer qu'ils ne sont pas vides.
+     * Affiche un message d'erreur si une validation échoue.
+     * @return true si les champs sont valides, false sinon.
+     * @author Alex LOVIN
+     */
     private boolean validateFields() {
         if (seuilsMin.getText().trim().isEmpty() || seuilsMax.getText().trim().isEmpty()) {
             Alert alert = new Alert(AlertType.ERROR);
@@ -205,7 +229,11 @@ public class seuilsViewController {
         return true;
     }
 
-
+    /**
+     * Recharge les valeurs Min et Max pour le type de données actuellement sélectionné.
+     * Met à jour les champs de saisie avec les valeurs lues depuis la configuration.
+     * @author Alex LOVIN
+     */
     private void reloadSelectedType() {
         if (selectedType != null) {
             String minKey = "Seuils Alerte." + selectedType + "Min";
@@ -224,6 +252,11 @@ public class seuilsViewController {
         }
     }
 
+    /**
+     * Supprime les données enregistrées dans le dossier "Alert" pour réinitialiser les alertes.
+     * Cette méthode est appelée après la modification des seuils d'alerte.
+     * @author Alex LOVIN
+     */
     private void deleteAlertData(){
         String directoryPath = "src/main/resources/data";
         Path directory = Paths.get(directoryPath);
@@ -248,11 +281,21 @@ public class seuilsViewController {
         }
     }
 
+    /**
+     * Méthode liée au bouton de validation des seuils.
+     * Appelle la méthode de sauvegarde pour valider les changements actuels.
+     * @author Alex LOVIN
+     */
     @FXML
     private void handleSaveSeuils() {
         saveCurrentSeuils(); // Appel à la méthode qui gère la validation et la sauvegarde
     }
 
+     /**
+     * Ouvre l'interface de configuration et permet de basculer vers la vue associée.
+     * Propose de sauvegarder les changements non sauvegardés avant d'effectuer la transition.
+     * @author Alex LOVIN
+     */
     @FXML
     private void handleOpenConfig() {
         if (hasUnsavedChanges) {

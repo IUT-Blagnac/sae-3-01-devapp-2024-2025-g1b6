@@ -21,6 +21,11 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import application.config.AppConstants;
 
+/**
+ * Contrôleur de la vue de configuration.
+ * Gère les interactions entre l'interface utilisateur et les données de configuration.
+ * @author Alex LOVIN
+ */
 public class configViewController {
 
     private final ConfigManager configManager = new ConfigManager();
@@ -59,6 +64,11 @@ public class configViewController {
     private final Set<String> selectedDataTypes = new HashSet<>(); // Stocke les types sélectionnés
     private boolean hasUnsavedChanges = false; // Variable pour détecter les modifications non sauvegardées
 
+     /**
+     * Méthode d'initialisation de la vue.
+     * Elle charge les données de configuration, configure les composants et initialise les valeurs.
+     * @author Alex LOVIN
+     */
     @FXML
     private void initialize() {
         try {
@@ -158,7 +168,10 @@ public class configViewController {
     }
 
 
-    // Méthode pour mettre à jour les dataTypes dans le ConfigManager
+     /**
+     * Met à jour les types de données sélectionnés dans la configuration.
+     * @author Alex LOVIN
+     */
     private void updateDataTypesInConfig() {
         if (selectedDataTypes.isEmpty()) {
             configManager.updateConfig("Capteurs.data_type", "''");
@@ -171,7 +184,11 @@ public class configViewController {
         }
     }
 
-
+     /**
+     * Gère la sélection des capteurs via les boutons radio.
+     * Met à jour la configuration et désactive la liste de capteurs si nécessaire.
+     * @author Alex LOVIN
+     */
     @FXML
     private void handleSubscribeAllCapteurs() {
         boolean isOn = btnOuiCapteur.isSelected();
@@ -180,6 +197,11 @@ public class configViewController {
         hasUnsavedChanges = true; // Marquer comme modifié
     }
 
+     /**
+     * Gère la sélection des panneaux solaires via les boutons radio.
+     * Met à jour la configuration en conséquence.
+     * @author Alex LOVIN
+     */
     @FXML
     private void handleSubscribeAllPanneaux() {
         boolean isOn = btnOuiPanneau.isSelected();
@@ -187,6 +209,11 @@ public class configViewController {
         hasUnsavedChanges = true; // Marquer comme modifié
     }
 
+    /**
+     * Gère la validation des modifications apportées par l'utilisateur.
+     * Affiche une alerte en cas de champs invalides ou vides.
+     * @author Alex LOVIN
+     */
     @FXML
     private void handleValider() {
         String frequenceInput = frequence.getText().trim();
@@ -230,7 +257,12 @@ public class configViewController {
         hasUnsavedChanges = false;
     }
 
-    // Méthode pour vérifier si une chaîne est un entier positif
+    /**
+     * Vérifie si une chaîne est un entier positif.
+     * @param input la chaîne à vérifier
+     * @return true si la chaîne est un entier positif, false sinon
+     * @author Alex LOVIN
+     */
     private boolean isPositiveInteger(String input) {
         try {
             int value = Integer.parseInt(input);
@@ -240,6 +272,10 @@ public class configViewController {
         }
     }
 
+    /**
+     * Met à jour les salles sélectionnées dans la configuration.
+     * @author Alex LOVIN
+     */
     private void updateSallesInConfig() {
         if (selectedSalles.isEmpty()) {
             configManager.updateConfig("Capteurs.salles", "''");
@@ -251,7 +287,10 @@ public class configViewController {
             configManager.updateConfig("Capteurs.salles", updatedSalles);
         }
     }
-
+    /**
+     * Sauvegarde les données de configuration dans le fichier approprié.
+     * @author Alex LOVIN
+     */
     private void saveConfig() {
         try {
             configManager.saveConfig();
@@ -260,9 +299,21 @@ public class configViewController {
         }
     }
 
+    /**
+     * Recharge les valeurs de la vue.
+     * Utilisé pour rafraîchir les valeurs après la modification des seuils d'alerte.
+     * @author Alex LOVIN
+     */
     public void reloadView() {
         initialize(); // Recharger les valeurs depuis l'initialize
     }
+
+    /**
+     * Vérifie les champs requis avant de permettre la navigation.
+     * Affiche une alerte en cas de champs invalides ou vides.
+     * @return true si les champs sont valides, false sinon
+     * @author Alex LOVIN
+     */
     private boolean validateRequiredFields() {
         String frequenceInput = frequence.getText().trim();
         String hoteInput = hote.getText().trim();
@@ -288,6 +339,11 @@ public class configViewController {
         return true;
     }
 
+    /**
+     * Gère l'ouverture de la vue des seuils d'alerte.
+     * Vérifie les champs requis avant de permettre la navigation.
+     * @author Alex LOVIN
+     */
     @FXML
     private void handleOpenAlerte() {
         if (!validateRequiredFields()) {
@@ -319,6 +375,10 @@ public class configViewController {
         }
     }
 
+    /**
+     * Ouvre la vue des seuils d'alerte.
+     *  @author Alex LOVIN
+     */
     private void openAlertePage() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LaunchApp.class.getResource("view/seuilsAlerteView.fxml"));
@@ -336,7 +396,10 @@ public class configViewController {
         }
     }
 
-
+    /**
+     * Ferme la vue actuelle et retourne à la vue précédente.
+     * * @author Alex LOVIN
+     */
     @FXML
     private void onBtnRetour() {
         if (!validateRequiredFields()) {
@@ -367,7 +430,10 @@ public class configViewController {
             closeCurrentPage();
         }
     }
-
+    /**
+     * Ferme la page actuelle.
+     * @author Alex LOVIN
+     */
     private void closeCurrentPage() {
         ((Stage) this.btnAlerte.getScene().getWindow()).close();
     }

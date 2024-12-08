@@ -4,17 +4,35 @@ import java.io.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
+/**
+ * Classe permettant de gérer le fichier de configuration `config.ini`.
+ * Elle permet de créer, charger, lire, mettre à jour et sauvegarder des configurations
+ * dans un fichier structuré au format INI.
+ * 
+ * @author Alex LOVIN
+ */
 public class ConfigManager {
 
     private static final String CONFIG_FILE = "src/main/python/config.ini";
     private final Map<String, String> configMap = new LinkedHashMap<>();
     private final StringBuilder comments = new StringBuilder();
 
+    /**
+     * Constructeur de la classe. Vérifie ou crée le fichier `config.ini` à l'initialisation.
+     * 
+     * @author Alex LOVIN
+     */
     public ConfigManager() {
         checkOrCreateConfigFile();
     }
 
-    // Vérifie ou crée le fichier config.ini
+    /**
+     * Vérifie l'existence du fichier `config.ini`. Si le fichier ou le répertoire parent n'existe pas,
+     * ils sont créés avec des valeurs par défaut.
+     * 
+     * @author Alex LOVIN
+     */
     public void checkOrCreateConfigFile() {
         File configFile = new File(CONFIG_FILE);
         File parentDir = configFile.getParentFile();
@@ -45,7 +63,12 @@ public class ConfigManager {
         }
     }
 
-    // Charger le contenu de config.ini
+     /**
+     * Charge le contenu du fichier `config.ini` dans une structure de données (Map).
+     * 
+     * @throws IOException en cas d'erreur lors de la lecture du fichier.
+     * @author Alex LOVIN
+     */
     public void loadConfig() throws IOException {
         configMap.clear();
         comments.setLength(0);
@@ -74,17 +97,34 @@ public class ConfigManager {
         }
     }
 
-    // Lire une valeur
+    /**
+     * Lit une valeur de configuration à partir de sa clé.
+     * 
+     * @param key La clé de la configuration à lire.
+     * @return La valeur associée à la clé, ou une chaîne vide si la clé n'existe pas.
+     * @author Alex LOVIN
+     */
     public String readConfig(String key) {
         return configMap.getOrDefault(key, "");
     }
 
-    // Mettre à jour une valeur
+    /**
+     * Met à jour une valeur de configuration dans la structure de données.
+     * 
+     * @param key La clé de la configuration à mettre à jour.
+     * @param value La nouvelle valeur à associer à la clé.
+     * @author Alex LOVIN
+     */
     public void updateConfig(String key, String value) {
         configMap.put(key, value);
     }
 
-    // Sauvegarder dans config.ini
+    /**
+     * Sauvegarde les configurations actuelles dans le fichier `config.ini`.
+     * 
+     * @throws IOException en cas d'erreur lors de l'écriture dans le fichier.
+     * @author Alex LOVIN
+     */
     public void saveConfig() throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(CONFIG_FILE))) {
             if (configMap.isEmpty()) {
@@ -96,7 +136,12 @@ public class ConfigManager {
         }
     }
 
-    // Générer le fichier config formaté
+     /**
+     * Génère une représentation formatée du fichier `config.ini` en fonction des configurations actuelles.
+     * 
+     * @return Une chaîne de caractères représentant le contenu formaté du fichier `config.ini`.
+     * @author Alex LOVIN
+     */
     private String getFormattedConfig() {
         StringBuilder formattedConfig = new StringBuilder();
 
@@ -139,13 +184,25 @@ public class ConfigManager {
         return formattedConfig.toString();
     }
 
+     /**
+     * Ajoute les seuils minimum et maximum pour un type de données dans la configuration formatée.
+     * 
+     * @param formattedConfig Le contenu formaté du fichier `config.ini`.
+     * @param type Le type de données pour lequel ajouter les seuils.
+     * @author Alex LOVIN
+     */
     private void appendSeuils(StringBuilder formattedConfig, String type) {
         formattedConfig.append("# ").append(type).append(" (valeur numérique positive)\n");
         formattedConfig.append(type).append("Min : ").append(configMap.getOrDefault("Seuils Alerte." + type + "Min", "0")).append("\n");
         formattedConfig.append(type).append("Max : ").append(configMap.getOrDefault("Seuils Alerte." + type + "Max", "0")).append("\n");
     }
 
-    // Configuration par défaut
+    /**
+     * Génère une configuration par défaut pour le fichier `config.ini`.
+     * 
+     * @return Une chaîne de caractères représentant la configuration par défaut.
+     * @author Alex LOVIN
+     */
     private String getDefaultConfig() {
         return """
             [General]
