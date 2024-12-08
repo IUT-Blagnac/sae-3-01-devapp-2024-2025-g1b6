@@ -37,3 +37,4 @@ java/build/**
 
 # json Files
 *.json
+appJavaIOT/src/main/resources/python
