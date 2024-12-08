@@ -18,6 +18,15 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Contrôleur pour gérer l'affichage des graphiques de données pour les salles et les panneaux solaires.
+ * <p>
+ * Cette classe est responsable de l'affichage des données sous forme de graphiques interactifs (barres et courbes) dans une interface JavaFX.
+ * Elle permet de surveiller les alertes et les nouveaux fichiers de données via un mécanisme de surveillance de fichiers.
+ * </p>
+ * 
+ * @author Marwane Ibrahim
+ */
 public class GraphiquesController {
 
     private Map<String, Map<String, Double>> sensorData = new HashMap<>();
@@ -31,6 +40,12 @@ public class GraphiquesController {
     @FXML
     private Button buttonRetour;
 
+    /**
+     * Initialise le contrôleur, charge les données des salles et crée les onglets de graphiques.
+     * 
+     * Cette méthode est appelée lors de l'initialisation du contrôleur. Elle charge les données des salles et des panneaux solaires via le singleton {@link SyncData}.
+     * Elle crée ensuite des onglets de graphiques pour chaque type de donnée et lance des threads pour surveiller les alertes et les fichiers de données.
+     */
     public void initialize() {
         try {
             SyncData syncData = SyncData.getInstance();
@@ -47,6 +62,7 @@ public class GraphiquesController {
                 }
             }
 
+            // Crée un onglet pour chaque type de donnée
             for (String key : sensorData.keySet()) {
                 Tab tab = new Tab(key);
                 tab.setContent(createChart(key, sensorData.get(key)));
@@ -62,6 +78,13 @@ public class GraphiquesController {
         }
     }
 
+    /**
+     * Affiche une alerte sous forme de fenêtre pop-up lorsque des données critiques sont détectées.
+     * 
+     * @param key   Le nom de la donnée critique.
+     * @param room  Le nom de la salle où la donnée est hors seuil.
+     * @param value La valeur de la donnée qui est hors seuil.
+     */
     private void showAlert(String key, String room, double value) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -72,6 +95,12 @@ public class GraphiquesController {
         });
     }
 
+    /**
+     * Démarre la surveillance des alertes dans un répertoire spécifique, en créant un service de surveillance de fichiers.
+     * Lorsqu'un nouveau fichier est créé dans ce répertoire, il sera analysé pour détecter des alertes.
+     * 
+     * @param alertDir Le répertoire à surveiller pour les fichiers d'alertes.
+     */
     private void startAlertMonitoring(Path alertDir) {
         alertExecutor = Executors.newSingleThreadExecutor();
 
@@ -114,6 +143,12 @@ public class GraphiquesController {
         });
     }
 
+    /**
+     * Démarre la surveillance des fichiers de données dans un répertoire spécifique.
+     * Lorsqu'un nouveau fichier de données est créé dans ce répertoire, il sera chargé pour mettre à jour les graphiques.
+     * 
+     * @param dataDir Le répertoire à surveiller pour les fichiers de données.
+     */
     private void startDataMonitoring(Path dataDir) {
         dataExecutor = Executors.newSingleThreadExecutor();
 
@@ -152,6 +187,13 @@ public class GraphiquesController {
         });
     }
 
+    /**
+     * Crée un graphique en fonction du type de donnée (barres ou courbes).
+     * 
+     * @param key   Le nom de la donnée (utilisé pour déterminer si c'est une courbe ou un histogramme).
+     * @param data  Les données à afficher dans le graphique.
+     * @return Le graphique créé (soit un graphique à barres, soit un graphique linéaire).
+     */
     private Chart createChart(String key, Map<String, Double> data) {
         if (key.equalsIgnoreCase("pressure") || key.equalsIgnoreCase("temperature")) {
             return createLineChart(key, data);
@@ -160,6 +202,13 @@ public class GraphiquesController {
         }
     }
 
+    /**
+     * Crée un graphique à barres pour afficher les données.
+     * 
+     * @param key   Le nom de la donnée.
+     * @param data  Les données à afficher sous forme de barres.
+     * @return Un graphique à barres représentant les données.
+     */
     private BarChart<String, Number> createBarChart(String key, Map<String, Double> data) {
         BarChart<String, Number> barChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
         barChart.setTitle("Données : " + key);
@@ -175,6 +224,13 @@ public class GraphiquesController {
         return barChart;
     }
 
+    /**
+     * Crée un graphique linéaire pour afficher les données.
+     * 
+     * @param key   Le nom de la donnée.
+     * @param data  Les données à afficher sous forme de courbe.
+     * @return Un graphique linéaire représentant les données.
+     */
     private LineChart<String, Number> createLineChart(String key, Map<String, Double> data) {
         LineChart<String, Number> lineChart = new LineChart<>(new CategoryAxis(), new NumberAxis());
         lineChart.setTitle("Données : " + key);
@@ -190,11 +246,18 @@ public class GraphiquesController {
         return lineChart;
     }
 
+    /**
+     * Gère l'événement de clic sur le bouton "Retour" et permet de revenir à l'écran précédent.
+     */
     @FXML
     private void handleButtonRetour() {
         System.out.println("Retour à l'écran précédent.");
     }
 
+    /**
+     * Arrête les exécutants en cours (surveillance des alertes et des données).
+     * Cette méthode doit être appelée lorsque le contrôleur n'est plus nécessaire ou lors de la fermeture de l'application.
+     */
     public void stop() {
         try {
             if (alertExecutor != null && !alertExecutor.isShutdown()) {

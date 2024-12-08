@@ -8,7 +8,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import application.view.GraphiquesController;
+import application.model.Room;
+import application.model.SyncData;
+import application.view.SalleDetailsController;
 
 /**
  * JavaFX App
@@ -16,21 +18,31 @@ import application.view.GraphiquesController;
 public class App extends Application {
 
     private static Scene scene;
-    private GraphiquesController graphiquesController;
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("view/graphiques.fxml"));
+        // Exemple : Chargez une salle spécifique (nommée ici "Salle 1") pour démonstration
+        SyncData syncData = SyncData.getInstance();
+        syncData.fillRoomList(); // Charger les données des salles
+        Room specificRoom = syncData.getRoomsMap().get("B108");
+
+        // Charger la vue SalleDetails avec une salle spécifique
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("view/SalleDetailsView.fxml"));
         Parent root = fxmlLoader.load();
-        graphiquesController = fxmlLoader.getController(); // Récupérer le contrôleur
 
+        // Obtenir le contrôleur et configurer la salle
+        SalleDetailsController salleDetailsController = fxmlLoader.getController();
+        salleDetailsController.setRoom(specificRoom);
+
+        // Configurer la scène
         scene = new Scene(root, 800, 600); // Ajustez la taille selon vos besoins
-        stage.setScene(scene);
         scene.getStylesheets().add(App.class.getResource("css/styles.css").toExternalForm());
-        stage.setTitle("Application de Graphiques");
+        stage.setScene(scene);
+        stage.setTitle("Détails de la Salle : " + specificRoom.getRoomName());
 
+        // Gérer la fermeture
         stage.setOnCloseRequest(event -> {
-            graphiquesController.stop(); // Arrêter les threads du contrôleur
+            salleDetailsController.stop(); // Libérer les ressources si nécessaire
             System.exit(0); // Forcer la fermeture complète de l'application
         });
 
