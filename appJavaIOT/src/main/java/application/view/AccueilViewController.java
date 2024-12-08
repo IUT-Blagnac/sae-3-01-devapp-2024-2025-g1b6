@@ -200,7 +200,6 @@ public class AccueilViewController {
     private void actionManuel() {
         Stage newStage = new Stage();
         newStage.setTitle("Manuel");
-
         javafx.scene.control.Label manuelTitre = new javafx.scene.control.Label(
             "Voici le manuel d'utilisation de l'application :"
         );
