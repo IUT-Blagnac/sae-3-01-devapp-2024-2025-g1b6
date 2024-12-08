@@ -1,3 +1,31 @@
+<?php
+session_start();
+include("connect.inc.php");
+
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION["user"]["IDCLIENT"])) {
+    header("Location: connexion.php");
+    exit();
+}
+
+// Récupérer l'ID client depuis la session
+$id_client = $_SESSION["user"]["IDCLIENT"];
+
+// Préparer la requête pour récupérer les informations du client
+$stmt = $pdo->prepare("SELECT * FROM CLIENT WHERE IDCLIENT = :id_client");
+$stmt->execute(['id_client' => $id_client]);
+$user = $stmt->fetch();
+
+
+if (!$user) {
+    echo "Erreur : utilisateur introuvable.";
+    exit();
+}
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +45,6 @@
                         <input type="checkbox" id="burgerToggle">
                         <ul class="categories">
                             <?php
-                            include ("connect.inc.php");
                             $stmt = $pdo->prepare("SELECT * FROM CATEGORIE WHERE IDCATEG_CATPERE IS NULL");
                             $stmt->execute();
                             $categories = $stmt->fetchAll();
@@ -40,7 +67,7 @@
                         if (isset($_SESSION["user"])) {
                             $id_client = $_SESSION["user"]["IDCLIENT"];
                             // Si l'utilisateur est connecté, on le redirige vers son compte
-                            echo '<a href="compte.php?id_client=' . $id_client . '"><div class="imgCompte"></div></a>';
+                            echo '<a href="compte.php"><div class="imgCompte"></div></a>';
                         } else {
                             // Sinon, on le redirige vers la page de connexion
                             echo '<a href="connexion.php"><div class="imgCompte"></div></a>';
@@ -56,25 +83,26 @@
     <main>
         <div class="container">
             <ul class="listeCompte">
-                <li><div class="compte">
-                        <div class="imgProfil"></div>
-                        <h1 class="titreCompte">Mon compte</h1>
-                        <div class="infosCompte">
-                            <div class="infosPerso">
-                                <div class="infos">
-                                    <p class="info">Nom : Ibrahim </p>
-                                    <p class="info">Prénom : Marwane </p>
-                                    <p class="info">Adresse : 11 Rue du quai</p>
-                                    <p class="info">Code postal : 31300</p>
-                                    <p class="info">Ville : Toulouse </p>
-                                    <p class="info">Téléphone : 06 64 80 54 85</p>
-                                    <p class="info">Email : marwane.prime@gmail.com</p>
-                                </div>
+                <li>
+                <div class="compte">
+                    <h1 class="titreCompte">Mon compte</h1>
+                    <div class="infosCompte">
+                        <div class="infosPerso">
+                            <div class="infos">
+                                <p class="info">Nom : <?= isset($user['NOMCLIENT']) ? htmlspecialchars($user['NOMCLIENT']) : 'Non défini' ?></p>
+                                <p class="info">Prenom : <?= isset($user['PRENOMCLIENT']) ? htmlspecialchars($user['PRENOMCLIENT']) : 'Non défini' ?></p>
+                                <p class="info">Adresse : </p>
+                                <p class="info">Code postal : </p>
+                                <p class="info">Ville : </p>
+                                <p class="info">Téléphone : <?= isset($user['NUMTEL']) ? htmlspecialchars($user['NUMTEL']) : 'Non défini' ?></p>
+                                <p class="info">email : <?= isset($user['EMAIL']) ? htmlspecialchars($user['EMAIL']) : 'Non défini' ?></p>
                             </div>
                         </div>
-                        <div class="modifier"> Modifier</div>
-                    </div></li>
-                <li>
+                    </div>
+                    
+                     <a href="updateInfosClient.php"><button class="modifier" type="submit" name="updateInfo">Modifier</button></a>  
+                </div>
+            </li> 
                     <div class="commandes">
                         <div class="imgCommande"></div>
                         <h1 class="titreCommande">Mes commandes</h1>
@@ -134,6 +162,7 @@
             </ul>
         </div>
     </footer>
+
 
 </body>
 </html>

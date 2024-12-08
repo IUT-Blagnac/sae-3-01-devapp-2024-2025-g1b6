@@ -17,7 +17,13 @@
                         <input type="checkbox" id="burgerToggle">
                         <ul class="categories">
                             <?php
-                            include ("categories.php");
+                            include ("connect.inc.php");
+                            $stmt = $pdo->prepare("SELECT * FROM CATEGORIE WHERE IDCATEG_CATPERE IS NULL");
+                            $stmt->execute();
+                            $categories = $stmt->fetchAll();
+                            foreach ($categories as $categorie) {
+                                echo "<li><a href='categorie.php?id=".$categorie['IDCATEG']."'>".$categorie['NOMCATEG']."</a></li>";
+                            }
                             ?>
                         </ul>
                         <span></span>
@@ -47,15 +53,15 @@
 
     <?php
     // Vérifiez si des cookies existent
-    $email = isset($_COOKIE['email']) ? $_COOKIE['email'] : '';
-    $password = isset($_COOKIE['password']) ? $_COOKIE['password'] : '';
+    $EMAIL = isset($_COOKIE['EMAIL']) ? $_COOKIE['EMAIL'] : '';
+    $PASSWORD = isset($_COOKIE['PASSWORD']) ? $_COOKIE['PASSWORD'] : '';
 
     // Récupérer les erreurs si présentes
     $errorMessage = "";
     if (isset($_GET['error'])) {
         switch ($_GET['error']) {
             case 1:
-                $errorMessage = "Email ou mot de passe incorrect.";
+                $errorMessage = "email ou mot de passe incorrect.";
                 break;
             case 2:
                 $errorMessage = "Une erreur est survenue, veuillez réessayer plus tard.";
@@ -77,14 +83,14 @@
                             <div class="error"><?= htmlspecialchars($errorMessage) ?></div>
                         <?php endif; ?>
 
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="<?= htmlspecialchars($email) ?>" required>
+                        <label for="EMAIL">email</label>
+                        <input type="EMAIL" id="EMAIL" name="EMAIL" value="<?= htmlspecialchars($EMAIL) ?>" required>
                         
-                        <label for="password">Mot de passe</label>
-                        <input type="password" id="password" name="password" value="<?= htmlspecialchars($password) ?>" required>
+                        <label for="PASSWORD">Mot de passe</label>
+                        <input type="PASSWORD" id="PASSWORD" name="PASSWORD" value="<?= htmlspecialchars($PASSWORD) ?>" required>
                         
                         <div class="checkbox_container">
-                            <input type="checkbox" id="remember_me" name="remember_me" <?= $email ? 'checked' : '' ?>>
+                            <input type="checkbox" id="remember_me" name="remember_me" <?= $EMAIL ? 'checked' : '' ?>>
                             <label for="remember_me">Se souvenir de moi</label>
                         </div>
                         

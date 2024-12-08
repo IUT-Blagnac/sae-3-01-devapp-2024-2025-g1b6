@@ -1,6 +1,5 @@
 <?php
-// Inclure la connexion à la base de données
-include("connect.inc.php");
+
 
 // Fonction pour vérifier l'existence de la table
 function tableExiste($nomTable, $pdo) {
@@ -63,6 +62,7 @@ if (isset($_GET['recherche'])) {
 ?>
 
 <!-- Formulaire de recherche -->
+<link rel="stylesheet" href="Css/all.css">
 <form method="get" action="">
     <input class="barreRecherche" type="text" name="recherche" 
            placeholder="Barre de recherche ..." 

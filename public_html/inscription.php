@@ -1,84 +1,76 @@
 <?php
-// Démarrer la session
 session_start();
 
-// Vérifier si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Inclure la connexion à la base de données
     include("connect.inc.php");
 
-    // Récupérer les données du formulaire
-    $nom = $_POST["nom"];
-    $prenom = $_POST["prenom"];
-    $telephone = $_POST["telephone"];
-    $email = $_POST["email"];
+    // Récupération des données
+    $idClient = 
+    $nom = trim($_POST["nom"]);
+    $prenom = trim($_POST["prenom"]);
+    $telephone = trim($_POST["telephone"]);
+    $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
     $dtn = $_POST["dtn"];
     $password = $_POST["password"];
     $password2 = $_POST["password2"];
 
-    // Vérifier que les mots de passe correspondent
-    if ($password != $password2) {
+    // Vérification des mots de passe
+    if ($password !== $password2) {
         $error = "Les mots de passe ne correspondent pas.";
+    } elseif (!preg_match('/^(?=.*[A-Z])(?=.*\W)(?=.*\d)[A-Za-z\d\W]{8,}$/', $password)) {
+        $error = "Le mot de passe doit comporter au moins 8 caractères, une majuscule, un chiffre, et un caractère spécial.";
     } else {
-        // Vérifier la validité du mot de passe (min 8 caractères, une majuscule, un caractère spécial)
-        if (!preg_match('/^(?=.*[A-Z])(?=.*\W)(?=.*\d)[A-Za-z\d\W]{8,}$/', $password)) {
-            $error = "Le mot de passe doit comporter au moins 8 caractères, une majuscule, et un caractère spécial.";
-        } else {
-            // Hachage du mot de passe
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        // Hachage du mot de passe
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            try {
-                // Vérifier si l'email existe déjà dans la base de données
-                $stmt = $pdo->prepare("SELECT * FROM CLIENT WHERE email = :email");
+        try {
+            // Vérifier si l'email existe déjà
+            $stmt = $pdo->prepare("SELECT COUNT(*) FROM CLIENT WHERE EMAIL = :email");
+            $stmt->execute(["email" => $email]);
+            $emailExists = $stmt->fetchColumn();
+
+            if ($emailExists) {
+                $error = "Un compte avec cet email existe déjà.";
+            } else {
+
+                $stmt = $pdo->query("SELECT MAX(IDCLIENT) AS maxIdClient FROM CLIENT");
+                $maxIdClient = $stmt->fetchColumn();
+                $newIdClient = $maxIdClient ? $maxIdClient + 1 : 1;
+
+
+                // Insertion du nouveau client
+                $stmt = $pdo->prepare("INSERT INTO CLIENT (IDCLIENT, NOMCLIENT, PRENOMCLIENT, NUMTEL, EMAIL, PASSWORD, DATEN, DATEINSCRIPTION) 
+                                       VALUES (:idClient, :nom, :prenom, :telephone, :email, :password, :dtn, :dateInscription)");
+                $stmt->execute([
+                    "idClient" => $newIdClient,
+                    "nom" => $nom,
+                    "prenom" => $prenom,
+                    "telephone" => $telephone,
+                    "email" => $email,
+                    "password" => $hashedPassword,
+                    "dtn" => $dtn,
+                    "dateInscription" => date('Y-m-d'),
+                ]);
+
+                // Récupérer l'utilisateur nouvellement inscrit
+                $stmt = $pdo->prepare("SELECT * FROM CLIENT WHERE EMAIL = :email");
                 $stmt->execute(["email" => $email]);
                 $user = $stmt->fetch();
 
-                if ($user) {
-                    $error = "Un compte avec cet email existe déjà.";
-                } else {
-                    // Récupérer le idClient maximum dans la base de données
-                    $stmt = $pdo->query("SELECT MAX(idClient) AS maxIdClient FROM client");
-                    $maxIdClient = $stmt->fetchColumn();
-                    $newIdClient = $maxIdClient ? $maxIdClient + 1 : 1; // Si aucun client, commence à 1
+                // Stocker l'utilisateur dans la session
+                $_SESSION["user"] = $user;
 
-                    // Récupérer la date actuelle pour l'insertion
-                    $dateInscription = date('Y-m-d');
-
-                    // Préparer la requête d'insertion
-                    $stmt = $pdo->prepare("INSERT INTO CLIENT (IDCLIENT, NOMCLIENT, PRENOMCLIENT, NUMTEL, EMAIL, PASSWORD, DATEN, DATEINSCRIPTION) 
-                                        VALUES (:idClient, :nom, :prenom, :telephone, :email, :password, :dtn, :dateInscription)");
-
-                    // Exécution de l'insertion
-                    $stmt->execute([
-                        "idClient" => $newIdClient,
-                        "nom" => $nom,
-                        "prenom" => $prenom,
-                        "telephone" => $telephone,
-                        "email" => $email,
-                        "password" => $hashedPassword,
-                        "dtn" => $dtn,
-                        "dateInscription" => $dateInscription
-                    ]);
-
-                    // Redirection après succès
-                    $_SESSION["user"] = [
-                        "nom" => $nom,
-                        "prenom" => $prenom,
-                        "email" => $email
-                    ];
-                    header("Location: compte.php");
-                    exit;
-                }
-            } catch (PDOException $e) {
-                // Gérer l'exception pour la base de données
-                $error = "Une erreur est survenue, veuillez réessayer plus tard.";
-                // Optionnel : log de l'erreur dans un fichier de log
-                error_log("Erreur PDO: " . $e->getMessage());
+                // Redirection vers la page compte
+                header("Location: compte.php");
+                exit;
             }
+        } catch (PDOException $e) {
+            $error = "Erreur : " . $e->getMessage();
         }
     }
 }
 ?>
+
 
 
 
