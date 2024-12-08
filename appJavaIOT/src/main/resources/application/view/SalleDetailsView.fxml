@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.SalleDetailsController">
+    
+    <!-- Onglets pour afficher les graphiques spécifiques à une salle -->
+    <TabPane fx:id="tabPaneDetails" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="50.0" 
+             AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+
+    <!-- Bouton pour quitter -->
+    <Button fx:id="buttonQuitter" mnemonicParsing="false" onAction="#handleQuitter" text="Quitter" 
+            AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" 
+            maxWidth="150" />
+</AnchorPane>

@@ -1,10 +1,14 @@
 package application.view;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+import java.nio.file.*;
 import application.LaunchApp;
+import application.SyncData;
+
+import application.control.RoomsPane;
 import application.tools.StageManagement;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +18,9 @@ import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import org.ini4j.Ini;
+import org.ini4j.Profile;
+
 
 public class AccueilViewController {
 
@@ -107,7 +114,7 @@ public class AccueilViewController {
                 process.destroy(); // Arrêter le processus si encore en cours
             }
         }
-        
+
         return exitCode;
     }
 
@@ -146,7 +153,27 @@ public class AccueilViewController {
             return;
         }
 
-        //todo
+        // Charger le fichier INI
+        Ini ini = null;
+        try {
+            ini = new Ini(new File("src/main/python/config.ini"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Obtenir la section [General]
+        Profile.Section generalSection = ini.get("General");
+
+        // Lire la valeur de 'frequence'
+        String frequenceValue = generalSection.get("frequence");
+
+        if (!frequenceValue.isEmpty()){
+            SyncData syncInstance = SyncData.getInstance();
+            syncInstance.startPeriodicSave(Integer.parseInt(frequenceValue));
+            RoomsPane rp = new RoomsPane(this.containingStage);
+            rp.show();
+        }
+
     }
 
     @FXML
@@ -239,5 +266,6 @@ public class AccueilViewController {
         StageManagement.manageCenteringStage(this.containingStage, configStage);
         configStage.show();
     }
+
 
 }

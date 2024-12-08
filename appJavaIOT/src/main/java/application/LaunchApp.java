@@ -1,6 +1,5 @@
 package application;
 
-import application.control.RoomsPane;
 import application.view.AccueilViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -34,10 +33,6 @@ public class LaunchApp extends Application {
 
         this.primaryStage.show(); // Affiche la fenêtre principale
 
-
-        //RoomsPane rp = new RoomsPane(null);
-
-        //rp.show();
     }
 
     public static void main(String[] args) {

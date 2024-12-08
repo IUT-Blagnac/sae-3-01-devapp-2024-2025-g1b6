@@ -1,7 +1,13 @@
 package application.view;
 
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+import application.SyncData;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,7 +20,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import application.ConfigManager;
+import application.config.ConfigManager;
 import application.LaunchApp;
 import javafx.scene.control.MenuItem;
 
@@ -122,13 +128,30 @@ public class seuilsViewController {
 
     private void saveCurrentSeuils() {
         if (selectedType != null) {
+            if (!validateFields()) {
+                return; // Arrêter l'exécution si des champs sont vides
+            }
+
             try {
                 String minValueStr = seuilsMin.getText().trim();
                 String maxValueStr = seuilsMax.getText().trim();
 
+                // Validation des valeurs
                 int minValue = Integer.parseInt(minValueStr);
                 int maxValue = Integer.parseInt(maxValueStr);
 
+                // Vérification que les valeurs sont positives sauf pour la température
+                if (!selectedType.equals("temperature") && (minValue < 0 || maxValue < 0)) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Erreur de validation");
+                    alert.setHeaderText("Valeur impossible");
+                    alert.setContentText("Les valeurs doivent être positives, sauf pour la température.");
+                    alert.showAndWait();
+                    reloadSelectedType(); // Recharger les valeurs actuelles
+                    return;
+                }
+
+                // Vérification que max >= min
                 if (maxValue < minValue) {
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Erreur de validation");
@@ -140,8 +163,8 @@ public class seuilsViewController {
                 }
 
                 // Mettre à jour et sauvegarder
-                configManager.updateConfig("Seuils Alerte."+selectedType + "Min", minValueStr);
-                configManager.updateConfig("Seuils Alerte."+selectedType + "Max", maxValueStr);
+                configManager.updateConfig("Seuils Alerte." + selectedType + "Min", minValueStr);
+                configManager.updateConfig("Seuils Alerte." + selectedType + "Max", maxValueStr);
                 configManager.saveConfig();
 
                 // Recharger la configuration après la sauvegarde pour garantir la mise à jour des données
@@ -149,6 +172,12 @@ public class seuilsViewController {
 
                 // Recharger l'affichage
                 reloadSelectedType();
+
+                //Supprimer les données actuellement enregitrées dans l'application vu que les seuils ont changé
+                SyncData syncInst = SyncData.getInstance();
+                syncInst.clearData();
+                //De même avec les fichiers dans le dossier Alert
+                deleteAlertData();
 
                 hasUnsavedChanges = false;
 
@@ -163,6 +192,19 @@ public class seuilsViewController {
             }
         }
     }
+
+    private boolean validateFields() {
+        if (seuilsMin.getText().trim().isEmpty() || seuilsMax.getText().trim().isEmpty()) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erreur de validation");
+            alert.setHeaderText("Champs vides");
+            alert.setContentText("Veuillez remplir les deux champs avant de valider.");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
 
     private void reloadSelectedType() {
         if (selectedType != null) {
@@ -179,6 +221,30 @@ public class seuilsViewController {
             // Mettre à jour les champs avec les valeurs chargées
             seuilsMin.setText(minValue);
             seuilsMax.setText(maxValue);
+        }
+    }
+
+    private void deleteAlertData(){
+        String directoryPath = "src/main/resources/data";
+        Path directory = Paths.get(directoryPath);
+        if (directory.toFile().exists()) {
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) {
+                for (Path dir : stream) {
+                    // Vérifier si le dossier est "Alert"
+                    if (Files.isDirectory(dir) && dir.getFileName().toString().equals("Alert")) {
+                        try (DirectoryStream<Path> alertStream = Files.newDirectoryStream(dir)) {
+                            // Supprimer tous les fichiers dans le dossier "Alert"
+                            for (Path alertFile : alertStream) {
+                                if (Files.isRegularFile(alertFile)) {
+                                    Files.delete(alertFile);  // Supprimer le fichier
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

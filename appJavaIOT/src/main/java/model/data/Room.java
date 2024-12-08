@@ -19,9 +19,19 @@ import java.util.Set;
  */
 public class Room {
 
+    /** Liste des mesures effectuées dans cette salle. */
     private List<Measure> roomValues;
+
+    /** Liste des mesures qui déclenchent des alertes pour cette salle. */
+    private List<Measure> roomAlertValues;
+
+    /** Le nom de la salle. */
     private String roomName;
+
+    /** L'étage où se trouve la salle. */
     private int floor;
+
+    /** Le bâtiment auquel la salle appartient (représenté par un caractère). */
     private char building;
 
     /**
@@ -37,6 +47,7 @@ public class Room {
         this.floor = pfFloor;
 
         this.roomValues = new ArrayList<>();
+        this.roomAlertValues = new ArrayList<>();
     }
 
     /**
@@ -76,12 +87,12 @@ public class Room {
     }
 
     /**
-     * Ajoute une mesure à la liste des mesures de la salle.
+     * Retourne la liste des mesures qui ont déclenché des alertes dans cette salle.
      *
-     * @param measure La mesure à ajouter.
+     * @return La liste des mesures d'alerte de la salle.
      */
-    public void addRoomValue(Measure measure) {
-        this.roomValues.add(measure);
+    public List<Measure> getRoomAlertValues() {
+        return this.roomAlertValues;
     }
 
     /**
@@ -95,7 +106,7 @@ public class Room {
     public String toString() {
         // Vérification si la liste de valeurs n'est pas vide pour éviter des erreurs
         if (this.roomValues.isEmpty()) {
-            return this.roomName + " => Pas de mesures disponibles";
+            return this.roomName + " => Toutes les données dépassent le seuil d'alerte. Veuillez voir les logs d'alerte";
         }
 
         // Récupérer les types de capteurs de la dernière mesure

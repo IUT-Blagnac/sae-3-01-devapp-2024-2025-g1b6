@@ -1,6 +1,7 @@
 package application.control;
 
 import application.LaunchApp;
+import application.tools.StageManagement;
 import application.view.RoomsViewControler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -46,6 +47,7 @@ public class RoomsPane {
             this.rpStage.setScene(scene);
             this.rpStage.setTitle("Affichage des dernières mesures par salle");
             this.rpStage.setResizable(false);
+            StageManagement.manageCenteringStage(parentStage, this.rpStage);
             this.rpViewController = loader.getController();
             this.rpViewController.initContext(this.rpStage);
 
