@@ -34,18 +34,7 @@ public class RoomsViewControler {
 
     /** La fenêtre principale contenant cette vue. */
     private Stage containingStage;
-
-    /** Bouton permettant de voir les mesures des capteurs. */
-    @FXML
-    Button btnVoirMesures;
-
-    /** Bouton permettant de voir les graphiques des capteurs. */
-    @FXML
-    Button btnVoirGraphiques;
-
-    /** Bouton permettant de revenir à la vue précédente. */
-    @FXML
-    Button btnRetour;
+    private Room selectedRoom;
 
     /** Liste affichant les différentes salles et leurs capteurs associés. */
     @FXML
@@ -77,8 +66,15 @@ public class RoomsViewControler {
         this.containingStage.setOnCloseRequest(e -> this.closeWindow(e));
         SyncData inst = SyncData.getInstance();
         this.lvCapteurs.setItems(inst.getRoomsOlist());
-        this.lvCapteurs.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        this.lvCapteurs.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         this.lvCapteurs.getFocusModel().focus(-1);
+
+        // Ajouter un écouteur de clic de souris (si vous souhaitez détecter un clic direct)
+        lvCapteurs.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                this.selectedRoom = lvCapteurs.getSelectionModel().getSelectedItem();
+            }
+        });
     }
 
     /**
@@ -94,7 +90,6 @@ public class RoomsViewControler {
         this.containingStage.close();
         SyncData syncInstance = SyncData.getInstance();
         syncInstance.stopPeriodicSave();
-        e.consume();
         return null;
     }
 
@@ -115,8 +110,23 @@ public class RoomsViewControler {
      * Actuellement, elle affiche un message dans la console pour indiquer que le bouton a été cliqué.
      */
     @FXML
-    public void onBtnVoirMesures() {
-        System.out.println("Bouton voir mesures cliqué");
+    public void onBtnVueGlobale() {
+        FXMLLoader fxmlLoader = new FXMLLoader(LaunchApp.class.getResource("view/graphiques.fxml"));
+        Stage globalGraphsStage = new Stage();
+
+        Scene globalGraphScene = null;
+        try {
+            globalGraphScene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        globalGraphsStage.setTitle("Toutes les alertes");
+        globalGraphsStage.setScene(globalGraphScene);
+        StageManagement.manageCenteringStage(this.containingStage, globalGraphsStage);
+        GraphiquesController alCtrl = fxmlLoader.getController();
+        globalGraphsStage.setResizable(false);
+        alCtrl.initContext(globalGraphsStage);
+        globalGraphsStage.show();
     }
 
     /**
@@ -127,7 +137,24 @@ public class RoomsViewControler {
      */
     @FXML
     public void onBtnVoirGraphiques() {
-        System.out.println("Bouton voir graphiques cliqué");
+        if (this.selectedRoom != null) {
+            FXMLLoader fxmlLoader = new FXMLLoader(LaunchApp.class.getResource("view/SalleDetailsView.fxml"));
+            Stage sDetailsStage = new Stage();
+            Scene sDScene = null;
+            try {
+                sDScene = new Scene(fxmlLoader.load());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            sDetailsStage.setTitle("Informations salle " + selectedRoom.getRoomName());
+            sDetailsStage.setScene(sDScene);
+            StageManagement.manageCenteringStage(this.containingStage, sDetailsStage);
+            SalleDetailsController sDCtrl = fxmlLoader.getController();
+            sDetailsStage.setResizable(false);
+            sDCtrl.initContext(sDetailsStage);
+            sDCtrl.setRoom(selectedRoom);
+            sDetailsStage.show();
+        }
     }
 
     /**

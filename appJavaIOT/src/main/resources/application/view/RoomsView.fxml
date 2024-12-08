@@ -6,11 +6,8 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -18,7 +15,7 @@
     <center>
         <BorderPane prefHeight="497.0" prefWidth="534.0" BorderPane.alignment="CENTER">
             <center>
-                <ListView fx:id="lvCapteurs" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                <ListView fx:id="lvCapteurs" prefHeight="410.0" prefWidth="660.0" BorderPane.alignment="CENTER" />
             </center>
          <top>
             <VBox prefHeight="78.0" prefWidth="534.0">
@@ -55,44 +52,6 @@
          </top>
         </BorderPane>
     </center>
-    <right>
-        <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <center>
-                <VBox alignment="CENTER" prefHeight="420.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                    <children>
-                        <GridPane alignment="CENTER">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <children>
-                                <Button fx:id="btnVoirMesures" mnemonicParsing="false" onAction="#onBtnVoirMesures" text="Voir les dernières mesures" textOverrun="CENTER_ELLIPSIS" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                    <GridPane.margin>
-                                        <Insets bottom="10.0" top="10.0" />
-                                    </GridPane.margin>
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Button>
-                                <Button fx:id="btnVoirGraphiques" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBtnVoirGraphiques" text="Voir graphiques" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Button>
-                            </children>
-                        </GridPane>
-                    </children>
-                    <padding>
-                        <Insets top="10.0" />
-                    </padding>
-                </VBox>
-            </center>
-        </BorderPane>
-    </right>
     <bottom>
         <HBox prefHeight="75.0" prefWidth="734.0" BorderPane.alignment="CENTER">
             <children>
@@ -104,6 +63,22 @@
                   <Insets top="10.0" />
                </HBox.margin>
                 </Button>
+                    <Button fx:id="btnVoirMesures" mnemonicParsing="false" onAction="#onBtnVueGlobale" text="Vue Globale" textOverrun="CENTER_ELLIPSIS">
+                        <font>
+                            <Font size="14.0" />
+                        </font>
+               <HBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </HBox.margin>
+                    </Button>
+                    <Button fx:id="btnVoirGraphiques" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBtnVoirGraphiques" text="Voir graphiques" textAlignment="CENTER">
+                        <font>
+                            <Font size="14.0" />
+                        </font>
+               <HBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </HBox.margin>
+                    </Button>
             </children>
         </HBox>
     </bottom>

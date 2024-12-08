@@ -1,1 +1,1 @@
-[[{"temperature": 18.9, "humidity": 45, "co2": 412, "pressure": 989.6}, {"deviceName": "AM107-18", "devEUI": "24e124128c016453", "room": "B113", "floor": 1, "Building": "B"}]]
+[[{"temperature": 18.9, "humidity": 45, "co2": 412, "pressure": 989.6}, {"deviceName": "AM107-18", "devEUI": "24e124128c016453", "room": "B113", "floor": 1, "Building": "B"}], [{"temperature": 18.8, "humidity": 45.5, "co2": 408, "pressure": 989.3}, {"deviceName": "AM107-18", "devEUI": "24e124128c016453", "room": "B113", "floor": 1, "Building": "B"}]]
