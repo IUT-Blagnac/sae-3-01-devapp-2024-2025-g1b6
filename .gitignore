@@ -34,7 +34,5 @@ bin/
 build/
 /bin1/
 java/build/**
-
-# json Files
-*.json
 appJavaIOT/src/main/resources/python
+appJavaIOT/src/main/resources/data

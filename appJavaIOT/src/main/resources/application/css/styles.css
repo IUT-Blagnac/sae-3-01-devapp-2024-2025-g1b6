@@ -1,0 +1,86 @@
+
+.anchor-pane {
+    -fx-background-color: #f4f4f9;
+    -fx-padding: 10;
+}
+
+/* Style général pour les onglets */
+.tab-pane {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dddddd;
+    -fx-border-width: 2px;
+    -fx-tab-max-width: 200px;
+}
+
+.tab {
+    -fx-background-color: #4CAF50; /* Couleur pour les onglets */
+    -fx-text-base-color: white;   /* Couleur du texte */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected {
+    -fx-background-color: #81C784; /* Couleur pour l'onglet sélectionné */
+    -fx-text-base-color: black;
+    -fx-border-width: 0;
+}
+
+/* Style pour le graphique en barres */
+.bar-chart {
+    -fx-background-color: #ffffff, transparent;
+    -fx-border-color: #dddddd;
+    -fx-border-width: 1px;
+    -fx-padding: 10;
+}
+
+.bar-legend {
+    -fx-background-color: #eeeeee;
+    -fx-padding: 5;
+    -fx-border-color: #cccccc;
+}
+
+/* Style pour les graphiques en lignes */
+.line-chart {
+    -fx-background-color: #ffffff, transparent;
+    -fx-border-color: #dddddd;
+    -fx-border-width: 1px;
+    -fx-padding: 10;
+}
+
+.line-symbol {
+    -fx-background-color: #81C784;
+    -fx-border-radius: 5px;
+}
+
+/* Style pour le graphique en secteurs */
+.pie-chart {
+    -fx-background-color: #ffffff, transparent;
+    -fx-border-color: #dddddd;
+    -fx-border-width: 1px;
+    -fx-padding: 10;
+}
+
+.pie-legend {
+    -fx-background-color: #eeeeee;
+    -fx-padding: 5;
+    -fx-border-color: #cccccc;
+}
+
+/* Style pour les boutons */
+.button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-font-weight: bold;
+}
+
+.button:hover {
+    -fx-background-color: #81C784; /* Couleur au survol */
+}
+
+.button:pressed {
+    -fx-background-color: #388E3C; /* Couleur lorsque le bouton est pressé */
+}

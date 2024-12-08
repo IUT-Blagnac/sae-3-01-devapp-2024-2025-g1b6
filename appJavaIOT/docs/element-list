@@ -1,0 +1,8 @@
+module:application.view.appjavaiot
+application
+application.config
+application.control
+application.tasks
+application.tools
+application.view
+model.data
