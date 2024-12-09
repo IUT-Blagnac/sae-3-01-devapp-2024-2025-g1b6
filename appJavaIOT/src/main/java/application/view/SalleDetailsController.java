@@ -39,8 +39,10 @@ public class SalleDetailsController {
     private Button buttonRetour;
 
     /**
-     * Initialise les détails d'une salle spécifique en configurant les onglets et en démarrant la surveillance des alertes et des données.
+     * Initialise les détails d'une salle spécifique en configurant les onglets et en démarrant la 
+     * surveillance des alertes et des données.
      * 
+     * @see Room
      * @param room La salle à afficher, contenant les données et les alertes à surveiller.
      */
     public void setRoom(Room room) {

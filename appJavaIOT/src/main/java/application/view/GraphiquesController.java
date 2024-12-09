@@ -173,8 +173,6 @@ public class GraphiquesController {
                     for (WatchEvent<?> event : key.pollEvents()) {
                         if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
                             Path filePath = dataDir.resolve((Path) event.context());
-                            // Chargement des données des fichiers (implémentez selon votre logique)
-                            // loadSensorData(filePath);
                         }
                     }
                     key.reset();
