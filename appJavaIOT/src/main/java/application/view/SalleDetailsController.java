@@ -8,12 +8,8 @@ import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 import model.data.Measure;
 import model.data.Room;
-
-import java.io.IOException;
-import java.nio.file.*;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Contrôleur pour afficher les détails d'une salle spécifique, y compris les graphiques et la surveillance des alertes et des données.
@@ -21,7 +17,6 @@ import java.util.concurrent.Executors;
  * Cette classe est responsable de l'affichage des informations relatives à une salle, comme les graphiques des données de la salle, et la gestion des alertes et des données provenant de fichiers externes.
  * Elle utilise un mécanisme de surveillance des fichiers pour détecter les changements dans des répertoires spécifiques et actualiser les graphiques en conséquence.
  * </p>
- *
  * @author Marwane Ibrahim
  */
 public class SalleDetailsController {
@@ -35,11 +30,9 @@ public class SalleDetailsController {
     @FXML
     private TabPane tabPane;
 
-
-    public void initContext(Stage containingStage){
+    public void initContext(Stage containingStage) {
         this.containingStage = containingStage;
     }
-
 
     /**
      * Initialise les détails d'une salle spécifique en configurant les onglets et en démarrant la surveillance des alertes et des données.
@@ -48,7 +41,13 @@ public class SalleDetailsController {
      */
     public void setRoom(Room room) {
         this.room = room;
+        if (room != null) {
+            createRoomTab(room);
+        } else {
+            System.err.println("Room is null, unable to initialize SalleDetailsController.");
+        }
     }
+
 
     /**
      * Crée un onglet avec un graphique pour afficher les données d'une salle.
@@ -56,6 +55,7 @@ public class SalleDetailsController {
      * @param room La salle dont les données seront affichées dans le graphique.
      */
     private void createRoomTab(Room room) {
+        System.out.println("Creating tab for room: " + room.getRoomName());
         Tab tab = new Tab("Graphiques - " + room.getRoomName());
         tab.setContent(createRoomChart(room));
         tabPane.getTabs().clear(); // Supprime les anciens onglets
@@ -80,6 +80,7 @@ public class SalleDetailsController {
                 String key = entry.getKey();
                 Double value = ((Number) entry.getValue()).doubleValue();
                 series.getData().add(new XYChart.Data<>(key, value));
+                System.out.println("Adding data: " + key + " = " + value);
             }
         }
 
@@ -91,7 +92,13 @@ public class SalleDetailsController {
      * Met à jour les graphiques de la salle en ajoutant de nouvelles données.
      */
     private void updateCharts() {
-        Platform.runLater(() -> createRoomTab(room));
+        Platform.runLater(() -> {
+            if (room != null) {
+                createRoomTab(room);
+            } else {
+                System.out.println("Room is null, cannot update charts.");
+            }
+        });
     }
 
     /**
