@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.*;
 import application.LaunchApp;
 import application.SyncData;
 
@@ -25,6 +24,7 @@ import org.ini4j.Profile;
 public class AccueilViewController {
 
     private Stage containingStage;
+    private String pythonExecutable;
 
     @FXML
     private Button btnTesterCo;
@@ -75,21 +75,70 @@ public class AccueilViewController {
         });
     }
 
-    private int testerConnexion() {
-        String os = System.getProperty("os.name").toLowerCase();
-        String pythonExecutable;
+    private void checkAndSetupPythonEnvironment() {
+        try {
+            // Vérifier si Python est installé
+            if (!isCommandAvailable("python --version") && !isCommandAvailable("python3 --version")) {
+                throw new RuntimeException("Python n'est pas installé.");
+            }
 
-        if (os.contains("win")) {
-            // Chemin vers Python sur Windows
-            pythonExecutable = "src/main/resources/python/windows/python.exe";
-        } else if (os.contains("mac")) {
-            //TODO à l'avenir si on a le temps
-            throw new UnsupportedOperationException("OS non supporté");
-        } else {
-            throw new UnsupportedOperationException("OS non supporté");
+            // Déterminer l'exécutable Python
+            if (isCommandAvailable("python --version")) {
+                pythonExecutable = "python";
+            } else {
+                pythonExecutable = "python3";
+            }
+
+            // Vérifier si pip est installé
+            if (!isCommandAvailable(pythonExecutable + " -m pip --version")) {
+                // Installer pip si non disponible
+                installPip();
+            }
+
+            // Vérifier si paho-mqtt est installé
+            if (!isPackageInstalled("paho-mqtt")) {
+                installPythonPackage("paho-mqtt");
+            }
+
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException("Erreur lors de la configuration de l'environnement Python", e);
         }
+    }
 
+    private boolean isCommandAvailable(String command) throws IOException, InterruptedException {
+        ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", command);
+        Process process = processBuilder.start();
+        process.waitFor();
+        return process.exitValue() == 0;
+    }
 
+    private void installPip() throws IOException, InterruptedException {
+        ProcessBuilder processBuilder = new ProcessBuilder(pythonExecutable, "-m", "ensurepip");
+        Process process = processBuilder.start();
+        process.waitFor();
+        if (process.exitValue() != 0) {
+            throw new RuntimeException("L'installation de pip a échoué.");
+        }
+    }
+
+    private boolean isPackageInstalled(String packageName) throws IOException, InterruptedException {
+        ProcessBuilder processBuilder = new ProcessBuilder(pythonExecutable, "-m", "pip", "show", packageName);
+        Process process = processBuilder.start();
+        process.waitFor();
+        return process.exitValue() == 0;
+    }
+
+    private void installPythonPackage(String packageName) throws IOException, InterruptedException {
+        ProcessBuilder processBuilder = new ProcessBuilder(pythonExecutable, "-m", "pip", "install", packageName);
+        Process process = processBuilder.start();
+        process.waitFor();
+        if (process.exitValue() != 0) {
+            throw new RuntimeException("L'installation du package " + packageName + " a échoué.");
+        }
+    }
+
+    private int testerConnexion() {
+        checkAndSetupPythonEnvironment();
         int exitCode = -1;
         Process process = null;
         try {
