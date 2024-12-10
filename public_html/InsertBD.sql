@@ -7,36 +7,112 @@ INSERT INTO TRANSPORTEUR (IDTRANSPORTEUR, TYPEEXP, FRAISEXP, FRAISKG, DELAILIVRA
 (5, 'International', 15.99, 2.50, 10);
 
 -- Insertion des catégories principales
-INSERT INTO CATEGORIE (IDCATEG, IDCATEG_CATPERE, NOMCATEG, DESCCATEG) VALUES
-(1, NULL, 'Jouets en Bois', 'Jouets éducatifs fabriqués en bois'),
-(2, NULL, 'Jeux de Société', 'Jeux pour toute la famille'),
-(3, NULL, 'Figurines', 'Figurines pour enfants'),
-(4, NULL, 'Puzzles', 'Jeux de réflexion et puzzles'),
-(5, NULL, 'Peluches', 'Peluches douces et câlines'),
-(6, NULL, 'Électronique', 'Jouets électroniques et interactifs'),
-(7, NULL, 'Véhicules', 'Voitures et véhicules pour enfants'),
-(8, NULL, 'Extérieur', 'Jeux pour l’extérieur'),
-(9, NULL, 'Créativité', 'Jeux pour développer la créativité'),
-(10, NULL, 'Construction', 'Jeux de construction pour tous les âges');
-(20, NULL, 'Enfants', 'Jeux pour enfants');
-(21, NULL, 'Ado', 'Jeux pour ados');
-(22, NULL, 'Jeune-adulte', 'Jeux pour jeunes adultes');
-(23, NULL, 'Adulte', 'Jeux pour adultes');
+INSERT INTO CATEGORIE (IDCATEG, NOMCATEG, DESCCATEG) VALUES
+(1, 'Jouets en Bois', null),
+(2, 'Jeux de Société', null),
+(3, 'Figurines', null),
+(4, 'Puzzles', null),
+(5, 'Peluches', null),
+(6, 'Électronique', null),
+(7, 'Véhicules', null),
+(8, 'Extérieur', null),
+(9, 'Créativité', null),
+(10, 'Construction', null);
+(11, 'Enfants', 'Jeux pour enfants');
+(12, 'Ado', 'Jeux pour ados');
+(13, 'Jeune-adulte', 'Jeux pour jeunes adultes');
+(14, 'Adulte', 'Jeux pour adultes');
+(15, 'Puzzles en 3D', null),
+(16, 'Puzzles classiques', null),
+(17, 'Blocs de construction', null),
+(18, 'Modèles complexes', null);
+(19, 'Jeux éducatifs', null);
+(20, 'Jouets d’éveil', null);
+(21, 'Jeux de cartes', null);
+(22, 'Plateaux de jeux', null);
+(23, 'Collection ToyStory', 'La nouvelle collection de Toy Story');
+(24, 'Collection StarWars', 'La nouvelle collection de Star Wars');
+(25, 'Collection Disney', 'La nouvelle collection de Disney');
+(26, 'Collection Game of throne', 'La nouvelle collection Game of throne');
+(27, 'Collection DC', 'La nouvelle collection de DC');
+(28, 'Jeux Vidéo', null);
 
--- Sous-catégories (au moins 2 par catégorie)
-INSERT INTO CATEGORIE (IDCATEG, IDCATEG_CATPERE, NOMCATEG, DESCCATEG) VALUES
-(11, 1, 'Jeux éducatifs', 'Jouets en bois éducatifs'),
-(12, 1, 'Jouets d’éveil', 'Jouets d’éveil en bois'),
-(13, 2, 'Jeux de cartes', 'Jeux de cartes amusants'),
-(14, 2, 'Plateaux de jeux', 'Jeux de société classiques'),
-(15, 4, 'Puzzles en 3D', 'Puzzles en trois dimensions'),
-(16, 4, 'Puzzles classiques', 'Puzzles traditionnels'),
-(17, 10, 'Blocs de construction', 'Blocs pour les petits'),
-(18, 10, 'Modèles complexes', 'Jeux de construction avancés');
+INSERT INTO CATPERE (IDCATEG_PERE, IDCATEG) VALUES
+(11, 1), -- Enfants -> Jouets en Bois
+(11, 2), -- Enfants -> Jeux de Société
+(11, 3), -- Enfants -> Figurines
+(11, 4), -- Enfants -> Puzzles
+(11, 5), -- Enfants -> Peluches
+(11, 6), -- Enfants -> Électronique
+(11, 7), -- Enfants -> Véhicules
+(11, 8), -- Enfants -> Extérieur
+(11, 9), -- Enfants -> Créativité
+(11, 10), -- Enfants -> Construction
+(12, 1), -- Ado -> Jouets en Bois
+(12, 2), -- Ado -> Jeux de Société
+(12, 3), -- Ado -> Figurines
+(12, 4), -- Ado -> Puzzles
+(12, 6), -- Ado -> Électronique
+(12, 7), -- Ado -> Véhicules
+(12, 8), -- Ado -> Extérieur
+(12, 9), -- Ado -> Créativité
+(12, 10), -- Ado -> Construction
+(13, 2), -- Jeune-adulte -> Jeux de Société
+(13, 3), -- Jeune-adulte -> Figurines
+(13, 4), -- Jeune-adulte -> Puzzles
+(13, 6), -- Jeune-adulte -> Électronique
+(13, 7), -- Jeune-adulte -> Véhicules
+(13, 8), -- Jeune-adulte -> Extérieur
+(13, 9), -- Jeune-adulte -> Créativité
+(13, 10), -- Jeune-adulte -> Construction
+(14, 2), -- Adulte -> Jeux de Société
+(14, 4), -- Adulte -> Puzzles
+(14, 6), -- Adulte -> Électronique
+(14, 7), -- Adulte -> Véhicules
+(14, 8), -- Adulte -> Extérieur
+(14, 9), -- Adulte -> Créativité
+(14, 10), -- Adulte -> Construction
+(4, 15), -- Puzzles -> Puzzles en 3D
+(4, 16), -- Puzzles -> Puzzles classiques
+(10, 17), -- Construction -> Blocs de construction
+(4, 18), -- Puzzles -> Modèles complexes
+(10, 18), -- Construction -> Modèles complexes
+(2, 19), -- Jeux de Société -> Jeux éducatifs
+(2, 20), -- Jeux de Société -> Jouets d’éveil
+(2, 21), -- Jeux de Société -> Jeux de cartes
+(2, 22), -- Jeux de Société -> Plateaux de jeux
+(3, 23), -- Figurines -> Collection ToyStory
+(3, 24), -- Figurines -> Collection StarWars
+(3, 25), -- Figurines -> Collection Disney
+(3, 26), -- Figurines -> Collection Game of throne
+(3, 27), -- Figurines -> Collection DC
+(11, 28), -- Enfants -> Jeux Vidéo
+(12, 28), -- Ado -> Jeux Vidéo
+(13, 28), -- Jeune-adulte -> Jeux Vidéo
+(14, 28), -- Adulte -> Jeux Vidéo
+(2, 23), -- Jeux de Société -> Collection ToyStory
+(2, 24), -- Jeux de Société -> Collection StarWars
+(2, 25), -- Jeux de Société -> Collection Disney
+(2, 26), -- Jeux de Société -> Collection Game of throne
+(2, 27), -- Jeux de Société -> Collection DC
+(5, 23), -- Peluches -> Collection ToyStory
+(5, 24), -- Peluches -> Collection StarWars
+(5, 25), -- Peluches -> Collection Disney
+(5, 26), -- Peluches -> Collection Game of throne
+(5, 27), -- Peluches -> Collection DC
+(10, 23), -- Construction -> Collection ToyStory
+(10, 24), -- Construction -> Collection StarWars
+(10, 25), -- Construction -> Collection Disney
+(10, 26), -- Construction -> Collection Game of throne
+(10, 27); -- Construction -> Collection DC
+(1, )
 
--- Sous-catégorie de niveau inférieur
-INSERT INTO CATEGORIE (IDCATEG, IDCATEG_CATPERE, NOMCATEG, DESCCATEG) VALUES
-(19, 11, 'Éveil musical', 'Jouets en bois pour développer la musique');
+
+
+
+
+
+
 
 
 
@@ -61,7 +137,7 @@ INSERT INTO MARQUE (IDMARQUE, NOMMARQUE, DESCMARQUE) VALUES
 (17, 'Little Tikes', 'Marque de jouets d’extérieur et de jeux de rôle.'),
 (18, 'Step2', 'Marque de jouets d’extérieur et de jeux de rôle.'),
 (19, 'Hape', 'Marque de jouets en bois et de jeux éducatifs.'),
-(20, 'Janod', 'Marque de jouets en bois et de jeux éducatifs.');
+(20, 'Janod', 'Marque de jouets en bois et de jeux éducatifs.'),
 (21, 'Ludorama', 'Marque de jouets ludorama qui vend de tout.');
 
 -- Insertion des produits
@@ -117,6 +193,83 @@ INSERT INTO PRODUIT (IDPROD, IDMARQUE, NOMPROD, DESCPROD, PRIXHT, COULEUR, COMPO
 (49, 9, 'Kit de jardinage', 'Kit de jardinage pour enfants', 19.99, 'Vert', 'Plastique et métal', 1.0, 30),
 (50, 2, 'Marionnettes en tissu', 'Ensemble de 4 marionnettes', 29.99, 'Multicolore', 'Tissu', 1.1, 25);
 
+INSERT INTO PRODUIT (IDPROD, IDMARQUE, NOMPROD, DESCPROD, PRIXHT, COULEUR, COMPOSITION, POIDSPRODUIT, QTESTOCK) VALUES
+(51, 1, 'Lego starWars', 'Jeu de construction Lego StarWars', 29.99, 'Multicolore', 'Plastique', 1.2, 50),
+(52, 2, 'Playmobil ToyStory', 'Figurines Playmobil ToyStory', 15.99, 'Multicolore', 'Plastique', 0.8, 30),
+(53, 3, 'Peluche Reine des neige', 'Reine des neige Disney', 49.99, 'Multicolore', 'Plastique', 1.5, 25),
+(54, 4, 'Hasbro Game of throne', 'Jeux de société Hasbro Game of throne', 69.99, 'Multicolore', 'Carton', 4.0, 20),
+(55, 5, 'Peluche Superman', 'Peluches Superman', 19.99, 'Multicolore', 'Plastique', 0.5, 100),
+(56, 6, 'VTech', 'Jouets électroniques VTech', 14.99, 'Multicolore', 'Plastique', 0.7, 45),
+(57, 7, 'Hot Wheels', 'Voitures miniatures Hot Wheels', 34.99, 'Multicolore', 'Plastique', 2.0, 30),
+(58, 8, 'Barbie', 'Poupées Barbie', 59.99, 'Multicolore', 'Plastique', 4.5, 15),
+(59, 9, 'Nerf', 'Jouets Nerf', 49.99, 'Multicolore', 'Plastique', 3.8, 10),
+(60, 10, 'Mega Bloks', 'Jouets de construction Mega Bloks', 24.99, 'Multicolore', 'Plastique', 1.2, 40),
+(61, 11, 'Brio', 'Trains miniatures Brio', 12.99, 'Multicolore', 'Bois', 0.5, 50),
+(62, 12, 'Schleich', 'Figurines Schleich', 9.99, 'Multicolore', 'Plastique', 0.2, 100),
+(63, 13, 'Melissa & Doug', 'Jouets Melissa & Doug', 14.99, 'Multicolore', 'Plastique', 0.3, 75),
+(64, 14, 'Ravensburger', 'Puzzles Ravensburger', 19.99, 'Multicolore', 'Carton', 0.6, 80),
+(65, 15, 'Spin Master', 'Jouets Spin Master', 39.99, 'Multicolore', 'Plastique', 1.5, 40),
+(66, 16, 'LeapFrog', 'Jouets LeapFrog', 49.99, 'Multicolore', 'Plastique', 2.0, 30),
+(67, 17, 'Little Tikes', 'Jouets Little Tikes', 59.99, 'Multicolore', 'Plastique', 4.0, 20),
+(68, 18, 'Step2', 'Jouets Step2', 89.99, 'Multicolore', 'Plastique', 10.0, 15),
+(69, 19, 'Hape', 'Jouets Hape', 19.99, 'Multicolore', 'Bois', 1.0, 50),
+(70, 20, 'Janod', 'Jouets Janod', 29.99, 'Multicolore', 'Bois', 2.0, 60);
+(71, 21, 'Ludorama Game', 'Jeu de société Ludorama', 29.99, 'Multicolore', 'Carton', 1.2, 50),
+(72, 21, 'Karting Ludorama', 'Karting ludorama', 300, 'Multicolore', 'Plastique', 0.8, 30),
+(73, 21, 'Ludorama figurine', 'Figurine Ludorama', 49.99, 'Multicolore', 'Carton', 1.5, 25),
+(74, 21, 'Ludorama puzzle', 'Puzzle Ludorama', 69.99, 'Multicolore', 'Carton', 4.0, 20),
+(75, 21, 'Ludorama peluche', 'Peluche Ludorama', 19.99, 'blanc', 'Plastique', 0.5, 100),
+(76, 21 'Ludorama strangeBox', 'Jeu de société Ludorama', 14.99, 'Multicolore', 'Carton', 0.7, 45),
+(77, 21, 'Ludorama voiture', 'Voiture Ludorama', 34.99, 'Bleu', 'Plastique', 2.0, 30),
+(78, 21, 'Console Ludorama', 'La console spéciale Ludorama', 250, 'Noir', 'Plastique', 12, 31),
+(79, 21, 'Jeux Video Ludorama', 'Le jeux vidéo spécial ludorama', 35, 'bleu', 'DVD', 2, 38),
+(80, 22, 'Elden Ring', 'Jeu vidéo Elden Ring', 59.99, 'Multicolore', 'DVD', 0.1, 100),
+(81, 22, 'Horizon Forbidden West', 'Jeu vidéo Horizon Forbidden West', 69.99, 'Multicolore', 'DVD', 0.1, 100),
+(82, 22, 'God of War Ragnarok', 'Jeu vidéo God of War Ragnarok', 59.99, 'Multicolore', 'DVD', 0.1, 100),
+(83, 22, 'The Legend of Zelda Breath of the Wild 2', 'Jeu vidéo The Legend of Zelda Breath of the Wild 2', 69.99, 'Multicolore', 'DVD', 0.1, 100),
+(84, 22, 'Final Fantasy XVI', 'Jeu vidéo Final Fantasy XVI', 59.99, 'Multicolore', 'DVD', 0.1, 100),
+(85, 22, 'Starfield', 'Jeu vidéo Starfield', 69.99, 'Multicolore', 'DVD', 0.1, 100),
+(86, 22, 'Fable', 'Jeu vidéo Fable', 59.99, 'Multicolore', 'DVD', 0.1, 100),
+(87, 22, 'The Elder Scrolls VI', 'Jeu vidéo The Elder Scrolls VI', 69.99, 'Multicolore', 'DVD', 0.1, 100),
+(88, 22, 'Hogwarts Legacy', 'Jeu vidéo Hogwarts Legacy', 59.99, 'Multicolore', 'DVD', 0.1, 100),
+(89, 22, 'Gotham Knights', 'Jeu vidéo Gotham Knights', 69.99, 'Multicolore', 'DVD', 0.1, 100),
+(90, 22, 'Hellblade II Senua''s Saga', 'Jeu vidéo Hellblade II Senua''s Saga', 59.99, 'Multicolore', 'DVD', 0.1, 100),
+(91, 22, 'The Lord of the Rings Gollum', 'Jeu vidéo The Lord of the Rings Gollum', 69.99, 'Multicolore', 'DVD', 0.1, 100),
+(92, 22, 'The Witcher 4', 'Jeu vidéo The Witcher 4', 59.99, 'Multicolore', 'DVD', 0.1, 100),
+(93, 22, 'Silent Hill', 'Jeu vidéo Silent Hill', 59.99, 'Multicolore', 'DVD', 0.1, 100),
+(94, 22, 'Resident Evil 9', 'Jeu vidéo Resident Evil 9', 69.99, 'Multicolore', 'DVD', 0.1, 100),
+(95, 22, 'Dead Space 4', 'Jeu vidéo Dead Space 4', 59.99, 'Multicolore', 'DVD', 0.1, 100),
+(96, 23, 'Peluche Batman', 'Peluche Batman', 19.99, 'Noir', 'Tissu', 0.5, 100),
+(97, 23, 'Peluche Superman', 'Peluche Superman', 19.99, 'Bleu', 'Tissu', 0.5, 100),
+(98, 23, 'Peluche Wonder Woman', 'Peluche Wonder Woman', 19,99, 'Rouge', 'Tissu', 0.5, 100),
+(99, 2, 'Figurine Joker', 'Figurine Joker', 14.99, 'Vert', 'Plastique', 0.3, 100),
+(100, 2, 'Figurine Harley Quinn', 'Figurine Harley Quinn', 14.99, 'Rouge', 'Plastique', 0.3, 100),
+(101, 4, 'Jeu de société Mickey Mouse', 'Jeu de société Mickey Mouse', 24.99, 'Multicolore', 'Carton', 1.2, 100),
+(102, 4, 'Jeu de société Disney', 'Jeu de société Disney', 24.99, 'Multicolore', 'Carton', 1.2, 100),
+(103, 23, 'Peluche la reine des Neige', 'Peluche la reine des neige', 19.99, 'Multicolore', 'Tissu', 0.5, 100),
+(104, 23, 'Peluche Elsa', 'Peluche Elsa', 19.99, 'Bleu', 'Tissu', 0.5, 100),
+(105, 23, 'Peluche Anna', 'Peluche Anna', 19.99, 'Rouge', 'Tissu', 0.5, 100),
+(106, 23,'Peluche Anakin', 'Peluche anakin prime', 12, 'Noir', 'Tissu' 1, 45 ),
+(107, 23, 'Peluche dark Vador', 'Peluche Dark Vador', 12, 'Noir', 1, 45),
+(108, 23, 'Peluche Yoda', 'Peluche Yoda', 12, 'Vert', 'Tissu', 1, 45),
+(109, 23, 'Peluche R2D2', 'Peluche R2D2', 12, 'Blanc','Tissu', 1, 45),
+(110, 23, 'Peluche Daenerys Targarien', 'Peluche Daenerys Targarien', 12, 'Blanc','Tissu', 1, 45),
+(111, 23, 'Peluche Jon Snow', 'Peluche Jon Snow', 12, 'Noir','Tissu', 1, 45),
+(112, 23, 'Peluche Tyrion Lannister', 'Peluche Tyrion Lannister', 12, 'Noir','Tissu', 1, 45),
+(113, 23, 'Peluche Drogon', 'Peluche Drogon, le dragon de daenerys', 12, 'Noir','Tissu', 1, 45),
+(114, 1, 'Lego Game of Throne', 'Set lego game of throne 800 pièces', 150, 'Multicolore','Plastique', 1, 45),
+(115, 1, 'Lego Toy Story', 'Set lego Toy Story 800 pièces', 150, 'Multicolore','Plastique', 1, 45),
+(116, 23, 'Peluche Buz l''éclair', 'Peluche de Buz l''éclair', 13, 'blanc','Tissu', 1, 56),
+(117, 2, 'Playmobil StarWars', 'Figurines Playmobil StarWars', 15.99, 'Multicolore','Plastique', 0.8, 30),
+(118, 2, 'Playmobil Game of throne', 'Figurines Playmobil game of throne', 23.55, 'Multicolore', 'Plastique',2, 36),
+(119, 3, 'Monopoly StarWars', 'Monopoly starWars', 29.99, 'Multicolore', 'Plastique',1.2, 50),
+(120, 3, 'Monopoly Game of throne', 'Monopoly game of throne', 29.99, 'Multicolore','Plastique', 1.2, 50),
+(121, 3, 'Monopoly La reine des neige', 'Monopoly la reine des neige', 29.99, 'Multicolore','Plastique', 1.2, 50),
+(122, 3, 'Monopoly Disney', 'Monopoly Disney', 29.99, 'Multicolore','Plastique', 1.2, 50);
+
+
+
+
 
 -- Insertion des packs
 INSERT INTO PACK (IDPACK, NOMPACK, DESCPACK) VALUES
@@ -131,39 +284,130 @@ INSERT INTO PACK (IDPACK, NOMPACK, DESCPACK) VALUES
 
 -- Appartenance des produits aux catégories et sous-catégories
 INSERT INTO APPARTENIRCATEG (IDPROD, IDCATEG) VALUES
-(1, 11), -- Train en bois -> Jeux éducatifs
+(1, 19), -- Train en bois -> Jeux éducatifs
 (2, 16), -- Puzzle animaux -> Puzzles classiques
 (3, 7),  -- Voiture télécommandée -> Véhicules
-(4, 12), -- Maison de poupée -> Jouets d’éveil
-(5, 15), -- Peluche éléphant -> Puzzles en 3D
-(6, 14), -- Jeu de mémoire -> Plateaux de jeux
-(7, 17), -- Camion de pompier -> Blocs de construction
-(8, 18), -- Cuisinière jouet -> Modèles complexes
-(9, 11), -- Cheval à bascule -> Jeux éducatifs
-(10, 12), -- Jeu de société -> Jouets d’éveil
+(4, 20), -- Maison de poupée -> Jouets d’éveil
+(5, 5),  -- Peluche éléphant -> Peluches
+(6, 22), -- Jeu de mémoire -> Plateaux de jeux
+(7, 7),  -- Camion de pompier -> Véhicules
+(8, 17), -- Cuisinière jouet -> Blocs de construction
+(9, 1),  -- Cheval à bascule -> Jouets en Bois
+(10, 2), -- Jeu de société -> Jeux de Société
 (11, 16), -- Puzzle en bois -> Puzzles classiques
-(12, 14), -- Jeu de cartes -> Plateaux de jeux
-(13, 13), -- Figurine dinosaure -> Figurines
-(14, 15), -- Peluche ours -> Puzzles en 3D
+(12, 21), -- Jeu de cartes -> Jeux de cartes
+(13, 3),  -- Figurine dinosaure -> Figurines
+(14, 5),  -- Peluche ours -> Peluches
 (15, 7),  -- Voiture de course -> Véhicules
 (16, 6),  -- Robot interactif -> Électronique
-(17, 17), -- Tricycle -> Blocs de construction
+(17, 8),  -- Tricycle -> Extérieur
 (18, 8),  -- Toboggan -> Extérieur
 (19, 9),  -- Kit de peinture -> Créativité
 (20, 10), -- Jeu de construction -> Construction
 (21, 16), -- Casse-tête en bois -> Puzzles classiques
-(22, 14), -- Jeu de société classique -> Plateaux de jeux
-(23, 13), -- Figurine super-héros -> Figurines
-(24, 15), -- Peluche licorne -> Puzzles en 3D
+(22, 2),  -- Jeu de société classique -> Jeux de Société
+(23, 3),  -- Figurine super-héros -> Figurines
+(24, 5),  -- Peluche licorne -> Peluches
 (25, 7),  -- Camion benne -> Véhicules
 (26, 6),  -- Tablette éducative -> Électronique
-(27, 17), -- Balançoire -> Blocs de construction
+(27, 8),  -- Balançoire -> Extérieur
 (28, 8),  -- Piscine gonflable -> Extérieur
 (29, 9),  -- Kit de bricolage -> Créativité
 (30, 10), -- Jeu de dominos -> Construction
 (31, 16), -- Labyrinthe en bois -> Puzzles classiques
-(32, 14), -- Jeu de mémoire -> Plateaux de jeux
-(33, 13); -- Figurine animal -> Figurines
+(32, 22), -- Jeu de mémoire -> Plateaux de jeux
+(33, 3);  -- Figurine animal -> Figurines
+
+(34, 22),  -- Jeu de mémoire -> Plateaux de jeux
+(35, 7),  -- Train électrique -> Véhicules
+(36, 6),  -- Drone pour enfants -> Électronique
+(37, 8),  -- Trottinette -> Extérieur
+(38, 8),  -- Ballon sauteur -> Extérieur
+(39, 9),  -- Kit de couture -> Créativité
+(40, 10), -- Jeu de quilles -> Construction
+(41, 19), -- Boîte à formes -> Jeux éducatifs
+(42, 2),  -- Jeu de l'oie -> Jeux de Société
+(43, 3),  -- Figurine chevalier -> Figurines
+(44, 5),  -- Peluche chien -> Peluches
+(45, 6),  -- Hélicoptère télécommandé -> Électronique
+(46, 28),  -- Console de jeux -> Jeux vidéo
+(47, 8),  -- Bateau gonflable -> Extérieur
+(48, 8),  -- Cerf-volant -> Extérieur
+(49, 8),  -- Kit de jardinage -> Extérieur
+(50, 2);  -- Marionnettes en tissu -> Jeux de Société
+(51, 24), -- Lego starWars -> Collection StarWars
+(52, 23), -- Playmobil ToyStory -> Collection ToyStory
+(53, 25), -- Peluche Reine des neige -> Collection Disney
+(54, 26), -- Hasbro Game of throne -> Collection Game of throne
+(55, 27), -- Peluche Superman -> Collection DC
+(56, 6),  -- VTech -> Électronique
+(57, 7),  -- Hot Wheels -> Véhicules
+(58, 8),  -- Barbie -> Extérieur
+(59, 9),  -- Nerf -> Créativité
+(60, 10), -- Mega Bloks -> Construction
+(61, 11), -- Brio -> Enfants
+(62, 12), -- Schleich -> Ado
+(63, 13), -- Melissa & Doug -> Jeune-adulte
+(64, 14), -- Ravensburger -> Adulte
+(65, 15), -- Spin Master -> Puzzles en 3D
+(66, 16), -- LeapFrog -> Puzzles classiques
+(67, 17), -- Little Tikes -> Blocs de construction
+(68, 18), -- Step2 -> Modèles complexes
+(69, 19), -- Hape -> Jeux éducatifs
+(70, 20), -- Janod -> Jouets d’éveil
+(71, 21), -- Ludorama Game -> Jeux de cartes
+(72, 7),  -- Karting Ludorama -> Véhicules
+(73, 3),  -- Ludorama figurine -> Figurines
+(74, 4),  -- Ludorama puzzle -> Puzzles
+(75, 5),  -- Ludorama peluche -> Peluches
+(76, 2),  -- Ludorama strangeBox -> Jeux de Société
+(77, 7),  -- Ludorama voiture -> Véhicules
+(78, 28), -- Console Ludorama -> Jeux Vidéo
+(79, 28), -- Jeux Video Ludorama -> Jeux Vidéo
+(80, 28), -- Elden Ring -> Jeux Vidéo
+(81, 28), -- Horizon Forbidden West -> Jeux Vidéo
+(82, 28), -- God of War Ragnarok -> Jeux Vidéo
+(83, 28), -- The Legend of Zelda Breath of the Wild 2 -> Jeux Vidéo
+(84, 28), -- Final Fantasy XVI -> Jeux Vidéo
+(85, 28), -- Starfield -> Jeux Vidéo
+(86, 28), -- Fable -> Jeux Vidéo
+(87, 28), -- The Elder Scrolls VI -> Jeux Vidéo
+(88, 28), -- Hogwarts Legacy -> Jeux Vidéo
+(89, 28), -- Gotham Knights -> Jeux Vidéo
+(90, 28), -- Hellblade II Senua's Saga -> Jeux Vidéo
+(91, 28), -- The Lord of the Rings Gollum -> Jeux Vidéo
+(92, 28), -- The Witcher 4 -> Jeux Vidéo
+(93, 28), -- Silent Hill -> Jeux Vidéo
+(94, 28), -- Resident Evil 9 -> Jeux Vidéo
+(95, 28), -- Dead Space 4 -> Jeux Vidéo
+(96, 27), -- Peluche Batman -> Collection DC
+(97, 27), -- Peluche Superman -> Collection DC
+(98, 27), -- Peluche Wonder Woman -> Collection DC
+(99, 27), -- Figurine Joker -> Collection DC
+(100, 27), -- Figurine Harley Quinn -> Collection DC
+(101, 25), -- Jeu de société Mickey Mouse -> Collection Disney
+(102, 25), -- Jeu de société Disney -> Collection Disney
+(103, 25), -- Peluche la reine des Neige -> Collection Disney
+(104, 25), -- Peluche Elsa -> Collection Disney
+(105, 25), -- Peluche Anna -> Collection Disney
+(106, 26), -- Peluche Anakin -> Collection Game of throne
+(107, 26), -- Peluche Dark Vador -> Collection Game of throne
+(108, 26), -- Peluche Yoda -> Collection Game of throne
+(109, 26), -- Peluche R2D2 -> Collection Game of throne
+(110, 26), -- Peluche Daenerys Targarien -> Collection Game of throne
+(111, 26), -- Peluche Jon Snow -> Collection Game of throne
+(112, 26), -- Peluche Tyrion Lannister -> Collection Game of throne
+(113, 26), -- Peluche Drogon -> Collection Game of throne
+(114, 26), -- Lego Game of Throne -> Collection Game of throne
+(115, 23), -- Lego Toy Story -> Collection ToyStory
+(116, 23), -- Peluche Buz l'éclair -> Collection ToyStory
+(117, 24), -- Playmobil StarWars -> Collection StarWars
+(118, 26), -- Playmobil Game of throne -> Collection Game of throne
+(119, 24), -- Monopoly StarWars -> Collection StarWars
+(120, 26), -- Monopoly Game of throne -> Collection Game of throne
+(121, 25), -- Monopoly La reine des neige -> Collection Disney
+(122, 25); -- Monopoly Disney -> Collection Disney
+
 
 
 -- Insertion de 50 clients répartis en France

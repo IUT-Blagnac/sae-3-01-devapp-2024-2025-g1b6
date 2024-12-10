@@ -117,7 +117,6 @@ body {
     margin-top: 20px;
 }
 
-.product-details .btn-store,
 .product-details .btn-cart {
     display: inline-block;
     padding: 10px 20px;
@@ -129,7 +128,6 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.product-details .btn-store:hover,
 .product-details .btn-cart:hover {
     background: var(--dark-purple);
     color: var(--accent-pink);

@@ -5,10 +5,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include("connect.inc.php");
 
     // Récupération des données
-    $idClient = 
     $nom = trim($_POST["nom"]);
     $prenom = trim($_POST["prenom"]);
-    $telephone = trim($_POST["telephone"]);
+    $telephone = !empty(trim($_POST["telephone"])) ? $_POST["telephone"] : null;
     $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
     $dtn = $_POST["dtn"];
     $password = $_POST["password"];
@@ -85,47 +84,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     
-<header class="header">
-        <div class="barreMenu">
-            <ul class="menuListe">
-                <li> 
-                    <label class="burger" for="burgerToggle">
-                        <input type="checkbox" id="burgerToggle">
-                        <ul class="categories">
-                            <?php
-                            include ("connect.inc.php");
-                            $stmt = $pdo->prepare("SELECT * FROM CATEGORIE WHERE IDCATEG_CATPERE IS NULL");
-                            $stmt->execute();
-                            $categories = $stmt->fetchAll();
-                            foreach ($categories as $categorie) {
-                                echo "<li><a href='categorie.php?id=".$categorie['IDCATEG']."'>".$categorie['NOMCATEG']."</a></li>";
-                            }
-                            ?>
-                        </ul>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </label> 
-                </li>
-                <li> <a class="lienAccueil" href="index.php"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
-                <li> <input class="barreRecherche" type="text" placeholder="Barre de recherche ..."> </li>
-                <li> <div class="imgLoc"></div> </li>
-                <li> <a href="panier.php"><div class="imgPanier"></div></a></li>
-                <li> <?php
-                        // Vérification de la session utilisateur
-                        if (isset($_SESSION["user"])) {
-                            $id_client = $_SESSION["user"]["IDCLIENT"];
-                            // Si l'utilisateur est connecté, on le redirige vers son compte
-                            echo '<a href="compte.php?id_client=' . $id_client . '"><div class="imgCompte"></div></a>';
-                        } else {
-                            // Sinon, on le redirige vers la page de connexion
-                            echo '<a href="connexion.php"><div class="imgCompte"></div></a>';
-                        }
-                    ?> 
-                </li>
-            </ul>
-        </div>
-    </header>
+    <!-- En-tête -->
+    <?php include("header.php"); ?>
     
     <main>
         <div class="container">
@@ -145,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input class="nom" type="text" id="prenom" name="prenom" value="<?= isset($prenom) ? htmlspecialchars($prenom) : '' ?>" required>
 
                         <label for="telephone">Téléphone</label>
-                        <input class="tel" type="text" id="telephone" name="telephone" value="<?= isset($telephone) ? htmlspecialchars($telephone) : '' ?>" required>
+                        <input class="tel" type="text" id="telephone" name="telephone" value="<?= isset($telephone) ? htmlspecialchars($telephone) : '' ?>">
                         <br>
 
                         <label for="email">Email</label>

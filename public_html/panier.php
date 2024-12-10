@@ -1,107 +1,142 @@
-    <!DOCTYPE html>
+<?php
+session_start();
+?>    
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panier Page</title>
   <link rel="stylesheet" href="Css/paiement.css">
-    <link rel="stylesheet" href="Css/all.css">
+  <link rel="stylesheet" href="Css/all.css">
 </head>
 <body>
 
-<header class="header">
-        <div class="barreMenu">
-            <ul class="menuListe">
-                <li> 
-                    <label class="burger" for="burgerToggle">
-                        <input type="checkbox" id="burgerToggle">
-                        <ul class="categories">
-                            <?php
-                            include ("connect.inc.php");
-                            include("categories.php");
-                            ?>
-                        </ul>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </label> 
-                </li>
-                <li> <a class="lienAccueil" href="index.php"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
-                <li> <input class="barreRecherche" type="text" placeholder="Barre de recherche ..."> </li>
-                <li> <div class="imgLoc"></div> </li>
-                <li> <a href="panier.php"><div class="imgPanier"></div></a></li>
-                <li> <?php
-                        // Vérification de la session utilisateur
-                        if (isset($_SESSION["user"])) {
-                            $id_client = $_SESSION["user"]["IDCLIENT"];
-                            // Si l'utilisateur est connecté, on le redirige vers son compte
-                            echo '<a href="compte.php?id_client=' . $id_client . '"><div class="imgCompte"></div></a>';
-                        } else {
-                            // Sinon, on le redirige vers la page de connexion
-                            echo '<a href="connexion.php"><div class="imgCompte"></div></a>';
-                        }
-                    ?> 
-                </li>
-            </ul>
-        </div>
-    </header>
+<!-- En-tête -->
+<?php include("header.php"); ?>
 
-    <!-- Breadcrumb and Cart -->
-    <main class="container">
-
-        <div class="cartContainer">
+<main class="container">
+    <div class="cartContainer">
         <!-- Product List Section -->
         <div class="productList">
             <div class="cartHeader">
-            <h2 class="cartTitle">Panier</h2>
-            <button class="clearCartButton">Vider le panier</button>
+                <h2 class="cartTitle">Panier</h2>
+                <button class="clearCartButton" onclick="clearCart()">Vider le panier</button>
             </div>
-            <div class="product">
-            <div class="productImage">
-                <img src="images/nerfFortnite.jpg" alt="Nerf Fortnite edition 2024">
-            </div>
-            <div class="productDetails">
-                <h3>Nerf Fortnite edition 2024</h3>
-                <p>31779 - Marque : XYZ - Dès 5 ans</p>
-                <p>Livraison</p>
-            </div>
-            <div class="productQuantity">
-                <button>-</button>
-                1
-                <button>+</button>
-            </div>
-            <div class="productPrice">
-            29.99 €
-            </div>
-            </div>
+            <?php
+
+            // Vérifie si un utilisateur est connecté
+            if (!isset($_SESSION['user']['IDCLIENT'])) {
+                echo "<p>Vous devez être connecté pour voir votre panier.</p>";
+            } else {
+                $idClient = intval($_SESSION['user']['IDCLIENT']);
+
+                // Récupère les produits du panier pour l'utilisateur connecté
+                $stmt = $pdo->prepare("
+                    SELECT p.NOMPROD, p.IDPROD, p.PRIXHT, p.DESCPROD, pa.QUANTITEPROD
+                    FROM PANIER pa
+                    JOIN PRODUIT p ON pa.IDPROD = p.IDPROD
+                    WHERE pa.IDCLIENT = ?
+                ");
+                $stmt->execute([$idClient]);
+                $produitsPanier = $stmt->fetchAll();
+
+                if (empty($produitsPanier)) {
+                    echo "<p>Votre panier est vide.</p>";
+                } else {
+                    // Affiche chaque produit du panier
+                    foreach ($produitsPanier as $produit) {
+                        $imagePath = "./images/prod" . htmlspecialchars($produit['IDPROD']) . ".png"; // Chemin d'image
+                        $prix = number_format($produit['PRIXHT'], 2, ',', ' ') . " €";
+                        echo "
+                        <div class='product'>
+                            <div class='productImage'>
+                                <img src='{$imagePath}' alt='" . htmlspecialchars($produit['NOMPROD']) . "'>
+                            </div>
+                            <div class='productDetails'>
+                                <h3>" . htmlspecialchars($produit['NOMPROD']) . "</h3>
+                                <p>" . htmlspecialchars($produit['DESCPROD']) . "</p>
+                            </div>
+                            <div class='productQuantity'>
+                                <button onclick='updateQuantity({$produit['IDPROD']}, -1)'>-</button>
+                                " . htmlspecialchars($produit['QUANTITEPROD']) . "
+                                <button onclick='updateQuantity({$produit['IDPROD']}, 1)'>+</button>
+                            </div>
+                            <div class='productPrice'>
+                                {$prix}
+                            </div>
+                        </div>";
+                    }
+                }
+            }
+            ?>
         </div>
 
         <!-- Sidebar Section -->
         <div class="sidebar">
-            <h4>Nerf Fortnite edition 2024</h4>
-            <p>31779 - Marque : XYZ - Dès 5 ans</p>
-            <div class="priceSummary">
-            <button class="btn subtotal">Sous-total</button>
-            <span class="price">29.99 €</span>
-            </div>
-            <button class="btn retrait">Retrait magasin</button>
-            <button class="btn validate">Valider le panier</button>
-            <div class="paymentSecurity">
-            <p>Paiement 100% sécurisé</p>
-            <div class="paymentIcons">
-                <img src="images/visa.png" alt="Visa">
-                <img src="images/mastercard.png" alt="MasterCard">
-                <img src="images/paypal.png" alt="PayPal">
-            </div>
-            </div>
+            <?php
+            if (!empty($produitsPanier)) {
+                $total = 0;
+                foreach ($produitsPanier as $produit) {
+                    $total += $produit['PRIXHT'] * $produit['QUANTITEPROD'];
+                }
+                $totalFormatted = number_format($total, 2, ',', ' ') . " €";
+                echo "
+                <h4>Résumé</h4>
+                <div class='priceSummary'>
+                    <button class='btn subtotal'>Sous-total</button>
+                    <span class='price'>{$totalFormatted}</span>
+                </div>
+                <button class='btn validate'>Valider le panier</button>
+                <div class='paymentSecurity'>
+                    <p>Paiement 100% sécurisé</p>
+                    <div class='paymentIcons'>
+                        <img src='images/visa.png' alt='Visa'>
+                        <img src='images/mastercard.png' alt='MasterCard'>
+                        <img src='images/paypal.png' alt='PayPal'>
+                    </div>
+                </div>";
+            }
+            ?>
         </div>
-        </div>
-    </main>
+    </div>
+</main>
 
+<!-- Footer -->
+<?php include("footer.php"); ?>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <p>Magasin Environnement Contactez-nous Conditions générales de vente ... Utilisation cookies</p>
-  </footer>
+<script>
+    function updateQuantity(productId, delta) {
+        fetch('update_panier.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idProd: productId, delta: delta })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Erreur lors de la mise à jour de la quantité : ' + data.message);
+            }
+        })
+        .catch(error => console.error('Erreur:', error));
+    }
+
+    function clearCart() {
+        if (confirm("Voulez-vous vraiment vider votre panier ?")) {
+            fetch('clear_panier.php', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Erreur lors de la suppression du panier : ' + data.message);
+                }
+            })
+            .catch(error => console.error('Erreur:', error));
+        }
+    }
+</script>
 </body>
 </html>

@@ -270,7 +270,7 @@ html::-webkit-scrollbar-thumb {
 
 .categories li {
     position: relative;
-    height: auto;
+    height: 5em;
     padding: 0.5em;
     text-align: left;
     transition: background 0.3s;
@@ -287,6 +287,60 @@ html::-webkit-scrollbar-thumb {
     background-color: var(--medium-purple);
     transition: background 0.3s;
 }
+
+
+/* Conteneur des sous-catégories */
+.containerSouscategories {
+    display: none; /* Cacher les sous-catégories par défaut */
+    position: absolute; /* Positionner les sous-catégories sous la catégorie parent */
+    background: var(--clair-purple);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border: solid 2px var(--light-purple);
+    color: var(--clair-purple);
+}
+
+/* Afficher les sous-catégories lors du survol */
+.categories li:hover .containerSouscategories {
+    display: block; /* Afficher les sous-catégories au survol */
+}
+
+.containerSouscategories:hover {
+    color: var(--clair-purple);
+}
+
+/* Style des sous-catégories */
+.containerSouscategories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    color: var(--clair-purple);
+}
+
+.containerSouscategories li {
+    height: 2.9em;
+    width: 9em;
+    text-align: left;
+    transition: background 0.3s;
+}
+
+.containerSouscategories li:hover {
+    background-color: var(--medium-purple);
+}
+
+.containerSouscategories li a {
+    text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
