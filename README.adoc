@@ -34,6 +34,8 @@ Moderniser le site tout en respectant l’identité graphique et en :
 - **Nous (MOE)** : développement et livrables.
 - **Ludorama (MOA)** : contrôle et validation réguliers.
 
+=== Lien vers le site 
+- link:http://193.54.227.208/~R2024SAE3012/[Lien vers le site]
 
 
 == Backlog Produit : Ludorama
@@ -222,7 +224,9 @@ link:documentation/Doc_Conception.adoc[Lien vers le document de conception]
 link:documentation/Cahier_Recette.adoc[Lien vers le cahier de recette]
 
 === ODJ et CRs
-link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/tree/master/documentation/ODJ%20et%20CRs[Lien vers le dossier]
+- link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/tree/master/documentation/ODJ%20et%20CRs[Lien vers le dossier]
+- link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/tree/master/documentation/ODJ%20et%20CRs/ODJ-10-12.pdf[ODJ de la semaine]
+- link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/tree/master/documentation/ODJ%20et%20CRs/CR-10-12.pdf[CR de la semaine]
 
 === Documentation de la charte graphique 
 link:documentation/Doc_Charte_Graphique.adoc[Lien vers la documentation de la charte graphique]
