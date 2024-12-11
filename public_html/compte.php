@@ -12,12 +12,6 @@ if (!isset($_SESSION["user"]["IDCLIENT"])) {
 $id_client = $_SESSION["user"]["IDCLIENT"];
 
 
-// Préparer la requête pour récupérer les informations du client
-$stmt = $pdo->prepare("SELECT * FROM CLIENT WHERE IDCLIENT = :id_client");
-$stmt->execute(['id_client' => $id_client]);
-$user = $stmt->fetch();
-
-
 if (!$user) {
     echo "Erreur : utilisateur introuvable.";
     exit();
@@ -37,47 +31,40 @@ if (!$user) {
     
     <!-- En-tête -->
     <?php include("header.php"); 
+        // Préparer la requête pour récupérer les informations du client
+        $stmt = $pdo->prepare("SELECT * FROM CLIENT WHERE IDCLIENT = :id_client");
+        $stmt->execute(['id_client' => $id_client]);
+        $user = $stmt->fetch();
         var_dump($user);
-        exit(); 
     ?>
 
     <main>
-        <div class="container">
-            <ul class="listeCompte">
-                <li>
-                <div class="compte">
-                    <h1 class="titreCompte">Mon compte</h1>
-                    <div class="infosCompte">
-                        <div class="infosPerso">
-                            <div class="infos">
-                                <p class="info">Nom : <?= isset($user['NOMCLIENT']) ? htmlspecialchars($user['NOMCLIENT']) : 'Non défini' ?></p>
-                                <p class="info">Prenom : <?= isset($user['PRENOMCLIENT']) ? htmlspecialchars($user['PRENOMCLIENT']) : 'Non défini' ?></p>
-                                <p class="info">Adresse : </p>
-                                <p class="info">Code postal : </p>
-                                <p class="info">Ville : </p>
-                                <p class="info">Téléphone : <?= isset($user['NUMTEL']) ? htmlspecialchars($user['NUMTEL']) : 'Non défini' ?></p>
-                                <p class="info">email : <?= isset($user['EMAIL']) ? htmlspecialchars($user['EMAIL']) : 'Non défini' ?></p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                     <a href="updateInfosClient.php"><button class="modifier" type="submit" name="updateInfo">Modifier</button></a>  
-                </div>
-            </li> 
-                    <div class="commandes">
-                        <div class="imgCommande"></div>
-                        <h1 class="titreCommande">Mes commandes</h1>
-                        <div class="infosCommande">
-                            <ul class="listeCommandes">
-                                <li class="liCommandes">Croque-Carotte</li>
-                                <li class="liCommandes">Monopoly</li>
-                                <li class="liCommandes">Figurine batman</li>
-                                <li class="liCommandes">Voirure</li>
-                            </ul>
-                        </div>     
-                    </div>
-                </li>
-            </ul>
+        <div>
+                <!--<div class="compte">
+                <!--    <h1 class="titreCompte">Mon compte</h1>
+                <!--    <div class="infosCompte">
+                <!--        <div class="infosPerso">
+                <!--            <div class="infos">
+                <!--                <p class="info">Nom : <?= isset($user['NOMCLIENT']) ? htmlspecialchars($user['NOMCLIENT']) : 'Non défini' ?></p>
+                <!--                <p class="info">Prenom : <?= isset($user['PRENOMCLIENT']) ? htmlspecialchars($user['PRENOMCLIENT']) : 'Non défini' ?></p>
+                <!--                <p class="info">email : <?= isset($user['EMAIL']) ? htmlspecialchars($user['EMAIL']) : 'Non défini' ?></p>
+                <!--                <?php if (!empty($user['NUMTEL'])):?><p class="info">Téléphone : <?= isset($user['NUMTEL']) ? htmlspecialchars($user['NUMTEL']) : 'Non défini'; endif;?></p>
+                <!--            </div>
+                <!--        </div>
+                <!--    </div>
+                <!--    
+                <!--     <a href="updateInfosClient.php"><button class="modifier" type="submit" name="updateInfo">Modifier</button></a>  
+                <!--</div> !-->
+        <div>
+            <div class="adresse">
+
+            </div>
+
+            <div class="cartes">
+
+            </div>
+
+
         </div>
     </main>
 

@@ -14,7 +14,7 @@
                             $stmt->execute();
                             $categories = $stmt->fetchAll();
                             foreach ($categories as $categorie) {
-                                echo "<li><a href='categorie.php?id=".$categorie['IDCATEG']."'>".$categorie['NOMCATEG']."</a>";
+                                echo "<li><a href='traitCategorie.php?id=".$categorie['IDCATEG']."'>".$categorie['NOMCATEG']."</a>";
                                 echo "<div class=\"containerSouscategories\"> <ul>";
                                 $stmt = $pdo->prepare("SELECT DISTINCT C.IDCATEG, C.NOMCATEG
                                                        FROM CATEGORIE C JOIN CATPERE CP ON C.IDCATEG = CP.IDCATEG 
@@ -22,7 +22,8 @@
                                 $stmt->execute(["IDCATPERE" => $categorie['IDCATEG']]);
                                 $sous_categories = $stmt->fetchAll();
                                 foreach ($sous_categories as $sous_categorie) {
-                                    echo "<li><a href='categorie.php?id=".$sous_categorie['IDCATEG']."'>".$sous_categorie['NOMCATEG']."</a></li>";
+                                    echo "<li><a href='traitCategorie.php?idCateg=".$sous_categorie['IDCATEG']."&idCategPere=".$categorie['IDCATEG']."'>".$sous_categorie['NOMCATEG']."</a></li>";
+
                                 }
                                 echo "</ul> </div>";
                                 echo "</li>";

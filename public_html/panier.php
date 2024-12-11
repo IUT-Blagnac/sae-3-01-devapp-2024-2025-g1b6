@@ -58,7 +58,7 @@ session_start();
                                 <p>" . htmlspecialchars($produit['DESCPROD']) . "</p>
                             </div>
                             <div class='productQuantity'>
-                                <button onclick='updateQuantity({$produit['IDPROD']}, -1)'>-</button>
+                                <button onclick='updateQuantity(" . $produit['IDPROD'] . ", -1)' " . ($produit['QUANTITEPROD'] <= 1 ? "disabled" : "") . ">-</button>
                                 " . htmlspecialchars($produit['QUANTITEPROD']) . "
                                 <button onclick='updateQuantity({$produit['IDPROD']}, 1)'>+</button>
                             </div>
@@ -107,10 +107,15 @@ session_start();
 
 <script>
     function updateQuantity(productId, delta) {
+        const formData = new URLSearchParams();
+        formData.append('idProd', productId);
+        formData.append('delta', delta);
+        formData.append('idClient', <?php echo $_SESSION['user']['IDCLIENT']; ?>);
+
         fetch('update_panier.php', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ idProd: productId, delta: delta })
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: formData.toString()
         })
         .then(response => response.json())
         .then(data => {
@@ -125,7 +130,14 @@ session_start();
 
     function clearCart() {
         if (confirm("Voulez-vous vraiment vider votre panier ?")) {
-            fetch('clear_panier.php', { method: 'POST' })
+            const formData = new URLSearchParams();
+            formData.append('idClient', <?php echo $_SESSION['user']['IDCLIENT']; ?>);
+
+            fetch('clear_panier.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData.toString()
+            })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {

@@ -270,7 +270,7 @@ html::-webkit-scrollbar-thumb {
 
 .categories li {
     position: relative;
-    height: 5em;
+    height: auto;
     padding: 0.5em;
     text-align: left;
     transition: background 0.3s;
@@ -286,6 +286,7 @@ html::-webkit-scrollbar-thumb {
 .categories li:hover {
     background-color: var(--medium-purple);
     transition: background 0.3s;
+    height: 6em;
 }
 
 
@@ -298,11 +299,13 @@ html::-webkit-scrollbar-thumb {
     z-index: 1000;
     border: solid 2px var(--light-purple);
     color: var(--clair-purple);
+    left: -0.5%;
 }
 
 /* Afficher les sous-catégories lors du survol */
 .categories li:hover .containerSouscategories {
     display: block; /* Afficher les sous-catégories au survol */
+    height: auto;
 }
 
 .containerSouscategories:hover {
@@ -311,6 +314,7 @@ html::-webkit-scrollbar-thumb {
 
 /* Style des sous-catégories */
 .containerSouscategories ul {
+    position: relative;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -318,10 +322,11 @@ html::-webkit-scrollbar-thumb {
 }
 
 .containerSouscategories li {
-    height: 2.9em;
+    height: 4em;
     width: 9em;
     text-align: left;
     transition: background 0.3s;
+    padding: 0.5em;
 }
 
 .containerSouscategories li:hover {

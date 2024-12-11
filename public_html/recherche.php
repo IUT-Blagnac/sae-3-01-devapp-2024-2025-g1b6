@@ -1,85 +1,116 @@
+<?php
+require_once 'rechercheAvancee.php'; // Inclure la fonction rechercheAvancee
+require_once 'connect.inc.php'; // Connexion PDO
+
+// Récupérer les termes de recherche depuis la barre de recherche
+$criteres = [
+    'mot_cle' => $_GET['mot_cle'] ?? '',
+    'categorie' => $_GET['categorie'] ?? '',
+    'marque' => $_GET['marque'] ?? '',
+    'prix_min' => $_GET['prix_min'] ?? '',
+    'prix_max' => $_GET['prix_max'] ?? '',
+    'en_stock' => isset($_GET['en_stock']) ? 1 : 0
+];
+
+// Charger les catégories dynamiquement
+$stmt = $pdo->query("SELECT IDCATEG, NOMCATEG FROM CATEGORIE ORDER BY NOMCATEG ASC");
+$categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Charger les marques dynamiquement
+$stmt = $pdo->query("SELECT DISTINCT NOMMARQUE FROM MARQUE ORDER BY NOMMARQUE ASC");
+$marques = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+// Récupérer les produits via la fonction rechercheAvancee
+$resultats = rechercheAvancee($criteres, $pdo);
+
+?>
+
+
 <!DOCTYPE html>
-<!-- recherche.php-->
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Résultats de Recherche - Ludorama</title>
-    <link rel="stylesheet" href="Css/accueil.css">
-    <link rel="stylesheet" href="Css/all.css">
+    <title>Recherche Produits</title>
     <link rel="stylesheet" href="Css/recherche.css">
+    <link rel="stylesheet" href="Css/all.css">
 </head>
-<body>
-    <!-- Inclure le header -->
-    <?php include 'header.php'; ?>
 
-    <!-- Contenu principal -->
-    <main class="recherche-main">
+<body>
+    <?php include("header.php") ?>
+
+    <div class="recherche-main">
         <!-- Section des filtres -->
-        <aside class="recherche-filtres">
-            <form method="GET" action="recherche.php">
-                <h3>Filtrer les produits :</h3>
-                <label>Catégorie :
-                    <select name="categorie">
-                        <option value="">Toutes</option>
-                        <?php foreach ($categories as $categorie): ?>
-                            <option value="<?= htmlspecialchars($categorie) ?>" <?= isset($_GET['categorie']) && $_GET['categorie'] === $categorie ? 'selected' : '' ?>>
-                                <?= htmlspecialchars($categorie) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </label>
-                <label>Marque :
-                    <select name="marque">
-                        <option value="">Toutes</option>
-                        <?php foreach ($marques as $marque): ?>
-                            <option value="<?= htmlspecialchars($marque) ?>" <?= isset($_GET['marque']) && $_GET['marque'] === $marque ? 'selected' : '' ?>>
-                                <?= htmlspecialchars($marque) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </label>
-                <label>Prix :
-                    <input type="number" name="prix_min" placeholder="Min" value="<?= htmlspecialchars($_GET['prix_min'] ?? '') ?>">
-                    <input type="number" name="prix_max" placeholder="Max" value="<?= htmlspecialchars($_GET['prix_max'] ?? '') ?>">
-                </label>
-                <label>
-                    <input type="checkbox" name="en_stock" <?= isset($_GET['en_stock']) ? 'checked' : '' ?>> En stock uniquement
-                </label>
-                <button type="submit">Filtrer</button>
+        <div class="recherche-filtres">
+            <h3>Filtres</h3>
+            <form action="recherche.php" method="get">
+                <label for="mot_cle">Mot-clé :</label>
+                <input type="text" name="mot_cle" id="mot_cle" value="<?= htmlspecialchars($criteres['mot_cle']) ?>"> <br>
+
+                <label for="categorie">Catégorie :</label>
+                <select name="categorie" id="categorie">
+                    <option value="">-- Toutes les catégories --</option>
+                    <?php foreach ($categories as $categorie): ?>
+                        <option value="<?= htmlspecialchars($categorie['IDCATEG']) ?>"
+                            <?= $criteres['categorie'] == $categorie['IDCATEG'] ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($categorie['NOMCATEG']) ?>
+                        </option>
+                    <?php endforeach; ?>
+
+
+                </select><br>
+
+                <label for="marque">Marque :</label>
+                <select name="marque" id="marque">
+                    <option value="">-- Toutes les marques --</option>
+                    <?php foreach ($marques as $marque): ?>
+                        <option value="<?= htmlspecialchars($marque) ?>"
+                            <?= $criteres['marque'] == $marque ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($marque) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select><br>
+
+                <label for="prix_min">Prix minimum :</label>
+                <input type="number" step="0.01" name="prix_min" id="prix_min" value="<?= htmlspecialchars($criteres['prix_min']) ?>"> <br>
+
+                <label for="prix_max">Prix maximum :</label>
+                <input type="number" step="0.01" name="prix_max" id="prix_max" value="<?= htmlspecialchars($criteres['prix_max']) ?>"><br>
+
+                <label for="en_stock">
+                    En stock uniquement
+                    <input type="checkbox" name="en_stock" id="en_stock" <?= $criteres['en_stock'] ? 'checked' : '' ?>>
+                </label><br>
+
+                <button type="submit">Rechercher</button>
             </form>
-        </aside>
+        </div>
+
 
         <!-- Section des résultats -->
-<section class="recherche-resultats">
-    <h1>Résultats de recherche</h1>
-    <p><?= count($resultats) ?> produit(s) trouvé(s)</p>
-    <div class="produits-grid">
-        <?php foreach ($resultats as $produit): ?>
-            <div class="produit-item">
-                <!-- Vérifier si 'image_url' existe avant d'afficher l'image -->
-                <?php if (isset($produit['image_url']) && !empty($produit['image_url'])): ?>
-                    <img src="<?= htmlspecialchars($produit['image_url']) ?>" alt="<?= htmlspecialchars($produit['NOMPROD']) ?>">
+        <div class="recherche-resultats">
+            <h3>Résultats</h3>
+            <div class="produits-grid">
+                <?php if (empty($resultats)): ?>
+                    <p>Aucun produit trouvé.</p>
                 <?php else: ?>
-                    <img src="default-image.jpg" alt="<?= htmlspecialchars($produit['NOMPROD']) ?>"> <!-- Image par défaut -->
+                    <?php foreach ($resultats as $produit): ?>
+                        <div class="produit-item">
+                            <h4><?= htmlspecialchars($produit['NOMPROD']) ?></h4>
+                            <p><?= htmlspecialchars($produit['DESCPROD']) ?></p>
+                            <p>Prix : <?= number_format($produit['PRIXHT'], 2) ?> €</p>
+                            <p class="<?= $produit['QTESTOCK'] > 0 ? 'en-stock' : 'rupture-stock' ?>">
+                                <?= $produit['QTESTOCK'] > 0 ? 'En stock' : 'Rupture de stock' ?>
+                            </p>
+                        </div>
+                    <?php endforeach; ?>
                 <?php endif; ?>
-                
-                <h2><?= htmlspecialchars($produit['NOMPROD']) ?></h2>
-                <p><?= htmlspecialchars($produit['DESCPROD']) ?></p>
-                <p><?= htmlspecialchars($produit['PRIXHT']) ?> €</p>
-                <p class="<?= $produit['QTESTOCK'] > 0 ? 'en-stock' : 'rupture-stock' ?>">
-                    <?= $produit['QTESTOCK'] > 0 ? 'En stock' : 'Rupture de stock' ?>
-                </p>
-                <!-- Lien vers la page de détails du produit -->
-                <a href="descProduit.php?idProd=<?= $produit['IDPROD'] ?>" class="produit-lien">Voir le produit</a>
             </div>
-        <?php endforeach; ?>
+        </div>
     </div>
-</section>
+    <?php include("footer.php") ?>
 
-    </main>
-
-    <!-- Inclure le footer -->
-    <?php include 'footer.php'; ?>
 </body>
+
 </html>
