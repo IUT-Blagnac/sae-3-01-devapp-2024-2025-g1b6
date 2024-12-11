@@ -1,19 +1,32 @@
 /* Palette de couleurs */
 :root {
-    --dark-purple: linear-gradient( #6d00b0, #b06bdc);
-    --dark-purple-inverse:linear-gradient(#b06bdc, #6d00b0);
+    --dark-purple: linear-gradient(#6d00b0, #b06bdc);
+    --dark-purple-inverse: linear-gradient(#b06bdc, #6d00b0);
     --clair-purple: #c267ff;
     --medium-purple: #8A2BE2;
     --light-purple: #e6d1f2;
     --accent-pink: #FF69B4;
     --backpurple: #d3bce6;
-    --white: #FFFFFF;   
+    --white: #FFFFFF;
     --light-gray: #F0F0F0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--light-gray);
+    margin: 0;
+    padding: 0;
 }
 
 .lienAccueil {
     text-decoration: none;
-    
+    color: var(--medium-purple);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.lienAccueil:hover {
+    color: var(--accent-pink);
 }
 
 .filtres {
@@ -23,6 +36,10 @@
     height: 15em;
     width: 10em;
     text-align: center;
+    background-color: var(--backpurple);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
 }
 
 .listFiltres {
@@ -30,431 +47,136 @@
     list-style-type: none;
     margin-top: -1em;
     padding: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    justify-content: flex-start;
 }
 
-.liFiltres {
-    position: relative;
-    margin-top: 0.5em;
-    margin-left: 0.5em;
-    padding: 0.1em;
-    background-color: var(--medium-purple);
-    color: var(--white);
-    height: 4em;
-    width: 9em;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.liFiltres:hover {
-    background: var(--dark-purple);
-    color: var(--accent-pink);
+.listFiltres li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: var(--white);
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
     cursor: pointer;
 }
 
+.listFiltres li:hover {
+    background-color: var(--clair-purple);
+    transform: scale(1.05);
+}
+
+.principale {
+    display: flex;
+    margin-left: 12em; /* Laisser de la place pour les filtres */
+    padding: 20px;
+}
 
 .ludizone {
-    position: relative;
-    margin-top: 6em;
-    margin-left: 12.5em;
-    width: 84.3em;
+    flex: 1;
+    background-color: var(--backpurple);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.titreLudizone {
-    position: relative;
-    left: 25%;
-    padding: 0.1em;
-    width: 16em;
-    font-size: 2.5em;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+.titreLudizone, .titreCDC, .titreLudiGame, .titreLudiEvent {
     color: var(--medium-purple);
-}
-
-.coupDeCoeur {
-    position: relative;
-    margin-top: 0.5em;
-    margin-left: 0.5em;
-    padding: 0.1em;
-    height: 4em;
-    width: 90em;
-}
-
-.titreCDC {
-    position: relative;
-    margin-top: 0;
-    margin-left: 0;
-    padding: 0.1em;
-    width: 15em;
-    font-size: 1.5em;
-    border-bottom: var(--medium-purple) solid 0.15em;
-}
-
-/* Conteneur des produits */
-.listeCDC {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    padding: 0;
-    list-style: none;
-}
-
-/* Carte produit */
-.produit-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: #fff;
-    transition: transform 0.3s, box-shadow 0.3s;
     text-align: center;
+    margin-bottom: 20px;
 }
 
-.produit-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+.coupDeCoeur, .ludiGames, .ludiEvent {
+    margin-bottom: 40px;
 }
 
-/* Image produit */
-.produit-image img {
+.listeCDC, .listeEvent {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.produit-item, .Event {
+    flex: 1 1 calc(25% - 20px);
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.produit-item:hover, .Event:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.produit-card{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--light-purple);
+    align-items: center;
+    padding: 20px;
+}
+
+.produit-card, .Event {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.produit-image img, .imgEvent1, .imgEvent2, .imgEvent3, .imgEvent4, .imgEvent5 {
     width: 100%;
-    height: 150px;
-    object-fit: cover;
+    height: auto;
+    border-radius: 10px;
 }
 
-/* Infos produit */
 .produit-info {
-    padding: 10px;
+    text-align: center;
+    margin-top: 10px;
 }
 
 .produit-nom {
     font-size: 18px;
-    font-weight: 600;
-    margin: 10px 0;
-    color: #333;
+    color: var(--medium-purple);
+    margin-bottom: 10px;
 }
 
 .produit-prix {
     font-size: 16px;
-    color: #ff5722;
+    color: var(--accent-pink);
+    margin-bottom: 10px;
+}
+
+.produit-categories {
+    font-size: 14px;
+    color: var(--dark-purple);
     margin-bottom: 10px;
 }
 
 .produit-lien {
     display: inline-block;
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
+    padding: 10px 20px;
+    background-color: var(--medium-purple);
+    color: var(--white);
     border-radius: 5px;
-    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.3s;
 }
 
 .produit-lien:hover {
-    background-color: #0056b3;
-}
-
-
-.jeuCDC {
-    position: relative;
-    background-color: var(--backpurple);
-    margin-right: 5em;
-    width: 16em;
-    height: 18em;
-    border-radius: 2em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.jeuCDC a {
-    text-decoration: none;  
-    width: 15em;
-}
-
-.jeuCDC:hover {
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-}
-
-.imgJeuCDC1 {
-    background-image: url('../images/Jeu1.jpg');
-    border-radius: 2em;
-    margin-top: 1em;
-    width: 9em;
-    height: 9em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.imgJeuCDC2 {
-    background-image: url('../images/nerf1.png');
-    border-radius: 2em;
-    margin-top: 1em;
-    margin-left: 3em;
-    width: 9em;
-    height: 9em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.imgJeuCDC3 {
-    background-image: url('../images/Jeu3.jpg');
-    border-radius: 2em;
-    margin-top: 1em;
-    width: 12em;
-    height: 9em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.imgJeuCDC4 {
-    background-image: url('../images/Jeu4.jpg');
-    border-radius: 2em;
-    margin-top: 1em;
-    width: 12em;
-    height: 9em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.nomJeu {
-    position: relative;
-    margin-top: 1em;
-    margin-left: 0.5em;
-    padding: 0.1em;
-    width: 15em;
-    font-size: 1em;
-    text-align: center;
-    font-family: 'Poppins', sans-serif;
-}
-
-.prixCDC {
-    position: relative;
-    margin-top: 0.5em;
-    margin-left: 10em;
-    padding: 0.1em;
-    width: 15em;
-    font-size: 1em;
-    text-align: center;
-    font-family: 'Poppins', sans-serif;
-}
-
-.listeDisponibilites {
-    position: relative;
-    list-style-type: none;
-    width: 14em;
-    border-radius: 1em;
-    margin-top: 0.5em;
-    margin-left: 0.5em;
-    padding: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    background: var(--clair-purple);
-    word-spacing: 2em;  
-}
-
-.elementDispo {
-    position: relative;
-    margin: 0.5em;
-    padding: 0.1em;
-    width: 15em;
-}
-
-.elementDispoImg {
-    width: 1.5em;
-    height: 1.5em;
-    position: relative;
-    left: -1em;
-    top: 0.6em;
-    margin-top: -0.3em;
-}
-
-.titreLudiGame {
-    position: relative;
-    margin-top: 12.5em;
-    margin-left: 0.5em;
-    padding: 0.1em;
-    width: 15em;
-    font-size: 1.5em;
-    border-bottom: var(--medium-purple) solid 0.15em;
-}
-
-.imgLudiGame {
-    background-image: url('../images/LudiGame.webp');
-    border-radius: 2em;
-    margin-top: 1em;
-    width: 70em;
-    height: 35em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.ludiEvent {
-    position: relative;
-    margin-top: 0.5em;
-    margin-left: 0.5em;
-    padding: 0.1em;
-    height: 27em;
-    width: 80em;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;    
-}
-
-.ludiEvent::-webkit-scrollbar {
-    height: 0.3em;
-}
-
-.ludiEvent::-webkit-scrollbar-thumb {
-    background-color: var(--medium-purple);
-    border: 1em solid transparent;
-    border-radius: 2em; 
-    position: relative; 
-}
-
-.titreLudiEvent {
-    position: relative;
-    left: 35%;
-    padding: 0.1em;
-    width: 6em;
-    font-size: 1.5em;
-    border-bottom: var(--medium-purple) solid 0.15em;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-}
-
-.listeEvent {
-    position: relative;
-    list-style-type: none;
-    margin-top: 0.5em;
-    margin-left: 1em;
-    padding: 0;
-    overflow: hidden;
-    display: inline-flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
-.Event {
-    margin-top: 1em;
-    margin-left: 0.5em;
-    padding: 0.1em;
-    height: 20em;
-    width: 20em;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+    background-color: var(--accent-pink);
 }
 
 .btnParticipe {
-    position: relative;
-    margin-top: 0.5em;
-    margin-left: 0.5em;
-    padding: 0.1em;
-    width: 13em;
-    font-size: 1em;
-    text-align: center;
-    font-family: 'Poppins', sans-serif;
     background-color: var(--medium-purple);
+    color: var(--white);
+    padding: 10px 20px;
     border: none;
-    color: var(--light-gray);
-    height: 4em;
-    border-radius: 5em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .btnParticipe:hover {
-    background: var(--dark-purple);
-    color: var(--accent-pink);
-    cursor: pointer;
+    background-color: var(--accent-pink);
 }
-
-
-.imgEvent1 {
-    background-image: url('../images/Event1.jpg');
-    border-radius: 2em;
-    margin-top: 1em;
-    width: 18em;
-    height: 15em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.imgEvent2 {
-    background-image: url('../images/Event2.jpg');
-    border-radius: 2em;
-    margin-top: 1em;
-    width: 18em;
-    height: 15em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.imgEvent3 {
-    background-image: url('../images/Event3.png');
-    border-radius: 2em;
-    margin-top: 1em;
-    width: 18em;
-    height: 15em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.imgEvent4 {
-    background-image: url('../images/Event4.jpg');
-    border-radius: 2em;
-    margin-top: 1em;
-    width: 18em;
-    height: 15em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.imgEvent5 {
-    background-image: url('../images/Event5.jpg');
-    border-radius: 2em;
-    margin-top: 1em;
-    width: 18em;
-    height: 15em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.vide{
-    position: relative;
-    margin-top: 0.5em;
-    margin-left: 0.5em;
-    padding: 0.1em;
-    height: 4em;
-    width: 90em;
-}
-
-
-.footer {
-    top:0em;
-}
-
-

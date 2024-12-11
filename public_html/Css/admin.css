@@ -1,0 +1,140 @@
+:root {
+    --dark-purple: linear-gradient(#6d00b0, #b06bdc);
+    --clair-purple: #c267ff;
+    --medium-purple: #8A2BE2;
+    --light-purple: #e6d1f2;
+    --accent-pink: #FF69B4;
+    --white: #FFFFFF;
+    --light-gray: #F0F0F0;
+}
+
+/* Styles de base */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--light-gray);
+    margin: 0;
+    padding: 0;
+    color: var(--medium-purple);
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    z-index: 1000; /* Assure que le header est au-dessus */
+    position: relative;
+    background-color: var(--medium-purple);
+    color: var(--white);
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Menu Admin */
+.menuAdmin {
+    position: absolute; /* Place le menu sous le contenu principal */
+    top: 100px; /* Ajuste la position sous le header */
+    left: 0;
+    width: 100%; /* Prend toute la largeur */
+    background: var(--dark-purple);
+    color: var(--white);
+    padding: 20px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1; /* Derrière le header et le footer */
+}
+
+.menuAdmin ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Centrer les éléments */
+}
+
+.menuAdmin ul a {
+    text-decoration: none;
+    color: var(--white);
+}
+
+.menuAdmin ul li {
+    padding: 10px 20px;
+    transition: background 0.3s, transform 0.2s;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.menuAdmin ul li:hover {
+    background-color: var(--clair-purple);
+    transform: scale(1.1);
+}
+
+/* Main content */
+main {
+    margin-top: 200px; /* Laisser de la place pour le menu */
+    padding: 20px;
+    background: var(--light-purple);
+    z-index: 10; /* Contenu principal au-dessus du menu */
+    position: relative;
+    min-height: calc(100vh - 200px); /* Garde une hauteur suffisante */
+}
+
+/* Conteneur Dashboard */
+.containerDashboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.listeStat ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.listeStat ul li {
+    flex: 1;
+    max-width: 200px;
+    background: var(--white);
+    border: 2px solid var(--medium-purple);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.listeStat ul li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-color: var(--accent-pink);
+}
+
+/* Footer */
+footer {
+    z-index: 1000; /* Assure que le footer est au-dessus */
+    position: relative;
+    background: var(--medium-purple);
+    color: var(--white);
+    text-align: center;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: auto;
+}
+
+/* Boutons ou liens d'action */
+button, .action-link {
+    background-color: var(--accent-pink);
+    color: var(--white);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover, .action-link:hover {
+    background-color: var(--clair-purple);
+}

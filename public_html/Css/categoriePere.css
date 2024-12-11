@@ -1,0 +1,151 @@
+/* Palette de couleurs */
+:root {
+    --dark-purple: linear-gradient(#6d00b0, #b06bdc);
+    --dark-purple-inverse: linear-gradient(#b06bdc, #6d00b0);
+    --clair-purple: #c267ff;
+    --medium-purple: #8A2BE2;
+    --light-purple: #e6d1f2;
+    --accent-pink: #FF69B4;
+    --backpurple: #d3bce6;
+    --white: #FFFFFF;
+    --light-gray: #F0F0F0;
+}
+
+.containerCategPere {
+    display: flex;
+    flex-direction: column; /* Change to column layout */
+    flex-wrap: wrap; /* Prevent wrapping */
+    justify-content: flex-start; /* Align items to the start */
+    align-items: center; /* Center items horizontally */
+    width: 100%;
+    height: auto;
+}
+
+
+.filtres {
+    position: fixed;
+    margin-top: 1%;
+    left: 0;
+    height: 15em;
+    width: 10em;
+    text-align: center;
+    background-color: var(--backpurple);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.filtres ul {
+    position: relative;
+    list-style-type: none;
+    margin-top: -1em;
+    padding: 0;
+}
+
+.filtres ul li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: var(--white);
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+}
+
+.filtres ul li:hover {
+    background-color: var(--clair-purple);
+    transform: scale(1.05);
+}
+
+.containerProduit {
+    position: relative;
+    left: 5%;
+    width: 80em;
+    height: 80em;
+    height: auto;
+}
+
+.sousCategorieContainer {
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 4em;
+    margin-bottom:0%;
+    padding: 0.1em;
+    height: auto;
+    width: 77em;
+}
+
+.sousCategorieContainer ul {
+    position: relative;
+    width: 100%;
+    list-style-type: none;
+    margin-left: 1em;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; /* Permet le retour à la ligne */
+    justify-content: flex-start; /* Aligne les éléments au début */
+    align-items: flex-start; /* Aligne les éléments verticalement au début */
+}
+
+
+
+.titreSousCateg {
+    position: relative;
+    margin-top: 0;
+    margin-left: 0;
+    padding: 0.1em;
+    width: 15em;
+    font-size: 1.5em;
+    border-bottom: var(--medium-purple) solid 0.15em;
+}
+
+.sousCategorieContainer ul {
+    position: relative;
+    width: 100%;
+    list-style-type: none;
+    margin-left: 1em;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.sousCategorieContainer ul li {
+    position: relative;
+    width: 15em;
+    margin: 0.5em;
+    padding: 0.5em;
+    background-color: var(--white);
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+}
+
+.sousCategorieContainer ul li:hover {
+    background-color: var(--clair-purple);
+    transform: scale(1.05);
+}
+
+.sousCategorieContainer ul li img {
+    width: 10em;
+    height: 10em;
+}
+
+.sousCategorieContainer ul li p {
+    font-size: 1em;
+    text-align: center;
+}
+
+.containerCategPere a {
+    text-decoration: none;
+    color: var(--medium-purple);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+
+
+

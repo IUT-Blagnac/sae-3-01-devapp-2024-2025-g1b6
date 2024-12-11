@@ -1,5 +1,9 @@
+<?php
+session_start();
+include("connect.inc.php");
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="Css/all.css">
@@ -11,45 +15,10 @@
 </head>
 
 <body>
-    
-<header class="header">
-        <div class="barreMenu">
-            <ul class="menuListe">
-                <li> 
-                    <label class="burger" for="burgerToggle">
-                        <input type="checkbox" id="burgerToggle">
-                        <ul class="categories">
-                            <?php
-                            include ("connect.inc.php");
-                            include ("categories.php");
-                            ?>
-                        </ul>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </label> 
-                </li>
-                <li> <a class="lienAccueil" href="index.php"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
-                <li> <input class="barreRecherche" type="text" placeholder="Barre de recherche ..."> </li>
-                <li> <div class="imgLoc"></div> </li>
-                <li> <a href="panier.php"><div class="imgPanier"></div></a></li>
-                <li> <?php
-                        // Vérification de la session utilisateur
-                        if (isset($_SESSION["user"])) {
-                            $id_client = $_SESSION["user"]["IDCLIENT"];
-                            // Si l'utilisateur est connecté, on le redirige vers son compte
-                            echo '<a href="compte.php?id_client=' . $id_client . '"><div class="imgCompte"></div></a>';
-                        } else {
-                            // Sinon, on le redirige vers la page de connexion
-                            echo '<a href="connexion.php"><div class="imgCompte"></div></a>';
-                        }
-                    ?> 
-                </li>
-            </ul>
-        </div>
-    </header>
 
-
+<?php
+include("header.php");
+?>
 
 <div class="principale">
 
@@ -65,33 +34,51 @@
 
     <div class="ludizone">
         <h1 class="titreLudizone">Bienvenue dans la LudiZone !</h1>
+        
         <div class="coupDeCoeur">
             <h1 class="titreCDC">Coup de coeur</h1>
             
             <ul class="listeCDC">
-    <?php
-    $stmt = $pdo->prepare("SELECT * FROM PRODUIT P, APPARTENIRCATEG AC WHERE P.IDPROD = AC.IDPROD AND AC.IDCATEG = 20");
-    $stmt->execute();
-    $produits = $stmt->fetchAll();
-    foreach ($produits as $produit): ?>
-        <li class="produit-item">
-            <div class="produit-card">
-                <!-- Image -->
-                <div class="produit-image">
-                    <img src="images/<?= htmlspecialchars($produit['IDPROD']) ?>.jpg" alt="<?= htmlspecialchars($produit['NOMPROD']) ?>">
-                </div>
-                <!-- Infos produit -->
-                <div class="produit-info">
-                    <h2 class="produit-nom"><?= htmlspecialchars($produit['NOMPROD']) ?></h2>
-                    <p class="produit-prix"><?= number_format($produit['PRIXHT'], 2) ?> €</p>
-                    <a href="descProduit.php?idProd=<?= $produit['IDPROD'] ?>" class="produit-lien">Voir le produit</a>
-                </div>
-            </div>
-        </li>
-    <?php endforeach; ?>
-</ul>
+                <?php
+                // Sélectionner les produits de la catégorie enfant (ID = 20)
+                try {
+                    $stmt = $pdo->prepare("
+                        SELECT p.*, 
+                               m.NOMMARQUE,
+                               GROUP_CONCAT(c.NOMCATEG SEPARATOR ', ') AS CATEGORIES
+                        FROM PRODUIT p
+                        LEFT JOIN MARQUE m ON p.IDMARQUE = m.IDMARQUE
+                        LEFT JOIN APPARTENIRCATEG ac ON p.IDPROD = ac.IDPROD
+                        LEFT JOIN CATEGORIE c ON ac.IDCATEG = c.IDCATEG
+                        WHERE ac.IDCATEG = ?
+                        GROUP BY p.IDPROD
+                    ");
+                    $stmt->execute([20]); // Catégorie Enfant (ID 20)
+                    $produits = $stmt->fetchAll();
+                } catch (PDOException $e) {
+                    echo "Erreur lors de la récupération des produits : " . $e->getMessage();
+                    exit();
+                }
 
-
+                // Affichage des produits
+                foreach ($produits as $produit): ?>
+                    <li class="produit-item">
+                        <div class="produit-card">
+                            <!-- Image -->
+                            <div class="produit-image">
+                                <img src="./images/<?= htmlspecialchars($produit['IDPROD']) ?>.jpg" alt="<?= htmlspecialchars($produit['NOMPROD']) ?>">
+                            </div>
+                            <!-- Infos produit -->
+                            <div class="produit-info">
+                                <h2 class="produit-nom"><?= htmlspecialchars($produit['NOMPROD']) ?></h2>
+                                <p class="produit-prix"><?= number_format($produit['PRIXHT'], 2, ',', ' ') ?> €</p>
+                                <p class="produit-categories">Catégories : <?= htmlspecialchars($produit['CATEGORIES']) ?></p>
+                                <a href="descProduit.php?idProd=<?= htmlspecialchars($produit['IDPROD']) ?>" class="produit-lien">Voir le produit</a>
+                            </div>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
         </div>
 
         <div class="ludiGames">
@@ -99,56 +86,21 @@
             <div class="imgLudiGame"></div>
         </div>
 
-
         <div class="ludiEvent">
             <h1 class="titreLudiEvent">Ludi'Events</h1>
-            
             <ul class="listeEvent">
-                <li>
-                    <div class="Event">
-                        <div class="imgEvent1"></div>
-                        <button class="btnParticipe"> J'y participe </button>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="Event">
-                        <div class="imgEvent2"></div>
-                        <button class="btnParticipe"> J'y participe </button>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="Event">
-                        <div class="imgEvent3"></div>
-                        <button class="btnParticipe"> J'y participe </button>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="Event">
-                        <div class="imgEvent4"></div>
-                        <button class="btnParticipe"> J'y participe </button>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="Event">
-                        <div class="imgEvent5"></div>
-                        <button class="btnParticipe"> J'y participe </button>
-                    </div>
-                </li>
+                <li><div class="Event"><div class="imgEvent1"></div><button class="btnParticipe">J'y participe</button></div></li>
+                <li><div class="Event"><div class="imgEvent2"></div><button class="btnParticipe">J'y participe</button></div></li>
+                <li><div class="Event"><div class="imgEvent3"></div><button class="btnParticipe">J'y participe</button></div></li>
+                <li><div class="Event"><div class="imgEvent4"></div><button class="btnParticipe">J'y participe</button></div></li>
+                <li><div class="Event"><div class="imgEvent5"></div><button class="btnParticipe">J'y participe</button></div></li>
             </ul>
         </div>
 
-        <div class="vide">
-
-        </div>
+        <div class="vide"></div>
 
     </div>
-    
 </div>  
-
 
 <footer class="footer">
     <div class="footer-column">
@@ -190,31 +142,26 @@
             <li><a href="#">Tous nos sites</a></li>
         </ul>
     </div>
-</footer> 
-
+</footer>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-    const burgerToggle = document.getElementById('burgerToggle');
-    const categoriesMenu = document.querySelector('.categories');
+        const burgerToggle = document.getElementById('burgerToggle');
+        const categoriesMenu = document.querySelector('.categories');
 
-    // Fermer le menu déroulant si on clique ailleurs
-    document.addEventListener('click', (event) => {
-        if (!event.target.closest('.burger')) {
-            burgerToggle.checked = false; // Décocher la checkbox pour fermer le menu
-        }
-    });
+        // Fermer le menu déroulant si on clique ailleurs
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.burger')) {
+                burgerToggle.checked = false; // Décocher la checkbox pour fermer le menu
+            }
+        });
 
-    // Empêcher le clic sur le menu burger de se propager
-    burgerToggle.addEventListener('click', (event) => {
-        event.stopPropagation();
+        // Empêcher le clic sur le menu burger de se propager
+        burgerToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
     });
-});
 </script>
 
-
-
 </body>
-
-
 </html>
