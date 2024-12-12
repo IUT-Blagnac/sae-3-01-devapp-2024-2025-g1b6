@@ -1,34 +1,46 @@
 <?php
-    require_once 'rechercheAvancee.php'; // Inclure la fonction rechercheAvancee
-    require_once 'connect.inc.php'; // Connexion PDO
+require_once 'rechercheAvancee.php'; // Inclure la fonction rechercheAvancee
+require_once 'connect.inc.php'; // Connexion PDO
+
+// Récupérer la page actuelle (par défaut 1 si non définie)
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+$produitsParPage = 18; // Nombre de produits par page
+
+// Calculer l'offset
+$offset = ($page - 1) * $produitsParPage;
+
+// Récupérer les termes de recherche depuis la barre de recherche
+// Récupérer les critères depuis la barre de recherche
+$criteres = [
+    'mot_cle' => $_GET['mot_cle'] ?? '',
+    'categorie' => $_GET['categorie'] ?? NULL,
+    'marque' => $_GET['marque'] ?? NULL,
+    'prix_min' => $_GET['prix_min'] ?? NULL,
+    'prix_max' => $_GET['prix_max'] ?? NULL,
+    'en_stock' => isset($_GET['en_stock']) ? 1 : NULL,  // Si en_stock est défini, on le met à 1, sinon NULL
+];
+
+// Debug : Affiche l'exécution de la procédure
+echo "Exécution de la procédure pour les critères suivants : ";
+print_r($criteres);
 
 
-    // Récupérer les termes de recherche depuis la barre de recherche
-    $criteres = [
-        'mot_cle' => $_GET['mot_cle'] ?? '',
-        'categorie' => $_GET['categorie'] ?? '',
-        'marque' => $_GET['marque'] ?? '',
-        'prix_min' => $_GET['prix_min'] ?? '',
-        'prix_max' => $_GET['prix_max'] ?? '',
-        'en_stock' => isset($_GET['en_stock']) ? 1 : 0
-    ];
 
+// Charger les catégories dynamiquement
+$stmt = $pdo->query("SELECT IDCATEG, NOMCATEG FROM CATEGORIE ORDER BY NOMCATEG ASC");
+$categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Charger les catégories dynamiquement
-    $stmt = $pdo->query("SELECT IDCATEG, NOMCATEG FROM CATEGORIE ORDER BY NOMCATEG ASC");
-    $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Charger les marques dynamiquement
+$stmt = $pdo->query("SELECT DISTINCT NOMMARQUE FROM MARQUE ORDER BY NOMMARQUE ASC");
+$marques = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
+// Récupérer les produits via la fonction rechercheAvancee
+$resultats = rechercheAvancee($criteres, $pdo, $produitsParPage, $offset);
 
-    // Charger les marques dynamiquement
-    $stmt = $pdo->query("SELECT DISTINCT NOMMARQUE FROM MARQUE ORDER BY NOMMARQUE ASC");
-    $marques = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-
-    // Récupérer les produits via la fonction rechercheAvancee
-    $resultats = rechercheAvancee($criteres, $pdo);
-
-
-    ?>
+// Compter le total des produits pour générer la pagination
+$totalProduits = countProduits($criteres, $pdo);
+$totalPages = ceil($totalProduits / $produitsParPage);
+?>
     <!DOCTYPE html>
     <html lang="fr">
 
@@ -125,6 +137,15 @@
                 </div>
             </div>
         </div>
+        <div class="pagination">
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <a href="recherche.php?page=<?= $i ?>&<?= http_build_query($criteres) ?>" 
+           class="<?= $i == $page ? 'active' : '' ?>">
+            <?= $i ?>
+        </a>
+    <?php endfor; ?>
+</div>
+
         <?php include("footer.php") ?>
 
 
