@@ -266,11 +266,11 @@ html::-webkit-scrollbar-thumb {
     margin: 0;
     padding: 0;
     display: flex; /* Afficher les éléments en ligne */
-}
+}  
 
 .categories li {
     position: relative;
-    height: 5em;
+    height: auto;
     padding: 0.5em;
     text-align: left;
     transition: background 0.3s;
@@ -286,6 +286,7 @@ html::-webkit-scrollbar-thumb {
 .categories li:hover {
     background-color: var(--medium-purple);
     transition: background 0.3s;
+    height: 5em;
 }
 
 
@@ -296,6 +297,7 @@ html::-webkit-scrollbar-thumb {
     background-color: var(--clair-purple);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    left: 0;
 }
 
 /* Afficher les sous-catégories lors du survol */

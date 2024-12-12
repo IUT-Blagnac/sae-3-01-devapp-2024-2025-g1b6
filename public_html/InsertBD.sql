@@ -238,6 +238,7 @@ INSERT INTO PRODUIT (IDPROD, IDMARQUE, NOMPROD, DESCPROD, PRIXHT, COULEUR, COMPO
 (49, 9, 'Kit de jardinage', 'Kit de jardinage pour enfants', 19.99, 'Vert', 'Plastique et métal', 1.0, 30),
 (50, 2, 'Marionnettes en tissu', 'Ensemble de 4 marionnettes', 29.99, 'Multicolore', 'Tissu', 1.1, 25);
 
+
 INSERT INTO PRODUIT (IDPROD, IDMARQUE, NOMPROD, DESCPROD, PRIXHT, COULEUR, COMPOSITION, POIDSPRODUIT, QTESTOCK) VALUES
 (51, 1, 'Lego starWars', 'Jeu de construction Lego StarWars', 29.99, 'Multicolore', 'Plastique', 1.2, 50),
 (52, 2, 'Playmobil ToyStory', 'Figurines Playmobil ToyStory', 15.99, 'Multicolore', 'Plastique', 0.8, 30),
@@ -490,6 +491,7 @@ INSERT INTO APPARTENIRCATEG (IDPROD, IDCATEG) VALUES
 (63, 13), -- Melissa & Doug -> Jeune-adulte
 (64, 14), -- Ravensburger -> Adulte
 (65, 15), -- Spin Master -> Puzzles en 3D
+
 (66, 16), -- LeapFrog -> Puzzles classiques
 (67, 17), -- Little Tikes -> Blocs de construction
 (68, 18), -- Step2 -> Modèles complexes
@@ -568,7 +570,7 @@ INSERT INTO APPARTENIRCATEG (IDPROD, IDCATEG) VALUES
 (121, 22),  -- Monopoly La reine des neige -> Jeux de plateau
 (122, 22),  -- Monopoly Disney -> Jeux de plateau
 (80, 29), -- Elden Ring -> Jeu Vidéo aventure
-(21, 29), -- Horizon Forbidden West -> Jeu Vidéo aventure
+(81, 29), -- Horizon Forbidden West -> Jeu Vidéo aventure
 (82, 30), -- God of War Ragnarok -> Jeu Vidéo RPG
 (83, 29), -- The Legend of Zelda Breath of the Wild 2 -> Jeu Vidéo aventure
 (84, 30), -- Final Fantasy XVI -> Jeu Vidéo RPG
@@ -626,6 +628,14 @@ INSERT INTO APPARTENIRCATEG (IDPROD, IDCATEG) VALUES
 (19, 47), -- Kit de peinture -> Peinture
 (29, 48), -- Kit de bricolage -> Bricolage
 (39, 48), -- Kit de couture -> Bricolage
+
+(138, 3), -- Figurine en bois cheval -> Figurines
+(139, 3), -- Figurine en bois chien -> Figurines
+(140, 3), -- Figurine en bois chat -> Figurines
+(141, 3), -- Figurine en bois éléphant -> Figurines
+(142, 3); -- Figurine en bois lion -> Figurines
+
+
 
 
 INSERT INTO APPARTENIRCATEG (IDPROD, IDCATEG) VALUES

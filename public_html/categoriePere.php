@@ -48,11 +48,16 @@ $idCategorie = htmlspecialchars($_GET['idCategorie']);
                     echo "<h1 class=\"titreSousCateg\">".$sous_categorie['NOMCATEG']."</h1>";
                     echo "<ul>";
                     try {
-                            $stmt = $pdo->prepare("SELECT DISTINCT P.IDPROD, P.NOMPROD, P.DESCPROD, P.PRIXHT, P.COULEUR, P.COMPOSITION, P.POIDSPRODUIT, P.QTESTOCK
-                                                FROM PRODUIT P JOIN APPARTENIRCATEG A ON P.IDPROD = A.IDPROD
-                                                        JOIN CATEGORIE C ON A.IDCATEG = C.IDCATEG
-                                                WHERE C.IDCATEG = :IDSOUSCATEG;");
-                        $stmt->execute(["IDSOUSCATEG" => $sous_categorie['IDCATEG']]);
+                            $stmt = $pdo->prepare(" SELECT DISTINCT P.IDPROD, P.NOMPROD, P.DESCPROD, P.PRIXHT, P.COULEUR, P.COMPOSITION, P.POIDSPRODUIT, P.QTESTOCK
+                                                    FROM PRODUIT P
+                                                    JOIN APPARTENIRCATEG A1 ON P.IDPROD = A1.IDPROD
+                                                    JOIN CATEGORIE C1 ON A1.IDCATEG = C1.IDCATEG
+                                                    JOIN CATPERE CP ON C1.IDCATEG = CP.IDCATEG
+                                                    JOIN APPARTENIRCATEG A2 ON P.IDPROD = A2.IDPROD
+                                                    WHERE C1.IDCATEG = :IDSOUSCATEG
+                                                    AND CP.IDCATEG_PERE = :IDCATPERE
+                                                    AND A2.IDCATEG = CP.IDCATEG_PERE;");
+                        $stmt->execute(["IDSOUSCATEG" => $sous_categorie['IDCATEG'] , "IDCATPERE" => $idCategorie]);
                         $produits = $stmt->fetchAll();
                         foreach ($produits as $produit) {
                             echo "<li>";
