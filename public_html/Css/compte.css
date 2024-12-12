@@ -156,7 +156,7 @@ form label {
     font-weight: bold;
 }
 
-form input[type="text"], form button {
+form input[type="text"], form input[type="password"], form input[type="date"], form button {
     padding: 10px;
     border: 1px solid var(--light-gray);
     border-radius: 5px;
@@ -173,6 +173,20 @@ form button {
 form button:hover {
     background-color: var(--accent-pink);
 }
+
+/* Style pour les champs de mot de passe incorrects */
+input.error {
+    border: 2px solid red;  /* Bordure rouge autour des champs */
+    background-color: transparent; /* Assurez-vous que la couleur de fond reste inchangée */
+}
+
+/* Style pour le bouton désactivé */
+button:disabled {
+    background-color: #d3d3d3; /* Gris clair */
+    cursor: not-allowed;
+    color: #808080; /* Texte gris */
+}
+
 
 /* Media Query pour les écrans plus petits */
 @media (max-width: 780px) {

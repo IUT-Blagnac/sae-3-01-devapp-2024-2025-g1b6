@@ -34,6 +34,8 @@ Moderniser le site tout en respectant l’identité graphique et en :
 - **Nous (MOE)** : développement et livrables.
 - **Ludorama (MOA)** : contrôle et validation réguliers.
 
+=== Lien vers le site 
+- link:http://193.54.227.208/~R2024SAE3012/[Lien vers le site]
 
 
 == Backlog Produit : Ludorama
@@ -204,6 +206,17 @@ Moderniser le site tout en respectant l’identité graphique et en :
 
 |===
 
+== Télétravail
+
+|===
+| **Jour** | **Télétravail** 
+| Jeudi 12/12
+| Oui
+|===
+
+
+
+
 == Dernière release
 
 - Version courante : https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/releases/tag/Release[V1.0]
@@ -222,7 +235,9 @@ link:documentation/Doc_Conception.adoc[Lien vers le document de conception]
 link:documentation/Cahier_Recette.adoc[Lien vers le cahier de recette]
 
 === ODJ et CRs
-link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/tree/master/documentation/ODJ%20et%20CRs[Lien vers le dossier]
+- link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/tree/master/documentation/ODJ%20et%20CRs[Lien vers le dossier]
+- link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/tree/master/documentation/ODJ%20et%20CRs/ODJ-10-12.pdf[ODJ de la semaine]
+- link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/tree/master/documentation/ODJ%20et%20CRs/CR-10-12.pdf[CR de la semaine]
 
 === Documentation de la charte graphique 
 link:documentation/Doc_Charte_Graphique.adoc[Lien vers la documentation de la charte graphique]
@@ -248,6 +263,7 @@ note: 1,3/3
 ==== Evaluation semaine 49
 Liens directs vers ODJ et CR de la semaine ! La prochaine fois c'est 0.  ODJ incomplet, manque qui est resp de chaque rubrique et CR réunion client. Manque toujours CR réunion client et analyse réussites/difficultés.
 Note: 1,9/3
+Note appel Offre : 10/20
 
 === Evaluation bi-hebdomadaire :
 

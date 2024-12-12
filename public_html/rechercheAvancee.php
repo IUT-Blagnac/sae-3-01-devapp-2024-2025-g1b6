@@ -18,7 +18,6 @@ function rechercheAvancee($criteres, $pdo, $limit, $offset) {
         // Lier les valeurs des prix ou NULL si vides
         $stmt->bindValue(':prix_min', $prix_min, $prix_min === NULL ? PDO::PARAM_NULL : PDO::PARAM_STR);
         $stmt->bindValue(':prix_max', $prix_max, $prix_max === NULL ? PDO::PARAM_NULL : PDO::PARAM_STR);
-
         
         // Lier la disponibilité en stock (NULL si vide)
         $stmt->bindValue(':en_stock', isset($criteres['en_stock']) ? $criteres['en_stock'] : NULL, PDO::PARAM_INT);
@@ -33,13 +32,6 @@ function rechercheAvancee($criteres, $pdo, $limit, $offset) {
         // Récupérer les résultats
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Afficher les critères pour le débogage
-        echo "<h4>Critères :</h4><pre>" . print_r($criteres, true) . "</pre>";
-        echo "Requête exécutée : " . $stmt->queryString . "<br><br>";
-
-        // Afficher les résultats
-        echo "<h4>Résultats :</h4><pre>" . print_r($result, true) . "</pre>";
-
         // Retourner les résultats
         return $result;
     } catch (PDOException $e) {
@@ -47,6 +39,7 @@ function rechercheAvancee($criteres, $pdo, $limit, $offset) {
         return [];
     }
 }
+
 
 
 
