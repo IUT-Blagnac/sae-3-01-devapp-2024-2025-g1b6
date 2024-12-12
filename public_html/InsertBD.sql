@@ -40,31 +40,21 @@ INSERT INTO CATEGORIE (IDCATEG, NOMCATEG, DESCCATEG) VALUES
 (30, 'Jeu Vidéo RPG', null),
 (31, 'Jeu Vidéo Action', null),
 (34, 'Jeu Vidéo Horreur', null),
-(35, 'Figurines en Bois', null);
-
--- Insertion des sous-catégories pour 'Électronique'
-INSERT INTO CATEGORIE (IDCATEG, NOMCATEG, DESCCATEG) VALUES
+(35, 'Figurines en Bois', null),
 (38, 'Robots', null),
 (39, 'Tablettes', null),
-(40, 'Jeux Interactifs', null);
-
--- Insertion des sous-catégories pour 'Véhicules'
-INSERT INTO CATEGORIE (IDCATEG, NOMCATEG, DESCCATEG) VALUES
+(40, 'Jeux Interactifs', null),
 (36, 'Voitures', null),
 (37, 'Camions', null),
-(41, 'Avions', null);
-
--- Insertion des sous-catégories pour 'Extérieur'
-INSERT INTO CATEGORIE (IDCATEG, NOMCATEG, DESCCATEG) VALUES
+(41, 'Avions', null),
 (44, 'Jeux de Jardin', null),
 (45, 'Piscines', null),
-(46, 'Toboggans', null);
-
--- Insertion des sous-catégories pour 'Créativité'
-INSERT INTO CATEGORIE (IDCATEG, NOMCATEG, DESCCATEG) VALUES
+(46, 'Toboggans', null),
 (47, 'Peinture', null),
 (48, 'Bricolage', null),
-(49, 'Pâte à Modeler', null);
+(49, 'Pâte à Modeler', null),
+(50, 'Peluches Classique', null);
+(51, 'Figurine Classique', null);
 
 
 
@@ -158,6 +148,8 @@ INSERT INTO CATPERE (IDCATEG_PERE, IDCATEG) VALUES
 (9, 47), -- Créativité -> Peinture
 (9, 48), -- Créativité -> Bricolage
 (9, 49); -- Créativité -> Pâte à Modeler
+(5, 50); -- Peluches -> Peluches Classique
+
 
 
 
@@ -198,10 +190,10 @@ INSERT INTO PRODUIT (IDPROD, IDMARQUE, NOMPROD, DESCPROD, PRIXHT, COULEUR, COMPO
 (1, 1, 'Train en bois', 'Train avec rails en bois', 29.99, 'Multicolore', 'Bois', 1.2, 50),
 (2, 2, 'Puzzle animaux', 'Puzzle éducatif en bois', 15.99, 'Multicolore', 'Bois', 0.8, 30),
 (3, 3, 'Voiture télécommandée', 'Voiture électrique rapide', 49.99, 'Rouge', 'Plastique', 1.5, 25),
-(4, 1, 'Maison de poupée', 'Maison en bois avec meubles', 69.99, 'Rose', 'Bois', 4.0, 20),
+(4, 8, 'Maison de poupée', 'Maison en bois avec meubles', 69.99, 'Rose', 'Bois', 4.0, 20),
 (5, 4, 'Peluche éléphant', 'Peluche douce pour câliner', 19.99, 'Gris', 'Tissu', 0.5, 100),
 (6, 2, 'Jeu de mémoire', 'Jeu de société pour mémoire', 14.99, 'Multicolore', 'Carton', 0.7, 45),
-(7, 5, 'Camion de pompier', 'Camion miniature avec échelle', 34.99, 'Rouge', 'Métal et plastique', 2.0, 30),
+(7, 2, 'Camion de pompier', 'Camion miniature avec échelle', 34.99, 'Rouge', 'Métal et plastique', 2.0, 30),
 (8, 6, 'Cuisinière jouet', 'Cuisine miniature avec ustensiles', 59.99, 'Rose', 'Bois et plastique', 4.5, 15),
 (9, 1, 'Cheval à bascule', 'Cheval en bois avec poignée', 49.99, 'Marron', 'Bois', 3.8, 10),
 (10, 3, 'Jeu de société', 'Jeu éducatif sur les animaux', 24.99, 'Multicolore', 'Carton et plastique', 1.2, 40),
@@ -389,6 +381,8 @@ INSERT INTO PRODUIT (IDPROD, IDMARQUE, NOMPROD, DESCPROD, PRIXHT, COULEUR, COMPO
 (175, 13, 'Kit de pâte à modeler', 'Kit complet de pâte à modeler avec accessoires', 19.99, 'Multicolore', 'Pâte à modeler', 1.2, 50),
 (176, 13, 'Pâte à modeler fluorescente', 'Pâte à modeler fluorescente pour enfants', 14.99, 'Multicolore', 'Pâte à modeler', 0.8, 40),
 (177, 13, 'Pâte à modeler parfumée', 'Pâte à modeler parfumée avec différents parfums', 24.99, 'Multicolore', 'Pâte à modeler', 1.0, 30);
+(178, 23, 'Peluches Woodie', 'Peluches Woodie de ToyStory', 24.99, 'Multicolore', 'Tissu', 1.0, 30),
+(179, 23, 'Peluches Aliens', 'Peluches Aliens de ToyStory', 24.99, 'Multicolore', 'Tissu', 1.0, 30);
 
 
 
@@ -456,8 +450,33 @@ INSERT INTO APPARTENIRCATEG (IDPROD, IDCATEG) VALUES
 (48, 8),  -- Cerf-volant -> Extérieur
 (49, 8),  -- Kit de jardinage -> Extérieur
 (50, 2);  -- Marionnettes en tissu -> Jeux de Société
+
+-- Ajout des figurines à la catégorie Figurines Classique
+INSERT INTO APPARTENIRCATEG (IDPROD, IDCATEG) VALUES
+(13, 51), -- Figurine dinosaure -> Figurines Classique
+(23, 51), -- Figurine super-héros -> Figurines Classique
+(33, 51), -- Figurine animal -> Figurines Classique
+(43, 51), -- Figurine chevalier -> Figurines Classique
+(73, 51), -- Ludorama figurine -> Figurines Classique
+
+
+-- Ajout des produits de la catégorie Construction dans les sous-catégories
+INSERT INTO APPARTENIRCATEG (IDPROD, IDCATEG) VALUES
+(20, 17), -- Jeu de construction -> Blocs de construction
+(30, 17), -- Jeu de dominos -> Blocs de construction
+(40, 17), -- Jeu de quilles -> Blocs de construction
+(114, 18), -- Lego Game of Throne -> Modèles complexes
+(115, 18); -- Lego Toy Story -> Modèles complexes
+
+-- Ajout des peluches à la catégorie Peluches Classique
+INSERT INTO APPARTENIRCATEG (IDPROD, IDCATEG) VALUES
+(5, 50),  -- Peluche éléphant -> Peluches Classique
+(14, 50), -- Peluche ours -> Peluches Classique
+(24, 50), -- Peluche licorne -> Peluches Classique
+(44, 50), -- Peluche chien -> Peluches Classique
+
 (51, 24), -- Lego starWars -> Collection StarWars
-(52, 23), -- Playmobil ToyStory -> Collection ToyStory
+(52, 23), -- Playmobil ToyStory -> Collection ToyStory 
 (53, 25), -- Peluche Reine des neige -> Collection Disney
 (54, 26), -- Hasbro Game of throne -> Collection Game of throne
 (55, 27), -- Peluche Superman -> Collection DC
@@ -506,15 +525,12 @@ INSERT INTO APPARTENIRCATEG (IDPROD, IDCATEG) VALUES
 (98, 27), -- Peluche Wonder Woman -> Collection DC
 (99, 27), -- Figurine Joker -> Collection DC
 (100, 27), -- Figurine Harley Quinn -> Collection DC
+
 (101, 25), -- Jeu de société Mickey Mouse -> Collection Disney
 (102, 25), -- Jeu de société Disney -> Collection Disney
 (103, 25), -- Peluche la reine des Neige -> Collection Disney
 (104, 25), -- Peluche Elsa -> Collection Disney
 (105, 25), -- Peluche Anna -> Collection Disney
-(106, 26), -- Peluche Anakin -> Collection Game of throne
-(107, 26), -- Peluche Dark Vador -> Collection Game of throne
-(108, 26), -- Peluche Yoda -> Collection Game of throne
-(109, 26), -- Peluche R2D2 -> Collection Game of throne
 (110, 26), -- Peluche Daenerys Targarien -> Collection Game of throne
 (111, 26), -- Peluche Jon Snow -> Collection Game of throne
 (112, 26), -- Peluche Tyrion Lannister -> Collection Game of throne
@@ -528,6 +544,11 @@ INSERT INTO APPARTENIRCATEG (IDPROD, IDCATEG) VALUES
 (120, 26), -- Monopoly Game of throne -> Collection Game of throne
 (121, 25), -- Monopoly La reine des neige -> Collection Disney
 (122, 25); -- Monopoly Disney -> Collection Disney
+
+
+
+
+
 
 (106, 5),  -- Peluche Anakin -> Peluches
 (107, 5),  -- Peluche Dark Vador -> Peluches
@@ -707,6 +728,10 @@ INSERT INTO APPARTENIRCATEG (IDPROD, IDCATEG) VALUES
 (176, 9),  -- Pâte à modeler fluorescente -> Créativité
 (177, 49), -- Pâte à modeler parfumée -> Pâte à Modeler
 (177, 9);  -- Pâte à modeler parfumée -> Créativité
+(178, 23), -- Peluches Woodie -> Collection ToyStory
+(179, 23), -- Peluches Aliens -> Collection ToyStory
+(178, 5),  -- Peluches Woodie -> Peluches
+(179, 5);  -- Peluches Aliens -> Peluches
 
 
 
@@ -817,6 +842,60 @@ INSERT INTO ADRESSE (IDADRESSE, NUMRUE, NOMRUE, COMPLEMENTADR, NOMVILLE, CODEPOS
 (48, '459', 'Boulevard de la Gare', NULL, 'Toulouse', 31000, 'France'),
 (49, '471', 'Rue de la Pomme', NULL, 'Toulouse', 31000, 'France'),
 (50, '483', 'Avenue de la Gloire', NULL, 'Toulouse', 31000, 'France');
+
+-- Insertion des relations entre clients et adresses
+INSERT INTO POSSEDERADR (IDADRESSE, IDCLIENT) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8),
+(9, 9),
+(10, 10),
+(11, 11),
+(12, 12),
+(13, 13),
+(14, 14),
+(15, 15),
+(16, 16),
+(17, 17),
+(18, 18),
+(19, 19),
+(20, 20),
+(21, 21),
+(22, 22),
+(23, 23),
+(24, 24),
+(25, 25),
+(26, 26),
+(27, 27),
+(28, 28),
+(29, 29),
+(30, 30),
+(31, 31),
+(32, 32),
+(33, 33),
+(34, 34),
+(35, 35),
+(36, 36),
+(37, 37),
+(38, 38),
+(39, 39),
+(40, 40),
+(41, 41),
+(42, 42),
+(43, 43),
+(44, 44),
+(45, 45),
+(46, 46),
+(47, 47),
+(48, 48),
+(49, 49),
+(50, 50),
+(27932, 52);
 
 -- Insertion des informations de paiement
 INSERT INTO INFORMATIONPAIEMENT (NUMCB, NOMCOMPLETCB, DATEEXP, CRYPTOGRAMME) VALUES

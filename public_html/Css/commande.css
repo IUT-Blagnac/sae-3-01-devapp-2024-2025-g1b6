@@ -92,16 +92,34 @@ html, body {
 
 .payment-method {
     margin-bottom: 20px;
+    display: flex; /* Aligne les éléments en ligne */
+    align-items: center; /* Aligne les éléments verticalement */
+    justify-content: flex-start; /* Aligne les éléments à gauche */
+}
+
+.payment-method input[type="radio"] {
+    margin-left: 10px; /* Ajoute un espace entre le texte et le bouton radio */
+    accent-color: var(--medium-purple); /* Couleur personnalisée */
+    width: 20px; /* Taille du bouton */
+    height: 20px; /* Taille du bouton */
+    cursor: pointer; /* Affiche le curseur pointeur sur le bouton */
 }
 
 .payment-method label {
-    display: block;
     font-size: 14px;
     color: #333;
-    margin-bottom: 5px;
+    margin: 0; /* Assure une bonne alignement */
+    flex-grow: 1; /* Permet au texte de prendre tout l'espace disponible si nécessaire */
 }
 
-.payment-method input {
+.payment-method label span {
+    display: inline-block;
+    margin-left: 5px; /* Optionnel : ajuste l'espace entre le texte et la partie spécifique */
+    font-size: 14px;
+    color: var(--medium-purple);
+}
+
+.payment-method input[type="text"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;

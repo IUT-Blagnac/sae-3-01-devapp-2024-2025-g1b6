@@ -270,7 +270,7 @@ html::-webkit-scrollbar-thumb {
 
 .categories li {
     position: relative;
-    height: auto;
+    height: 5em;
     padding: 0.5em;
     text-align: left;
     transition: background 0.3s;
@@ -286,7 +286,6 @@ html::-webkit-scrollbar-thumb {
 .categories li:hover {
     background-color: var(--medium-purple);
     transition: background 0.3s;
-    height: 6em;
 }
 
 
@@ -294,18 +293,14 @@ html::-webkit-scrollbar-thumb {
 .containerSouscategories {
     display: none; /* Cacher les sous-catégories par défaut */
     position: absolute; /* Positionner les sous-catégories sous la catégorie parent */
-    background: var(--clair-purple);
+    background-color: var(--clair-purple);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    border: solid 2px var(--light-purple);
-    color: var(--clair-purple);
-    left: -0.5%;
 }
 
 /* Afficher les sous-catégories lors du survol */
 .categories li:hover .containerSouscategories {
     display: block; /* Afficher les sous-catégories au survol */
-    height: auto;
 }
 
 .containerSouscategories:hover {
@@ -314,28 +309,36 @@ html::-webkit-scrollbar-thumb {
 
 /* Style des sous-catégories */
 .containerSouscategories ul {
-    position: relative;
     list-style-type: none;
     margin: 0;
     padding: 0;
+    color: var(--light-purple);
+}
+
+.containerSouscategories ul:hover {
     color: var(--clair-purple);
 }
 
 .containerSouscategories li {
-    height: 4em;
+    height: 3em;
     width: 9em;
     text-align: left;
     transition: background 0.3s;
-    padding: 0.5em;
 }
 
 .containerSouscategories li:hover {
-    background-color: var(--medium-purple);
+    background-color: var(--light-purple);
+    color: var(--clair-purple);
 }
 
 .containerSouscategories li a {
     text-decoration: none;
 }
+
+.containerSouscategories li a:hover {
+    color: var(--dark-purple);
+}
+
 
 
 

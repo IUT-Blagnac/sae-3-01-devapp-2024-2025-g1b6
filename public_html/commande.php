@@ -22,6 +22,25 @@ $stmt = $pdo->prepare("
 ");
 $stmt->execute([$idClient]);
 $infosPaiement = $stmt->fetchAll();
+
+// Récupérer les adresses pour l'utilisateur connecté
+$stmt = $pdo->prepare("
+    SELECT a.IDADRESSE, a.NUMRUE, a.NOMRUE, a.COMPLEMENTADR, a.NOMVILLE, a.CODEPOSTAL, a.PAYS
+    FROM ADRESSE a
+    JOIN POSSEDERADR pa ON a.IDADRESSE = pa.IDADRESSE
+    WHERE pa.IDCLIENT = ?
+");
+$stmt->execute([$idClient]);
+$adresses = $stmt->fetchAll();
+
+// Récupérer les transporteurs
+$stmt = $pdo->prepare("
+    SELECT IDTRANSPORTEUR, TYPEEXP, FRAISEXP
+    FROM TRANSPORTEUR
+    ORDER BY FRAISEXP ASC
+");
+$stmt->execute();
+$transporteurs = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -33,8 +52,33 @@ $infosPaiement = $stmt->fetchAll();
     <link rel="stylesheet" href="Css/all.css">
 </head>
 <body>
+    
+<header class="header">
+    <div class="barreMenu">
+        <ul class="menuListe">
+            <li style="flex: 1;"></li> <!-- Espace vide pour centrer le titre -->
+            <li>
+                <a class="lienAccueil" href="index.php">
+                    <h1 class="titreLudorama">Ludorama</h1>
+                </a>
+            </li>
+            <li style="flex: 1; display: flex; justify-content: flex-end;">
+                <?php
+                // Vérification de la session utilisateur
+                if (isset($_SESSION["user"])) {
+                    $id_client = $_SESSION["user"]["IDCLIENT"];
+                    // Si l'utilisateur est connecté, on le redirige vers son compte
+                    echo '<a href="compte.php"><div class="imgCompte"></div></a>';
+                } else {
+                    // Sinon, on le redirige vers la page de connexion
+                    echo '<a href="connexion.php"><div class="imgCompte"></div></a>';
+                }
+                ?>
+            </li>
+        </ul>
+    </div>
+</header>
 
-<h1>Page du détail d'une Commande</h1>
 
 <div class="container">
     <div class="commande-container">
@@ -43,10 +87,12 @@ $infosPaiement = $stmt->fetchAll();
             if (empty($produitsPanier)) {
                 echo "<p>Votre panier est vide.</p>";
             } else {
+                $totalHT = 0;
                 foreach ($produitsPanier as $produit) {
                     $imagePath = "./images/prod" . htmlspecialchars($produit['IDPROD']) . ".png"; // Chemin d'image
                     $prix = number_format($produit['PRIXHT'], 2, ',', ' ') . " €";
                     $quantite = intval($produit['QUANTITEPROD']);
+                    $totalHT += $produit['PRIXHT'] * $quantite;
                     echo "
                     <div class='product'>
                         <img src='$imagePath' alt='Image du produit'>
@@ -58,39 +104,127 @@ $infosPaiement = $stmt->fetchAll();
                         </div>
                     </div>";
                 }
+                $totalTTC = $totalHT * 1.2; // Ajout de la TVA (20%)
             }
             ?>
         </div>
 
         <div class="payment-section">
             <h2>Choisir une Information de Paiement</h2>
-            <form action="process_payment.php" method="post">
+            <form action="process_payment.php" method="post" onsubmit="return confirmPayment()">
                 <?php
                 if (empty($infosPaiement)) {
                     echo "<p>Aucune information de paiement disponible. <a href='info_paiement.php'>Ajouter une information de paiement</a></p>";
                 } else {
                     foreach ($infosPaiement as $info) {
                         echo "
+                        <p><a href='info_paiement.php'>Ajouter une information de paiement</a></p>
                         <div class='payment-method'>
                             <input type='radio' id='payment_{$info['NUMCB']}' name='numCB' value='{$info['NUMCB']}' required>
-                            <label for='payment_{$info['NUMCB']}'>Carte se terminant par " . substr($info['NUMCB'], -4) . " - Expire le {$info['DATEEXP']}</label>
+                            <label for='payment_{$info['NUMCB']}'>Carte se terminant par <span>" . substr($info['NUMCB'], -4) . "</span> - Expire le {$info['DATEEXP']}</label>
                         </div>";
                     }
                 }
                 ?>
-                <div class="payment-method">
-                    <label for="idAdresse">Adresse de livraison</label>
-                    <input type="text" id="idAdresse" name="idAdresse" required>
+                <h2>Choisir une Adresse de Livraison</h2>
+                <?php
+                if (empty($adresses)) {
+                    echo "<p>Aucune adresse disponible. <a href='info_adresse.php'>Ajouter une adresse</a></p>";
+                } else {
+                    foreach ($adresses as $adresse) {
+                        echo "
+                        <div class='address-method'>
+                            <input type='radio' id='address_{$adresse['IDADRESSE']}' name='idAdresse' value='{$adresse['IDADRESSE']}' required>
+                            <label for='address_{$adresse['IDADRESSE']}'>
+                                {$adresse['NUMRUE']} {$adresse['NOMRUE']}, {$adresse['COMPLEMENTADR']}, {$adresse['NOMVILLE']}, {$adresse['CODEPOSTAL']}, {$adresse['PAYS']}
+                            </label>
+                        </div>";
+                    }
+                }
+                ?>
+                <div class="address-method">
+                    <input type="radio" id="newAddress" name="idAdresse" value="new" required>
+                    <label for="newAddress">Entrer une nouvelle adresse</label>
                 </div>
-                <div class="payment-method">
-                    <label for="idLivraison">Type de livraison</label>
-                    <input type="text" id="idLivraison" name="idLivraison" required>
+                <div id="newAddressFields" style="display: none;">
+                    <div class="payment-method">
+                        <label for="numRue">Numéro de rue</label>
+                        <input type="text" id="numRue" name="numRue">
+                    </div>
+                    <div class="payment-method">
+                        <label for="nomRue">Nom de la rue</label>
+                        <input type="text" id="nomRue" name="nomRue">
+                    </div>
+                    <div class="payment-method">
+                        <label for="complementAdr">Complément d'adresse</label>
+                        <input type="text" id="complementAdr" name="complementAdr">
+                    </div>
+                    <div class="payment-method">
+                        <label for="nomVille">Ville</label>
+                        <input type="text" id="nomVille" name="nomVille">
+                    </div>
+                    <div class="payment-method">
+                        <label for="codePostal">Code postal</label>
+                        <input type="text" id="codePostal" name="codePostal">
+                    </div>
+                    <div class="payment-method">
+                        <label for="pays">Pays</label>
+                        <input type="text" id="pays" name="pays">
+                    </div>
                 </div>
+                <h2>Choisir un Transporteur</h2>
+                <?php
+                if (empty($transporteurs)) {
+                    echo "<p>Aucun transporteur disponible.</p>";
+                } else {
+                    foreach ($transporteurs as $transporteur) {
+                        echo "
+                        <div class='transport-method'>
+                            <input type='radio' id='transport_{$transporteur['IDTRANSPORTEUR']}' name='idTransporteur' value='{$transporteur['IDTRANSPORTEUR']}' data-frais='{$transporteur['FRAISEXP']}' required>
+                            <label for='transport_{$transporteur['IDTRANSPORTEUR']}'>
+                                {$transporteur['TYPEEXP']} - Frais : " . number_format($transporteur['FRAISEXP'], 2, ',', ' ') . " €
+                            </label>
+                        </div>";
+                    }
+                }
+                ?>
+                <h2>Prix Total</h2>
+                <p id="totalPrice"><?php echo number_format($totalTTC, 2, ',', ' '); ?> €</p>
+                <input type="hidden" id="totalPriceInput" name="totalPrice" value="<?php echo $totalTTC; ?>">
                 <button type="submit" class="btn validate">Payer</button>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+document.getElementById('newAddress').addEventListener('change', function() {
+    document.getElementById('newAddressFields').style.display = 'block';
+});
+
+document.querySelectorAll('input[name="idAdresse"]').forEach(function(input) {
+    if (input.id !== 'newAddress') {
+        input.addEventListener('change', function() {
+            document.getElementById('newAddressFields').style.display = 'none';
+        });
+    }
+});
+
+document.querySelectorAll('input[name="idTransporteur"]').forEach(function(input) {
+    input.addEventListener('change', function() {
+        const frais = parseFloat(this.getAttribute('data-frais'));
+        const totalHT = <?php echo $totalHT; ?>;
+        const totalTTC = totalHT * 1.2; // Ajout de la TVA (20%)
+        const total = totalTTC + frais;
+        document.getElementById('totalPrice').textContent = total.toFixed(2).replace('.', ',') + ' €';
+        document.getElementById('totalPriceInput').value = total;
+    });
+});
+
+function confirmPayment() {
+    return confirm("Voulez-vous confirmer le paiement ?");
+}
+</script>
 
 </body>
 </html>

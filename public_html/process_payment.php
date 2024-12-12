@@ -5,18 +5,49 @@ include("connect.inc.php");
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $numCB = $_POST['numCB'];
     $idClient = intval($_SESSION['user']['IDCLIENT']);
+    $numRue = $_POST['numRue'];
+    $nomRue = $_POST['nomRue'];
+    $complementAdr = $_POST['complementAdr'];
+    $nomVille = $_POST['nomVille'];
+    $codePostal = $_POST['codePostal'];
+    $pays = $_POST['pays'];
     $idAdresse = $_POST['idAdresse'];
-    $idLivraison = $_POST['idLivraison'];
+    $idTransporteur = $_POST['idTransporteur'];
+    $statutLivraison = 'En cours'; // Par défaut, le statut de livraison est "En cours"
+    $totalPrice = $_POST['totalPrice'];
+
+    // Générer le numéro de suivi (3 lettres suivies de 9 chiffres)
+    $lettres = strtoupper(substr(md5(rand()), 0, 3));  // 3 lettres aléatoires
+    $chiffres = str_pad(rand(100000000, 999999999), 9, '0', STR_PAD_LEFT);  // 9 chiffres
+    $codeSuivi = $lettres . $chiffres;
+
+    
+
+    // Récuperer la date de commande
+    $dateCommande = date("Y-m-d");
+
 
     try {
         // Commencer une transaction
         $pdo->beginTransaction();
 
-        // Insérer la commande dans la table Commande
-        $stmt = $pdo->prepare("INSERT INTO Commande (IDCLIENT, NUMCB, IDADRESSE, IDLIVRAISON, TYPEREGLEMENT, DATECOMMANDE) VALUES (?, ?, ?, ?, ?, NOW())");
-        $stmt->execute([$idClient, $numCB, $idAdresse, $idLivraison, 'CB']);
+        if($idAdresse === 'new'){
+            $idAdresse = rand(51, 100000); // Générer un ID d'adresse aléatoire
+            // Insérer l'adresse dans la table Adresse
+            $stmt = $pdo->prepare("INSERT INTO ADRESSE (IDADRESSE, NUMRUE, NOMRUE, COMPLEMENTADR, NOMVILLE, CODEPOSTAL, PAYS) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$idAdresse, $numRue, $nomRue, $complementAdr, $nomVille, $codePostal, $pays]);
 
-        // Vider le panier
+            $stmt = $pdo->prepare("INSERT INTO POSSEDERADR (IDADRESSE, IDCLIENT) VALUES (?, ?)");
+            $stmt->execute([$idAdresse, $idClient]);
+        }
+        // Insérer la commande dans la table Commande
+        $stmt = $pdo->prepare("INSERT INTO COMMANDE (IDCLIENT, IDTRANSPORTEUR, NUMCB, IDADRESSE, TYPEREGLEMENT, DATECOMMANDE, STATUTLIVRAISON, CODESUIVI, TOTALCOMMANDE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$idClient, $idTransporteur, $numCB, $idAdresse, 'CB', $dateCommande, $statutLivraison, $codeSuivi, $totalPrice]);
+
+        // Récupérer le numéro de commande généré
+        $numCommande = $pdo->lastInsertId();
+
+        // Vider le panier pour l'utilisateur
         $stmt = $pdo->prepare("DELETE FROM PANIER WHERE IDCLIENT = ?");
         $stmt->execute([$idClient]);
 
@@ -24,12 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo->commit();
 
         // Rediriger vers une page de confirmation
-        header("Location: confirmation.php");
+        header("Location: confirmation.php?commande=" . $numCommande);
         exit();
     } catch (Exception $e) {
         // Annuler la transaction en cas d'erreur
         $pdo->rollBack();
-        echo "Erreur lors du traitement du paiement : " . $e->getMessage();
+        echo "Erreur lors du traitement du paiement : " . htmlspecialchars($e->getMessage());
     }
 } else {
     echo "Requête invalide.";

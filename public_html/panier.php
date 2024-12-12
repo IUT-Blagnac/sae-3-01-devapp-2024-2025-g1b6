@@ -84,10 +84,12 @@ session_start();
                 echo "
                 <h4>Résumé</h4>
                 <div class='priceSummary'>
-                    <button class='btn subtotal'>Sous-total</button>
+                    <span>Total</span>
                     <span class='price'>{$totalFormatted}</span>
                 </div>
-                <button class='btn validate'>Valider le panier</button>
+                <form action='commande.php' method='post'>
+                    <button type='submit' class='btn validate'>Valider le panier</button>
+                </form>
                 <div class='paymentSecurity'>
                     <p>Paiement 100% sécurisé</p>
                     <div class='paymentIcons'>

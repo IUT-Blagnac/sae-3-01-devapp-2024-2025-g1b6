@@ -1,26 +1,187 @@
-.adresse {
-    background-color: aqua;
-    width: 50%;
-    height: 50%;
-    display: flex;
-    flex-direction: row;
+/* Palette de couleurs */
+:root {
+    --dark-purple: #6d00b0;
+    --clair-purple: #b27bd38f;
+    --medium-purple: #8A2BE2;
+    --light-purple: #e6d1f2;
+    --accent-pink: #FF69B4;
+    --backpurple: #d3bce6;
+    --white: #FFFFFF;   
+    --light-gray: #F0F0F0;
 }
 
-.cartes {
-    background-color: blue;
-    width: 50%;
-    height: 50%;
-    display: flex;
-    flex-direction: row;
+/* Styles de base */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-div {
-    width: 100%;
-    height: 100%;
+body {
+    overflow-x: hidden;
+    background-color: var(--light-purple);
+    font-family: 'Roboto', sans-serif;
 }
 
 main {
     display: flex;
     flex-direction: column;
-    
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.info-client {
+    width: 100%;
+    max-width: 800px;
+    margin: 10px 0;
+}
+
+.modif-client {
+    width: 100%;
+    max-width: 800px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.info-client {
+    background-color: var(--clair-purple);
+    border-radius: 15px;
+    padding: 15px;
+    width: 100%;
+    margin: 10px 10px;
+}
+
+.adresse, .cartes {
+    background-color: var(--clair-purple);
+    border-radius: 15px;
+    padding: 15px;
+    width: 50%;
+    margin: 10px 10px;
+}
+
+.adresse h2, .cartes h2, .info-client h2 {
+    margin-top: 0;
+    color: var(--white);
+}
+
+.adresse-item, .carte-item {
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.modal-btn {
+    background-color: var(--medium-purple);
+    color: var(--white);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.modal-btn:hover {
+    background-color: var(--accent-pink);
+}
+
+/* Fenêtre contextuelle (modale) */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    padding-top: 100px; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: var(--white);
+    margin: auto;
+    padding: 20px;
+    border: 1px solid var(--light-gray);
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    animation: slide-down 0.4s ease-out;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@keyframes slide-down {
+    from {
+        transform: translateY(-20%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form label {
+    font-weight: bold;
+}
+
+form input[type="text"], form button {
+    padding: 10px;
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+}
+
+form button {
+    background-color: var(--medium-purple);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: var(--accent-pink);
+}
+
+/* Media Query pour les écrans plus petits */
+@media (max-width: 780px) {
+    .modif-client {
+        flex-direction: column;
+    }
+
+    .adresse, .cartes {
+        width: 100%;
+        margin: 10px 0;
+    }
 }
