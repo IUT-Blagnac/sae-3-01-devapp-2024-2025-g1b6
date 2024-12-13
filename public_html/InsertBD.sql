@@ -352,7 +352,7 @@ INSERT INTO PRODUIT (IDPROD, IDMARQUE, NOMPROD, DESCPROD, PRIXHT, COULEUR, COMPO
 (151, 7, 'Voiture de sport', 'Voiture de sport rapide', 29.99, 'Rouge', 'Plastique', 0.5, 50),
 (152, 7, 'Voiture de police', 'Voiture de police avec sirène', 24.99, 'Bleu', 'Plastique', 0.6, 40),
 (153, 7, 'Voiture F1', 'Voiture de course télécommandée', 34.99, 'Jaune', 'Plastique', 0.7, 30),
-(154, 7, 'Camion de Police', 'Camion de pompier avec échelle', 39.99, 'Rouge', 'Plastique', 1.0, 25),
+(154, 7, 'Camion de Police Lego', 'Camion de pompier avec échelle', 39.99, 'Rouge', 'Plastique', 1.0, 25),
 (155, 7, 'Camion Tortue Ninja', 'Camion benne pour chantier', 29.99, 'Jaune', 'Plastique', 1.2, 20),
 (156, 7, 'Camion de livraison', 'Camion de livraison avec portes ouvrantes', 34.99, 'Blanc', 'Plastique', 1.1, 30),
 (157, 7, 'Avion de chasse', 'Avion de chasse rapide', 49.99, 'Gris', 'Plastique', 0.8, 20),
