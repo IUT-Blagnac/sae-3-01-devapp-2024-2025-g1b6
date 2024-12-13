@@ -1,6 +1,20 @@
 <?php
 session_start();
-include("connect.inc.php");
+
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commande - Ludorama</title>
+    <link rel="stylesheet" href="Css/commande.css">
+    <link rel="stylesheet" href="Css/all.css">
+</head>
+<body>
+    
+<?php 
+include("header.php"); 
 
 // Récupérer les produits du panier pour l'utilisateur connecté
 $idClient = intval($_SESSION['user']['IDCLIENT']);
@@ -42,42 +56,6 @@ $stmt = $pdo->prepare("
 $stmt->execute();
 $transporteurs = $stmt->fetchAll();
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commande - Ludorama</title>
-    <link rel="stylesheet" href="Css/commande.css">
-    <link rel="stylesheet" href="Css/all.css">
-</head>
-<body>
-    
-<header class="header">
-    <div class="barreMenu">
-        <ul class="menuListe">
-            <li style="flex: 1;"></li> <!-- Espace vide pour centrer le titre -->
-            <li>
-                <a class="lienAccueil" href="index.php">
-                    <h1 class="titreLudorama">Ludorama</h1>
-                </a>
-            </li>
-            <li style="flex: 1; display: flex; justify-content: flex-end;">
-                <?php
-                // Vérification de la session utilisateur
-                if (isset($_SESSION["user"])) {
-                    $id_client = $_SESSION["user"]["IDCLIENT"];
-                    // Si l'utilisateur est connecté, on le redirige vers son compte
-                    echo '<a href="compte.php"><div class="imgCompte"></div></a>';
-                } else {
-                    // Sinon, on le redirige vers la page de connexion
-                    echo '<a href="connexion.php"><div class="imgCompte"></div></a>';
-                }
-                ?>
-            </li>
-        </ul>
-    </div>
-</header>
 
 
 <div class="container">
@@ -128,9 +106,6 @@ $transporteurs = $stmt->fetchAll();
                 ?>
                 <h2>Choisir une Adresse de Livraison</h2>
                 <?php
-                if (empty($adresses)) {
-                    echo "<p>Aucune adresse disponible. <a href='info_adresse.php'>Ajouter une adresse</a></p>";
-                } else {
                     foreach ($adresses as $adresse) {
                         echo "
                         <div class='address-method'>
@@ -140,7 +115,6 @@ $transporteurs = $stmt->fetchAll();
                             </label>
                         </div>";
                     }
-                }
                 ?>
                 <div class="address-method">
                     <input type="radio" id="newAddress" name="idAdresse" value="new" required>

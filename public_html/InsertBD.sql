@@ -547,11 +547,6 @@ INSERT INTO APPARTENIRCATEG (IDPROD, IDCATEG) VALUES
 (121, 25), -- Monopoly La reine des neige -> Collection Disney
 (122, 25); -- Monopoly Disney -> Collection Disney
 
-
-
-
-
-
 (106, 5),  -- Peluche Anakin -> Peluches
 (107, 5),  -- Peluche Dark Vador -> Peluches
 (108, 5),  -- Peluche Yoda -> Peluches
