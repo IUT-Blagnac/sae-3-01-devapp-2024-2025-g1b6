@@ -310,7 +310,7 @@ INSERT INTO PRODUIT (IDPROD, IDMARQUE, NOMPROD, DESCPROD, PRIXHT, COULEUR, COMPO
 (118, 2, 'Playmobil Game of throne', 'Figurines Playmobil game of throne', 23.55, 'Multicolore', 'Plastique',2, 36),
 (119, 3, 'Monopoly StarWars', 'Monopoly starWars', 29.99, 'Multicolore', 'Plastique',1.2, 50),
 (120, 3, 'Monopoly Game of throne', 'Monopoly game of throne', 29.99, 'Multicolore','Plastique', 1.2, 50),
-(121, 3, 'Monopoly La reine des neige', 'Monopoly la reine des neige', 29.99, 'Multicolore','Plastique', 1.2, 50),
+(121, 3, 'Monopoly Disney Villains', 'Monopoly Disney Villains ', 29.99, 'Multicolore','Plastique', 1.2, 50),
 (122, 3, 'Monopoly Disney', 'Monopoly Disney', 29.99, 'Multicolore','Plastique', 1.2, 50);
 
 INSERT INTO PRODUIT (IDPROD, IDMARQUE, NOMPROD, DESCPROD, PRIXHT, COULEUR, COMPOSITION, POIDSPRODUIT, QTESTOCK) VALUES
