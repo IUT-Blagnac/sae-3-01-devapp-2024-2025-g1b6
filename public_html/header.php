@@ -27,7 +27,6 @@
                                 }
                                 echo "</ul> </div>";
                                 echo "</li>";
-                                
                             }
                             ?>
                         </ul>

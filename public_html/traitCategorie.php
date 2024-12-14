@@ -9,12 +9,11 @@ if ($idCategPere !== null && $idCateg == null) {    // Si on a uniquement une ca
     exit();
 
 } else if ($idCateg !== null && $idCategPere !== null) {    // Si on a une catégorie enfant et une catégorie parente
-    header("Location: categorieEnfants.php?idCategorie=".$idCateg); 
+    header("Location: categorieEnfants.php?idCategorie=".$idCateg. "&idCategoriePere=".$idCategPere); 
     exit();
 } else {
     echo "Aucune catégorie sélectionnée";
     header("Location: index.php");
     exit();
 }
-
 ?>

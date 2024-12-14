@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["EMAIL"]) && isset($_PO
                 setcookie("PASSWORD", "", time() - 3600);
             }
 
-            header("Location: admin.php");
+            header("Location: adminDashboard.php");
             exit;
         }
 

@@ -29,11 +29,10 @@
     height: 15em;
     width: 10em;
     text-align: center;
-    background-color: var(--backpurple);
+    background-color: var(--light-purple);
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 10px;
-}
+}  
 
 .filtres ul {
     position: relative;
@@ -122,6 +121,9 @@
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.3s;
     cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .sousCategorieContainer ul li:hover {
