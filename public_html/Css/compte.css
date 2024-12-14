@@ -1,260 +1,576 @@
-/* Palette de couleurs */
+/* Variables globales */
 :root {
-    --dark-purple: linear-gradient(#6d00b0, #b06bdc);
-    --clair-purple: #c267ff;
+    --dark-purple: #6d00b0;
+    --clair-purple: rgba(109, 0, 176, 0.15);
     --medium-purple: #8A2BE2;
-    --light-purple: #e6d1f2;
+    --light-purple: #f8f5fb;
     --accent-pink: #FF69B4;
-    --backpurple: #d3bce6;
-    --white: #FFFFFF;
+    --white: #FFFFFF;   
     --light-gray: #F0F0F0;
+    --text-dark: #2c3e50;
+    --shadow: 0 4px 6px rgba(109, 0, 176, 0.1);
 }
 
-
-.lienAccueil {
-    text-decoration: none;
+/* Styles de base */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.container {
-    flex: 1; 
+body {
+    overflow-x: hidden;
+    background-color: var(--light-purple);
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-top: -4em;
-}
-
-
-.listeCompte {
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 5em;
-}
-
-
-.compte{
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    gap: 30px;
     position: relative;
-    align-items: center;
-    justify-content: center;
-    margin-top: 5em;
-    background-color:var(--backpurple);
-    width: 30em;
-    height: 40em;
-    border-radius: 3em;
+    padding-bottom: 80px;
 }
 
-.titreCompte{
-    position: relative;
-    top: 5%;
+/* Conteneurs principaux */
+.info-client, .adresse, .cartes {
+    width: 70%;
+    background-color: var(--white);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--light-gray);
+    margin: 20px auto;
+    box-sizing: border-box;
+}
+
+/* Conteneurs internes */
+.infosCompte, .adresse-item, .carte-item {
+    width: 85%;
+    margin: 12px auto;
+    background-color: var(--light-purple);
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid var(--light-gray);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Titres */
+h2 {
+    width: 100%;
     text-align: center;
-    font-size: 2em;
-    margin-top: -1em;
-    color: var(--medium-purple);
+    color: var(--dark-purple);
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 10px;
 }
 
-.infosCompte {
-    position: relative;
-    top: 7%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    margin-top: -2em;
-}
-
+/* Informations */
 .infos {
-    position: relative;
-    background: var(--light-purple);
-    width: 25em;
-    height: 19em;
-    border-radius: 1em;
-    margin-top: 1em;
-    margin-left: 0em;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 .info {
-    position: relative;
-    width: 20em;
-    height: 1em;
-    border-radius: 1em;    
-    margin-left: 2.5em;
-    margin-top: 1.5em;
-    top: 1em;
-    color: var(--clair-purple);
+    margin: 8px 0;
+    padding: 8px 0;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--light-gray);
 }
 
-.modifier {
-    position: relative;
-    top: 10%;
-    left: 10%;
-    width: 10em;
-    height: 2em;
-    border-radius: 1em;
-    margin-top: 1em;
-    margin-left: 9em;
+/* Boutons */
+.action-buttons {
     display: flex;
-    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
     justify-content: center;
-    border: 2px solid var(--light-gray);
-    color: var(--medium-purple);
-    border-radius: 2em;
-    background-color: var(--light-gray);
-    transition: background 0.3s;
-    text-decoration: none;
 }
 
-.modifier:hover {
-    background: var(--clair-purple);
-    transition: background 0.3s;
-    cursor: pointer;
-    color: var(--white);
-    border-color: var(--clair-purple);
-    text-decoration: none;
-}
-
-.compte a {
-    text-decoration: none;
-}
-
-
-
-
-.formulaire-modif {
-    display: flex;
-    flex-direction: column;
-    max-width: 500px;
-    margin: 2em auto;
-    padding: 2em;
-    background-color: var(--light-purple);
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.formulaire-modif input[type="text"],
-.formulaire-modif input[type="email"],
-.formulaire-modif input[type="tel"] {
-    padding: 1em;
-    margin: 0.5em 0;
-    font-size: 16px;
-    border: 1px solid var(--medium-purple);
-    border-radius: 8px;
-}
-
-.formulaire-modif input[type="text"]:focus,
-.formulaire-modif input[type="email"]:focus,
-.formulaire-modif input[type="tel"]:focus {
-    border-color: var(--clair-purple);
-    outline: none;
-}
-
-.btn-valider {
-    background-color: var(--medium-purple);
-    color: var(--white);
-    padding: 1em;
-    margin-top: 1em;
-    font-weight: bold;
+.modal-btn {
+    background: linear-gradient(135deg, var(--medium-purple), var(--dark-purple));
+    color: white;
+    padding: 12px 25px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 5px rgba(109, 0, 176, 0.2);
 }
 
-.btn-valider:hover {
-    background-color: var(--clair-purple);
+.modal-btn:hover {
+    background: linear-gradient(135deg, var(--dark-purple), var(--medium-purple));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(109, 0, 176, 0.3);
 }
 
-.btn-annuler {
-    text-decoration: none;
-    text-align: center;
-    padding: 1em;
-    background-color: var(--light-gray);
-    color: var(--medium-purple);
+.disconnect-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #ff4757, #ff6b81);
+    padding: 15px 30px;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* Liste d'adresses */
+.adresse-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Modales */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding: 20px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: var(--white);
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid var(--light-gray);
+    width: 90%;
+    max-width: 500px;
+    min-width: 280px;
     border-radius: 10px;
-    transition: background 0.3s;
-    display: inline-block;
-    margin-top: 1em;
-    text-align: center;
-}
-
-.btn-annuler:hover {
-    background-color: var(--clair-purple);
-    color: var(--white);
-}
-
-
-
-
-
-
-
-
-
-.commandes {
+    animation: slide-down 0.4s ease-out;
     position: relative;
-    align-items: center;
-    justify-content: center;
-    margin-top: 5em;
-    background-color:var(--light-purple);
-    width: 30em;
-    height: 40em;
-    border-radius: 3em;
 }
 
-.imgCommande {
-    position: relative;
-    background-image: url("../images/Commande.png");
-    left: 38%;
-    top: 1%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 9.5em;
-    height: 9.5em;  
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.titreCommande {
-    position: relative;
-    text-align: center;
-    font-size: 2em;
-    margin-top:0.8em;
-    color: var(--medium-purple);
+.close:hover {
+    color: black;
 }
 
-.listeCommandes {
+/* Formulaires */
+form {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    margin-top: -1em;
+    gap: 10px;
 }
 
-.liCommandes {
-    position: relative;
-    background: var(--clair-purple);
-    width: 15em;
-    height: 3em;
-    border-radius: 1em;
-    margin-top: 1em;
-    margin-left: -2em;
+form label {
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="password"],
+form input[type="date"],
+form input[type="month"],
+form select {
+    padding: 10px;
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+    color: #808080;
+}
+
+/* Toasts */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.toast {
+    padding: 16px 24px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    min-width: 300px;
+    max-width: 400px;
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    color: var(--light-purple);
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.3s ease-in-out, fadeOut 0.5s ease-in-out 4.5s forwards;
+    cursor: pointer;
+    background: var(--white);
+}
+
+.toast.success {
+    background-color: #4caf50;
+    color: white;
+    border-left: 4px solid #2ecc71;
+}
+
+.toast.error {
+    background-color: #f44336;
+    color: white;
+    border-left: 4px solid #e74c3c;
+}
+
+/* Confirmation de suppression */
+.confirm-delete-content {
     text-align: center;
-    font-size: 1.5em;
-    transition: background 0.3s;
+    padding: 20px;
 }
 
-.liCommandes:hover {
-    background: var(--medium-purple);
-    transition: background 0.3s;
+.confirm-delete-content h2 {
+    color: #ff4757;
+    margin-bottom: 20px;
 }
 
+.confirm-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.confirm-yes {
+    background: linear-gradient(135deg, #ff4757, #ff6b81);
+}
+
+.confirm-no {
+    background: linear-gradient(135deg, var(--medium-purple), var(--dark-purple));
+}
+
+/* Dans la section Formulaires */
+form button[type="submit"] {
+    background: linear-gradient(135deg, var(--medium-purple), var(--dark-purple));
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 5px rgba(109, 0, 176, 0.2);
+    margin-top: 10px;
+    width: 100%;
+}
+
+form button[type="submit"]:hover {
+    background: linear-gradient(135deg, var(--dark-purple), var(--medium-purple));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(109, 0, 176, 0.3);
+}
+
+form button[type="submit"]:disabled {
+    background: #d3d3d3;
+    transform: none;
+    box-shadow: none;
+    cursor: not-allowed;
+    color: #808080;
+}
+
+/* Pour les boutons sans type spécifié dans les formulaires */
+form button:not([type]) {
+    background: linear-gradient(135deg, var(--medium-purple), var(--dark-purple));
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 5px rgba(109, 0, 176, 0.2);
+    margin-top: 10px;
+    width: 100%;
+}
+
+form button:not([type]):hover {
+    background: linear-gradient(135deg, var(--dark-purple), var(--medium-purple));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(109, 0, 176, 0.3);
+}
+
+/* Style de la liste de cartes avec scrollbar */
+.carte-list {
+    max-height: 300px; /* Hauteur maximale qui permet d'afficher environ 2 cartes */
+    overflow-y: auto;
+}
+
+.carte-item {
+    width: 95%;
+    margin: 0 auto 15px auto;
+    background-color: var(--light-purple);
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid var(--light-gray);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.carte-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Titre et bouton en dehors de la zone scrollable */
+.cartes h2 {
+    margin: 0;
+    padding-bottom: 15px;
+}
+
+.cartes .modal-btn.ajouter-moyen-paiement {
+    margin-top: 10px;
+    align-self: center;
+}
+
+/* Style des cartes avec scrollbar */
+.cartes {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.carte-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.carte-item {
+    width: 95%;
+    margin: 0 auto 15px auto;
+}
+
+.carte-item:last-child {
+    margin-bottom: 0;
+}
+
+.cartes .modal-btn.ajouter-moyen-paiement {
+    margin-top: 10px;
+    align-self: center;
+}
+
+/* Style des commandes */
+.commandes {
+    width: 70%;
+    background-color: var(--white);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--light-gray);
+    margin: 20px auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.commande-list {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.commande-item {
+    width: 95%;
+    margin: 0 auto 20px auto;
+    background-color: var(--light-purple);
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid var(--light-gray);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.commande-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.commande-status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-weight: 500;
+    font-size: 0.9em;
+}
+
+.commande-status.en-cours {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.commande-status.livree {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.commande-status.annulee {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.produits-list {
+    margin-bottom: 15px;
+}
+
+.produit-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.produit-item:last-child {
+    border-bottom: none;
+}
+
+.livraison-info {
+    background-color: var(--white);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.no-commandes {
+    text-align: center;
+    color: var(--text-dark);
+    padding: 20px;
+}
+
+
+.produit-nom {
+    color: var(--dark-purple);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.produit-nom:hover {
+    color: var(--medium-purple);
+    text-decoration: underline;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-numbers {
+    display: flex;
+    gap: 10px;
+}
+
+.page-number {
+    padding: 8px 12px;
+    border: 1px solid var(--medium-purple);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.page-number:hover {
+    background-color: var(--light-purple);
+}
+
+.page-number.active {
+    background-color: var(--medium-purple);
+    color: white;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes slide-down {
+    from { transform: translateY(-20%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Media Queries */
+@media (max-width: 1400px) {
+    .info-client, .adresse, .cartes {
+        width: 80%;
+    }
+}
+
+@media (max-width: 768px) {
+    .info-client, .adresse, .cartes {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .modal-btn {
+        width: 100%;
+    }
+
+    .toast-container {
+        width: 90%;
+        right: 5%;
+        left: 5%;
+    }
+
+    .toast {
+        width: 100%;
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 10px;
+    }
+}
+
+
+/* Ajustements responsifs */
+@media (max-width: 768px) {
+    .carte-list {
+        max-height: 250px;
+    }
+    
+    .carte-item {
+        width: 90%;
+    }
+}
