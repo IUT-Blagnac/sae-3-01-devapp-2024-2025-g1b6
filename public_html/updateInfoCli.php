@@ -62,10 +62,7 @@
             header("Location: compte.php?modif=erreur&typeModif=1");
         }
         exit();
-    }
-
-    // Traitement de la modification du mot de passe
-    if ($_GET["typeModif"] == 2) {
+    }else if ($_GET["typeModif"] == 2) { // Traitement de la modification du mot de passe
         // Vérification de l'ancien mot de passe
         $query = $pdo->prepare("SELECT PASSWORD FROM CLIENT WHERE IDCLIENT = :idClient");
         $query->execute([":idClient" => $id_client]);
@@ -99,11 +96,17 @@
             header("Location: compte.php?modif=erreur&typeModif=2&error=wrong_password");
         }
         exit();
-    }
-
-    // Traitement de l'ajout d'adresse
-    if ($_GET["typeModif"] == 3) {
+    }else if ($_GET["typeModif"] == 3) {// Traitement de l'ajout d'adresse
         try {
+            // Debug : Afficher les données reçues
+            echo "Données reçues : <br>";
+            echo "numRue: " . $_POST['numRue'] . "<br>";
+            echo "nomRue: " . $_POST['nomRue'] . "<br>";
+            echo "complement: " . $_POST['complement'] . "<br>";
+            echo "ville: " . $_POST['ville'] . "<br>";
+            echo "codePostal: " . $_POST['codePostal'] . "<br>";
+            echo "pays: " . $_POST['pays'] . "<br>";
+
             // Validation des données
             $numRue = filter_var($_POST['numRue'], FILTER_VALIDATE_INT);
             $nomRue = trim($_POST['nomRue']);
@@ -111,6 +114,15 @@
             $ville = trim($_POST['ville']);
             $codePostal = filter_var($_POST['codePostal'], FILTER_VALIDATE_INT);
             $pays = trim($_POST['pays']);
+
+            // Debug : Afficher les données après validation
+            echo "<br>Après validation : <br>";
+            echo "numRue: " . var_export($numRue, true) . "<br>";
+            echo "nomRue: " . $nomRue . "<br>";
+            echo "complement: " . $complement . "<br>";
+            echo "ville: " . $ville . "<br>";
+            echo "codePostal: " . var_export($codePostal, true) . "<br>";
+            echo "pays: " . $pays . "<br>";
 
             // Vérification des longueurs et types
             if ($numRue === false || $numRue <= 0 || strlen($numRue) > 10) {
@@ -135,9 +147,14 @@
             // Démarrer la transaction
             $pdo->beginTransaction();
             
-            // Insertion de la nouvelle adresse avec les données validées
+            // Debug : Afficher la requête qui va être exécutée
+            echo "<br>Requête d'insertion adresse : <br>";
+            echo "INSERT INTO ADRESSE (NUMRUE, NOMRUE, COMPLEMENT, VILLE, CODEPOSTAL, PAYS) VALUES ";
+            echo "($numRue, '$nomRue', " . ($complement ? "'$complement'" : "NULL") . ", '$ville', $codePostal, '$pays')";
+            
+            // Insertion de la nouvelle adresse
             $query = $pdo->prepare("
-                INSERT INTO ADRESSE (NUMRUE, NOMRUE, COMPLEMENT, VILLE, CODEPOSTAL, PAYS)
+                INSERT INTO ADRESSE (NUMRUE, NOMRUE, COMPLEMENTADR, NOMVILLE, CODEPOSTAL, PAYS)
                 VALUES (:numRue, :nomRue, :complement, :ville, :codePostal, :pays)
             ");
             
@@ -151,11 +168,18 @@
             ]);
             
             if (!$success) {
+                echo "<br>Erreur lors de l'insertion de l'adresse : ";
+                print_r($query->errorInfo());
                 throw new Exception("Erreur lors de l'insertion de l'adresse");
             }
             
             // Récupérer l'ID de l'adresse nouvellement créée
             $idAdresse = $pdo->lastInsertId();
+            echo "<br>ID de l'adresse créée : " . $idAdresse;
+            
+            // Debug : Afficher la requête de liaison
+            echo "<br>Requête de liaison : <br>";
+            echo "INSERT INTO POSSEDERADR (IDCLIENT, IDADRESSE) VALUES ($id_client, $idAdresse)";
             
             // Lier l'adresse au client
             $query = $pdo->prepare("
@@ -169,19 +193,23 @@
             ]);
             
             if (!$success) {
+                echo "<br>Erreur lors de la liaison de l'adresse au client : ";
+                print_r($query->errorInfo());
                 throw new Exception("Erreur lors de la liaison de l'adresse au client");
             }
             
             // Si tout s'est bien passé, on valide la transaction
             $pdo->commit();
-            header("Location: compte.php?modif=ok&typeModif=3");
+            echo "<br>Transaction validée avec succès !";
             
         } catch (Exception $e) {
             // En cas d'erreur, on annule la transaction
             if ($pdo->inTransaction()) {
                 $pdo->rollBack();
+                echo "<br>Transaction annulée !";
             }
-            header("Location: compte.php?modif=erreur&typeModif=3");
+            echo "<br>Erreur : " . $e->getMessage();
+            echo "<br>Trace : <pre>" . $e->getTraceAsString() . "</pre>";
         }
         exit();
     }

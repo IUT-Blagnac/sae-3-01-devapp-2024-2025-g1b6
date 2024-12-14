@@ -4,7 +4,7 @@ require_once 'connect.inc.php'; // Connexion PDO
 
 // Récupérer la page actuelle (par défaut 1 si non définie)
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
-$produitsParPage = 10; // Nombre de produits par page
+$produitsParPage = 12; // Nombre de produits par page
 
 // Calculer l'offset
 $offset = ($page - 1) * $produitsParPage;

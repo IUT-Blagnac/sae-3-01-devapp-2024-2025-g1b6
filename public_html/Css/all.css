@@ -322,7 +322,7 @@ html::-webkit-scrollbar-thumb {
 }
 
 .containerSouscategories li {
-    height: 3em;
+    height: 2.45em;
     width: 9em;
     text-align: left;
     transition: background 0.3s;
@@ -331,6 +331,7 @@ html::-webkit-scrollbar-thumb {
 .containerSouscategories li:hover {
     background-color: var(--light-purple);
     color: var(--clair-purple);
+    height: 2.45em;
 }
 
 .containerSouscategories li a {

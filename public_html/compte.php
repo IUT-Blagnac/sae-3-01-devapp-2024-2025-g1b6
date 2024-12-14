@@ -161,28 +161,6 @@
                         <p>Vous n'avez encore aucune carte de paiement enregistrée.</p>
                     <?php endif; ?>
                 <button class="modal-btn ajouter-moyen-paiement"> Ajouter </button>
-                <h2>Mes Moyens de Paiement</h2>
-                <?php 
-                    $query = $pdo->prepare('SELECT Ip.* FROM INFORMATIONPAIEMENT Ip, POSSEDERIP Pip
-                                                   WHERE Ip.NUMCB = Pip.NUMCB
-                                                   AND Pip.IDCLIENT = :idClient 
-                    ');
-                    $query->execute(['idClient'=> $id_client]);
-                    $tabCartes = $query->fetchAll();
-                    $query->closeCursor();
-                    if (count($tabCartes) > 0): ?>
-                        <?php foreach ($tabCartes as $carte): ?>
-                            <div class="carte-item">
-                                <p><?php substr_replace($carte['NUMCB'], str_repeat('*', strlen($carte['NUMCB']) - 5), 0, strlen($carte['NUMCB'])-5); ?></p>
-                                <div class="action-buttons">
-                                    <button class="modal-btn supprimer-carte">Supprimer</button>
-                                </div>
-                            </div>
-                        <?php endforeach;?>
-                    <?php else: ?>
-                        <p>Vous n'avez encore aucune carte de paiement enregistrée.</p>
-                    <?php endif; ?>
-                <button class="modal-btn ajouter-moyen-paiement"> Ajouter </button>
             </div>
         </div>
         <button class="modal-btn disconnect-btn">Se déconecter</button>

@@ -31,10 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo->beginTransaction();
 
         if($idAdresse === 'new'){
-            $idAdresse = rand(51, 100000); // Générer un ID d'adresse aléatoire
             // Insérer l'adresse dans la table Adresse
-            $stmt = $pdo->prepare("INSERT INTO ADRESSE (IDADRESSE, NUMRUE, NOMRUE, COMPLEMENTADR, NOMVILLE, CODEPOSTAL, PAYS) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$idAdresse, $numRue, $nomRue, $complementAdr, $nomVille, $codePostal, $pays]);
+            $stmt = $pdo->prepare("INSERT INTO ADRESSE ( NUMRUE, NOMRUE, COMPLEMENTADR, NOMVILLE, CODEPOSTAL, PAYS) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([ $numRue, $nomRue, $complementAdr, $nomVille, $codePostal, $pays]);
 
             $stmt = $pdo->prepare("INSERT INTO POSSEDERADR (IDADRESSE, IDCLIENT) VALUES (?, ?)");
             $stmt->execute([$idAdresse, $idClient]);
