@@ -100,7 +100,8 @@
     ('Bricolage', null),
     ('Pâte à Modeler', null),
     ('Peluches Classique', null),
-    ('Figurine Classique', null);
+    ('Figurine Classique', null),
+    ('Console de jeux', null);
 
     -- Insertion des packs
     INSERT INTO PACK (NOMPACK, DESCPACK) VALUES
@@ -526,7 +527,7 @@
     (4, 18), -- Puzzles --> Modèles complexes
     (10, 18), -- Construction --> Modèles complexes
     (2, 19), -- Jeux de Société --> Jeux éducatifs
-    (2, 20), -- Jeux de Société --> Jouets d'éveil
+    (9, 20), -- Créativité --> Jouets d'éveil
     (2, 21), -- Jeux de Société --> Jeux de cartes
     (2, 22), -- Jeux de Société --> Plateaux de jeux
     (3, 23), -- Figurines --> Collection ToyStory
@@ -576,6 +577,7 @@
     (9, 48), -- Créativité --> Bricolage
     (9, 49); -- Créativité --> Pâte à Modeler
     (5, 50); -- Peluches --> Peluches Classique
+    (28, 48); -- Jeux Vidéo --> Console de jeux
 
 
 
@@ -592,9 +594,12 @@
     (4, 20), -- Maison de poupée --> Jouets d'éveil
     (5, 5),  -- Peluche éléphant --> Peluches
     (6, 22), -- Jeu de mémoire --> Plateaux de jeux
+    (6, 2), -- Jeu de mémoire --> Jeux de Société
     (7, 7),  -- Camion de pompier --> Véhicules
     (8, 17), -- Cuisinière jouet --> Blocs de construction
+    (8, 10), -- Cuisinière jouet --> Construction
     (9, 1),  -- Cheval à bascule --> Jouets en Bois
+    (9, 19), -- Cheval à bascule --> Jeux éducatifs
     (10, 2), -- Jeu de société --> Jeux de Société
     (11, 16), -- Puzzle en bois --> Puzzles classiques
     (11, 4), -- Puzzle en bois --> Puzzles
@@ -610,7 +615,8 @@
     (21, 16), -- Casse-tête en bois --> Puzzles classiques
     (21, 4), -- Casse-tête en bois --> Puzzles
     (22, 2),  -- Jeu de société classique --> Jeux de Société
-    (23, 4), -- Figurine super-héros --> Figurines
+    (23, 3), -- Figurine super-héros --> Figurines
+    (23, 47), -- Figurine super-héros --> Figurines classiques
     (24, 2), -- Peluche licorne --> Peluches
     (25, 3), -- Camion benne --> Véhicules
     (26, 6),  -- Tablette éducative --> Électronique
@@ -621,9 +627,11 @@
     (31, 16), -- Labyrinthe en bois --> Puzzles classiques
     (31, 4), -- Labyrinthe en bois --> Puzzles
     (32, 22), -- Jeu de mémoire --> Plateaux de jeux
+    (32, 2), -- Jeu de mémoire --> Jeux de Société
     (33, 3);  -- Figurine animal --> Figurines
 
-    (34, 22),  -- Jeu de mémoire --> Plateaux de jeux
+    (34, 5),  -- Peluche lapin --> Peluches
+    (34, 46), -- Peluche lapin --> Peluches classique
     (35, 7),  -- Train électrique --> Véhicules
     (36, 6),  -- Drone pour enfants --> Électronique
     (37, 8),  -- Trottinette --> Extérieur
@@ -632,6 +640,7 @@
     (40, 10), -- Jeu de quilles --> Construction
     (41, 19), -- Boîte à formes --> Jeux éducatifs
     (42, 2),  -- Jeu de l'oie --> Jeux de Société
+    (54, 2), -- Hasbro Game of throne --> Jeux de Société
     (43, 3),  -- Figurine chevalier --> Figurines
     (44, 5),  -- Peluche chien --> Peluches
     (45, 6),  -- Hélicoptère télécommandé --> Électronique
@@ -639,7 +648,37 @@
     (47, 8),  -- Bateau gonflable --> Extérieur
     (48, 8),  -- Cerf-volant --> Extérieur
     (49, 8),  -- Kit de jardinage --> Extérieur
-    (50, 2);  -- Marionnettes en tissu --> Jeux de Société
+    (50, 2),  -- Marionnettes en tissu --> Jeux de Société
+    (46, 48), -- Console de jeux --> Console de Jeux
+    (50, 19), -- Marionnettes en tissu --> Jeux éducatifs
+    (58, 3), -- Barbie --> Figurines
+    (58, 47), -- Barbie --> Figurines classiques
+    (60, 17), -- Mega Bloks --> Blocs de construction
+    (61, 7), -- Brio --> Véhicules
+    (61, 37), -- Brio --> Voitures
+    (62, 3), -- Schleich --> Figurines
+    (62, 47), -- Schleich --> Figurines classiques
+    (63, 20), -- Melissa & Doug --> Jouets d'éveil
+    (63, 9), -- Melissa & Doug --> Créativité
+    (64, 16), -- Ravensburger --> Puzzles classiques
+    (64, 4), -- Ravensburger --> Puzzles
+    (67, 7), -- Little Tikes --> Véhicules
+    (67, 37), -- Little Tikes --> Voitures
+    (69, 1), -- Hape --> Jouets en Bois
+    (78, 48), -- Console Ludorama --> Console de Jeux
+    (79, 29), -- Jeux Video Ludorama --> Jeu Vidéo aventure
+    (81, 29), -- Horizon Forbidden West --> Jeu Vidéo aventure
+    (123, 28), -- Call of Duty: Modern Warfare --> Jeu Vidéo
+    (124, 28), -- Assassin's Creed Valhalla --> Jeu Vidéo
+    (125, 28), -- Cyberpunk 2077 --> Jeu Vidéo
+    (126, 28), -- Red Dead Redemption 2 --> Jeu Vidéo
+    (127, 28), -- Resident Evil Village --> Jeu Vidéo
+    (128, 28), -- The Last of Us Part II --> Jeu Vidéo
+    (129, 28), -- Outlast --> Jeu Vidéo
+    (130, 28); -- Amnesia: Rebirth --> Jeu Vidéo
+    (59, 8), -- Nerf --> Extérieur
+    (59, 36); -- Nerf --> Jeux Interactifs
+    
 
 
 
@@ -811,6 +850,8 @@
     (90, 31), -- Hellblade II Senua's Saga --> Jeu Vidéo Action
     (91, 29), -- The Lord of the Rings Gollum --> Jeu Vidéo aventure
     (92, 30), -- The Witcher 4 --> Jeu Vidéo RPG
+    (45, 7), -- Hélicoptère télécommandé --> Véhicules
+    (45, 39), -- Hélicoptère télécommandé --> Avions
 
 
 

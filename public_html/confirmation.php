@@ -75,7 +75,7 @@ $total = $totalTTC + $commande['FRAISEXP'];
 <p><?php echo htmlspecialchars($commande['COMPLEMENTADR']); ?></p>
 <p><?php echo htmlspecialchars($commande['NOMVILLE']) . ', ' . htmlspecialchars($commande['CODEPOSTAL']) . ', ' . htmlspecialchars($commande['PAYS']); ?></p>
 
-<h2>Transporteur</h2>
+<h2>Type d'expédition</h2>
 <p><?php echo htmlspecialchars($commande['TYPEEXP']); ?></p>
 
 <?php include("footer.php"); ?>

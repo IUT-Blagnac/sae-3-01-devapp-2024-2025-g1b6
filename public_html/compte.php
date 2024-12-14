@@ -12,8 +12,8 @@
 
     // Récupérer l'ID client depuis la session
     $id_client = $_SESSION["user"]["IDCLIENT"];
-    var_dump($_SESSION["user"]);
-?>
+
+?>  
 
 
 <!DOCTYPE html>
@@ -22,7 +22,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Css/all.css">
-    <link rel="stylesheet" href="Css/compte.css?v=1.9">
+    <link rel="stylesheet" href="Css/compte.css?v=1.97">
     <title>Compte</title>
 </head>
 <body>
@@ -64,9 +64,36 @@
                                 'Votre nouvelle adresse a été ajoutée avec succès.' : 
                                 'Une erreur est survenue lors de l\'ajout de l\'adresse.';
                             break;
-                        // Ajoutez d'autres cas selon vos besoins
+                        case '4':
+                            $message = $type === 'success' ? 
+                                'L\'adresse a été modifiée avec succès !' : 
+                                'Une erreur est survenue lors de la modification de l\'adresse.';
+                            break;
+                        case '5':
+                            $message = $type === 'success' ? 
+                                'L\'adresse a été supprimée avec succès !' : 
+                                'Une erreur est survenue lors de la suppression de l\'adresse.';
+                            break;
+                        case '6':
+                            if (isset($_GET['error']) && $_GET['error'] === 'wrong_holder') {
+                                $message = 'Le nom du détenteur de la carte ne correspond pas à celui enregistré.';
+                            } else {
+                                $message = $type === 'success' ? 
+                                    'Votre carte bancaire a été ajoutée avec succès !' : 
+                                    'Une erreur est survenue lors de l\'ajout de la carte bancaire.';
+                            }
+                            break;
+                        case '7':
+                            $message = $type === 'success' ? 
+                                'La carte bancaire a été supprimée avec succès !' : 
+                                'Une erreur est survenue lors de la suppression de la carte bancaire.';
+                            break;
+                        default:
+                            $message = $type === 'success' ? 'Opération réussie !' : 'Une erreur est survenue.';
+                            break;
                     }
                 }
+
                 ?>
                 <div class="toast <?= $type ?>" onclick="this.remove()">
                     <div class="toast-icon">
@@ -79,52 +106,53 @@
                 </div>
             <?php endif; ?>
         </div>
-        <div>
-            <div class="info-client">
-                <h2>Mes informations personnelles</h2>
-                <div class="infosCompte">
-                    <div class="infosPerso">
-                        <div class="infos">
-                            <p class="info">Nom : <?= isset($user['NOMCLIENT']) ? htmlspecialchars($user['NOMCLIENT']) : 'Non défini' ?></p>
-                            <p class="info">Prenom : <?= isset($user['PRENOMCLIENT']) ? htmlspecialchars($user['PRENOMCLIENT']) : 'Non défini' ?></p>
-                            <p class="info">Email : <?= isset($user['EMAIL']) ? htmlspecialchars($user['EMAIL']) : 'Non défini' ?></p>
-                            <p class="info">Date de naissance : <?= isset($user['DATEN']) ? htmlspecialchars((new DateTime($user['DATEN']))->format('d/m/Y')) : 'Non défini' ?></p>
-                            <?php if (!empty($user['NUMTEL'])): ?>
-                                <p class="info">Téléphone : <?= '+' . substr(htmlspecialchars($user['NUMTEL']), 2) ?></p>
-                            <?php endif; ?>
-                        </div>
+        <div class="info-client">
+            <h2>Mes informations personnelles</h2>
+            <div class="infosCompte">
+                <div class="infosPerso">
+                    <div class="infos">
+                        <p class="info">Nom : <?= isset($user['NOMCLIENT']) ? htmlspecialchars($user['NOMCLIENT']) : 'Non défini' ?></p>
+                        <p class="info">Prenom : <?= isset($user['PRENOMCLIENT']) ? htmlspecialchars($user['PRENOMCLIENT']) : 'Non défini' ?></p>
+                        <p class="info">Email : <?= isset($user['EMAIL']) ? htmlspecialchars($user['EMAIL']) : 'Non défini' ?></p>
+                        <p class="info">Date de naissance : <?= isset($user['DATEN']) ? htmlspecialchars((new DateTime($user['DATEN']))->format('d/m/Y')) : 'Non défini' ?></p>
+                        <?php if (!empty($user['NUMTEL'])): ?>
+                            <p class="info">Téléphone : <?= '+' . substr(htmlspecialchars($user['NUMTEL']), 2) ?></p>
+                        <?php endif; ?>
                     </div>
-                </div>    
-                <div class="action-buttons">
-                    <button class="modal-btn modifier-infoClient">Modifier Mes Infos</button>
-                    <button class="modal-btn modifier-mdp">Modifier Mot de passe</button>
                 </div>
+            </div>    
+            <div class="action-buttons">
+                <button class="modal-btn modifier-infoClient">Modifier Mes Infos</button>
+                <button class="modal-btn modifier-mdp">Modifier Mot de passe</button>
+            </div>
         </div>
-            
-        <div class="modif-client">
-            <?php 
-                $query = $pdo->prepare('SELECT A.* FROM ADRESSE A, POSSEDERADR Pa
+
+        <div class="adresse">
+            <h2>Mes Adresses</h2>
+            <div class="adresse-list">
+                <?php 
+                    $query = $pdo->prepare('SELECT A.* FROM ADRESSE A, POSSEDERADR Pa
                                                WHERE A.IDADRESSE = Pa.IDADRESSE
                                                AND Pa.IDCLIENT = :idClient 
-                ');
-                $query->execute(['idClient'=> $id_client]);
-                $adresses = $query->fetchAll();
-                $query->closeCursor()
-            ?>
-            <div class="adresse">
-                <h2>Mes Adresses</h2>
+                    ');
+                    $query->execute(['idClient'=> $id_client]);
+                    $adresses = $query->fetchAll();
+                    $query->closeCursor()
+                ?>
                 <?php if (count($adresses) > 0): ?>
                     <?php foreach($adresses as $adresse): ?>
                         <div class="adresse-item">
                             <p>
-                                <?= htmlspecialchars($adresse['NUMRUE']) ?> 
-                                <?= htmlspecialchars($adresse['NOMRUE']) ?>
-                                <?= !empty($adresse['COMPLEMENT']) ? ', ' . htmlspecialchars($adresse['COMPLEMENT']) : '' ?>
+                                <span class="num-rue"><?= htmlspecialchars($adresse['NUMRUE']) ?></span>
+                                <span class="nom-rue"><?= htmlspecialchars($adresse['NOMRUE']) ?></span>
+                                <?php if (!empty($adresse['COMPLEMENTADR'])): ?>
+                                    <span class="complement">, <?= htmlspecialchars($adresse['COMPLEMENTADR']) ?></span>
+                                <?php endif; ?>
                                 <br>
-                                <?= htmlspecialchars($adresse['VILLE']) ?> 
-                                <?= htmlspecialchars($adresse['CODEPOSTAL']) ?>
+                                <span class="ville"><?= htmlspecialchars($adresse['NOMVILLE']) ?></span>
+                                <span class="code-postal"><?= htmlspecialchars($adresse['CODEPOSTAL']) ?></span>
                                 <br>
-                                <?= htmlspecialchars($adresse['PAYS']) ?>
+                                <span class="pays"><?= htmlspecialchars($adresse['PAYS']) ?></span>
                             </p>
                             <div class="action-buttons">
                                 <button class="modal-btn modifier-adresse" data-id="<?= $adresse['IDADRESSE'] ?>">Modifier</button>
@@ -135,79 +163,134 @@
                 <?php else: ?>
                     <p>Vous n'avez encore aucune adresse enregistrée.</p>
                 <?php endif; ?>
-                <button class="modal-btn ajouter-adresse">Ajouter</button>
             </div>
+            <button class="modal-btn ajouter-adresse">Ajouter</button>
+        </div>
 
-            <div class="cartes">
-                <h2>Mes Moyens de Paiement</h2>
+        <div class="cartes">
+            <h2>Mes Moyens de Paiement</h2>
+            <div class="carte-list">  <!-- Conteneur pour la scrollbar -->
                 <?php 
-                    $query = $pdo->prepare('SELECT Ip.* FROM INFORMATIONPAIEMENT Ip, POSSEDERIP Pip
+                $query = $pdo->prepare('SELECT Ip.* FROM INFORMATIONPAIEMENT Ip, POSSEDERIP Pip
                                                    WHERE Ip.NUMCB = Pip.NUMCB
                                                    AND Pip.IDCLIENT = :idClient 
+                ');
+                $query->execute(['idClient'=> $id_client]);
+                $tabCartes = $query->fetchAll();
+                $query->closeCursor();
+                if (count($tabCartes) > 0): ?>
+                    <?php foreach ($tabCartes as $carte): ?>
+                        <div class="carte-item">
+                            <p>Carte n° <?php 
+                                $lastFourDigits = substr($carte['NUMCB'], -4);
+                                echo str_repeat('*', 12) . $lastFourDigits;
+                            ?></p>
+                            <div class="action-buttons">
+                                <button class="modal-btn supprimer-carte" data-id="<?= $carte['NUMCB'] ?>">Supprimer</button>
+                            </div>
+                        </div>
+                    <?php endforeach;?>
+                <?php else: ?>
+                    <p>Vous n'avez encore aucune carte de paiement enregistrée.</p>
+                <?php endif; ?>
+            </div>
+            <button class="modal-btn ajouter-moyen-paiement">Ajouter</button>
+        </div>
+
+        <div class="commandes">
+            <h2>Mes Commandes</h2>
+            <div class="commande-list">
+                <?php 
+                    $query = $pdo->prepare('
+                    SELECT 
+                        C.*,
+                        T.TYPEEXP, T.FRAISEXP, T.FRAISKG, T.DELAILIVRAISON,
+                        P.QUANTITEPROD,
+                        PR.IDPROD, PR.NOMPROD, PR.PRIXHT, PR.COMPOSITION, PR.COULEUR
+                    FROM COMMANDE C
+                    LEFT JOIN TRANSPORTEUR T ON C.IDTRANSPORTEUR = T.IDTRANSPORTEUR
+                    LEFT JOIN PANIER P ON P.IDCOMMANDE = C.NUMCOMMANDE AND P.IDCLIENT = C.IDCLIENT
+                    LEFT JOIN PRODUIT PR ON P.IDPROD = PR.IDPROD
+                    WHERE C.IDCLIENT = :idClient
+                    ORDER BY C.DATECOMMANDE DESC
                     ');
-                    $query->execute(['idClient'=> $id_client]);
-                    $tabCartes = $query->fetchAll();
-                    $query->closeCursor();
-                    if (count($tabCartes) > 0): ?>
-                        <?php foreach ($tabCartes as $carte): ?>
-                            <div class="carte-item">
-                                <p><?php substr_replace($carte['NUMCB'], str_repeat('*', strlen($carte['NUMCB']) - 5), 0, strlen($carte['NUMCB'])-5); ?></p>
-                                <div class="action-buttons">
-                                    <button class="modal-btn supprimer-carte">Supprimer</button>
+                    $query->execute(['idClient' => $id_client]);
+                    $commandes = [];
+
+                    // Organiser les données
+                    while($row = $query->fetch()) {
+                        if (!isset($commandes[$row['NUMCOMMANDE']])) {
+                            $commandes[$row['NUMCOMMANDE']] = [
+                                'date' => new DateTime($row['DATECOMMANDE']),
+                                'statut' => $row['STATUTLIVRAISON'],
+                                'suivi' => $row['CODESUIVI'],
+                                'reglement' => $row['TYPEREGLEMENT'],
+                                'transport' => [
+                                    'type' => $row['TYPEEXP'],
+                                    'frais' => $row['FRAISEXP'],
+                                    'delai' => $row['DELAILIVRAISON']
+                                ],
+                                'produits' => []
+                            ];
+                        }
+                        // Modification ici pour inclure l'IDPROD
+                        $commandes[$row['NUMCOMMANDE']]['produits'][] = [
+                            'idprod' => $row['IDPROD'],  // Ajout de l'ID du produit
+                            'nom' => $row['NOMPROD'],
+                            'quantite' => $row['QUANTITEPROD'],
+                            'prix' => $row['PRIXHT']
+                        ];
+                    }
+                
+                    if (count($commandes) > 0): 
+                        foreach($commandes as $numCommande => $commande): ?>
+                            <div class="commande-item">
+                                <div class="commande-header">
+                                    <div class="commande-info">
+                                        <h3>Commande n°<?= $numCommande ?></h3>
+                                        <p class="date">Du <?= $commande['date']->format('d/m/Y') ?></p>
+                                    </div>
+                                    <div class="commande-status <?= strtolower($commande['statut']) ?>">
+                                        <?= $commande['statut'] ?>
+                                    </div>
+                                </div>
+
+                                <div class="commande-details">
+                                    <div class="produits-list">
+                                        <?php foreach($commande['produits'] as $produit): ?>
+                                            <div class="produit-item">
+                                                <a href="descProduit.php?idProd=<?= $produit['idprod'] ?>" class="produit-nom" target="_blank">
+                                                    <?= $produit['nom'] ?>
+                                                </a>
+                                                <span class="produit-quantite">x<?= $produit['quantite'] ?></span>
+                                                <span class="produit-prix"><?= number_format($produit['prix'], 2) ?> €</span>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                        
+                                    <div class="livraison-info">
+                                        <p>Mode de livraison : <?= $commande['transport']['type'] ?></p>
+                                        <p>Délai estimé : <?= $commande['transport']['delai'] ?> jours</p>
+                                        <?php if ($commande['suivi']): ?>
+                                            <p>Code de suivi : <?= $commande['suivi'] ?></p>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
                         <?php endforeach;?>
+                        <div class="pagination">
+                            <div class="pagination-numbers"></div>
+                        </div>
                     <?php else: ?>
-                        <p>Vous n'avez encore aucune carte de paiement enregistrée.</p>
-                    <?php endif; ?>
-                <button class="modal-btn ajouter-moyen-paiement"> Ajouter </button>
+                        <p class="no-commandes">Vous n'avez pas encore passé de commande.</p>
+                <?php endif; ?>
             </div>
         </div>
-        <button class="modal-btn disconnect-btn">Se déconecter</button>
+
+        <button class="disconnect-btn">Se déconnecter</button>
     </main>
 
-    <!-- Pied de page -->
-    <footer class="footer">
-        <div class="footer-column">
-            <h3>Qui sommes-nous ?</h3>
-            <ul>
-                <li><a href="#">Ludorama.com</a></li>
-                <li><a href="#">Nos magasins</a></li>
-                <li><a href="#">Cartes cadeaux</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>En ce moment</h3>
-            <ul>
-                <li><a href="#">Ambiance de Noël</a></li>
-                <li><a href="#">Nouveautés</a></li>
-                <li><a href="#">Rejoignez LudiSphere !</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Marques</h3>
-            <ul>
-                <li><a href="#">Lego</a></li>
-                <li><a href="#">Playmobil</a></li>
-                <li><a href="#">Jurassic Park</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Personnages jouets</h3>
-            <ul>
-                <li><a href="#">Pokemon</a></li>
-                <li><a href="#">Tous les personnages</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Nos sites</h3>
-            <ul>
-                <li><a href="#">France</a></li>
-                <li><a href="#">Allemagne</a></li>
-                <li><a href="#">Tous nos sites</a></li>
-            </ul>
-        </div>
-    </footer>
+    <?php include("footer.php"); ?>
 
     <!-- Fenêtre contextuelle pour modifier les informations client -->
     <div id="modal-infoClient" class="modal">
@@ -279,13 +362,31 @@
         </div>
     </div>
 
-    <div id="modal-modifier-adresse" class="modal">
+    <div id="modal-modif-adresse" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Modifier une adresse</h2>
-            <form>
-                <label for="modif-adr">Adresse:</label>
-                <input type="text" id="modif-adr" name="adresse">
+            <h2>Modifier l'adresse</h2>
+            <form action="updateInfoCli.php?typeModif=4" method="POST">
+                <input type="hidden" id="idAddress" name="idAddress">
+                
+                <label for="numRue">Numéro de rue :</label>
+                <input type="number" id="numRue" name="numRue" required>
+                
+                <label for="nomRue">Nom de rue :</label>
+                <input type="text" id="nomRue" name="nomRue" required>
+                
+                <label for="complement">Complément d'adresse :</label>
+                <input type="text" id="complement" name="complement">
+                
+                <label for="ville">Ville :</label>
+                <input type="text" id="ville" name="ville" required>
+                
+                <label for="codePostal">Code postal :</label>
+                <input type="number" id="codePostal" name="codePostal" required>
+                
+                <label for="pays">Pays :</label>
+                <input type="text" id="pays" name="pays" required>
+                
                 <button type="submit">Modifier</button>
             </form>
         </div>
@@ -320,17 +421,56 @@
         </div>
     </div>
     
-    <!-- Fenêtre contextuelle pour modifier les cartes -->
+    <!-- Fenêtre contextuelle pour ajouter une carte -->
     <div id="modal-ajouter-carte" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Ajouter une carte</h2>
-            <form>
-                <label for="numero-carte">Numéro de carte:</label>
-                <input type="text" id="numero-carte" name="numero-carte">
+            <h2>Ajouter une carte bancaire</h2>
+            <form method="post" action="updateInfoCli.php?typeModif=6">
+                <label for="numCB">Numéro de carte :</label>
+                <input type="text" id="numCB" name="numCB" required maxlength="19" placeholder="XXXX XXXX XXXX XXXX">
+                            
+                <label for="nomCompletCB">Nom sur la carte :</label>
+                <input type="text" id="nomCompletCB" name="nomCompletCB" required maxlength="50">
+                            
+                <label for="dateExp">Date d'expiration :</label>
+                <input type="month" id="dateExp" name="dateExp" required>
+                            
+                <label for="cryptogramme">Cryptogramme :</label>
+                <input type="password" id="cryptogramme" name="cryptogramme" required maxlength="3" pattern="[0-9]{3}">
+                            
+                <button type="submit" id="submitBtn-ajout-carte">Ajouter</button>
             </form>
         </div>
     </div>
+
+    <!-- Modal de confirmation de suppression -->
+    <div id="modal-confirm-delete" class="modal">
+        <div class="modal-content">
+            <div class="confirm-delete-content">
+                <h2>Confirmation de suppression</h2>
+                <p>Êtes-vous sûr de vouloir supprimer cette adresse ? Cette action est irréversible.</p>
+                <div class="confirm-buttons">
+                    <button class="modal-btn confirm-yes">Supprimer</button>
+                    <button class="modal-btn confirm-no">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-confirm-delete-card" class="modal">
+    <div class="modal-content">
+        <div class="confirm-delete-content">
+            <h2>Confirmation de suppression</h2>
+            <p>Êtes-vous sûr de vouloir supprimer cette carte ? Cette action est irréversible.</p>
+            <div class="confirm-buttons">
+                <button class="modal-btn confirm-yes">Supprimer</button>
+                <button class="modal-btn confirm-no">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
 
@@ -756,5 +896,259 @@
                 }
             });
         }
+
+        // Récupération des éléments
+        const modalModifAdresse = document.getElementById('modal-modif-adresse');
+        const closeModifAdresse = modalModifAdresse.querySelector('.close');
+        
+        // Gestion de la modification d'adresse
+        document.querySelectorAll('.modifier-adresse').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const adresseItem = this.closest('.adresse-item');
+                
+                // Remplissage du formulaire
+                document.getElementById('idAddress').value = this.dataset.id;
+                document.getElementById('numRue').value = adresseItem.querySelector('.num-rue').textContent.trim();
+                document.getElementById('nomRue').value = adresseItem.querySelector('.nom-rue').textContent.trim();
+                
+                const complement = adresseItem.querySelector('.complement');
+                document.getElementById('complement').value = complement ? complement.textContent.replace(',', '').trim() : '';
+                
+                document.getElementById('ville').value = adresseItem.querySelector('.ville').textContent.trim();
+                document.getElementById('codePostal').value = adresseItem.querySelector('.code-postal').textContent.trim();
+                document.getElementById('pays').value = adresseItem.querySelector('.pays').textContent.trim();
+                
+                // Affichage de la modale
+                modalModifAdresse.style.display = 'block';
+            });
+        });
+
+        // Fermeture de la modale
+        closeModifAdresse.addEventListener('click', () => {
+            modalModifAdresse.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modalModifAdresse) {
+                modalModifAdresse.style.display = 'none';
+            }
+        });
+
+
+           // Gestion de la suppression d'adresse
+        const modalConfirmDelete = document.getElementById('modal-confirm-delete');
+        let addressToDelete = null;
+
+        document.querySelectorAll('.supprimer-adresse').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                addressToDelete = this.dataset.id;
+                modalConfirmDelete.style.display = 'block';
+            });
+        });
+
+        // Gestion des boutons de confirmation
+        const confirmYes = modalConfirmDelete.querySelector('.confirm-yes');
+        const confirmNo = modalConfirmDelete.querySelector('.confirm-no');
+
+        confirmYes.addEventListener('click', function() {
+            if (addressToDelete) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'updateInfoCli.php?typeModif=5';
+
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'idAddress';
+                input.value = addressToDelete;
+
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+            modalConfirmDelete.style.display = 'none';
+        });
+
+        confirmNo.addEventListener('click', function() {
+            modalConfirmDelete.style.display = 'none';
+            addressToDelete = null;
+        });
+
+        // Fermeture de la modal en cliquant en dehors
+        window.addEventListener('click', function(e) {
+            if (e.target === modalConfirmDelete) {
+                modalConfirmDelete.style.display = 'none';
+                addressToDelete = null;
+            }
+        });
+
+        const formCarte = document.querySelector('#modal-ajouter-carte form');
+            if (formCarte) {
+            const numCBInput = document.getElementById('numCB');
+            const nomCompletCBInput = document.getElementById('nomCompletCB');
+            const dateExpInput = document.getElementById('dateExp');
+            const cryptogrammeInput = document.getElementById('cryptogramme');
+            const submitBtn = document.getElementById('submitBtn-ajout-carte');
+
+
+            // Formatage automatique du numéro de carte
+            numCBInput.addEventListener('input', (e) => {
+                // Supprime tout ce qui n'est pas un chiffre
+                let value = e.target.value.replace(/[^\d]/g, '');
+
+                // Ajoute un espace tous les 4 chiffres
+                let formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+
+                // Limite à 16 chiffres (19 caractères avec les espaces)
+                if (value.length > 16) {
+                    value = value.slice(0, 16);
+                    formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+                }
+
+                e.target.value = formattedValue;
+                validateCardForm();
+            });
+
+            // Validation du nom
+            nomCompletCBInput.addEventListener('input', () => {
+                const hadNumbers = /\d/.test(nomCompletCBInput.value);
+                nomCompletCBInput.value = nomCompletCBInput.value.replace(/[^A-Za-z\s]/g, '').toUpperCase();
+                if (hadNumbers) {
+                    showToast('Le nom ne peut pas contenir de chiffres', 'error', 'Format incorrect');
+                }
+                validateCardForm();
+            });
+
+            // Validation de la date d'expiration
+            dateExpInput.addEventListener('change', () => {
+                const selectedDate = new Date(dateExpInput.value);
+                const today = new Date();
+                if (selectedDate < today) {
+                    showToast('La date d\'expiration doit être dans le futur', 'error', 'Date invalide');
+                    dateExpInput.value = '';
+                }
+                validateCardForm();
+            });
+
+            // Validation du cryptogramme
+            cryptogrammeInput.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '').substring(0, 3);
+                validateCardForm();
+            });
+
+            function validateCardForm() {
+                const numCB = numCBInput.value.replace(/\s/g, '');
+                const isValid = 
+                    numCB.length === 16 && 
+                    nomCompletCBInput.value.length >= 3 &&
+                    dateExpInput.value && 
+                    cryptogrammeInput.value.length === 3;
+
+                submitBtn.disabled = !isValid;
+                return isValid;
+            }
+
+            formCarte.addEventListener('submit', (e) => {
+                if (!validateCardForm()) {
+                    e.preventDefault();
+                    showToast('Veuillez remplir correctement tous les champs', 'error', 'Formulaire invalide');
+                }
+            });
+        }
+
+        // Gestion de la suppression de carte
+        const modalConfirmDeleteCard = document.getElementById('modal-confirm-delete-card');
+        let cardToDelete = null;
+
+        document.querySelectorAll('.supprimer-carte').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                cardToDelete = this.dataset.id;
+                modalConfirmDeleteCard.style.display = 'block';
+            });
+        });
+
+        // Gestion des boutons de confirmation
+        const confirmCardYes = modalConfirmDeleteCard.querySelector('.confirm-yes');
+        const confirmCardNo = modalConfirmDeleteCard.querySelector('.confirm-no');
+
+        confirmCardYes.addEventListener('click', function() {
+            if (cardToDelete) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'updateInfoCli.php?typeModif=7';
+            
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'numCB';
+                input.value = cardToDelete;
+            
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+            modalConfirmDeleteCard.style.display = 'none';
+        });
+
+        confirmCardNo.addEventListener('click', function() {
+            modalConfirmDeleteCard.style.display = 'none';
+            cardToDelete = null;
+        });
+
+        // Fermeture de la modal en cliquant en dehors
+        window.addEventListener('click', function(e) {
+            if (e.target === modalConfirmDeleteCard) {
+                modalConfirmDeleteCard.style.display = 'none';
+                cardToDelete = null;
+            }
+        });
+
+        const commandesParPage = 2; // Changé de 3 à 2
+        const commandeItems = document.querySelectorAll('.commande-item');
+        const paginationContainer = document.querySelector('.pagination-numbers');
+        let pageCourante = 1;
+
+        function afficherCommandes(page) {
+            const debut = (page - 1) * commandesParPage;
+            const fin = debut + commandesParPage;
+        
+            commandeItems.forEach((item, index) => {
+                if (index >= debut && index < fin) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Mise à jour des boutons de pagination
+            document.querySelectorAll('.page-number').forEach(btn => {
+                btn.classList.toggle('active', parseInt(btn.textContent) === page);
+            });
+        }
+
+        function initialiserPagination() {
+            const nombrePages = Math.ceil(commandeItems.length / commandesParPage);
+            paginationContainer.innerHTML = '';
+
+            for (let i = 1; i <= nombrePages; i++) {
+                const button = document.createElement('button');
+                button.className = 'page-number';
+                button.textContent = i;
+                button.addEventListener('click', () => {
+                    pageCourante = i;
+                    afficherCommandes(i);
+                });
+                paginationContainer.appendChild(button);
+            }
+
+            // Afficher la première page
+            afficherCommandes(1);
+        }
+
+        if (commandeItems.length > 0) {
+            initialiserPagination();
+        }
+
     });
+    
 </script>

@@ -46,14 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $numCommande = $pdo->lastInsertId();
 
         // Mettre à jour la date de commande dans le panier
-        $stmt = $pdo->prepare("UPDATE PANIER SET DATECOMMANDE = ? WHERE IDCLIENT = ? AND DATECOMMANDE IS NULL");
-        $stmt->execute([$dateCommande, $idClient]);
+        $stmt = $pdo->prepare("UPDATE PANIER SET IDCOMMANDE = ? WHERE IDCLIENT = ? AND IDCOMMANDE = 0");
+        $stmt->execute([$numCommande, $idClient]);
 
         // Mettre à jour le stock des produits
         $stmt = $pdo->prepare("
             UPDATE PRODUIT p
             JOIN PANIER pa ON p.IDPROD = pa.IDPROD
-            SET p.STOCKPROD = p.STOCKPROD - pa.QUANTITEPROD
+            SET p.QTESTOCK = p.QTESTOCK - pa.QUANTITEPROD
             WHERE pa.IDCLIENT = ? AND pa.DATECOMMANDE = ?
         ");
         $stmt->execute([$idClient, $dateCommande]);

@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($existingEntry) {
             // Mettre à jour la quantité si le produit existe déjà
-            $stmt = $pdo->prepare("UPDATE PANIER SET QUANTITEPROD = QUANTITEPROD + 1 WHERE IDCLIENT = ? AND IDPROD = ?");
+            $stmt = $pdo->prepare("UPDATE PANIER SET QUANTITEPROD = QUANTITEPROD + 1 WHERE IDCLIENT = ? AND IDPROD = ? AND IDCOMMANDE = 0");
             $stmt->execute([$idClient, $idProd]);
         } else {
             // Ajouter une nouvelle entrée dans le panier
