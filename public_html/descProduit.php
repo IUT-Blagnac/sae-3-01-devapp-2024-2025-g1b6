@@ -75,7 +75,15 @@ $imagePath = "./images/prod". htmlspecialchars($produit['IDPROD'])  .".png" ; //
             <h1><?php echo htmlspecialchars($produit['NOMPROD']); ?></h1>
             <p class="product-id">Réference : <?php echo $produit['IDPROD']; ?> | Marque : <?php echo htmlspecialchars($produit['NOMMARQUE']); ?> | Catégories : <?php echo htmlspecialchars($produit['CATEGORIES']); ?></p>
             <p class="price"><?php echo number_format($produit['PRIXHT'], 2, ',', ' '); ?> €</p>
-            <button class="btn-cart" onclick="confirmAddToCart()">Ajouter au panier</button>
+            <?php if ($produit['DISPONIBLE'] != 1): ?>
+                <p class="stop-sell">Nous ne vendons plus ce produit</p>
+            <?php else: ?>
+                <?php if ($produit['QTESTOCK'] > 0): ?>
+                    <button class="btn-cart" onclick="confirmAddToCart()">Ajouter au panier</button>
+                <?php else: ?>
+                    <p class="out-of-stock">Rupture de stock</p>
+                <?php endif; ?>
+            <?php endif; ?>
             <p class="shipping-info">Livraison gratuite dès 50 € | Livraison prévue pour le <?php echo date('d/m/Y', strtotime('+5 days')); ?></p>
         </div>
     </div>
@@ -119,6 +127,20 @@ $imagePath = "./images/prod". htmlspecialchars($produit['IDPROD'])  .".png" ; //
             echo '<p>Aucun avis pour l\'instant.</p>';
         }
         ?>
+        <?php if (isset($_SESSION['user']['IDCLIENT'])): ?>
+    <div class="review-section">
+        <h3>Laisser un avis</h3>
+        <form id="reviewForm" action="add_avis.php" method="post" onsubmit="return validateReview()">
+            <input type="hidden" name="idProd" value="<?php echo $idProd; ?>">
+            <textarea name="descAvis" id="descAvis" rows="4" maxlength="750" placeholder="Laissez votre avis (750 caractères max)" required></textarea>
+            <button type="submit" class="btn">Soumettre l'avis</button>
+        </form>
+    </div>
+<?php else: ?>
+    <div class="review-section">
+        <p class="login-message">Vous devez être connecté pour laisser un avis.</p>
+    </div>
+<?php endif; ?>
     </div>
 
 </main>
