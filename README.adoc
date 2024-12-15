@@ -207,6 +207,7 @@ Moderniser le site tout en respectant l’identité graphique et en :
 == Dernière release
 
 - Version courante : https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/releases/tag/Release.2.0[V2.0]
+
 == Historique des releases
 
 - https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/releases/tag/Doc-Release[V0.1]
