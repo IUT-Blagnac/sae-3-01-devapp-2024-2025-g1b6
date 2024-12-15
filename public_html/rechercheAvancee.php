@@ -1,94 +1,89 @@
 <?php
-
-
-// Fonction pour vérifier l'existence de la table
-function tableExiste($nomTable, $pdo) {
+// rechercheAvancee.php
+// Recherche avec les critères dynamiques
+function rechercheAvancee($criteres, $pdo, $limit, $offset)
+{
     try {
-        $result = $pdo->query("DESCRIBE $nomTable");
-        return $result !== false;
+        // Convertir les critères des prix en NULL si vides
+        $prix_min = isset($criteres['prix_min']) && $criteres['prix_min'] !== '' ? (float)$criteres['prix_min'] : NULL;
+        $prix_max = isset($criteres['prix_max']) && $criteres['prix_max'] !== '' ? (float)$criteres['prix_max'] : NULL;
+
+        // Préparer l'appel à la procédure stockée
+        $stmt = $pdo->prepare("CALL SP_RECHERCHE_AVANCEE(:mot_cle, :categorie, :marque, :prix_min, :prix_max, :en_stock, :limit, :offset)");
+
+        // Passer les paramètres correctement typés
+        $stmt->bindValue(':mot_cle', $criteres['mot_cle'] ?? '', PDO::PARAM_STR);
+        $stmt->bindValue(
+            ':categorie',
+            isset($criteres['categorie']) && $criteres['categorie'] !== '' ? (int)$criteres['categorie'] : NULL,
+            isset($criteres['categorie']) && $criteres['categorie'] !== '' ? PDO::PARAM_INT : PDO::PARAM_NULL
+        );
+
+        $stmt->bindValue(':marque', $criteres['marque'] !== '' ? $criteres['marque'] : NULL, PDO::PARAM_STR);
+        $stmt->bindValue(':prix_min', $prix_min, $prix_min === NULL ? PDO::PARAM_NULL : PDO::PARAM_STR);
+        $stmt->bindValue(':prix_max', $prix_max, $prix_max === NULL ? PDO::PARAM_NULL : PDO::PARAM_STR);
+        $stmt->bindValue(':en_stock', $criteres['en_stock'] !== NULL ? (int)$criteres['en_stock'] : NULL, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+
+        // Débogage : Requête simulée
+        $requeteDebug = sprintf(
+            "CALL SP_RECHERCHE_AVANCEE(:mot_cle = '%s', :categorie = %s, :marque = '%s', :prix_min = %s, :prix_max = %s, :en_stock = %s, :limit = %d, :offset = %d)",
+            $criteres['mot_cle'] ?? '',
+            $criteres['categorie'] !== '' ? (int)$criteres['categorie'] : "NULL",
+            $criteres['marque'] ?? "NULL",
+            $prix_min !== NULL ? $prix_min : "NULL",
+            $prix_max !== NULL ? $prix_max : "NULL",
+            $criteres['en_stock'] !== NULL ? (int)$criteres['en_stock'] : "NULL",
+            (int)$limit,
+            (int)$offset
+        );
+
+        // Exécuter la procédure stockée
+        $stmt->execute();
+
+        // Récupérer les résultats
+        $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Retourner les résultats
+        return $resultats;
     } catch (PDOException $e) {
-        return false;
+        // Gérer les erreurs SQL
+        echo "<h4>Erreur SQL :</h4><pre>" . $e->getMessage() . "</pre>";
+        return [];
     }
 }
 
-// Fonction de recherche avancée
-function rechercheAvancee($termes, $pdo) {
-    // Vérifier si la table "PRODUIT" existe
-    if (!tableExiste('PRODUIT', $pdo)) {
-        return null; // Retourner null si la table est absente
+
+
+// Fonction pour compter le total des produits
+function countProduits($criteres, $pdo)
+{
+    try {
+        // Conversion des critères de prix
+        $prix_min = !empty($criteres['prix_min']) ? (float)$criteres['prix_min'] : NULL;
+        $prix_max = !empty($criteres['prix_max']) ? (float)$criteres['prix_max'] : NULL;
+
+        // Préparer l'appel à la procédure stockée
+        $stmt = $pdo->prepare("CALL SP_COUNT_PRODUITS(:mot_cle, :categorie, :marque, :prix_min, :prix_max, :en_stock)");
+
+        // Binder les paramètres dynamiquement
+        $stmt->bindValue(':mot_cle', $criteres['mot_cle'] ?? '', PDO::PARAM_STR);
+        $stmt->bindValue(':categorie', isset($criteres['categorie']) && $criteres['categorie'] !== '' ? (int)$criteres['categorie'] : NULL, PDO::PARAM_INT);
+        $stmt->bindValue(':marque', $criteres['marque'] ?? NULL, PDO::PARAM_STR);
+        $stmt->bindValue(':prix_min', $prix_min, is_null($prix_min) ? PDO::PARAM_NULL : PDO::PARAM_STR);
+        $stmt->bindValue(':prix_max', $prix_max, is_null($prix_max) ? PDO::PARAM_NULL : PDO::PARAM_STR);
+        $stmt->bindValue(':en_stock', isset($criteres['en_stock']) ? (int)$criteres['en_stock'] : NULL, PDO::PARAM_INT);
+
+        // Exécuter la procédure
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Retourner le total ou 0 si non défini
+        return $result['total'] ?? 0;
+    } catch (PDOException $e) {
+        // Afficher les erreurs SQL pour débogage
+        echo "<h4>Erreur SQL :</h4><pre>" . $e->getMessage() . "</pre>";
+        return 0;
     }
-
-    // Nettoyer et normaliser les termes
-    $termes = strtolower(trim($termes));
-    $mots = explode(" ", $termes); // Découper en mots
-
-    // Construire une clause SQL pour les correspondances flexibles
-    $conditions = [];
-    $params = [];
-    foreach ($mots as $index => $mot) {
-        $conditions[] = "LOWER(NOMPROD) LIKE :mot$index";
-        $params[":mot$index"] = "%$mot%";
-    }
-    $whereClause = implode(" OR ", $conditions);
-
-    // Requête SQL pour rechercher les produits
-    $sql = "
-        SELECT *
-        FROM PRODUIT
-        WHERE $whereClause
-        ORDER BY NOMPROD ASC
-        LIMIT 20;
-    ";
-
-    // Exécuter la requête préparée
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($params);
-
-    // Récupérer les résultats
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
-// Initialisation des variables pour éviter les erreurs si aucune recherche n'est effectuée
-$termes = '';
-$produits = [];
-
-// Vérifier si le formulaire a été soumis avec un terme de recherche
-if (isset($_GET['recherche'])) {
-    $termes = $_GET['recherche']; // Récupérer la valeur saisie par l'utilisateur
-
-    // Appeler la fonction de recherche avancée avec le terme
-    $produits = rechercheAvancee($termes, $pdo);
-}
-?>
-
-<!-- Formulaire de recherche -->
-<link rel="stylesheet" href="Css/all.css">
-<form method="get" action="">
-    <input class="barreRecherche" type="text" name="recherche" 
-           placeholder="Barre de recherche ..." 
-           value="<?php echo htmlspecialchars($termes); ?>" 
-           onkeydown="if(event.key === 'Enter') this.form.submit();">
-</form>
-
-<!-- Affichage des résultats de recherche -->
-<?php if (!empty($termes)) : ?>
-    <section class="resultatsRecherche">
-        <h2>Résultats de recherche pour : <?php echo htmlspecialchars($termes); ?></h2>
-
-        <?php if ($produits === null) : ?>
-            <p>Erreur : La table "PRODUIT" est absente. Veuillez vérifier la base de données.</p>
-        <?php elseif ($produits) : ?>
-            <ul>
-                <?php foreach ($produits as $produit) : ?>
-                    <li>
-                        <a href="produit.php?id=<?php echo $produit['IDPROD']; ?>">
-                            <?php echo htmlspecialchars($produit['NOMPROD']); ?>
-                        </a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else : ?>
-            <p>Aucun produit trouvé.</p>
-        <?php endif; ?>
-    </section>
-<?php endif; ?>
