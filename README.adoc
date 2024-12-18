@@ -260,6 +260,14 @@ TIP: Mettez ici toutes les informations nécessaire à l'utilisation de votre d�
 Mettre les liens directs vers les derniers comptes rendus , je n'ai pas à chercher dans le dossier ! ODJ : Préciser qui est en charge de quelle rubrique, qui prendra des notes. Lieu : préciser la salle et l'heure et durée totale ! CR : Manque bilan rdv client, manque analyse difficulés-réussites. Structurer en fonction du plan de l'ODJ. Manque lieu, durée, présents, absents. Manque qui s'occupe de la suivante.
 note: 1,3/3
 
+==== Evaluation semaine 49
+Liens directs SVP ! La prochaine fois c'est 0.  ODJ incomplet, manque qui est resp de chaque rubrique et CR réunion client. Manque toujours CR réunion client et analyse réussites/difficultés.
+note 1,9/3
+
+==== Evaluation semaine 50
+ODJ: Manque point rdv client, idem dans le CR. Dans le CR manque analyse difficutés réussites et notamment au niveau organisationnel.
+note : 2,2/3
+
 === Evaluation bi-hebdomadaire :
 
 ifdef::env-github[]
