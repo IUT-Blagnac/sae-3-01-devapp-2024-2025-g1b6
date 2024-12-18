@@ -225,6 +225,10 @@ link:documentation/Cahier_Recette.adoc[Lien vers le cahier de recette]
 === ODJ et CRs
 link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/tree/master/documentation/ODJ%20et%20CRs[Lien vers le dossier]
 
+link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/tree/master/documentation/ODJ%20et%20CRs/ODJ-16-12.pdf[Lien vers le dernier ODJ]
+
+link:https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/tree/master/documentation/ODJ%20et%20CRs/CR-16-12.pdf[Lien vers le dernier CR]
+
 === Documentation de la charte graphique 
 link:documentation/Doc_Charte_Graphique.adoc[Lien vers la documentation de la charte graphique]
 
