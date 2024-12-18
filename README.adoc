@@ -204,6 +204,16 @@ Moderniser le site tout en respectant l’identité graphique et en :
 
 |===
 
+== Télétravail 
+
+|===
+| Date         | Jour          | Mode de travail
+| 18/12/2024   | Mercredi      | Télétravail
+| 19/12/2024   | Jeudi         | Télétravail
+| 20/12/2024   | Vendredi      | Télétravail
+|===
+
+
 == Dernière release
 
 - Version courante : https://github.com/IUT-Blagnac/sae-3-01-devapp-2024-2025-g1b6/releases/tag/Release.2.0[V2.0]
