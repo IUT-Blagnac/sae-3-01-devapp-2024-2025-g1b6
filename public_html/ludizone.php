@@ -39,38 +39,32 @@ include("header.php");
             <ul class="listeCDC">       
                     <?php
                         include("connect.inc.php");            
-                        // Requête pour récupérer l'ID maximum des produits
-                        $maxIdReq = $pdo->query("SELECT MAX(IDPROD) as maxId FROM PRODUIT");
-                        $maxId = $maxIdReq->fetch()['maxId'];
+                        // Requête pour récupérer les 4 produits les mieux notés
+                        $sql = "SELECT p.IDPROD, p.NOMPROD, p.PRIXHT, a.NOTE
+                                FROM PRODUIT p
+                                JOIN AVIS a ON p.IDPROD = a.IDPROD
+                                ORDER BY a.NOTE DESC
+                                LIMIT 4";
+                        $req = $pdo->query($sql);
+                        $produits = $req->fetchAll();
 
-                        $randomIds = [];
-                        while (count($randomIds) < 4) {
-                            $randomId = rand(1, $maxId);
-                            if (!in_array($randomId, $randomIds)) {
-                                $randomIds[] = $randomId;
-                            }
-                        }
-
-                            $placeholders = implode(',', array_fill(0, count($randomIds), '?'));
-                            $req = $pdo->prepare("SELECT * FROM PRODUIT WHERE IdPROD IN ($placeholders)");
-                            $req->execute($randomIds);
-                            $produits = $req->fetchAll();
-
-                            foreach ($produits as $produit) {
-                                echo "<li>";
-                                    echo "<a href='descProduit.php?idProd=".$produit['IDPROD']."'>";
-                                    echo "<div class\"produitCard\">";
-                                        echo "<div class=\"imageContainer\">";
-                                            echo "<img src='./images/prod". htmlspecialchars($produit['IDPROD']).".png' alt='Image du produit'>";
-                                        echo "</div>";
-                                        echo "<div class=\"infoContainer\">";
-                                            echo "<h2>".$produit['NOMPROD']."</h2>";
-                                            echo "<p>".$produit['PRIXHT']."€</p>";
-                                        echo "</div>";
+                        // Affichage des produits
+                        foreach ($produits as $produit) {
+                        echo "<li>";
+                            echo "<a href='descProduit.php?idProd=" . $produit['IDPROD'] . "'>";
+                                echo "<div class=\"produitCard\">";
+                                    echo "<div class=\"imageContainer\">";
+                                        echo "<img src='./images/prod" . htmlspecialchars($produit['IDPROD']) . ".png' alt='Image du produit'>";
+                                    echo "</div>";
+                                    echo "<div class=\"infoContainer\">";
+                                        echo "<h2>" . htmlspecialchars($produit['NOMPROD']) . "</h2>";
+                                        echo "<p>" . htmlspecialchars($produit['PRIXHT']) . "€</p>";
+                                        echo "<p>Note : " . htmlspecialchars($produit['NOTE']) . "/5</p>";
+                                    echo "</div>";
                                 echo "</div>";
-                                echo "</a>";
-                                echo "</li>";
-                            }
+                            echo "</a>";
+                        echo "</li>";
+                        }
                     ?>
             </ul>
         </section>
@@ -125,10 +119,60 @@ include("header.php");
 
 
     <div class="enfantsProduits">
+        <h1>Nos produits pour enfants !</h1>
+        <ul id="produitsList">
+        <?php 
+            // Configuration de la pagination
+            $limit = 11; // Number of products per page
+            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $offset = ($page - 1) * $limit;
 
+            // Requête pour récupérer le nombre total de produits
+            $totalReq = $pdo->query("SELECT COUNT(*) as total FROM PRODUIT P 
+                                     JOIN APPARTENIRCATEG A ON P.IDPROD = A.IDPROD
+                                     JOIN CATEGORIE C ON A.IDCATEG = C.IDCATEG
+                                     JOIN CATPERE CA ON C.IDCATEG = CA.IDCATEG
+                                     WHERE CA.IDCATEG_PERE = 11;");
+            $total = $totalReq->fetch()['total'];
+            $totalPages = ceil($total / $limit);
+
+            // Requête pour récupérer les produits
+            $req = $pdo->prepare("SELECT P.IDPROD, P.NOMPROD, P.PRIXHT
+                                  FROM PRODUIT P 
+                                  JOIN APPARTENIRCATEG A ON P.IDPROD = A.IDPROD
+                                  JOIN CATEGORIE C ON A.IDCATEG = C.IDCATEG
+                                  JOIN CATPERE CA ON C.IDCATEG = CA.IDCATEG
+                                  WHERE CA.IDCATEG_PERE = 11
+                                  LIMIT :limit OFFSET :offset;");
+            $req->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $req->bindParam(':offset', $offset, PDO::PARAM_INT);
+            $req->execute();
+            $produits = $req->fetchAll();
+
+            foreach ($produits as $produit) {
+                echo "<li>";
+                    echo "<a href='descProduit.php?idProd=".$produit['IDPROD']."'>";
+                    echo "<div class=\"produitCard\">";
+                        echo "<div class=\"imageContainer\">";
+                            echo "<img src='./images/prod". htmlspecialchars($produit['IDPROD']).".png' alt='Image du produit'>";
+                        echo "</div>";
+                        echo "<div class=\"infoContainer\">";
+                            echo "<h2>".$produit['NOMPROD']."</h2>";
+                            echo "<p>".$produit['PRIXHT']."€</p>";
+                        echo "</div>";
+                echo "</div>";
+                echo "</a>";
+                echo "</li>";
+            }
+        ?>
+        </ul>
+        <div class="pagination">
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a class="page-number <?php echo ($i == $page) ? 'active' : ''; ?>" href="#" data-page="<?php echo $i; ?>"><?php echo $i; ?></a>
+            <?php endfor; ?>
+        </div>
     </div>
         
-
         
 </div>  
 
@@ -149,6 +193,28 @@ include("header.php");
         // Empêcher le clic sur le menu burger de se propager
         burgerToggle.addEventListener('click', (event) => {
             event.stopPropagation();
+        });
+
+        // Pagination script
+        const paginationLinks = document.querySelectorAll('.pagination a');
+        paginationLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const page = event.target.getAttribute('data-page');
+                fetch(`ludizone.php?page=${page}`)
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const newList = doc.querySelector('#produitsList').innerHTML;
+                        document.querySelector('#produitsList').innerHTML = newList;
+                        window.history.pushState({}, '', `?page=${page}`);
+
+                        // Update numéro de page actif
+                        document.querySelector('.pagination .active').classList.remove('active');
+                        event.target.classList.add('active');
+                    });
+            });
         });
     });
 </script>

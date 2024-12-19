@@ -8,15 +8,12 @@
         exit();
     }
 
-<<<<<<< HEAD
     if (isset($_GET['disconnect']) && $_GET['disconnect'] === 'true') {
         session_destroy();
         header("Location: connexion.php");
         exit();
     }
 
-=======
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
     header("Cache-Control: no-cache, must-revalidate");
 
     // Récupérer l'ID client depuis la session
@@ -244,14 +241,9 @@
                                 'produits' => []
                             ];
                         }
-<<<<<<< HEAD
-                        $commandes[$row['NUMCOMMANDE']]['produits'][] = [
-                            'idprod' => $row['IDPROD'],  
-=======
                         // Modification ici pour inclure l'IDPROD
                         $commandes[$row['NUMCOMMANDE']]['produits'][] = [
                             'idprod' => $row['IDPROD'],  // Ajout de l'ID du produit
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
                             'nom' => $row['NOMPROD'],
                             'quantite' => $row['QUANTITEPROD'],
                             'prix' => $row['PRIXHT']
@@ -279,11 +271,7 @@
                                                     <?= $produit['nom'] ?>
                                                 </a>
                                                 <span class="produit-quantite">x<?= $produit['quantite'] ?></span>
-<<<<<<< HEAD
-                                                <span class="produit-prix"><?= number_format($produit['prix'] * $produit['quantite'], 2) ?> €</span>
-=======
                                                 <span class="produit-prix"><?= number_format($produit['prix'], 2) ?> €</span>
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
                                             </div>
                                         <?php endforeach; ?>
                                     </div>
@@ -308,14 +296,6 @@
         </div>
 
         <button class="disconnect-btn">Se déconnecter</button>
-<<<<<<< HEAD
-        <script>
-            document.querySelector('.disconnect-btn').addEventListener('click', () => {
-                window.location.href = 'compte.php?disconnect=true';
-            });
-        </script>
-=======
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
     </main>
 
     <?php include("footer.php"); ?>

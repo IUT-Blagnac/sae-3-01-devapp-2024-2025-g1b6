@@ -105,8 +105,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label for="prenom">Prénom</label>
                         <input class="nom" type="text" id="prenom" name="prenom" value="<?= isset($prenom) ? htmlspecialchars($prenom) : '' ?>" required>
 
-                        <label for="telephone">Téléphone</label>
-                        <input class="tel" type="text" id="telephone" name="telephone" value="<?= isset($telephone) ? htmlspecialchars($telephone) : '' ?>">
+                        <label class="labelTel" for="telephone">Téléphone</label>
+                        <div class="telephone-container">
+                            <select id="indicatif" name="indicatif">
+                                <?php
+                                $indicatifs = json_decode(file_get_contents('indicatifs.json'), true);
+                                foreach ($indicatifs as $indicatif) {
+                                    $selected = ($indicatif['code'] === '+33') ? 'selected' : ''; // Par défaut, on sélectionne la France
+                                    echo "<option value=\"{$indicatif['code']}\" {$selected}>{$indicatif['emoji']} {$indicatif['pays']} ({$indicatif['code']})</option>";
+                                }
+                                ?>
+                            </select>
+                            <input type="text" id="numTel" name="numTel">
+                        </div>
                         <br>
 
                         <label for="email">Email</label>
@@ -180,6 +191,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </ul>
         </div>
     </footer>
+
+
+
+    <script>
+
+
+        //----------------------VERIFICATION DU NUMERO DE TELEPHONE----------------------------
+        const numTelInput = document.getElementById('numTel');
+        numTelInput.addEventListener('input', () => {
+            // Nettoyage du numéro
+            if (numTelInput.value.startsWith('0')) {
+                numTelInput.value = numTelInput.value.substring(1);
+            }
+            // Supprimer les caractères non numériques
+            numTelInput.value = numTelInput.value.replace(/[^\d]/g, '');
+            
+            // Validation de la longueur
+            const isValid = numTelInput.value.length === 9;
+            const submitBtn = document.getElementById('submitBtn-modif-Info-Cli');
+            
+            // Mise à jour de l'interface
+            submitBtn.disabled = !isValid;
+            
+            // Limiter à 9 chiffres et afficher message d'erreur
+            if (numTelInput.value.length > 9) {
+                numTelInput.value = numTelInput.value.slice(0, 9);
+                showToast(
+                    'Le numéro de téléphone est limité à 9 chiffres',
+                    'error',
+                    'Limite atteinte'
+                );
+            }
+            // Afficher message d'erreur si nombre insuffisant de chiffres
+            else if (numTelInput.value.length > 0 && numTelInput.value.length < 9) {
+                showToast(
+                    'Le numéro de téléphone doit contenir exactement 9 chiffres',
+                    'error',
+                    'Format incorrect'
+                );
+            }
+            // Afficher succès uniquement si exactement 9 chiffres et pas de troncature
+            else if (isValid && numTelInput.value.length === 9) {
+                showToast(
+                    'Format du numéro de téléphone valide',
+                    'success',
+                    'Validation'
+                );
+            }
+        });
+    </script>
 
 
 </body>

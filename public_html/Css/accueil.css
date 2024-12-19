@@ -1,13 +1,15 @@
-/* Palette de couleurs */
+/* Variables globales */
 :root {
-    --dark-purple: linear-gradient(#6d00b0, #b06bdc);
-    --clair-purple: #c267ff;
+    --dark-purple: #6d00b0;
+    --clair-purple: rgba(109, 0, 176, 0.15);
     --medium-purple: #8A2BE2;
-    --light-purple: #e6d1f2;
+    --light-purple: #f8f5fb;
     --accent-pink: #FF69B4;
+    --white: #FFFFFF;   
     --backpurple: #d3bce6;
-    --white: #FFFFFF;
     --light-gray: #F0F0F0;
+    --text-dark: #2c3e50;
+    --shadow: 0 4px 6px rgba(109, 0, 176, 0.1);
 }
 
 /* Style général */
@@ -71,13 +73,14 @@ body {
     height: 17em;
     margin: 0.5em;
     padding: 0.5em;
-    background-color: var(--backpurple);
+    background-color: var(--white);
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.3s;
     cursor: pointer;
     justify-content: center;
     align-items: center;
     text-align: center;
+    box-shadow: var(--shadow);
 }
 
 .listeCDC li:hover {
@@ -251,7 +254,7 @@ body {
 
 .pack {
     position: relative;
-    margin-top: 10em;
+    margin-top: 5%;
     margin-left: 6em;
     padding: 0.1em;
     height: 27em;
@@ -302,7 +305,7 @@ body {
     height: 17em;
     margin: 0.5em;
     padding: 0.5em;
-    background-color: var(--backpurple);
+    background-color: var(--white);
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.3s;
     cursor: pointer;
@@ -311,6 +314,7 @@ body {
     text-align: center;
     display: flex;
     flex-direction: column;
+    box-shadow: var(--shadow);
 }
 
 

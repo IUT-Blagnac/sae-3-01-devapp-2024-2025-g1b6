@@ -18,6 +18,7 @@
     justify-content: flex-start; /* Align items to the start */
     align-items: center; /* Center items horizontally */
     width: 100%;
+    min-height: 100%;
     height: auto;
 }
 
@@ -25,11 +26,11 @@
 .filtres {
     position: fixed;
     margin-top: 1%;
-    left: 0;
+    left: 1%;
     height: 15em;
     width: 10em;
     text-align: center;
-    background-color: var(--light-purple);
+    background-color: var(--backpurple);
     border-radius: 10px;
     padding: 10px;
 }  
@@ -117,13 +118,14 @@
     width: 15em;
     margin: 0.5em;
     padding: 0.5em;
-    background-color: var(--backpurple);
+    background-color: var(--white);
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.3s;
     cursor: pointer;
     justify-content: center;
     align-items: center;
     text-align: center;
+    box-shadow: var(--shadow);
 }
 
 .sousCategorieContainer ul li:hover {

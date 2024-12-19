@@ -222,6 +222,41 @@ body {
     text-decoration: underline;
 }
 
+/* Zone de texte pour les avis */
+.review-section textarea {
+    width: 100%;
+    border: 2px solid var(--medium-purple);
+    border-radius: 5px;
+    resize: vertical;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    color: var(--dark-purple);
+    background-color: var(--white);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-section textarea:focus {
+    border-color: var(--dark-purple);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+.review-section .btn-avis {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--medium-purple);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.review-section .btn-avis:hover {
+    background: var(--dark-purple);
+    color: var(--accent-pink);
+}
+
 .popup {
     display: none;
     position: fixed;

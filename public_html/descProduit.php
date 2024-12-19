@@ -177,7 +177,7 @@ $imagePath = "./images/prod". htmlspecialchars($produit['IDPROD'])  .".png" ; //
                             </div>
                             <input type="hidden" name="idProd" value="<?php echo $idProd; ?>">
                             <textarea name="descAvis" id="descAvis" rows="4" maxlength="750" placeholder="Laissez votre avis (750 caractères max)" required></textarea>
-                            <button type="submit" class="btn">Soumettre l'avis</button>
+                            <button type="submit" class="btn-avis">Soumettre l'avis</button>
                         </form>
                     </div>
                 <?php endif; ?>

@@ -2,29 +2,17 @@
     session_start();
     include("connect.inc.php");
 
-<<<<<<< HEAD
-    //// Vérifier si l'utilisateur est un administrateur
-    //if (!isset($_SESSION["admin"])) {
-    //    header("Location: connexion.php");
-    //    exit();
-    //}
-
-=======
     // Vérification de la déconnexion
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
     if (isset($_GET['disconnect']) && $_GET['disconnect'] === 'true') {
         session_destroy();
         header("Location: connexion.php");
         exit();
     }
+    
 
     header("Cache-Control: no-cache, must-revalidate");
 ?>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -32,121 +20,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Css/all.css">
     <link rel="stylesheet" href="Css/dashboardAdmin.css">
-<<<<<<< HEAD
-    <title>Dashboard Administrateur</title>
-=======
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <title>Tableau de bord Administrateur</title>
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
 </head>
 <body>
     <?php include("header.php"); ?>
 
     <main>
         <div class="dashboard-container">
-            <!-- Menu latéral -->
-            <div class="sidebar">
-                <nav class="sidebar-nav">
-                    <ul class="nav-list">
-                        <!-- Accueil -->
-                        <li class="nav-item">
-<<<<<<< HEAD
-                            <div class="nav-link" data-section="accueil">
-                                <i class="fas fa-home"></i>
-=======
-                            <div class="nav-link active" data-section="accueil">
-                                <i class="fa-solid fa-house"></i>
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
-                                <span>Accueil</span>
-                            </div>
-                        </li>
-
-                        <!-- Produits -->
-                        <li class="nav-item">
-                            <div class="nav-link has-submenu">
-<<<<<<< HEAD
-                                <i class="fas fa-box"></i>
-                                <span>Produits</span>
-                                <i class="fas fa-chevron-down arrow"></i>
-=======
-                                <i class="fa-solid fa-box"></i>
-                                <span>Produits</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
-                            </div>
-                            <ul class="submenu">
-                                <li data-section="liste-produits">Liste des produits</li>
-                                <li data-section="ajouter-produit">Ajouter un produit</li>
-                            </ul>
-                        </li>
-
-                        <!-- Catégories -->
-                        <li class="nav-item">
-                            <div class="nav-link has-submenu">
-<<<<<<< HEAD
-                                <i class="fas fa-tags"></i>
-                                <span>Catégories</span>
-                                <i class="fas fa-chevron-down arrow"></i>
-=======
-                                <i class="fa-solid fa-tags"></i>
-                                <span>Catégories</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
-                            </div>
-                            <ul class="submenu">
-                                <li data-section="liste-categories">Liste des catégories</li>
-                                <li data-section="ajouter-categorie">Ajouter une catégorie</li>
-                            </ul>
-                        </li>
-
-                        <!-- Lots -->
-                        <li class="nav-item">
-                            <div class="nav-link has-submenu">
-<<<<<<< HEAD
-                                <i class="fas fa-layer-group"></i>
-                                <span>Lots</span>
-                                <i class="fas fa-chevron-down arrow"></i>
-=======
-                                <i class="fa-solid fa-layer-group"></i>
-                                <span>Lots</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
-                            </div>
-                            <ul class="submenu">
-                                <li data-section="liste-lots">Liste des lots</li>
-                                <li data-section="creer-lot">Créer un lot</li>
-                            </ul>
-                        </li>
-
-                        <!-- Avis -->
-                        <li class="nav-item">
-                            <div class="nav-link has-submenu">
-<<<<<<< HEAD
-                                <i class="fas fa-comments"></i>
-                                <span>Avis</span>
-                                <i class="fas fa-chevron-down arrow"></i>
-=======
-                                <i class="fa-solid fa-comments"></i>
-                                <span>Avis</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
-                            </div>
-                            <ul class="submenu">
-                                <li data-section="tous-les-avis">Tous les avis</li>
-                                <li data-section="avis-signales">Avis signalés</li>
-                                <li data-section="moderation">Modération</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            <?php 
+            $currentPage = 'accueil';
+            include("includes/adminSidebar.php"); 
+            ?>
 
             <!-- Contenu principal -->
             <div class="main-content">
-<<<<<<< HEAD
-                <!-- Le contenu sera chargé dynamiquement ici -->
-=======
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
                 <div class="content-section" id="accueil">
                     <h1>Tableau de bord administrateur</h1>
                     
@@ -166,11 +54,7 @@
                             $query->execute();
                             $commandesMois = $query->fetchColumn();
                             
-<<<<<<< HEAD
-                            // Chiffre d'affaires total
-=======
                             // Chiffre d'affaires du mois
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
                             $query = $pdo->prepare("
                                 SELECT SUM(P.PRIXHT * PA.QUANTITEPROD) 
                                 FROM COMMANDE C 
@@ -234,11 +118,6 @@
                         <div class="chart-card">
                             <h3>Top 5 des produits</h3>
                             <canvas id="topProductsChart"></canvas>
-<<<<<<< HEAD
-                        </div>
-                        
-                        <!-- Répartition des commandes -->
-=======
                             <div class="period-selector">
                                 <div class="slider"></div>
                                 <button class="period-btn active" data-period="day" data-chart="top_products">Jour</button>
@@ -248,89 +127,11 @@
                         </div>
                         
                         <!-- Statuts des commandes -->
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
                         <div class="chart-card">
                             <h3>Statuts des commandes</h3>
                             <canvas id="orderStatusChart"></canvas>
                         </div>
                     </div>
-<<<<<<< HEAD
-
-                    <?php
-                        // Données pour les graphiques
-                        // Ventes des 6 derniers mois
-                        $query = $pdo->prepare("
-                            WITH RECURSIVE dates AS (
-                                SELECT CURDATE() - INTERVAL 29 DAY as date
-                                UNION ALL
-                                SELECT date + INTERVAL 1 DAY
-                                FROM dates
-                                WHERE date < CURDATE()
-                            )
-                            SELECT 
-                                DATE_FORMAT(d.date, '%e %b') as mois,
-                                COALESCE(SUM(P.PRIXHT * PA.QUANTITEPROD), 0) as total_ventes
-                            FROM dates d
-                            LEFT JOIN COMMANDE C ON DATE(C.DATECOMMANDE) = d.date
-                            LEFT JOIN PANIER PA ON C.NUMCOMMANDE = PA.IDCOMMANDE
-                            LEFT JOIN PRODUIT P ON PA.IDPROD = P.IDPROD
-                            GROUP BY d.date
-                            ORDER BY d.date ASC
-                        ");
-                        $query->execute();
-                        $ventesData = $query->fetchAll();
-
-                        // Nouveaux clients par mois
-                        $query = $pdo->prepare("
-                            WITH RECURSIVE dates AS (
-                                SELECT CURDATE() - INTERVAL 29 DAY as date
-                                UNION ALL
-                                SELECT date + INTERVAL 1 DAY
-                                FROM dates
-                                WHERE date < CURDATE()
-                            )
-                            SELECT 
-                                DATE_FORMAT(d.date, '%e %b') as mois,
-                                COUNT(C.IDCLIENT) as nouveaux_clients
-                            FROM dates d
-                            LEFT JOIN CLIENT C ON DATE(C.DATEINSCRIPTION) = d.date
-                            GROUP BY d.date
-                            ORDER BY d.date ASC
-                        ");
-                        $query->execute();
-                        $clientsData = $query->fetchAll();
-
-                        // Top 5 des produits (sur les 30 derniers jours)
-                        $query = $pdo->prepare("
-                            SELECT 
-                                P.NOMPROD,
-                                SUM(PA.QUANTITEPROD) as quantite_vendue
-                            FROM PANIER PA
-                            JOIN PRODUIT P ON PA.IDPROD = P.IDPROD
-                            JOIN COMMANDE C ON PA.IDCOMMANDE = C.NUMCOMMANDE
-                            WHERE PA.IDCOMMANDE != 0
-                            AND C.DATECOMMANDE >= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
-                            GROUP BY P.IDPROD, P.NOMPROD
-                            ORDER BY quantite_vendue DESC
-                            LIMIT 5
-                        ");
-                        $query->execute();
-                        $topProduits = $query->fetchAll();
-
-                        // Statuts des commandes (sur les 30 derniers jours)
-                        $query = $pdo->prepare("
-                            SELECT 
-                                STATUTLIVRAISON,
-                                COUNT(*) as nombre
-                            FROM COMMANDE
-                            WHERE DATECOMMANDE >= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
-                            GROUP BY STATUTLIVRAISON
-                        ");
-                        $query->execute();
-                        $statutsCommandes = $query->fetchAll();
-                    ?>
-=======
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
                 </div>
             </div>
         </div>
@@ -340,17 +141,11 @@
 
     <?php include("footer.php"); ?>
 
-<<<<<<< HEAD
-    <!-- Ajouter Chart.js -->
-=======
     <!-- Chart.js -->
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-<<<<<<< HEAD
-=======
             // Fonction pour charger les données selon la période
             async function loadChartData(chartType, period) {
                 try {
@@ -402,21 +197,13 @@
                 chart.update();
             }
 
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
             // Gestion du menu déroulant
             const menuItems = document.querySelectorAll('.nav-link.has-submenu');
             
             menuItems.forEach(item => {
                 item.addEventListener('click', function() {
-<<<<<<< HEAD
-                    // Toggle active class
                     this.classList.toggle('active');
                     
-                    // Toggle submenu visibility
-=======
-                    this.classList.toggle('active');
-                    
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
                     const submenu = this.nextElementSibling;
                     if (submenu.style.maxHeight) {
                         submenu.style.maxHeight = null;
@@ -424,10 +211,6 @@
                         submenu.style.maxHeight = submenu.scrollHeight + "px";
                     }
                     
-<<<<<<< HEAD
-                    // Rotate arrow
-=======
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
                     const arrow = this.querySelector('.arrow');
                     arrow.style.transform = arrow.style.transform === 'rotate(180deg)' ? 
                                           'rotate(0deg)' : 'rotate(180deg)';
@@ -439,69 +222,6 @@
                 window.location.href = 'dashboardAdmin.php?disconnect=true';
             });
 
-<<<<<<< HEAD
-            // Gestion des boutons de période et de l'effet de glissement
-            document.querySelectorAll('.period-selector').forEach(selector => {
-                const buttons = selector.querySelectorAll('.period-btn');
-                const slider = selector.querySelector('.slider');
-                
-                buttons.forEach((btn, index) => {
-                    btn.addEventListener('click', async function() {
-                        const period = this.dataset.period;
-                        const chartType = this.dataset.chart;
-                        
-                        // Mise à jour du slider
-                        slider.style.transform = `translateX(${index * 100}%)`;
-                        
-                        // Mise à jour des classes active
-                        buttons.forEach(b => b.classList.remove('active'));
-                        this.classList.add('active');
-                    });
-                });
-
-                // Positionner initialement le slider
-                const activeButton = selector.querySelector('.period-btn.active');
-                const activeIndex = Array.from(buttons).indexOf(activeButton);
-                slider.style.transform = `translateX(${activeIndex * 100}%)`;
-            });
-
-            let salesChart, clientsChart;
-            
-            // Données PHP vers JavaScript
-            const ventesData = <?= json_encode($ventesData) ?>;
-            const clientsData = <?= json_encode($clientsData) ?>;
-            const topProduits = <?= json_encode($topProduits) ?>;
-            const statutsCommandes = <?= json_encode($statutsCommandes) ?>;
-
-            // Fonction pour charger les données selon la période
-            async function loadChartData(chartType, period) {
-                try {
-                    const response = await fetch(`getChartData.php?type=${chartType}&period=${period}`);
-                    const data = await response.json();
-                    
-                    if (!response.ok) {
-                        console.error('Erreur serveur:', data);
-                        throw new Error(`Erreur ${response.status}: ${data.error}\nLigne: ${data.line}\nFichier: ${data.file}\nTrace: ${data.trace}`);
-                    }
-                    
-                    return data;
-                } catch (error) {
-                    console.error('Erreur détaillée:', error);
-                    return null;
-                }
-            }
-
-            // Graphique des ventes
-            salesChart = new Chart(document.getElementById('salesChart'), {
-                type: 'line',
-                data: {
-                    labels: ventesData.map(item => item.mois),
-                    datasets: [{
-                        label: 'Ventes (€)',
-                        data: ventesData.map(item => item.total_ventes),
-                        borderColor: '#6d00b0',
-                        tension: 0.3,
-=======
             let salesChart, clientsChart, topProductsChart, orderStatusChart;
             
             // Initialisation des graphiques
@@ -514,31 +234,12 @@
                         data: [],
                         borderColor: '#6d00b0',
                         tension: 0.4,
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
                         fill: true,
                         backgroundColor: 'rgba(109, 0, 176, 0.1)'
                     }]
                 },
                 options: {
                     responsive: true,
-<<<<<<< HEAD
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return value + ' €';
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return context.parsed.y + ' €';
-=======
                     maintainAspectRatio: false
                 }
             });
@@ -595,7 +296,6 @@
                             callbacks: {
                                 label: function(context) {
                                     return ` ${context.label}: ${context.raw} commandes`;
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
                                 }
                             }
                         }
@@ -603,25 +303,6 @@
                 }
             });
 
-<<<<<<< HEAD
-            // Fonction pour mettre à jour les graphiques
-            async function updateChart(chartType, period, chart) {
-                const data = await loadChartData(chartType, period);
-                if (data) {
-                    chart.data.labels = data.labels;
-                    chart.data.datasets[0].data = data.values;
-                    
-                    // Ajuster les options en fonction de la période
-                    if (chartType === 'sales') {
-                        chart.options.scales.x.time = {
-                            unit: period === 'day' ? 'day' : period === 'month' ? 'month' : 'year'
-                        };
-                    }
-                    
-                    chart.update();
-                }
-            }
-=======
             orderStatusChart = new Chart(document.getElementById('orderStatusChart'), {
                 type: 'pie',
                 data: {
@@ -667,7 +348,6 @@
                     orderStatusChart.update();
                 }
             });
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
 
             // Gestion des boutons de période
             document.querySelectorAll('.period-selector').forEach(selector => {
@@ -676,25 +356,6 @@
                 
                 buttons.forEach((btn, index) => {
                     btn.addEventListener('click', async function() {
-<<<<<<< HEAD
-                        const period = this.dataset.period;
-                        const chartType = this.dataset.chart;
-                        
-                        // Mise à jour du slider
-                        slider.style.transform = `translateX(${index * 100}%)`;
-                        
-                        // Mise à jour des classes active
-                        buttons.forEach(b => b.classList.remove('active'));
-                        this.classList.add('active');
-                        
-                        // Mise à jour du graphique
-                        const chart = chartType === 'sales' ? salesChart : clientsChart;
-                        await updateChart(chartType, period, chart);
-                    });
-                });
-
-                // Positionner initialement le slider
-=======
                         console.log('Bouton cliqué:', this.dataset.period, this.dataset.chart); // Debug
                         const period = this.dataset.period;
                         const chartType = this.dataset.chart;
@@ -723,105 +384,11 @@
                 });
 
                 // Position initiale du slider
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395
                 const activeButton = selector.querySelector('.period-btn.active');
                 const activeIndex = Array.from(buttons).indexOf(activeButton);
                 slider.style.transform = `translateX(${activeIndex * 100}%)`;
             });
-<<<<<<< HEAD
-
-            // Graphique des nouveaux clients
-            clientsChart = new Chart(document.getElementById('newClientsChart'), {
-                type: 'bar',
-                data: {
-                    labels: clientsData.map(item => item.mois),
-                    datasets: [{
-                        label: 'Nouveaux clients',
-                        data: clientsData.map(item => item.nouveaux_clients),
-                        backgroundColor: '#8A2BE2'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 1
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Graphique des top produits
-            new Chart(document.getElementById('topProductsChart'), {
-                type: 'doughnut',
-                data: {
-                    labels: topProduits.map(item => item.NOMPROD),
-                    datasets: [{
-                        data: topProduits.map(item => item.quantite_vendue),
-                        backgroundColor: [
-                            '#6d00b0',
-                            '#8A2BE2',
-                            '#9370DB',
-                            '#BA55D3',
-                            '#DDA0DD'
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'right'
-                        },
-                        title: {
-                            display: true,
-                            text: '30 derniers jours'
-                        }
-                    }
-                }
-            });
-
-            // Graphique des statuts de commande
-            new Chart(document.getElementById('orderStatusChart'), {
-                type: 'pie',
-                data: {
-                    labels: statutsCommandes.map(item => item.STATUTLIVRAISON),
-                    datasets: [{
-                        data: statutsCommandes.map(item => item.nombre),
-                        backgroundColor: [
-                            '#6d00b0',
-                            '#8A2BE2',
-                            '#9370DB',
-                            '#BA55D3'
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'right'
-                        },
-                        title: {
-                            display: true,
-                            text: '30 derniers jours'
-                        }
-                    }
-                }
-            });
-        });
-    </script>
-</body>
-</html> 
-=======
         });
     </script>
 </body>
 </html>
->>>>>>> 58492d3d674473bca65841a379863d3695ffa395

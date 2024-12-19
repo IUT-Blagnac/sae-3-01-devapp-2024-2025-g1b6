@@ -23,11 +23,11 @@
         
         <div class="navigation-container">
             <nav>
-                <button>Dernière sortie</button>
-                <button>Nos collections</button>
+                <a href="derniereSortie.php"><button>Dernière sortie</button></a>
+                <a href="nosCollection.php"><button>Nos collections</button></a>
                 <button>Idées cadeaux</button>
                 <button>Promotions !</button>
-                <button>Découvrir la collection</button>
+                <a href="collection.php?idCateg=23"><button>Découvrir la collection</button></a>
             </nav>
         </div>
     
@@ -39,7 +39,7 @@
                 <img src="images/toyStory.png" alt="Toys Story">
             </div>
         
-            <button class="collection-btn">Découvrir la collection</button>
+            <a href="collection.php?idCateg=23"><button class="collection-btn">Découvrir la collection</button></a>
         
             <div class="age-categories">
                 <div>
@@ -49,19 +49,19 @@
                     <p>Enfant</p>
                 </div>
                 <div>
-                    <a href="#">
+                    <a href="grosseCateg.php?idCateg=12">
                         <img src="images/adolescent.jpg" alt="Adolescent">
                     </a>
                     <p>Adolescent</p>
                 </div>
                 <div>
-                    <a href="#">
+                    <a href="grosseCateg.php?idCateg=13">
                         <img src="images/jeune_adulte.jpg" alt="Jeune Adulte">
                     </a>
                     <p>Jeune adulte</p>
                 </div>
                 <div>
-                    <a href="#">
+                    <a href="grosseCateg.php?idCateg=14">
                         <img src="images/adulte.jpg" alt="Adulte">
                     </a>
                     <p>Adulte</p>
@@ -77,43 +77,35 @@
     <h1 class="titreCDC">Coups de coeur</h1>
     
     <ul class="listeCDC">       
-            <?php
-                include("connect.inc.php");
+        <?php
+                        include("connect.inc.php");            
+                        // Requête pour récupérer les 4 produits les mieux notés
+                        $sql = "SELECT p.IDPROD, p.NOMPROD, p.PRIXHT, a.NOTE
+                                FROM PRODUIT p
+                                JOIN AVIS a ON p.IDPROD = a.IDPROD
+                                ORDER BY a.NOTE DESC
+                                LIMIT 4";
+                        $req = $pdo->query($sql);
+                        $produits = $req->fetchAll();
 
-                
-               // Requête pour récupérer l'ID maximum des produits
-               $maxIdReq = $pdo->query("SELECT MAX(IDPROD) as maxId FROM PRODUIT");
-               $maxId = $maxIdReq->fetch()['maxId'];
-
-               $randomIds = [];
-               while (count($randomIds) < 4) {
-                   $randomId = rand(1, $maxId);
-                   if (!in_array($randomId, $randomIds)) {
-                       $randomIds[] = $randomId;
-                   }
-               }
-
-                $placeholders = implode(',', array_fill(0, count($randomIds), '?'));
-                $req = $pdo->prepare("SELECT * FROM PRODUIT WHERE IdPROD IN ($placeholders)");
-                $req->execute($randomIds);
-                $produits = $req->fetchAll();
-
-                foreach ($produits as $produit) {
-                    echo "<li>";
-                        echo "<a href='descProduit.php?idProd=".$produit['IDPROD']."'>";
-                        echo "<div class\"produitCard\">";
-                            echo "<div class=\"imageContainer\">";
-                                echo "<img src='./images/prod". htmlspecialchars($produit['IDPROD']).".png' alt='Image du produit'>";
-                            echo "</div>";
-                            echo "<div class=\"infoContainer\">";
-                                echo "<h2>".$produit['NOMPROD']."</h2>";
-                                echo "<p>".$produit['PRIXHT']."€</p>";
-                            echo "</div>";
-                    echo "</div>";
-                    echo "</a>";
-                    echo "</li>";
-                }
-            ?>
+                        // Affichage des produits
+                        foreach ($produits as $produit) {
+                        echo "<li>";
+                            echo "<a href='descProduit.php?idProd=" . $produit['IDPROD'] . "'>";
+                                echo "<div class=\"produitCard\">";
+                                    echo "<div class=\"imageContainer\">";
+                                        echo "<img src='./images/prod" . htmlspecialchars($produit['IDPROD']) . ".png' alt='Image du produit'>";
+                                    echo "</div>";
+                                    echo "<div class=\"infoContainer\">";
+                                        echo "<h2>" . htmlspecialchars($produit['NOMPROD']) . "</h2>";
+                                        echo "<p>" . htmlspecialchars($produit['PRIXHT']) . "€</p>";
+                                        echo "<p>Note : " . htmlspecialchars($produit['NOTE']) . "/5</p>";
+                                    echo "</div>";
+                                echo "</div>";
+                            echo "</a>";
+                        echo "</li>";
+                        }
+                    ?>
     </ul>
     
 </section>
