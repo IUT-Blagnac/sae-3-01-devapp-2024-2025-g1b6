@@ -8,6 +8,7 @@
         header("Location: connexion.php");
         exit();
     }
+    
 
     header("Cache-Control: no-cache, must-revalidate");
 ?>
@@ -27,73 +28,10 @@
 
     <main>
         <div class="dashboard-container">
-            <!-- Menu latéral -->
-            <div class="sidebar">
-                <nav class="sidebar-nav">
-                    <ul class="nav-list">
-                        <!-- Accueil -->
-                        <li class="nav-item">
-                            <div class="nav-link active" data-section="accueil">
-                                <i class="fa-solid fa-house"></i>
-                                <span>Accueil</span>
-                            </div>
-                        </li>
-
-                        <!-- Produits -->
-                        <li class="nav-item">
-                            <div class="nav-link has-submenu">
-                                <i class="fa-solid fa-box"></i>
-                                <span>Produits</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
-                            </div>
-                            <ul class="submenu">
-                                <li data-section="liste-produits">Liste des produits</li>
-                                <li data-section="ajouter-produit">Ajouter un produit</li>
-                            </ul>
-                        </li>
-
-                        <!-- Catégories -->
-                        <li class="nav-item">
-                            <div class="nav-link has-submenu">
-                                <i class="fa-solid fa-tags"></i>
-                                <span>Catégories</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
-                            </div>
-                            <ul class="submenu">
-                                <li data-section="liste-categories">Liste des catégories</li>
-                                <li data-section="ajouter-categorie">Ajouter une catégorie</li>
-                            </ul>
-                        </li>
-
-                        <!-- Lots -->
-                        <li class="nav-item">
-                            <div class="nav-link has-submenu">
-                                <i class="fa-solid fa-layer-group"></i>
-                                <span>Lots</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
-                            </div>
-                            <ul class="submenu">
-                                <li data-section="liste-lots">Liste des lots</li>
-                                <li data-section="creer-lot">Créer un lot</li>
-                            </ul>
-                        </li>
-
-                        <!-- Avis -->
-                        <li class="nav-item">
-                            <div class="nav-link has-submenu">
-                                <i class="fa-solid fa-comments"></i>
-                                <span>Avis</span>
-                                <i class="fa-solid fa-chevron-down arrow"></i>
-                            </div>
-                            <ul class="submenu">
-                                <li data-section="tous-les-avis">Tous les avis</li>
-                                <li data-section="avis-signales">Avis signalés</li>
-                                <li data-section="moderation">Modération</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            <?php 
+            $currentPage = 'accueil';
+            include("includes/adminSidebar.php"); 
+            ?>
 
             <!-- Contenu principal -->
             <div class="main-content">

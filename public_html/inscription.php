@@ -1,14 +1,24 @@
 <?php
 session_start();
 
+// Chargement des indicatifs
+$indicatifs = json_decode(file_get_contents('indicatifs.json'), true);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include("connect.inc.php");
 
     // Récupération des données
-    $idClient = 
     $nom = trim($_POST["nom"]);
     $prenom = trim($_POST["prenom"]);
-    $telephone = trim($_POST["telephone"]);
+    
+    // Traitement du numéro de téléphone
+    $numTel = null;
+    if (!empty($_POST["numTel"])) {
+        $indicatif = str_replace("+", "00", $_POST["indicatif"]);
+        $numero = $indicatif . $_POST["numTel"];
+        $numTel = strlen($numero) > 11 ? $numero : null;
+    }
+    
     $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
     $dtn = $_POST["dtn"];
     $password = $_POST["password"];
@@ -45,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     "idClient" => $newIdClient,
                     "nom" => $nom,
                     "prenom" => $prenom,
-                    "telephone" => $telephone,
+                    "telephone" => $numTel,
                     "email" => $email,
                     "password" => $hashedPassword,
                     "dtn" => $dtn,
@@ -82,50 +92,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="Css/inscription.css">
     <link rel="stylesheet" href="Css/all.css">
     <title>Inscription</title>
+    <style>
+    .phone-input {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .phone-input .indicatif {
+        width: 100px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: white;
+    }
+
+    .phone-input .tel {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    </style>
 </head>
 <body>
     
-<header class="header">
-        <div class="barreMenu">
-            <ul class="menuListe">
-                <li> 
-                    <label class="burger" for="burgerToggle">
-                        <input type="checkbox" id="burgerToggle">
-                        <ul class="categories">
-                            <?php
-                            include ("connect.inc.php");
-                            $stmt = $pdo->prepare("SELECT * FROM CATEGORIE WHERE IDCATEG_CATPERE IS NULL");
-                            $stmt->execute();
-                            $categories = $stmt->fetchAll();
-                            foreach ($categories as $categorie) {
-                                echo "<li><a href='categorie.php?id=".$categorie['IDCATEG']."'>".$categorie['NOMCATEG']."</a></li>";
-                            }
-                            ?>
-                        </ul>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </label> 
-                </li>
-                <li> <a class="lienAccueil" href="index.php"><h1 class="titreLudorama"> Ludorama </h1>  </a></li>
-                <li> <input class="barreRecherche" type="text" placeholder="Barre de recherche ..."> </li>
-                <li> <div class="imgLoc"></div> </li>
-                <li> <a href="panier.php"><div class="imgPanier"></div></a></li>
-                <li> <?php
-                        // Vérification de la session utilisateur
-                        if (isset($_SESSION["user"])) {
-                            $id_client = $_SESSION["user"]["IDCLIENT"];
-                            // Si l'utilisateur est connecté, on le redirige vers son compte
-                            echo '<a href="compte.php?id_client=' . $id_client . '"><div class="imgCompte"></div></a>';
-                        } else {
-                            // Sinon, on le redirige vers la page de connexion
-                            echo '<a href="connexion.php"><div class="imgCompte"></div></a>';
-                        }
-                    ?> 
-                </li>
-            </ul>
-        </div>
-    </header>
+    <!-- En-tête -->
+    <?php include("header.php"); ?>
     
     <main>
         <div class="container">
@@ -145,7 +138,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input class="nom" type="text" id="prenom" name="prenom" value="<?= isset($prenom) ? htmlspecialchars($prenom) : '' ?>" required>
 
                         <label for="telephone">Téléphone</label>
-                        <input class="tel" type="text" id="telephone" name="telephone" value="<?= isset($telephone) ? htmlspecialchars($telephone) : '' ?>" required>
+                        <div class="phone-input">
+                            <select name="indicatif" id="indicatif" class="indicatif">
+                                <?php foreach ($indicatifs as $indicatif): ?>
+                                    <option value="<?= $indicatif['code'] ?>" 
+                                            <?= (isset($_POST['indicatif']) && $_POST['indicatif'] === $indicatif['code']) || 
+                                                (!isset($_POST['indicatif']) && $indicatif['code'] === '+33') ? 'selected' : '' ?>>
+                                        <?= $indicatif['code'] ?> <?= $indicatif['pays'] ?> <?= $indicatif['emoji'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <input type="text" id="numTel" name="numTel" class="tel">
+                        </div>
                         <br>
 
                         <label for="email">Email</label>
@@ -220,6 +224,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </footer>
 
-
+    <!-- Déplacez le script à la fin du body -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const telInput = document.getElementById('numTel');
+        if (telInput) {
+            telInput.addEventListener('input', function(e) {
+                // Ne garde que les chiffres
+                this.value = this.value.replace(/[^0-9]/g, '');
+                
+                // Limite la longueur à 9 chiffres
+                if (this.value.length > 9) {
+                    this.value = this.value.slice(0, 9);
+                }
+            });
+        }
+    });
+    </script>
 </body>
 </html>

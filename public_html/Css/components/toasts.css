@@ -1,0 +1,64 @@
+@import '../utils/variables.css';
+
+/* Container des toasts */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+
+/* Style de base des toasts */
+.toast {
+    padding: 16px 24px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    min-width: 300px;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.3s ease-in-out, fadeOut 0.5s ease-in-out 4.5s forwards;
+    cursor: pointer;
+    background: var(--white);
+}
+
+/* Variantes de toast */
+.toast.success {
+    background-color: #4caf50;
+    color: white;
+    border-left: 4px solid #2ecc71;
+}
+
+.toast.error {
+    background-color: #f44336;
+    color: white;
+    border-left: 4px solid #e74c3c;
+}
+
+/* Animations des toasts */
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .toast-container {
+        width: 90%;
+        right: 5%;
+        left: 5%;
+    }
+
+    .toast {
+        width: 100%;
+        min-width: auto;
+    }
+} 

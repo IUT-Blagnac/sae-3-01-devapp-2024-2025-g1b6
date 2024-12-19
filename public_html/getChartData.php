@@ -31,7 +31,7 @@ try {
                         LEFT JOIN COMMANDE C ON DATE(C.DATECOMMANDE) = d.date
                         LEFT JOIN PANIER PA ON C.NUMCOMMANDE = PA.IDCOMMANDE
                         LEFT JOIN PRODUIT P ON PA.IDPROD = P.IDPROD
-                        GROUP BY d.date
+                        GROUP BY d.date, DATE_FORMAT(d.date, '%e %b')
                         ORDER BY d.date
                     ");
                     break;
@@ -53,7 +53,7 @@ try {
                         LEFT JOIN COMMANDE C ON DATE_FORMAT(C.DATECOMMANDE, '%Y-%m') = DATE_FORMAT(m.month, '%Y-%m')
                         LEFT JOIN PANIER PA ON C.NUMCOMMANDE = PA.IDCOMMANDE
                         LEFT JOIN PRODUIT P ON PA.IDPROD = P.IDPROD
-                        GROUP BY m.month
+                        GROUP BY m.month, DATE_FORMAT(m.month, '%b %Y')
                         ORDER BY m.month
                     ");
                     break;
@@ -100,7 +100,7 @@ try {
                             COUNT(C.IDCLIENT) as total
                         FROM dates d
                         LEFT JOIN CLIENT C ON DATE(C.DATEINSCRIPTION) = d.date
-                        GROUP BY d.date
+                        GROUP BY d.date, DATE_FORMAT(d.date, '%e %b')
                         ORDER BY d.date
                     ");
                     break;
@@ -120,7 +120,7 @@ try {
                             COUNT(C.IDCLIENT) as total
                         FROM months m
                         LEFT JOIN CLIENT C ON DATE_FORMAT(C.DATEINSCRIPTION, '%Y-%m') = DATE_FORMAT(m.month, '%Y-%m')
-                        GROUP BY m.month
+                        GROUP BY m.month, DATE_FORMAT(m.month, '%b %Y')
                         ORDER BY m.month
                     ");
                     break;
@@ -147,6 +147,7 @@ try {
             }
             break;
 
+            
         case 'top_products':
             // Requête pour le top 5 des produits
             switch ($period) {
@@ -169,20 +170,13 @@ try {
                 case 'month':
                     // Top 5 des produits des 30 derniers jours
                     $query = $pdo->prepare("
-                        WITH RECURSIVE dates AS (
-                            SELECT CURDATE() - INTERVAL 29 DAY as date
-                            UNION ALL
-                            SELECT date + INTERVAL 1 DAY
-                            FROM dates
-                            WHERE date < CURDATE()
-                        )
                         SELECT 
                             P.NOMPROD as period,
                             COALESCE(SUM(PA.QUANTITEPROD), 0) as total
-                        FROM dates d
-                        LEFT JOIN COMMANDE C ON DATE(C.DATECOMMANDE) = d.date
-                        LEFT JOIN PANIER PA ON C.NUMCOMMANDE = PA.IDCOMMANDE
-                        RIGHT JOIN PRODUIT P ON PA.IDPROD = P.IDPROD
+                        FROM PRODUIT P
+                        LEFT JOIN PANIER PA ON P.IDPROD = PA.IDPROD
+                        LEFT JOIN COMMANDE C ON PA.IDCOMMANDE = C.NUMCOMMANDE 
+                            AND C.DATECOMMANDE >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
                         GROUP BY P.IDPROD, P.NOMPROD
                         HAVING total > 0
                         ORDER BY total DESC
@@ -193,20 +187,13 @@ try {
                 case 'year':
                     // Top 5 des produits des 12 derniers mois
                     $query = $pdo->prepare("
-                        WITH RECURSIVE months AS (
-                            SELECT DATE_FORMAT(CURDATE() - INTERVAL 11 MONTH, '%Y-%m-01') as month
-                            UNION ALL
-                            SELECT DATE_ADD(month, INTERVAL 1 MONTH)
-                            FROM months
-                            WHERE month < DATE_FORMAT(CURDATE(), '%Y-%m-01')
-                        )
                         SELECT 
                             P.NOMPROD as period,
                             COALESCE(SUM(PA.QUANTITEPROD), 0) as total
-                        FROM months m
-                        LEFT JOIN COMMANDE C ON DATE_FORMAT(C.DATECOMMANDE, '%Y-%m') = DATE_FORMAT(m.month, '%Y-%m')
-                        LEFT JOIN PANIER PA ON C.NUMCOMMANDE = PA.IDCOMMANDE
-                        RIGHT JOIN PRODUIT P ON PA.IDPROD = P.IDPROD
+                        FROM PRODUIT P
+                        LEFT JOIN PANIER PA ON P.IDPROD = PA.IDPROD
+                        LEFT JOIN COMMANDE C ON PA.IDCOMMANDE = C.NUMCOMMANDE 
+                            AND C.DATECOMMANDE >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
                         GROUP BY P.IDPROD, P.NOMPROD
                         HAVING total > 0
                         ORDER BY total DESC

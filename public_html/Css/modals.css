@@ -1,0 +1,62 @@
+/* Styles pour toutes les modales */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    padding: 20px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+
+
+.modal-content {
+    background-color: var(--white);
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid var(--light-gray);
+    width: 90%;
+    max-width: 500px;
+    min-width: 280px;
+    border-radius: 10px;
+    animation: slide-down 0.4s ease-out;
+    position: relative;
+}
+
+/* Style pour la modal de confirmation */
+.confirm-delete-content {
+    text-align: center;
+    padding: 20px;
+}
+
+.confirm-delete-content h2 {
+    color: #ff4757;
+    margin-bottom: 20px;
+}
+
+.confirm-delete-content p {
+    margin-bottom: 30px;
+    color: var(--text-dark);
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Animations */
+@keyframes slide-down {
+    from {
+        transform: translateY(-20%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+} 

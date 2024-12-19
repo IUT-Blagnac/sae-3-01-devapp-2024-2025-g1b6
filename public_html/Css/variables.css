@@ -1,0 +1,11 @@
+:root {
+    --dark-purple: #6d00b0;
+    --clair-purple: rgba(109, 0, 176, 0.15);
+    --medium-purple: #8A2BE2;
+    --light-purple: #f8f5fb;
+    --accent-pink: #FF69B4;
+    --white: #FFFFFF;   
+    --light-gray: #F0F0F0;
+    --text-dark: #2c3e50;
+    --shadow: 0 4px 6px rgba(109, 0, 176, 0.1);
+} 
