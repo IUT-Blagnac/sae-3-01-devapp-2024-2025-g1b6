@@ -4,6 +4,7 @@
 function rechercheAvancee($criteres, $pdo, $limit, $offset)
 {
     try {
+<<<<<<< HEAD
         // Préparer l'appel à la procédure stockée avec les nouveaux paramètres
         $stmt = $pdo->prepare("CALL SP_RECHERCHE_AVANCEE(:mot_cle, :categorie, :marque, :prix_min, :prix_max, :en_stock, :limit_count, :offset_count, :tri)");
 
@@ -22,6 +23,35 @@ function rechercheAvancee($criteres, $pdo, $limit, $offset)
         $stmt->execute();
 
         // Récupérer les résultats
+=======
+        // Validation des critères
+        $criteres['mot_cle'] = $criteres['mot_cle'] ?? '';
+        $criteres['categorie'] = empty($criteres['categorie']) ? NULL : (int)$criteres['categorie'];  // Catégorie vide devient NULL
+        $criteres['marque'] = empty($criteres['marque']) ? NULL : $criteres['marque'];  // Marque vide devient NULL
+        $criteres['prix_min'] = !empty($criteres['prix_min']) ? (float)$criteres['prix_min'] : NULL;
+        $criteres['prix_max'] = !empty($criteres['prix_max']) ? (float)$criteres['prix_max'] : NULL;
+        $criteres['en_stock'] = isset($criteres['en_stock']) ? 1 : NULL;  // 1 si coché, NULL si non
+        $criteres['tri'] = isset($criteres['tri']) && in_array($criteres['tri'], ['nom_asc', 'nom_desc', 'prix_asc', 'prix_desc']) ? $criteres['tri'] : 'nom_asc';
+
+
+        // Préparer la requête
+        $stmt = $pdo->prepare("CALL SP_RECHERCHE_AVANCEE(:mot_cle, :categorie, :marque, :prix_min, :prix_max, :en_stock, :limit_count, :offset_count, :tri)");
+
+        // Passer les paramètres
+        $stmt->bindValue(':mot_cle', $criteres['mot_cle'], PDO::PARAM_STR);
+        $stmt->bindValue(':categorie', $criteres['categorie'], PDO::PARAM_INT);
+        $stmt->bindValue(':marque', $criteres['marque'], PDO::PARAM_STR);
+        $stmt->bindValue(':prix_min', $criteres['prix_min'], PDO::PARAM_STR);
+        $stmt->bindValue(':prix_max', $criteres['prix_max'], PDO::PARAM_STR);
+        $stmt->bindValue(':en_stock', $criteres['en_stock'], PDO::PARAM_INT);
+        $stmt->bindValue(':limit_count', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset_count', (int)$offset, PDO::PARAM_INT);
+        $stmt->bindValue(':tri', $criteres['tri'], PDO::PARAM_STR);
+
+        // Debug avant l'exécution de la requête
+
+        $stmt->execute();
+>>>>>>> 58492d3d674473bca65841a379863d3695ffa395
         $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Retourner les résultats
@@ -34,8 +64,11 @@ function rechercheAvancee($criteres, $pdo, $limit, $offset)
 }
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 58492d3d674473bca65841a379863d3695ffa395
 // Fonction pour compter le total des produits
 function countProduits($criteres, $pdo)
 {
