@@ -241,9 +241,8 @@
                                 'produits' => []
                             ];
                         }
-                        // Modification ici pour inclure l'IDPROD
                         $commandes[$row['NUMCOMMANDE']]['produits'][] = [
-                            'idprod' => $row['IDPROD'],  // Ajout de l'ID du produit
+                            'idprod' => $row['IDPROD'],  
                             'nom' => $row['NOMPROD'],
                             'quantite' => $row['QUANTITEPROD'],
                             'prix' => $row['PRIXHT']
@@ -271,7 +270,7 @@
                                                     <?= $produit['nom'] ?>
                                                 </a>
                                                 <span class="produit-quantite">x<?= $produit['quantite'] ?></span>
-                                                <span class="produit-prix"><?= number_format($produit['prix'], 2) ?> €</span>
+                                                <span class="produit-prix"><?= number_format($produit['prix'] * $produit['quantite'], 2) ?> €</span>
                                             </div>
                                         <?php endforeach; ?>
                                     </div>
@@ -296,6 +295,11 @@
         </div>
 
         <button class="disconnect-btn">Se déconnecter</button>
+        <script>
+            document.querySelector('.disconnect-btn').addEventListener('click', () => {
+                window.location.href = 'compte.php?disconnect=true';
+            });
+        </script>
     </main>
 
     <?php include("footer.php"); ?>

@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     "idClient" => $newIdClient,
                     "nom" => $nom,
                     "prenom" => $prenom,
-                    "telephone" => $telephone,
+                    "telephone" => $numTel,
                     "email" => $email,
                     "password" => $hashedPassword,
                     "dtn" => $dtn,
@@ -82,6 +82,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="Css/inscription.css">
     <link rel="stylesheet" href="Css/all.css">
     <title>Inscription</title>
+    <style>
+    .phone-input {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .phone-input .indicatif {
+        width: 100px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: white;
+    }
+
+    .phone-input .tel {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    </style>
 </head>
 <body>
     
