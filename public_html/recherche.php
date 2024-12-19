@@ -1,4 +1,5 @@
 <?php
+//recherche.php
 require_once 'rechercheAvancee.php'; // Inclure la fonction rechercheAvancee
 require_once 'connect.inc.php'; // Connexion PDO
 
@@ -10,7 +11,6 @@ $produitsParPage = 12; // Nombre de produits par page
 $offset = ($page - 1) * $produitsParPage;
 
 // Récupérer les termes de recherche depuis la barre de recherche
-// Récupérer les critères depuis la barre de recherche
 $criteres = [
     'mot_cle' => $_GET['mot_cle'] ?? '',
     'categorie' => $_GET['categorie'] ?? NULL,
@@ -19,11 +19,6 @@ $criteres = [
     'prix_max' => $_GET['prix_max'] ?? NULL,
     'en_stock' => isset($_GET['en_stock']) ? 1 : NULL,  // Si en_stock est défini, on le met à 1, sinon NULL
 ];
-
-// Debug : Affiche l'exécution de la procédure
-echo "Exécution de la procédure pour les critères suivants : ";
-print_r($criteres);
-
 
 
 // Charger les catégories dynamiquement
@@ -131,13 +126,29 @@ $totalPages = ceil($totalProduits / $produitsParPage);
         </div>
     </div>
     <div class="pagination">
-        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-            <a href="recherche.php?page=<?= $i ?>&<?= http_build_query($criteres) ?>"
-                class="<?= $i == $page ? 'active' : '' ?>">
-                <?= $i ?>
-            </a>
-        <?php endfor; ?>
+        <?php if ($totalPages > 1): ?>
+
+
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="<?= htmlspecialchars("recherche.php?page=$i&" . http_build_query([
+                                'mot_cle' => $criteres['mot_cle'] ?? NULL,
+                                'categorie' => isset($criteres['categorie']) && $criteres['categorie'] !== '' ? $criteres['categorie'] : NULL,
+                                'marque' => $criteres['marque'] ?? NULL,
+                                'prix_min' => $criteres['prix_min'] ?? NULL,
+                                'prix_max' => $criteres['prix_max'] ?? NULL,
+                                'en_stock' => $criteres['en_stock'] !== NULL ? 1 : ''
+                            ])) ?>"
+                    class="<?= $i == $page ? 'active' : '' ?>">
+                    <?= $i ?>
+                </a>
+            <?php endfor; ?>
+        <?php else: ?>
+            <p>Aucune autre page.</p>
+        <?php endif; ?>
     </div>
+
+
+
     <?php include("footer.php") ?>
 </body>
 

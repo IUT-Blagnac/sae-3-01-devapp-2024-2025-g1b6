@@ -22,7 +22,7 @@ $stmt = $pdo->prepare("
     SELECT p.NOMPROD, p.IDPROD, p.PRIXHT, p.DESCPROD, pa.QUANTITEPROD
     FROM PANIER pa
     JOIN PRODUIT p ON pa.IDPROD = p.IDPROD
-    WHERE pa.IDCLIENT = ?
+    WHERE pa.IDCLIENT = ? AND pa.IDCOMMANDE = 0
 ");
 $stmt->execute([$idClient]);
 $produitsPanier = $stmt->fetchAll();

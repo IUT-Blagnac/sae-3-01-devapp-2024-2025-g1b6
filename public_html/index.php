@@ -74,67 +74,49 @@
          
 
 <section class="coupDeCoeur">
-    <h1 class="titreCDC">Coup de coeur</h1>
+    <h1 class="titreCDC">Coups de coeur</h1>
     
-    <ul class="listeCDC">
+    <ul class="listeCDC">       
+            <?php
+                include("connect.inc.php");
+
                 
-        <li class="jeuCDC"> 
-            <div class="imgJeuCDC1"></div>
-            <div class="nomJeuCDC">Croque-Carotte</div> 
-            <div class="prixCDC">35€</div> 
-            <div class="dsiponibiliteCDC"> 
-                <ul class="listeDisponibilites">
-                    <li class="elementDispo">Web Magasin</li>
-                    <li class="elementDispo">disponible disponible</li>
-                    <li> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"></li>
-                </ul>
-            </div>
-        </li>
-        
-        <li class="jeuCDC">
-            <a href="descProduit.php">
-            <div class="imgJeuCDC2"></div> 
-            </a>
-            <div class="nomJeuCDC">Nerf </div> 
-            <div class="prixCDC">29.99€</div> 
-            <div class="dsiponibiliteCDC"> 
-                <ul class="listeDisponibilites">
-                    <li class="elementDispo">Web Magasin</li>
-                    <li class="elementDispo">disponible disponible</li>
-                    <li><img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"></li>
-                </ul>
-            </div>
-        </li>
+               // Requête pour récupérer l'ID maximum des produits
+               $maxIdReq = $pdo->query("SELECT MAX(IDPROD) as maxId FROM PRODUIT");
+               $maxId = $maxIdReq->fetch()['maxId'];
 
-        <li class="jeuCDC"> 
-            <div class="imgJeuCDC3"></div> 
-            <div class="nomJeuCDC">Docteur Maboul</div> 
-            <div class="prixCDC">46€</div> 
-            <div class="dsiponibiliteCDC"> 
-                <ul class="listeDisponibilites">
-                    <li class="elementDispo">Web Magasin</li>
-                    <li class="elementDispo">disponible disponible</li>
-                    <li> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"></li>
-                </ul>
-            </div>
-        </li>
+               $randomIds = [];
+               while (count($randomIds) < 4) {
+                   $randomId = rand(1, $maxId);
+                   if (!in_array($randomId, $randomIds)) {
+                       $randomIds[] = $randomId;
+                   }
+               }
 
-        <li class="jeuCDC"> 
-            <div class="imgJeuCDC4"></div> 
-            <div class="nomJeuCDC">Monoopoly</div> 
-            <div class="prixCDC">30€</div> 
-            <div class="dsiponibiliteCDC"> 
-                <ul class="listeDisponibilites">
-                    <li class="elementDispo">Web Magasin</li>
-                    <li class="elementDispo">disponible disponible</li>
-                    <li> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"> <img class="elementDispoImg" src="images/pointVert.png" alt="ptVert"></li>
-                </ul>
-            </div>
-        </li>
+                $placeholders = implode(',', array_fill(0, count($randomIds), '?'));
+                $req = $pdo->prepare("SELECT * FROM PRODUIT WHERE IdPROD IN ($placeholders)");
+                $req->execute($randomIds);
+                $produits = $req->fetchAll();
+
+                foreach ($produits as $produit) {
+                    echo "<li>";
+                        echo "<a href='descProduit.php?idProd=".$produit['IDPROD']."'>";
+                        echo "<div class\"produitCard\">";
+                            echo "<div class=\"imageContainer\">";
+                                echo "<img src='./images/prod". htmlspecialchars($produit['IDPROD']).".png' alt='Image du produit'>";
+                            echo "</div>";
+                            echo "<div class=\"infoContainer\">";
+                                echo "<h2>".$produit['NOMPROD']."</h2>";
+                                echo "<p>".$produit['PRIXHT']."€</p>";
+                            echo "</div>";
+                    echo "</div>";
+                    echo "</a>";
+                    echo "</li>";
+                }
+            ?>
     </ul>
     
 </section>
-
 
 <!-- Section des événements -->
 <div class="ludiEvent">
@@ -144,41 +126,79 @@
         <li>
             <div class="Event">
                 <div class="imgEvent1"></div>
-                <button class="btnParticipe"> J'y participe </button>
+                <a href="ludiEvents.php?idEvent=1"><button class="btnParticipe"> J'y participe </button></a>
             </div>
         </li>
 
         <li>
             <div class="Event">
                 <div class="imgEvent2"></div>
-                <button class="btnParticipe"> J'y participe </button>
+                <a href="ludiEvents.php?idEvent=2"><button class="btnParticipe"> J'y participe </button></a>
             </div>
         </li>
 
         <li>
             <div class="Event">
                 <div class="imgEvent3"></div>
-                <button class="btnParticipe"> J'y participe </button>
+                <a href="ludiEvents.php?idEvent=3"><button class="btnParticipe"> J'y participe </button></a>
             </div>
         </li>
 
         <li>
             <div class="Event">
                 <div class="imgEvent4"></div>
-                <button class="btnParticipe"> J'y participe </button>
+                <a href="ludiEvents.php?idEvent=4"><button class="btnParticipe"> J'y participe </button></a>
             </div>
         </li>
 
         <li>
             <div class="Event">
                 <div class="imgEvent5"></div>
-                <button class="btnParticipe"> J'y participe </button>
+                <a href="ludiEvents.php?idEvent=5"><button class="btnParticipe"> J'y participe </button></a>
             </div>
         </li>
     </ul>
 </div>
 
+<div class="pack">
+    <h1 class="titrePCK">Packs</h1>
+    
+    <ul class="listePCK">       
+    <?php
+    // Requête pour récupérer chaque pack avec un seul produit associé
+    $req = $pdo->query("
+        SELECT P.IDPACK, P.NOMPACK, MIN(PO.IDPROD) AS IDPROD, MIN(PO.NOMPROD) AS NOMPROD, PRIXPACK
+        FROM PACK P
+        LEFT JOIN ASSOPACK AP ON P.IDPACK = AP.IDPACK
+        LEFT JOIN PRODUIT PO ON AP.IDPROD = PO.IDPROD
+        GROUP BY P.IDPACK, P.NOMPACK
+    ");
 
+    $packs = $req->fetchAll();
+
+    foreach ($packs as $pack) {
+        // Définir le chemin de l'image du produit
+        echo "<a href='descPack.php?idPack=".$pack['IDPACK']."'>";
+        $imagePath = !empty($pack['IDPROD']) 
+            ? "./images/prod" . htmlspecialchars($pack['IDPROD']) . ".png" 
+            : "./images/default.png"; // Image par défaut si aucun produit associé
+
+        echo "<li class='pack-item'>";
+
+        if (!empty($pack['IDPROD'])) {
+            echo "<img src='" . $imagePath . "' alt='" . htmlspecialchars($pack['NOMPROD']) . "' class='pack-image'>";
+        } else {
+            echo "<p>Aucun produit associé à ce pack.</p>";
+        }
+        echo "<h2>" . htmlspecialchars($pack['NOMPACK']) . "</h2>";
+        echo "<p>" . number_format($pack['PRIXPACK'], 2, ',', ' ') . " €</p>";
+        echo "</li>";
+    }
+    ?>
+
+    </ul>
+    
+</div>
 
 
 
@@ -186,48 +206,7 @@
 
     
 
-    <!-- Pied de page -->
-    <footer class="footer">
-        <div class="footer-column">
-            <h3>Qui sommes-nous ?</h3>
-            <ul>
-                <li><a href="#">Ludorama.com</a></li>
-                <li><a href="#">Nos magasins</a></li>
-                <li><a href="#">Cartes cadeaux</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>En ce moment</h3>
-            <ul>
-                <li><a href="#">Ambiance de Noël</a></li>
-                <li><a href="#">Nouveautés</a></li>
-                <li><a href="#">Rejoignez LudiSphere !</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Marques</h3>
-            <ul>
-                <li><a href="#">Lego</a></li>
-                <li><a href="#">Playmobil</a></li>
-                <li><a href="#">Jurassic Park</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Personnages jouets</h3>
-            <ul>
-                <li><a href="#">Pokemon</a></li>
-                <li><a href="#">Tous les personnages</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Nos sites</h3>
-            <ul>
-                <li><a href="#">France</a></li>
-                <li><a href="#">Allemagne</a></li>
-                <li><a href="#">Tous nos sites</a></li>
-            </ul>
-        </div>
-    </footer>
+    <?php include("footer.php") ?>
 
 
     <!-- Script menu déroulant -->

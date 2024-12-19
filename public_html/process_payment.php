@@ -32,8 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if($idAdresse === 'new'){
             // Insérer l'adresse dans la table Adresse
-            $stmt = $pdo->prepare("INSERT INTO ADRESSE ( NUMRUE, NOMRUE, COMPLEMENTADR, NOMVILLE, CODEPOSTAL, PAYS) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO ADRESSE ( NUMRUE, NOMRUE, COMPLEMENTADR, NOMVILLE, CODEPOSTAL, PAYS) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->execute([ $numRue, $nomRue, $complementAdr, $nomVille, $codePostal, $pays]);
+
+            // Récupérer l'ID de l'adresse généré
+            $idAdresse = $pdo->lastInsertId();
 
             $stmt = $pdo->prepare("INSERT INTO POSSEDERADR (IDADRESSE, IDCLIENT) VALUES (?, ?)");
             $stmt->execute([$idAdresse, $idClient]);
@@ -54,9 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             UPDATE PRODUIT p
             JOIN PANIER pa ON p.IDPROD = pa.IDPROD
             SET p.QTESTOCK = p.QTESTOCK - pa.QUANTITEPROD
-            WHERE pa.IDCLIENT = ? AND pa.DATECOMMANDE = ?
+            WHERE pa.IDCLIENT = ? AND pa.IDCOMMANDE = ?
         ");
-        $stmt->execute([$idClient, $dateCommande]);
+        $stmt->execute([$idClient, $numCommande]);
 
         // Valider la transaction
         $pdo->commit();

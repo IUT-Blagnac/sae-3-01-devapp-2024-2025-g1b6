@@ -1,0 +1,198 @@
+/* Palette de couleurs */
+:root {
+    --dark-purple: linear-gradient( #6d00b0, #b06bdc);
+    --medium-purple: #8A2BE2;
+    --light-purple: #e6d1f2;
+    --accent-pink: #FF69B4;
+    --backpurple: #d3bce6;
+    --white: #FFFFFF;
+    --light-gray: #F0F0F0;
+}
+
+/* Police */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-gray);
+}
+
+/* Contenu principal */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--backpurple);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+.product-top {
+    display: flex;
+    flex-direction: row;
+}
+
+.product-gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    width: 40%; /* Rétrécir la largeur de la galerie */
+}
+
+.thumbnail-images {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.thumbnail-images img {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.thumbnail-images img:hover {
+    transform: scale(1.1);
+}
+
+.product-gallery .main-image {
+    position: relative;
+    width: 100%;
+    height: auto; /* Ajuster la hauteur automatiquement */
+}
+
+.product-gallery .main-image img {
+    width: 100%;
+    height: auto; /* Ajuster la hauteur automatiquement */
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.product-gallery .main-image:hover img {
+    transform: scale(1.05);
+}
+
+.product-gallery .favorite {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2em;
+    color: var(--accent-pink);
+    cursor: pointer;
+}
+
+/* Détails du produit */
+.product-details {
+    flex: 1;
+    padding: 20px;
+    background-color: var(--light-purple);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-details h1 {
+    color: var(--dark-purple);
+    margin-top: 0;
+}
+
+.product-details .price {
+    font-size: 1.5em;
+    color: var(--accent-pink);
+    margin: 10px 0;
+}
+
+.product-details .original-price {
+    text-decoration: line-through;
+    color: #888;
+    margin-right: 10px;
+}
+
+.product-details .discounted-price {
+    color: var(--accent-pink);
+    font-weight: bold;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.product-details .btn-cart {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--medium-purple);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.product-details .btn-store:hover,
+.product-details .btn-cart:hover {
+    background: var(--dark-purple);
+    color: var(--accent-pink);
+}
+
+.product-details .shipping-info {
+    margin-top: 10px;
+    color: var(--dark-purple);
+}
+
+/* Liste des produits du pack */
+.pack-products {
+    margin-top: 20px;
+    background-color: var(--light-purple);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 30%; /* Rétrécir la largeur de la liste des produits */
+    margin-right: 20px; /* Ajouter un espace à droite */
+}
+
+.pack-products h2 {
+    color: var(--dark-purple);
+    margin-top: 0;
+}
+
+.pack-products ul {
+    list-style: none;
+    padding: 0;
+}
+
+.pack-products li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: var(--white);
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.pack-products li:hover {
+    transform: scale(1.02);
+}
+
+.pack-products a {
+    text-decoration: none;
+    color: var(--dark-purple);
+    font-weight: bold;
+}
+
+.pack-products a:hover {
+    text-decoration: underline;
+}
+
+/* Changer la forme de la souris sur les images de la liste */
+.pack-products a img {
+    cursor: pointer;
+}

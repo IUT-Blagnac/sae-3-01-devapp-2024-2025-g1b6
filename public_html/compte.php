@@ -8,6 +8,12 @@
         exit();
     }
 
+    if (isset($_GET['disconnect']) && $_GET['disconnect'] === 'true') {
+        session_destroy();
+        header("Location: connexion.php");
+        exit();
+    }
+
     header("Cache-Control: no-cache, must-revalidate");
 
     // Récupérer l'ID client depuis la session
@@ -201,19 +207,21 @@
             <h2>Mes Commandes</h2>
             <div class="commande-list">
                 <?php 
-                    $query = $pdo->prepare('
-                    SELECT 
-                        C.*,
-                        T.TYPEEXP, T.FRAISEXP, T.FRAISKG, T.DELAILIVRAISON,
-                        P.QUANTITEPROD,
-                        PR.IDPROD, PR.NOMPROD, PR.PRIXHT, PR.COMPOSITION, PR.COULEUR
-                    FROM COMMANDE C
-                    LEFT JOIN TRANSPORTEUR T ON C.IDTRANSPORTEUR = T.IDTRANSPORTEUR
-                    LEFT JOIN PANIER P ON P.IDCOMMANDE = C.NUMCOMMANDE AND P.IDCLIENT = C.IDCLIENT
-                    LEFT JOIN PRODUIT PR ON P.IDPROD = PR.IDPROD
-                    WHERE C.IDCLIENT = :idClient
-                    ORDER BY C.DATECOMMANDE DESC
-                    ');
+                    $query = $pdo->prepare("
+                        SELECT 
+                            C.*,
+                            T.TYPEEXP, T.FRAISEXP, T.FRAISKG, T.DELAILIVRAISON,
+                            P.QUANTITEPROD,
+                            PR.IDPROD, PR.NOMPROD, PR.PRIXHT, PR.COMPOSITION, PR.COULEUR
+                        FROM COMMANDE C, TRANSPORTEUR T, PANIER P, PRODUIT PR
+                        WHERE C.IDTRANSPORTEUR = T.IDTRANSPORTEUR
+                        AND P.IDCOMMANDE = C.NUMCOMMANDE 
+                        AND P.IDCLIENT = C.IDCLIENT
+                        AND P.IDPROD = PR.IDPROD
+                        AND P.IDCOMMANDE != 0
+                        AND C.IDCLIENT = :idClient
+                        ORDER BY C.DATECOMMANDE DESC
+                    ");
                     $query->execute(['idClient' => $id_client]);
                     $commandes = [];
 
@@ -233,9 +241,8 @@
                                 'produits' => []
                             ];
                         }
-                        // Modification ici pour inclure l'IDPROD
                         $commandes[$row['NUMCOMMANDE']]['produits'][] = [
-                            'idprod' => $row['IDPROD'],  // Ajout de l'ID du produit
+                            'idprod' => $row['IDPROD'],  
                             'nom' => $row['NOMPROD'],
                             'quantite' => $row['QUANTITEPROD'],
                             'prix' => $row['PRIXHT']
@@ -263,7 +270,7 @@
                                                     <?= $produit['nom'] ?>
                                                 </a>
                                                 <span class="produit-quantite">x<?= $produit['quantite'] ?></span>
-                                                <span class="produit-prix"><?= number_format($produit['prix'], 2) ?> €</span>
+                                                <span class="produit-prix"><?= number_format($produit['prix'] * $produit['quantite'], 2) ?> €</span>
                                             </div>
                                         <?php endforeach; ?>
                                     </div>
@@ -288,6 +295,11 @@
         </div>
 
         <button class="disconnect-btn">Se déconnecter</button>
+        <script>
+            document.querySelector('.disconnect-btn').addEventListener('click', () => {
+                window.location.href = 'compte.php?disconnect=true';
+            });
+        </script>
     </main>
 
     <?php include("footer.php"); ?>

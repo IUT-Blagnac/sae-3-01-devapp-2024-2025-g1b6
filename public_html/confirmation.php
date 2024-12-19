@@ -45,9 +45,9 @@ $stmt = $pdo->prepare("
     SELECT p.NOMPROD, p.PRIXHT, pa.QUANTITEPROD
     FROM PANIER pa
     JOIN PRODUIT p ON pa.IDPROD = p.IDPROD
-    WHERE pa.IDCLIENT = ? AND pa.DATECOMMANDE = ?
+    WHERE pa.IDCLIENT = ? AND pa.IDCOMMANDE = ?
 ");
-$stmt->execute([$_SESSION['user']['IDCLIENT'], $commande['DATECOMMANDE']]);
+$stmt->execute([$_SESSION['user']['IDCLIENT'], $commande['NUMCOMMANDE']]);
 $produitsPanier = $stmt->fetchAll();
 
 // Calculer le prix total de la commande

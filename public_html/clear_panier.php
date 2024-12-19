@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // Supprimer tous les produits du panier pour le client
-        $stmt = $pdo->prepare("DELETE FROM PANIER WHERE IDCLIENT = ?");
+        $stmt = $pdo->prepare("DELETE FROM PANIER WHERE IDCLIENT = ? AND IDCOMMANDE = 0");
         $stmt->execute([$idClient]);
 
         echo json_encode(['success' => true]);

@@ -8,7 +8,6 @@ if (!isset($_GET['idCategorie']) || empty($_GET['idCategorie'])) {
 
 $idCategorie = htmlspecialchars($_GET['idCategorie']);
 
-
 ?>
 
 <!DOCTYPE html> 

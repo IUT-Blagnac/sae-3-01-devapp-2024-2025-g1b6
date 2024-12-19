@@ -53,6 +53,28 @@ if (!$produit) {
     exit();
 }
 
+// Vérifier si l'utilisateur a déjà commandé le produit
+$hasOrdered = false;
+if (isset($_SESSION['user']['IDCLIENT'])) {
+    $idClient = intval($_SESSION['user']['IDCLIENT']);
+    $stmt = $pdo->prepare("
+        SELECT COUNT(*) FROM COMMANDE c
+        JOIN PANIER pa ON c.NUMCOMMANDE = pa.IDCOMMANDE
+        WHERE c.IDCLIENT = ? AND pa.IDPROD = ?
+    ");
+    $stmt->execute([$idClient, $idProd]);
+    $hasOrdered = $stmt->fetchColumn() > 0;
+}
+
+$hasSubmittedReview = false;
+
+// Vérifier si l'utilisateur connecté a déjà laissé un avis pour ce produit
+if (isset($_SESSION['user']['IDCLIENT'])) {
+    $stmtCheckReview = $pdo->prepare("SELECT COUNT(*) FROM AVIS WHERE IDCLIENT = ? AND IDPROD = ?");
+    $stmtCheckReview->execute([$_SESSION['user']['IDCLIENT'], $idProd]);
+    $hasSubmittedReview = $stmtCheckReview->fetchColumn() > 0;
+}
+
 // Définition de l'image principale du produit (colonne IMAGE dans PRODUIT)
 $imagePath = "./images/prod". htmlspecialchars($produit['IDPROD'])  .".png" ; // Image par défaut si aucune image n'est trouvée
 ?>
@@ -121,26 +143,51 @@ $imagePath = "./images/prod". htmlspecialchars($produit['IDPROD'])  .".png" ; //
         $avis = $stmtAvis->fetchAll();
         if ($avis) {
             foreach ($avis as $a) {
-                echo '<p><strong>' . htmlspecialchars($a['NOMCLIENT']) . " " .htmlspecialchars($a['PRENOMCLIENT']). ' :</strong> ' . htmlspecialchars($a['DESCAVIS']) . '</p>';
+                echo '<div class="star-review">';
+                for ($i = 1; $i <= 5; $i++) {
+                    if ($i <= $a['NOTE']) {
+                        echo '<span class="star-filled">&#9733;</span>'; // Étoile pleine
+                    } else {
+                        echo '<span class="star">&#9734;</span>'; // Étoile vide
+                    }
+                }
+                echo '</div>';
+                echo '<p><strong>' . htmlspecialchars($a['NOMCLIENT']) . " " 
+                .htmlspecialchars($a['PRENOMCLIENT']). ' :</strong> ' 
+                . htmlspecialchars($a['DESCAVIS']) . '</p>';
             }
         } else {
             echo '<p>Aucun avis pour l\'instant.</p>';
         }
         ?>
         <?php if (isset($_SESSION['user']['IDCLIENT'])): ?>
-    <div class="review-section">
-        <h3>Laisser un avis</h3>
-        <form id="reviewForm" action="add_avis.php" method="post" onsubmit="return validateReview()">
-            <input type="hidden" name="idProd" value="<?php echo $idProd; ?>">
-            <textarea name="descAvis" id="descAvis" rows="4" maxlength="750" placeholder="Laissez votre avis (750 caractères max)" required></textarea>
-            <button type="submit" class="btn">Soumettre l'avis</button>
-        </form>
-    </div>
-<?php else: ?>
-    <div class="review-section">
-        <p class="login-message">Vous devez être connecté pour laisser un avis.</p>
-    </div>
-<?php endif; ?>
+            <?php if ($hasOrdered): ?>
+                <?php if ($hasSubmittedReview): ?>
+                    <p>Vous avez déjà laissé un avis pour ce produit.</p>
+                <?php else: ?>
+                    <div class="review-section">
+                        <h3>Laisser un avis</h3>
+                        <form id="reviewForm" action="add_avis.php" method="post" onsubmit="return validateReview()">
+                            <div class="star-rating">
+                                <input type="radio" id="star5" name="note" value="5" required><label for="star5">&#9733;</label>
+                                <input type="radio" id="star4" name="note" value="4"><label for="star4">&#9733;</label>
+                                <input type="radio" id="star3" name="note" value="3"><label for="star3">&#9733;</label>
+                                <input type="radio" id="star2" name="note" value="2"><label for="star2">&#9733;</label>
+                                <input type="radio" id="star1" name="note" value="1"><label for="star1">&#9733;</label>
+                            </div>
+                            <input type="hidden" name="idProd" value="<?php echo $idProd; ?>">
+                            <textarea name="descAvis" id="descAvis" rows="4" maxlength="750" placeholder="Laissez votre avis (750 caractères max)" required></textarea>
+                            <button type="submit" class="btn">Soumettre l'avis</button>
+                        </form>
+                    </div>
+                <?php endif; ?>
+            <?php else: ?>
+                <p>Vous devez avoir commandé ce produit pour laisser un avis.</p>
+            <?php endif; ?>
+        <?php else: ?>
+            <p>Vous devez être connecté pour laisser un avis.</p>
+        <?php endif; ?>
+
     </div>
 
 </main>
@@ -199,6 +246,15 @@ include("footer.php");
         // Afficher le contenu de l'onglet actuel et ajouter la classe "active" au bouton sélectionné
         document.getElementById(tabName).classList.add('active');
         evt.currentTarget.classList.add('active');
+    }
+
+    function validateReview() {
+        const descAvis = document.getElementById('descAvis').value;
+        if (descAvis.length > 750) {
+            alert("Votre avis ne doit pas dépasser 750 caractères.");
+            return false;
+        }
+        return true;
     }
 </script>
 </body>

@@ -1,21 +1,22 @@
-/* Palette de couleurs */
+/* Variables globales */
 :root {
-    --dark-purple: linear-gradient(#6d00b0, #b06bdc);
-    --dark-purple-inverse: linear-gradient(#b06bdc, #6d00b0);
-    --clair-purple: #c267ff;
+    --dark-purple: #6d00b0;
+    --clair-purple: rgba(109, 0, 176, 0.15);
     --medium-purple: #8A2BE2;
-    --light-purple: #e6d1f2;
+    --light-purple: #f8f5fb;
     --accent-pink: #FF69B4;
-    --backpurple: #d3bce6;
-    --white: #FFFFFF;
+    --white: #FFFFFF;   
     --light-gray: #F0F0F0;
+    --text-dark: #2c3e50;
+    --shadow: 0 4px 6px rgba(109, 0, 176, 0.1);
 }
 
-body {
+.body {
     font-family: 'Poppins', sans-serif;
-    background-color: var(--light-gray);
+    background-color: var(--light-purple);
     margin: 0;
     padding: 0;
+    height: auto;
 }
 
 .lienAccueil {
@@ -25,13 +26,9 @@ body {
     transition: color 0.3s;
 }
 
-.lienAccueil:hover {
-    color: var(--accent-pink);
-}
-
 .filtres {
     position: fixed;
-    margin-top: -5em;
+    margin-top: 2em;
     left: 0;
     height: 15em;
     width: 10em;
@@ -39,7 +36,8 @@ body {
     background-color: var(--backpurple);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
+    padding: 1%;
+    z-index: 1000;
 }
 
 .listFiltres {
@@ -65,16 +63,16 @@ body {
 
 .principale {
     display: flex;
-    margin-left: 12em; /* Laisser de la place pour les filtres */
-    padding: 20px;
+    margin-left: 11em; /* Laisser de la place pour les filtres */
+    height: auto;
 }
 
 .ludizone {
+    position: relative;
     flex: 1;
-    background-color: var(--backpurple);
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: var(--light-purple);
+    left: -5%;
+    height: 100vw;
 }
 
 .titreLudizone, .titreCDC, .titreLudiGame, .titreLudiEvent {
@@ -83,100 +81,253 @@ body {
     margin-bottom: 20px;
 }
 
-.coupDeCoeur, .ludiGames, .ludiEvent {
-    margin-bottom: 40px;
+/* Section "Coup de coeur" */
+
+.coupDeCoeur {
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 7em;
+    margin-bottom: 7em;
+    padding: 0.1em;
+    height: 4em;
+    width: 90em;
 }
 
-.listeCDC, .listeEvent {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+.titreCDC {
+    position: relative;
+    margin-top: 0;
+    margin-left: 0;
+    padding: 0.1em;
+    width: 15em;
+    font-size: 1.5em;
+    border-bottom: var(--medium-purple) solid 0.15em;
 }
 
-.produit-item, .Event {
-    flex: 1 1 calc(25% - 20px);
-    background-color: var(--white);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.produit-item:hover, .Event:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-}
-
-.produit-card{
-    display: flex;
-    flex-direction: column;
-    background-color: var(--light-purple);
-    align-items: center;
-    padding: 20px;
-}
-
-.produit-card, .Event {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-}
-
-.produit-image img, .imgEvent1, .imgEvent2, .imgEvent3, .imgEvent4, .imgEvent5 {
+.listeCDC {
+    position: relative;
     width: 100%;
-    height: auto;
-    border-radius: 10px;
+    list-style-type: none;
+    margin-left: 1em;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
-.produit-info {
-    text-align: center;
-    margin-top: 10px;
-}
-
-.produit-nom {
-    font-size: 18px;
-    color: var(--medium-purple);
-    margin-bottom: 10px;
-}
-
-.produit-prix {
-    font-size: 16px;
-    color: var(--accent-pink);
-    margin-bottom: 10px;
-}
-
-.produit-categories {
-    font-size: 14px;
-    color: var(--dark-purple);
-    margin-bottom: 10px;
-}
-
-.produit-lien {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: var(--medium-purple);
-    color: var(--white);
+.listeCDC li {
+    position: relative;
+    width: 17em;
+    height: 17em;
+    margin: 0.5em;
+    padding: 0.5em;
+    background-color: var(--backpurple);
     border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
-.produit-lien:hover {
-    background-color: var(--accent-pink);
+.listeCDC li:hover {
+    transform: scale(1.05);
+}
+
+.listeCDC li img {
+    width: 10em;
+    height: 10em;
+}
+
+.listeCDC li p {
+    font-size: 1em;
+    text-align: center;
+}
+
+.listeCDC a {
+    text-decoration: none;
+    color: var(--medium-purple);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+
+
+/* Section "LudiGame" */
+.ludiGames {
+    position: relative;
+    top: 15%;
+    left: 7em;
+    padding: 0.1em; 
+    width: 90em;
+}
+
+.titreLudiGame {
+    position: relative;
+    margin-top: 0;
+    margin-left: 0;
+    padding: 0.1em;
+    width: 15em;
+    font-size: 1.5em;
+    border-bottom: var(--medium-purple) solid 0.15em;
+}
+
+.imgLudiGame {
+    position: relative;
+    background-image: url('../images/LudiGame.webp');
+    margin-top: 1em;
+    margin-left: 1em;
+    padding: 0.1em;
+    height: 30em;
+    width: 50em;
+    border-radius: 5px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+
+.ludiEvent {
+    position: relative;
+    margin-top: 15%;
+    margin-left: 6em;
+    padding: 0.1em;
+    height: auto;
+    width: 80em;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.ludiEvent::-webkit-scrollbar {
+    height: 0.5em;
+}
+
+.ludiEvent::-webkit-scrollbar-thumb {
+    background-color: var(--medium-purple);
+    border: 1em solid transparent;
+    border-radius: 2em; 
+    position: relative; 
+}
+
+.ludiEvent a {
+    text-decoration: none;
+}
+
+.titreLudiEvent {
+    position: relative;
+    left: 35%;
+    padding: 0.1em;
+    width: 6em;
+    font-size: 1.5em;
+    border-bottom: var(--medium-purple) solid 0.15em;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.listeEvent {
+    position: relative;
+    list-style-type: none;
+    margin-top: 0.5em;
+    margin-left: 1em;
+    padding: 0;
+    overflow: hidden;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.Event {
+    margin-top: 1em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    height: 20em;
+    width: 20em;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .btnParticipe {
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    padding: 0.1em;
+    width: 13em;
+    font-size: 1em;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
     background-color: var(--medium-purple);
-    color: var(--white);
-    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    color: var(--light-gray);
+    height: 4em;
+    border-radius: 5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btnParticipe:hover {
-    background-color: var(--accent-pink);
+    background: var(--dark-purple);
+    color: var(--accent-pink);
+    cursor: pointer;
+}
+
+.imgEvent1 {
+    background-image: url('../images/Event1.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgEvent2 {
+    background-image: url('../images/Event2.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgEvent3 {
+    background-image: url('../images/Event3.png');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgEvent4 {
+    background-image: url('../images/Event4.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgEvent5 {
+    background-image: url('../images/Event5.jpg');
+    border-radius: 2em;
+    margin-top: 1em;
+    width: 18em;
+    height: 15em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
 }
