@@ -78,35 +78,37 @@
     
     <ul class="listeCDC">       
         <?php
-                        include("connect.inc.php");            
-                        // Requête pour récupérer les 4 produits les mieux notés
-                        $sql = "SELECT p.IDPROD, p.NOMPROD, p.PRIXHT, a.NOTE
-                                FROM PRODUIT p
-                                JOIN AVIS a ON p.IDPROD = a.IDPROD
-                                ORDER BY a.NOTE DESC
-                                LIMIT 4";
-                        $req = $pdo->query($sql);
-                        $produits = $req->fetchAll();
+            include("connect.inc.php");            
+            // Requête pour récupérer les 4 produits avec les moyennes des avis les plus hautes
+            $sql = "SELECT p.IDPROD, p.NOMPROD, p.PRIXHT, AVG(a.NOTE) AS MOYENNE_NOTE
+                    FROM PRODUIT p
+                    JOIN AVIS a ON p.IDPROD = a.IDPROD
+                    GROUP BY p.IDPROD, p.NOMPROD, p.PRIXHT
+                    ORDER BY MOYENNE_NOTE DESC
+                    LIMIT 4";
+            $req = $pdo->query($sql);
+            $produits = $req->fetchAll();
 
-                        // Affichage des produits
-                        foreach ($produits as $produit) {
-                        echo "<li>";
-                            echo "<a href='descProduit.php?idProd=" . $produit['IDPROD'] . "'>";
-                                echo "<div class=\"produitCard\">";
-                                    echo "<div class=\"imageContainer\">";
-                                        echo "<img src='./images/prod" . htmlspecialchars($produit['IDPROD']) . ".png' alt='Image du produit'>";
-                                    echo "</div>";
-                                    echo "<div class=\"infoContainer\">";
-                                        echo "<h2>" . htmlspecialchars($produit['NOMPROD']) . "</h2>";
-                                        echo "<p>" . htmlspecialchars($produit['PRIXHT']) . "€</p>";
-                                        echo "<p>Note : " . htmlspecialchars($produit['NOTE']) . "/5</p>";
-                                    echo "</div>";
-                                echo "</div>";
-                            echo "</a>";
-                        echo "</li>";
-                        }
-                    ?>
+            // Affichage des produits
+            foreach ($produits as $produit) {
+                echo "<li>";
+                    echo "<a href='descProduit.php?idProd=" . $produit['IDPROD'] . "'>";
+                        echo "<div class=\"produitCard\">";
+                            echo "<div class=\"imageContainer\">";
+                                echo "<img src='./images/prod" . htmlspecialchars($produit['IDPROD']) . ".png' alt='Image du produit'>";
+                            echo "</div>";
+                            echo "<div class=\"infoContainer\">";
+                                echo "<h2>" . htmlspecialchars($produit['NOMPROD']) . "</h2>";
+                                echo "<p>" . htmlspecialchars($produit['PRIXHT']) . "€</p>";
+                                echo "<p>Note : " . number_format($produit['MOYENNE_NOTE'], 2) . "/5</p>";
+                            echo "</div>";
+                        echo "</div>";
+                    echo "</a>";
+                echo "</li>";
+            }
+        ?>
     </ul>
+</section>
     
 </section>
 

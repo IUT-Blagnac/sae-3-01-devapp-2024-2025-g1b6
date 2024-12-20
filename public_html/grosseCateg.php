@@ -25,87 +25,182 @@ $idCateg = (int)$_GET['idCateg'];
         include("header.php");
     ?>
 
-    <div class="principale">
+<div class="principale">
+    <div class="filtres">
+        <h1>Filtres</h1>
+        <form method="GET" action="grosseCateg.php">
+            <input type="hidden" name="idCateg" value="<?php echo $idCateg; ?>">
+            <div class="filtreSection">
+                <label for="prixMin">Prix Min:</label>
+                <input type="number" name="prixMin" id="prixMin" min="0" value="<?php echo isset($_GET['prixMin']) ? htmlspecialchars($_GET['prixMin']) : ''; ?>">
+            </div>
+            <div class="filtreSection">
+                <label for="prixMax">Prix Max:</label>
+                <input type="number" name="prixMax" id="prixMax" min="0" value="<?php echo isset($_GET['prixMax']) ? htmlspecialchars($_GET['prixMax']) : ''; ?>">
+            </div>
+            <div class="filtreSection">
+                <label for="marque">Marque:</label>
+                <select name="marque" id="marque">
+                    <option value="">Toutes</option>
+                    <?php
+                        include("connect.inc.php");
+                        $marquesReq = $pdo->query("SELECT DISTINCT NOMMARQUE FROM MARQUE");
+                        while ($marque = $marquesReq->fetch()) {
+                            $selected = (isset($_GET['marque']) && $_GET['marque'] == $marque['NOMMARQUE']) ? 'selected' : '';
+                            echo "<option value='" . htmlspecialchars($marque['NOMMARQUE']) . "' $selected>" . htmlspecialchars($marque['NOMMARQUE']) . "</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+            <div class="filtreSection">
+                <label for="avis">Avis:</label>
+                <select name="avis" id="avis">
+                    <option value="">Tous</option>
+                    <option value="desc" <?php echo (isset($_GET['avis']) && $_GET['avis'] == 'desc') ? 'selected' : ''; ?>>Meilleures notes</option>
+                    <option value="asc" <?php echo (isset($_GET['avis']) && $_GET['avis'] == 'asc') ? 'selected' : ''; ?>>Pires notes</option>
+                </select>
+            </div>
+            <button type="submit">Appliquer</button>
+        </form>
+    </div>
 
-        <div class="filtres">
-            <h1>Filtres</h1>
-            <ul class="listFiltres">
-                <li class="liFiltres">Prix</li>
-                <li class="liFiltres">Marques</li>
-                <li class="liFiltres">Catégorie</li>
-                <li class="liFiltres">Avis</li>
-            </ul>
-        </div>
+    <div class="grosseCategContainer">
+        <div class="produitsContainer">
+            <?php 
+                include("connect.inc.php");
 
-
-        <div class="grosseCategContainer">
-            <div class="produitsContainer">
-                <?php 
-                    include("connect.inc.php");
-
-                    $req = $pdo->prepare("SELECT * FROM CATEGORIE WHERE IDCATEG = :idCateg");
-                    $req->execute(['idCateg' => $idCateg]);
-                    $categ = $req->fetch();
-
-                    echo "<h1 class='titreGrosseCateg'>" . $categ['NOMCATEG'] . "</h1>";
-                ?>
-                <ul id="produitsList">
-                <?php 
+                try {
                     // Configuration de la pagination
-                    $limit = 11; // Number of products per page
+                    $limit = 11; // Nombre de produits par page
                     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
                     $offset = ($page - 1) * $limit;
 
-                    // Requête pour récupérer le nombre total de produits
-                    $totalReq = $pdo->prepare("SELECT DISTINCT COUNT(*) as total FROM PRODUIT P 
-                                            JOIN APPARTENIRCATEG A ON P.IDPROD = A.IDPROD
-                                            JOIN CATEGORIE C ON A.IDCATEG = C.IDCATEG
-                                            JOIN CATPERE CA ON C.IDCATEG = CA.IDCATEG
-                                            WHERE CA.IDCATEG_PERE = :idCateg;");
-                    $totalReq->execute(['idCateg' => $idCateg]);
-                    $total = $totalReq->fetch()['total'];
+                    // Initialisation des filtres
+                    $prixMin = isset($_GET['prixMin']) && $_GET['prixMin'] !== '' ? (int)$_GET['prixMin'] : null;
+                    $prixMax = isset($_GET['prixMax']) && $_GET['prixMax'] !== '' ? (int)$_GET['prixMax'] : null;
+                    $marque = isset($_GET['marque']) ? $_GET['marque'] : '';
+                    $avis = isset($_GET['avis']) ? strtolower($_GET['avis']) : '';
+                    $validAvis = ['asc', 'desc'];
+
+                    if (!in_array($avis, $validAvis)) {
+                        $avis = '';
+                    }
+
+                    // Requête pour le total des produits
+                    $totalQuery = "SELECT COUNT(DISTINCT P.IDPROD) AS total
+                                   FROM PRODUIT P 
+                                   JOIN APPARTENIRCATEG A ON P.IDPROD = A.IDPROD
+                                   JOIN CATEGORIE C ON A.IDCATEG = C.IDCATEG
+                                   JOIN CATPERE CA ON C.IDCATEG = CA.IDCATEG
+                                   WHERE CA.IDCATEG_PERE = :idCateg";
+
+                    if (!is_null($prixMin)) {
+                        $totalQuery .= " AND P.PRIXHT >= :prixMin";
+                    }
+                    if (!is_null($prixMax)) {
+                        $totalQuery .= " AND P.PRIXHT <= :prixMax";
+                    }
+                    if ($marque) {
+                        $totalQuery .= " AND P.IDMARQUE = (SELECT IDMARQUE FROM MARQUE WHERE NOMMARQUE = :marque)";
+                    }
+
+                    $totalStmt = $pdo->prepare($totalQuery);
+                    $totalStmt->bindParam(':idCateg', $idCateg, PDO::PARAM_INT);
+                    if (!is_null($prixMin)) {
+                        $totalStmt->bindParam(':prixMin', $prixMin, PDO::PARAM_INT);
+                    }
+                    if (!is_null($prixMax)) {
+                        $totalStmt->bindParam(':prixMax', $prixMax, PDO::PARAM_INT);
+                    }
+                    if ($marque) {
+                        $totalStmt->bindParam(':marque', $marque, PDO::PARAM_STR);
+                    }
+
+                    $totalStmt->execute();
+                    $total = $totalStmt->fetch()['total'];
                     $totalPages = ceil($total / $limit);
 
                     // Requête pour récupérer les produits
-                    $req = $pdo->prepare("SELECT DISTINCT P.IDPROD, P.NOMPROD, P.PRIXHT
-                                        FROM PRODUIT P 
-                                        JOIN APPARTENIRCATEG A ON P.IDPROD = A.IDPROD
-                                        JOIN CATEGORIE C ON A.IDCATEG = C.IDCATEG
-                                        JOIN CATPERE CA ON C.IDCATEG = CA.IDCATEG
-                                        WHERE CA.IDCATEG_PERE = :idCateg
-                                        LIMIT :limit OFFSET :offset;");
-                    $req->bindParam(':idCateg', $idCateg, PDO::PARAM_INT);
-                    $req->bindParam(':limit', $limit, PDO::PARAM_INT);
-                    $req->bindParam(':offset', $offset, PDO::PARAM_INT);
-                    $req->execute();
-                    $produits = $req->fetchAll();
+                    $query = "SELECT DISTINCT P.IDPROD, P.NOMPROD, P.PRIXHT, AVG(AV.NOTE) AS MOYENNE_NOTE
+                              FROM PRODUIT P 
+                              JOIN APPARTENIRCATEG A ON P.IDPROD = A.IDPROD
+                              JOIN CATEGORIE C ON A.IDCATEG = C.IDCATEG
+                              JOIN CATPERE CA ON C.IDCATEG = CA.IDCATEG
+                              LEFT JOIN AVIS AV ON P.IDPROD = AV.IDPROD
+                              WHERE CA.IDCATEG_PERE = :idCateg";
 
-                    foreach ($produits as $produit) {
-                        echo "<li>";
-                            echo "<a href='descProduit.php?idProd=".$produit['IDPROD']."'>";
-                            echo "<div class=\"produitCard\">";
-                                echo "<div class=\"imageContainer\">";
-                                    echo "<img src='./images/prod". htmlspecialchars($produit['IDPROD']).".png' alt='Image du produit'>";
-                                echo "</div>";
-                                echo "<div class=\"infoContainer\">";
-                                    echo "<h2>".$produit['NOMPROD']."</h2>";
-                                    echo "<p>".$produit['PRIXHT']."€</p>";
-                                echo "</div>";
-                        echo "</div>";
-                        echo "</a>";
-                        echo "</li>";
+                    if (!is_null($prixMin)) {
+                        $query .= " AND P.PRIXHT >= :prixMin";
                     }
-                ?>
-                </ul>
-                <div class="pagination">
-                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                        <a class="page-number <?php echo ($i == $page) ? 'active' : ''; ?>" href="?idCateg=<?php echo $idCateg; ?>&page=<?php echo $i; ?>" data-page="<?php echo $i; ?>"><?php echo $i; ?></a>
-                    <?php endfor; ?>
-                </div>
-            </div>
-            
+                    if (!is_null($prixMax)) {
+                        $query .= " AND P.PRIXHT <= :prixMax";
+                    }
+                    if ($marque) {
+                        $query .= " AND P.IDMARQUE = (SELECT IDMARQUE FROM MARQUE WHERE NOMMARQUE = :marque)";
+                    }
+                    $query .= " GROUP BY P.IDPROD";
+                    if ($avis) {
+                        $query .= " ORDER BY MOYENNE_NOTE $avis";
+                    }
+                    $query .= " LIMIT :limit OFFSET :offset";
+
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(':idCateg', $idCateg, PDO::PARAM_INT);
+                    if (!is_null($prixMin)) {
+                        $stmt->bindParam(':prixMin', $prixMin, PDO::PARAM_INT);
+                    }
+                    if (!is_null($prixMax)) {
+                        $stmt->bindParam(':prixMax', $prixMax, PDO::PARAM_INT);
+                    }
+                    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+                    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+                    if ($marque) {
+                        $stmt->bindParam(':marque', $marque, PDO::PARAM_STR);
+                    }
+
+                    $stmt->execute();
+                    $produits = $stmt->fetchAll();
+
+                    // Affichage des produits
+                    if ($produits) {
+                        echo "<ul id='produitsList'>";
+                        foreach ($produits as $produit) {
+                            echo "<li>";
+                            echo "<a href='descProduit.php?idProd=" . htmlspecialchars($produit['IDPROD']) . "'>";
+                            echo "<div class='produitCard'>";
+                            echo "<div class='imageContainer'>";
+                            echo "<img src='./images/prod" . htmlspecialchars($produit['IDPROD']) . ".png' alt='Image du produit'>";
+                            echo "</div>";
+                            echo "<div class='infoContainer'>";
+                            echo "<h2>" . htmlspecialchars($produit['NOMPROD']) . "</h2>";
+                            echo "<p>" . htmlspecialchars($produit['PRIXHT']) . "€</p>";
+                            echo "</div>";
+                            echo "</div>";
+                            echo "</a>";
+                            echo "</li>";
+                        }
+                        echo "</ul>";
+                    } else {
+                        echo "<p>Aucun produit ne correspond à vos critères.</p>";
+                    }
+
+                    // Pagination
+                    if ($totalPages > 1) {
+                        echo "<div class='pagination'>";
+                        for ($i = 1; $i <= $totalPages; $i++) {
+                            $activeClass = $i == $page ? 'active' : '';
+                            echo "<a class='page-number $activeClass' href='#' data-page='$i'>$i</a>";
+                        }
+                        echo "</div>";
+                    }
+                } catch (Exception $e) {
+                    echo "<p>Une erreur est survenue : " . htmlspecialchars($e->getMessage()) . "</p>";
+                }
+            ?>
         </div>
     </div>
+</div>
 
 
 

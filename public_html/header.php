@@ -41,7 +41,7 @@
                         <input type="text" class="barreRecherche" name="mot_cle" placeholder="Rechercher...">
                     </form>
                 </li>
-                <li> <div class="imgLoc"></div> </li>
+                <li> <div class="imgWish"></div> </li>
                 <li> <a href="panier.php"><div class="imgPanier"></div></a></li>
                 <li> <?php
                         // Vérification de la session utilisateur

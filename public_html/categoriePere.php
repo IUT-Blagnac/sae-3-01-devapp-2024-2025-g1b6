@@ -25,13 +25,6 @@ $idCategorie = htmlspecialchars($_GET['idCategorie']);
 
 
     <div class="containerCategPere">
-        <div class="filtres">
-            <h1>Filtres</h1>
-            <ul>
-                <li>Age</li>
-                <li>Prix</li>
-            </ul>
-        </div>
 
         <div class="containerProduit">
             <?php

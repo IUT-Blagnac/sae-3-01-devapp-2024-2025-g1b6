@@ -138,7 +138,8 @@ html::-webkit-scrollbar-thumb {
     border-color: var(--light-gray); 
 }
 
-.imgLoc {
+.imgWish {
+    background-image: url('../images/wishlist.png');
     margin-top: 0.8em;
     margin-left: 0.8em;
 

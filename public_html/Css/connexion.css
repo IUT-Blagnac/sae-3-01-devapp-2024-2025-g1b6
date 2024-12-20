@@ -157,7 +157,7 @@
 }
 
 .formConnexion .checkbox_container input[type="checkbox"]:checked {
-    background-color: var(--backpurple);
+    background-color: var(--medium-purple);
     box-shadow: 0 0 10px var(--shadow);
     border-color: var(--dark-purple);
 }
@@ -169,7 +169,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.2em;
-    color: var(--medium-purple);  
+    color: var(--white);  
     border-color: var(--medium-purple);
 }
 
