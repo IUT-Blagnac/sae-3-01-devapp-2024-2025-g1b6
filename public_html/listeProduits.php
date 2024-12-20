@@ -206,7 +206,7 @@ $categoriesMeres = $queryCategoriesMeres->fetchAll();
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Modifier le produit</h2>
-            <form id="edit-product-form" method="post" action="updateProduct.php?action=edit">
+            <form id="edit-product-form" method="post" action="./traitements/updateProduct.php?action=edit">
                 <input type="hidden" name="idProd">
                 
                 <!-- Informations principales -->
@@ -229,7 +229,7 @@ $categoriesMeres = $queryCategoriesMeres->fetchAll();
 
                         <div class="form-group full-width">
                             <label for="descProd">Description :</label>
-                            <textarea id="descProd" name="description" maxlength="150" required></textarea>
+                            <textarea id="descProd" name="description" maxlength="150"></textarea>
                         </div>
                     </div>
                 </div>
@@ -238,24 +238,14 @@ $categoriesMeres = $queryCategoriesMeres->fetchAll();
                 <div class="form-section">
                     <h3>Catégories</h3>
                     <div class="fields-container">
-                        <div class="form-group full-width">
-                            <label class="required">Catégories mères :</label>
-                            <div class="categories-meres">
-                                <?php foreach ($categoriesMeres as $catMere): ?>
-                                    <label class="checkbox-container">
-                                        <input type="checkbox" name="categories_meres[]" 
-                                               value="<?= $catMere['IDCATEG'] ?>">
-                                        <?= htmlspecialchars($catMere['NOMCATEG']) ?>
-                                    </label>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             <label for="categoriePrincipale">Catégorie principale :</label>
                             <select id="categoriePrincipale" name="categorie_principale" required>
                                 <option value="">Sélectionnez une catégorie</option>
                             </select>
+                            <div id="publicCible" class="public-cible-info">
+                                Public cible : <span></span>
+                            </div>
                         </div>
                         
                         <div class="form-group full-width">
@@ -346,6 +336,6 @@ $categoriesMeres = $queryCategoriesMeres->fetchAll();
 
     <div class="toast-container"></div>
 
-    <script src="js/listeProduits.js"></script>
+    <script src="js/listeProduits.js?v=1.3"></script>
 </body>
 </html> 

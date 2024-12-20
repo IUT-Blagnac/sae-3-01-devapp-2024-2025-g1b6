@@ -1,13 +1,63 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Vérifier s'il y a un message dans l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const toastMessage = urlParams.get('message');
+    const toastType = urlParams.get('toast');
+    
+    if (toastMessage && toastType) {
+        showToast(decodeURIComponent(toastMessage), toastType, toastType === 'success' ? 'Succès' : 'Erreur');
+    }
+
     const modalEdit = document.getElementById('modal-edit-product');
     const form = document.getElementById('edit-product-form');
+    
+    // Modifier l'écouteur d'événements pour la catégorie principale
+    document.getElementById('categoriePrincipale').addEventListener('change', async function() {
+        const publicCibleSpan = document.querySelector('#publicCible span');
+        
+        if (this.value) {
+            try {
+                // Récupérer les catégories parentes
+                const response = await fetch(`getCategories.php?get_parents=${this.value}`);
+                const data = await response.json();
+                
+                if (data.parent_categories && data.parent_categories.length > 0) {
+                    // Mapper les IDs aux noms des publics cibles
+                    const publicsCibles = data.parent_categories
+                        .filter(cat => ['11', '12', '13', '14'].includes(cat.IDCATEG.toString()))
+                        .map(cat => {
+                            switch(cat.IDCATEG.toString()) {
+                                case '11': return 'Enfants';
+                                case '12': return 'Adolescents';
+                                case '13': return 'Adultes';
+                                case '14': return 'Famille';
+                                default: return '';
+                            }
+                        })
+                        .filter(name => name !== '');
+
+                    publicCibleSpan.textContent = publicsCibles.length > 0 ? publicsCibles.join(', ') : 'Non défini';
+                } else {
+                    publicCibleSpan.textContent = 'Non défini';
+                }
+                
+                await loadSecondaryCategories(this.value);
+            } catch (error) {
+                console.error('Erreur:', error);
+                publicCibleSpan.textContent = 'Non défini';
+            }
+        } else {
+            publicCibleSpan.textContent = 'Non défini';
+            document.getElementById('categoriesSecondaires').innerHTML = '';
+        }
+    });
     
     // Gestion des boutons d'édition
     document.querySelectorAll('.edit-btn').forEach(btn => {
         btn.addEventListener('click', async function() {
             const productId = this.dataset.id;
             try {
-                const response = await fetch(`getProduit.php?id=${productId}`);
+                const response = await fetch(`traitements/getProduit.php?id=${productId}`);
                 const product = await response.json();
                 
                 if (product.error) {
@@ -48,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         try {
             const formData = new FormData(this);
-            const response = await fetch('updateProduct.php?action=edit', {
+            const response = await fetch('traitements/updateProduct.php?action=edit', {
                 method: 'POST',
                 body: formData
             });
@@ -56,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            
+             
             const result = await response.json();
             
             if (result.success) {
@@ -171,6 +221,7 @@ async function loadSecondaryCategories(mainCategoryId) {
 async function fillEditForm(product) {
     const form = document.getElementById('edit-product-form');
     
+    // Remplir les champs de base
     form.querySelector('[name="idProd"]').value = product.IDPROD;
     form.querySelector('[name="nom"]').value = product.NOMPROD;
     form.querySelector('[name="description"]').value = product.DESCPROD;
@@ -185,18 +236,53 @@ async function fillEditForm(product) {
     // Gérer les catégories
     await loadCategories();
     const selectPrincipal = document.getElementById('categoriePrincipale');
-    if (product.MAIN_CATEGORY) {
+    const publicCibleSpan = document.querySelector('#publicCible span');
+    
+    if (product.MAIN_CATEGORY && product.MAIN_CATEGORY.IDCATEG) {
         selectPrincipal.value = product.MAIN_CATEGORY.IDCATEG;
+        
+        try {
+            // Récupérer les catégories parentes
+            const response = await fetch(`getCategories.php?get_parents=${product.MAIN_CATEGORY.IDCATEG}`);
+            const data = await response.json();
+            
+            if (data.parent_categories && data.parent_categories.length > 0) {
+                const publicsCibles = data.parent_categories
+                    .filter(cat => ['11', '12', '13', '14'].includes(cat.IDCATEG.toString()))
+                    .map(cat => {
+                        switch(cat.IDCATEG.toString()) {
+                            case '11': return 'Enfants';
+                            case '12': return 'Adolescents';
+                            case '13': return 'Adultes';
+                            case '14': return 'Famille';
+                            default: return '';
+                        }
+                    })
+                    .filter(name => name !== '');
+
+                publicCibleSpan.textContent = publicsCibles.length > 0 ? publicsCibles.join(', ') : 'Non défini';
+            } else {
+                publicCibleSpan.textContent = 'Non défini';
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+            publicCibleSpan.textContent = 'Non défini';
+        }
+        
         await loadSecondaryCategories(product.MAIN_CATEGORY.IDCATEG);
         
         const selectSecondaire = document.getElementById('categoriesSecondaires');
-        product.SECONDARY_CATEGORIES.forEach(cat => {
-            Array.from(selectSecondaire.options).forEach(option => {
-                if (option.value === cat.IDCATEG.toString()) {
-                    option.selected = true;
-                }
+        if (product.SECONDARY_CATEGORIES && Array.isArray(product.SECONDARY_CATEGORIES)) {
+            product.SECONDARY_CATEGORIES.forEach(cat => {
+                Array.from(selectSecondaire.options).forEach(option => {
+                    if (option.value === cat.IDCATEG.toString()) {
+                        option.selected = true;
+                    }
+                });
             });
-        });
+        }
+    } else {
+        publicCibleSpan.textContent = 'Non défini';
     }
 }
 
@@ -375,10 +461,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.getElementById('categoriePrincipale').addEventListener('change', function() {
+    const publicCibleSpan = document.querySelector('#publicCible span');
+    publicCibleSpan.textContent = determinerPublicCible(this.value);
+    
     if (this.value) {
         loadSecondaryCategories(this.value);
     } else {
         document.getElementById('categoriesSecondaires').innerHTML = '';
+        publicCibleSpan.textContent = 'Non défini';
     }
 });
 
@@ -440,7 +530,7 @@ function editImage(productId) {
         const formData = new FormData(this);
 
         try {
-            const response = await fetch('updateProductImage.php', {
+            const response = await fetch('traitements/updateProductImage.php', {
                 method: 'POST',
                 body: formData
             });
@@ -462,7 +552,7 @@ function editImage(productId) {
 // Ajouter/modifier la fonction editProduct
 async function editProduct(productId) {
     try {
-        const response = await fetch(`getProduit.php?id=${productId}`);
+        const response = await fetch(`traitements/getProduit.php?id=${productId}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -537,7 +627,7 @@ async function deleteProduct(productId) {
         // Action du bouton Supprimer
         confirmBtn.addEventListener('click', async () => {
             try {
-                const response = await fetch('deleteProduct.php', {
+                const response = await fetch('traitements/deleteProduct.php?idProd=${productId}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -550,7 +640,11 @@ async function deleteProduct(productId) {
 
                 if (result.success) {
                     showToast(result.message, 'success', 'Succès');
-                    setTimeout(() => location.reload(), 2000);
+                    setTimeout(() => {
+                        const url = new URL(window.location.href);
+                        url.search = ''; // Supprimer les paramètres GET
+                        window.location.href = url.toString();
+                    }, 2000);
                 } else {
                     showToast(result.message, 'error');
                 }
@@ -561,4 +655,15 @@ async function deleteProduct(productId) {
             resolve(true);
         });
     });
+}
+
+// Fonction pour déterminer le public cible
+function determinerPublicCible(categorieId) {
+    const publicCibleMap = {
+        '11': 'Enfants',
+        '12': 'Adolescents',
+        '13': 'Adultes',
+        '14': 'Famille'
+    };
+    return publicCibleMap[categorieId] || 'Non défini';
 } 

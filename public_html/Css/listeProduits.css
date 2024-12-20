@@ -290,25 +290,6 @@ h1 {
     background: var(--medium-purple);
 }
 
-/* Style pour les toasts */
-.toast-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-}
-
-.toast {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    background: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    cursor: pointer;
-    animation: slideIn 0.3s ease-in-out;
-}
 
 /* Ajout des animations pour les toasts */
 @keyframes slideIn {
@@ -777,3 +758,18 @@ th[data-sort].desc .sort-icon {
         opacity: 1;
     }
 } 
+
+.public-cible-info {
+    margin-top: 8px;
+    padding: 8px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #495057;
+}
+
+.public-cible-info span {
+    font-weight: bold;
+    color: #2c3e50;
+}
+  

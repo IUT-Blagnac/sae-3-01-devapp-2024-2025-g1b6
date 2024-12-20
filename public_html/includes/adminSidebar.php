@@ -111,8 +111,8 @@
                     <i class="fa-solid fa-chevron-down arrow"></i>
                 </div>
                 <ul class="submenu">
-                    <li data-section="liste-categories">Liste des catégories</li>
-                    <li data-section="ajouter-categorie">Ajouter une catégorie</li>
+                    <li data-section="liste-categories" class="<?= $currentPage === 'liste-categories' ? 'active' : '' ?>">Liste des catégories</li>
+                    <li data-section="ajouter-categorie" class="<?= $currentPage === 'ajouter-categorie' ? 'active' : '' ?>">Ajouter une catégorie</li>
                 </ul>
             </li>
 
@@ -186,6 +186,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     break;
                 case 'ajouter-produit':
                     window.location.href = 'ajouterProduit.php';
+                    break;
+                case 'liste-categories':
+                    window.location.href = 'listeCategories.php';
+                    break;
+                case 'ajouter-categorie':
+                    window.location.href = 'ajouterCategorie.php';
+                    break;
+                case 'liste-lots':
+                    window.location.href = 'listeLots.php';
+                    break;
+                case 'creer-lot':
+                    window.location.href = 'creerLot.php';
+                    break;
+                case 'tous-les-avis':
+                    window.location.href = 'Avis.php';
                     break;
             }
         });
