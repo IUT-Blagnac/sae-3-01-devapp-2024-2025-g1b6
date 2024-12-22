@@ -242,6 +242,9 @@ Moderniser le site tout en respectant l’identité graphique et en :
 
 == Documentation
 
+=== Fiche conseil 
+link:documentation/Fiche_conseil.pdf[Lien vers la fiche conseil]
+
 === Document de conception
 link:documentation/Doc_Conception.adoc[Lien vers le document de conception]
 

@@ -36,3 +36,4 @@ build/
 java/build/**
 appJavaIOT/src/main/resources/python
 appJavaIOT/src/main/resources/data
+public_html/images
