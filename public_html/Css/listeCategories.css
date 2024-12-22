@@ -1,0 +1,387 @@
+/* Réutiliser les styles de base de listeProduits.css */
+@import 'listeProduits.css';
+
+/* Styles spécifiques pour les badges de niveau */
+.niveau-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    display: inline-block;
+}
+
+.niveau-mère {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.niveau-principale {
+    background-color: #f3e5f5;
+    color: #7b1fa2;
+}
+
+.niveau-secondaire {
+    background-color: #e8f5e9;
+    color: #388e3c;
+}
+
+/* Appliquer les mêmes styles que products-table */
+.categories-table {
+    composes: products-table from './listeProduits.css';
+}
+
+/* Ajustements pour la table des catégories */
+.categories-table td {
+    vertical-align: middle;
+}
+
+.categories-table th:nth-child(4),
+.categories-table td:nth-child(4) {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Styles pour le modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    overflow-y: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+}
+
+.modal-content {
+    position: relative;
+    background-color: var(--white);
+    margin: 20px auto;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: var(--text-dark);
+    font-size: 1.5em;
+}
+
+.close {
+    color: var(--text-light);
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: var(--text-dark);
+}
+
+.modal-footer {
+    padding: 0;
+    margin: 0;
+    background-color: var(--white);
+    border-radius: 0 0 12px 12px;
+    border-top: 1px solid var(--border-color);
+    position: relative;
+}
+
+/* Styles pour les boutons du modal */
+.btn-secondary {
+    background-color: var(--light-gray);
+    color: var(--text-dark);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: var(--hover-gray);
+}
+
+/* Style pour le formulaire dans le modal */
+.modal .form-section {
+    background-color: var(--white);
+    padding: 20px;
+    margin-bottom: 0;
+}
+
+.modal .form-section:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal .form-section h3 {
+    color: var(--text-dark);
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+/* Style pour les champs de formulaire dans le modal */
+.modal .form-group {
+    margin-bottom: 20px;
+}
+
+.modal .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+    font-weight: 500;
+    font-size: 0.95em;
+}
+
+.modal .form-group input[type="text"],
+.modal .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--white);
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+}
+
+.modal .form-group input[type="text"]:hover,
+.modal .form-group textarea:hover {
+    border-color: var(--dark-purple);
+}
+
+.modal .form-group input[type="text"]:focus,
+.modal .form-group textarea:focus {
+    outline: none;
+    border-color: var(--dark-purple);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.modal .form-group input[readonly] {
+    background-color: #F1F5F9;
+    border-color: #E2E8F0;
+    cursor: not-allowed;
+    color: var(--text-light);
+}
+
+.modal .form-group input[readonly]:hover,
+.modal .form-group input[readonly]:focus {
+    border-color: #E2E8F0;
+    box-shadow: none;
+}
+
+/* Style pour la grille de catégories dans le modal */
+.modal .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* Ajustement du scroll */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 0 12px 12px 0;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: var(--dark-purple);
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: var(--darker-purple);
+}
+
+/* Style pour les checkboxes (copié depuis ajouterCategorie.css) */
+.modal .category-checkbox {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--white);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--light-gray);
+    box-shadow: var(--shadow-sm);
+}
+
+.modal .category-checkbox:hover {
+    background-color: var(--hover-gray);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.modal .category-checkbox input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--light-purple);
+    border-radius: 4px;
+    margin-right: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal .category-checkbox input[type="checkbox"]:checked {
+    background-color: var(--dark-purple);
+    border-color: var(--dark-purple);
+}
+
+.modal .category-checkbox input[type="checkbox"]:checked::after {
+    content: '\2714';
+    font-size: 14px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal .category-checkbox label {
+    cursor: pointer;
+    flex: 1;
+    font-size: 0.95em;
+    color: var(--text-dark);
+}
+
+/* Animation pour les checkboxes */
+.modal .category-checkbox input[type="checkbox"] {
+    transform-origin: center;
+}
+
+.modal .category-checkbox input[type="checkbox"]:checked {
+    animation: checkbox-pop 0.3s ease-in-out;
+}
+
+@keyframes checkbox-pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Ajustements pour le formulaire */
+.modal .form-section {
+    background-color: var(--white);
+    padding: 20px;
+    margin-bottom: 0;
+}
+
+.modal .form-section:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* Style du bouton submit */
+.modal-footer .btn-primary {
+    width: 100%;
+    padding: 16px;
+    border-radius: 0 0 12px 12px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: var(--dark-purple);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: block;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.confirm-modal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 1000;
+    padding-top: 20px;
+}
+
+.confirm-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    margin-top: 20px;
+    box-shadow: var(--shadow);
+}
+
+.confirm-modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.confirm-btn, .cancel-btn {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.confirm-btn {
+    background-color: var(--dark-red);
+    color: white;
+}
+
+.confirm-btn:hover {
+    background-color: #b91c1c;
+}
+
+.cancel-btn {
+    background-color: var(--light-gray);
+    color: var(--text-dark);
+}
+
+.cancel-btn:hover {
+    background-color: #d1d5db;
+}

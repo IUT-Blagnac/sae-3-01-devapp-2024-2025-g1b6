@@ -309,7 +309,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Modifier mes informations</h2>
-            <form method="post" action="updateInfoCli.php?typeModif=1">
+            <form method="post" action="traitements/updateInfoCli.php?typeModif=1">
                 <label for="nomCli">Nom :</label>
                 <input type="text" id="nomCli" name="nomCli" value=<?php echo '"' . htmlspecialchars($user['NOMCLIENT']) . '"'?>required>
                 <label for="prenomCli">Prénom :</label>
@@ -361,7 +361,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Modifier mon Mot de Passe</h2>
-            <form method="post" action="updateInfoCli.php?typeModif=2">
+            <form method="post" action="traitements/updateInfoCli.php?typeModif=2">
                 <label for="ancien-mdp">Ancien mot de passe:</label>
                 <input type="password" id="ancien-mdp" name="ancien-mdp" required>
                 <label for="ancien-mdp">Nouveau mot de passe:</label>
@@ -378,7 +378,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Modifier l'adresse</h2>
-            <form action="updateInfoCli.php?typeModif=4" method="POST">
+            <form action="traitements/updateInfoCli.php?typeModif=4" method="POST">
                 <input type="hidden" id="idAddress" name="idAddress">
                 
                 <label for="numRue">Numéro de rue :</label>
@@ -409,7 +409,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Ajouter une adresse</h2>
-            <form method="post" action="updateInfoCli.php?typeModif=3">
+            <form method="post" action="traitements/updateInfoCli.php?typeModif=3">
                 <label for="numRue">Numéro de rue :</label>
                 <input type="number" id="numRue" name="numRue" required min="1">
                 
@@ -438,7 +438,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Ajouter une carte bancaire</h2>
-            <form method="post" action="updateInfoCli.php?typeModif=6">
+            <form method="post" action="traitements/updateInfoCli.php?typeModif=6">
                 <label for="numCB">Numéro de carte :</label>
                 <input type="text" id="numCB" name="numCB" required maxlength="19" placeholder="XXXX XXXX XXXX XXXX">
                             
@@ -967,7 +967,7 @@
             if (addressToDelete) {
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = 'updateInfoCli.php?typeModif=5';
+                form.action = 'traitements/updateInfoCli.php?typeModif=5';
 
                 const input = document.createElement('input');
                 input.type = 'hidden';
@@ -1088,7 +1088,7 @@
             if (cardToDelete) {
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = 'updateInfoCli.php?typeModif=7';
+                form.action = 'traitements/updateInfoCli.php?typeModif=7';
             
                 const input = document.createElement('input');
                 input.type = 'hidden';

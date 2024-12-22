@@ -1,0 +1,2 @@
+à verifier pour plus tard : ne pas pouvoir accéder aux données json des fichiers de traitement lorsqu'on est pas connecté en tant qu'admin 
+mettre tous les traitement dans un dossier traitements

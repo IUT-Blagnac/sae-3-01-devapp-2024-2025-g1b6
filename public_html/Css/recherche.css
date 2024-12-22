@@ -1,72 +1,122 @@
+/* Palette de couleurs */
+:root {
+    --dark-purple: linear-gradient(#6d00b0, #b06bdc);
+    --dark-purple-inverse: linear-gradient(#b06bdc, #6d00b0);
+    --clair-purple: #c267ff;
+    --medium-purple: #8A2BE2;
+    --light-purple: #e6d1f2;
+    --accent-pink: #FF69B4;
+    --backpurple: #d3bce6;
+    --white: #FFFFFF;
+    --light-gray: #F0F0F0;
+}
+
+/* Conteneur principal de la recherche */
 .recherche-main {
     display: flex;
     gap: 20px;
     padding: 20px;
 }
 
+/* Conteneur des filtres */
 .recherche-filtres {
     width: 20%;
-    background-color: #f9f9f9;
+    background-color: var(--backpurple);
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Conteneur des résultats */
 .recherche-resultats {
     width: 75%;
 }
 
+/* Grille des produits */
 .produits-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; /* Permet le retour à la ligne */
+    gap: 1em; /* Espacement entre les éléments */
+    padding: 0;
+    margin: 0;
+    list-style-type: none; /* Supprime les puces des éléments */
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
+/* Style des produits */
 .produit-item {
-    border: 1px solid #ddd;
-    padding: 15px;
+    position: relative;
+    width: 15em; /* Largeur similaire aux catégories */
+    margin: 0.5em;
+    padding: 0.5em;
+    background-color: var(--white);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
     text-align: center;
-    margin: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.produit-image {
-    margin-bottom: 10px;
+.produit-item:hover {
+    transform: scale(1.05);
+    background-color: var(--light-purple);
+}
+
+/* Images des produits */
+.produit-item img {
+    width: 10em; /* Taille uniforme pour les images */
+    height: auto;
+    margin-bottom: 0.5em;
     border-radius: 5px;
 }
 
+/* Titre des produits */
+.produit-item h4 {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+    color: var(--medium-purple);
+    font-weight: bold;
+}
+
+/* Description des produits */
+.produit-item p {
+    font-size: 1em;
+    color: var(--dark-purple-inverse);
+    margin-bottom: 0.5em;
+}
+
+/* Bouton des détails */
 .btn-details {
     display: inline-block;
-    padding: 8px 15px;
-    background-color: #28a745;
-    color: #fff;
+    padding: 0.5em 1em;
+    margin-top: 0.5em;
+    background-color: var(--medium-purple);
+    color: var(--white);
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .btn-details:hover {
-    background-color: #218838;
+    background-color: var(--dark-purple);
+    transform: scale(1.05);
 }
 
-
-.produit-item img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-}
-
+/* Stock disponible */
 .en-stock {
     color: green;
     font-weight: bold;
 }
 
+/* Rupture de stock */
 .rupture-stock {
     color: red;
     font-weight: bold;
 }
 
+/* Pagination */
 .pagination {
     display: flex;
     justify-content: center;
@@ -78,9 +128,9 @@
 .pagination a {
     display: inline-block;
     padding: 8px 12px;
-    color: #007bff;
+    color: var(--medium-purple);
     text-decoration: none;
-    border: 1px solid #ddd;
+    border: 1px solid var(--light-gray);
     border-radius: 5px;
     transition: all 0.3s ease;
     font-size: 14px;
@@ -88,15 +138,15 @@
 }
 
 .pagination a:hover {
-    background-color: #007bff;
-    color: #ffffff;
-    border-color: #007bff;
+    background-color: var(--medium-purple);
+    color: var(--white);
+    border-color: var(--medium-purple);
 }
 
 .pagination a.active {
-    background-color: #007bff;
-    color: #ffffff;
-    border-color: #007bff;
+    background-color: var(--medium-purple);
+    color: var(--white);
+    border-color: var(--medium-purple);
     font-weight: bold;
 }
 

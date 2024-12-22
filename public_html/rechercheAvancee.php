@@ -13,8 +13,7 @@ function rechercheAvancee($criteres, $pdo, $limit, $offset)
         $criteres['en_stock'] = isset($criteres['en_stock']) ? 1 : NULL;  // 1 si coché, NULL si non
         $criteres['tri'] = isset($criteres['tri']) && in_array($criteres['tri'], ['nom_asc', 'nom_desc', 'prix_asc', 'prix_desc']) ? $criteres['tri'] : 'nom_asc';
 
-
-        // Préparer la requête
+        // Préparer la requête avec la procédure stockée
         $stmt = $pdo->prepare("CALL SP_RECHERCHE_AVANCEE(:mot_cle, :categorie, :marque, :prix_min, :prix_max, :en_stock, :limit_count, :offset_count, :tri)");
 
         // Passer les paramètres
@@ -28,8 +27,7 @@ function rechercheAvancee($criteres, $pdo, $limit, $offset)
         $stmt->bindValue(':offset_count', (int)$offset, PDO::PARAM_INT);
         $stmt->bindValue(':tri', $criteres['tri'], PDO::PARAM_STR);
 
-        // Debug avant l'exécution de la requête
-
+        // Exécuter la requête
         $stmt->execute();
         $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -41,7 +39,6 @@ function rechercheAvancee($criteres, $pdo, $limit, $offset)
         return [];
     }
 }
-
 
 // Fonction pour compter le total des produits
 function countProduits($criteres, $pdo)
@@ -74,3 +71,4 @@ function countProduits($criteres, $pdo)
         return 0;
     }
 }
+?>

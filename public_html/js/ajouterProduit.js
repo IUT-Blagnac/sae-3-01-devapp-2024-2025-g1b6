@@ -1,8 +1,52 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    // Charger les catégories au chargement de la page
+    await loadCategories();
+    
+    // Écouteur pour le changement de catégorie principale
+    document.getElementById('categoriePrincipale').addEventListener('change', async function() {
+        const publicCibleSpan = document.querySelector('#publicCible span');
+        
+        if (this.value) {
+            try {
+                // Récupérer les catégories parentes
+                const response = await fetch(`getCategories.php?get_parents=${this.value}`);
+                const data = await response.json();
+                
+                if (data.parent_categories && data.parent_categories.length > 0) {
+                    // Mapper les IDs aux noms des publics cibles
+                    const publicsCibles = data.parent_categories
+                        .filter(cat => ['11', '12', '13', '14'].includes(cat.IDCATEG.toString()))
+                        .map(cat => {
+                            switch(cat.IDCATEG.toString()) {
+                                case '11': return 'Enfants';
+                                case '12': return 'Adolescents';
+                                case '13': return 'Adultes';
+                                case '14': return 'Famille';
+                                default: return '';
+                            }
+                        })
+                        .filter(name => name !== '');
+
+                    publicCibleSpan.textContent = publicsCibles.length > 0 ? publicsCibles.join(', ') : 'Non défini';
+                } else {
+                    publicCibleSpan.textContent = 'Non défini';
+                }
+                
+                await loadSecondaryCategories(this.value);
+            } catch (error) {
+                console.error('Erreur:', error);
+                publicCibleSpan.textContent = 'Non défini';
+            }
+        } else {
+            publicCibleSpan.textContent = 'Non défini';
+            document.getElementById('categoriesSecondaires').innerHTML = '';
+        }
+    });
+
     // Gestion de la prévisualisation de l'image
     const imageInput = document.getElementById('imageProd');
-    const imagePreview = document.getElementById('image-preview');
-
+    const previewContainer = document.getElementById('image-preview');
+    
     imageInput.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
@@ -10,8 +54,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
             if (!validTypes.includes(file.type)) {
                 showToast('Format de fichier non supporté. Utilisez PNG, JPG, JPEG, GIF ou WEBP', 'error');
-                this.value = ''; // Réinitialiser l'input
-                imagePreview.innerHTML = '';
+                this.value = '';
+                previewContainer.innerHTML = '';
                 return;
             }
 
@@ -20,125 +64,138 @@ document.addEventListener('DOMContentLoaded', function() {
             if (file.size > maxSize) {
                 showToast('L\'image ne doit pas dépasser 5MB', 'error');
                 this.value = '';
-                imagePreview.innerHTML = '';
+                previewContainer.innerHTML = '';
                 return;
             }
 
-            // Prévisualisation si tout est OK
+            // Prévisualisation
             const reader = new FileReader();
             reader.onload = function(e) {
                 const img = document.createElement('img');
                 img.src = e.target.result;
-                imagePreview.innerHTML = '';
-                imagePreview.appendChild(img);
+                previewContainer.innerHTML = '';
+                previewContainer.appendChild(img);
             }
             reader.readAsDataURL(file);
         }
     });
 
-    // Chargement des catégories principales en fonction des catégories mères sélectionnées
-    const catMereCheckboxes = document.querySelectorAll('input[name="categories_meres[]"]');
-    const categoriePrincipale = document.getElementById('categoriePrincipale');
+    // Gestion de la soumission du formulaire
+    document.getElementById('add-product-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!validateProductForm()) {
+            return;
+        }
 
-    catMereCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', loadMainCategories);
-    });
+        try {
+            const formData = new FormData(this);
+            const response = await fetch('traitements/saveProduct.php', {
+                method: 'POST',
+                body: formData
+            });
 
-    // Chargement des catégories secondaires
-    document.getElementById('categoriePrincipale').addEventListener('change', function() {
-        if (this.value) {
-            loadSecondaryCategories(this.value);
-        } else {
-            document.getElementById('categoriesSecondaires').innerHTML = '';
+            const result = await response.json();
+
+            if (result.success) {
+                const toast = showToast('Produit ajouté avec succès', 'success', 'Succès');
+                // Attendre que le toast soit ajouté au DOM
+                requestAnimationFrame(() => {
+                    setTimeout(() => {
+                        // S'assurer que le toast est visible avant la redirection
+                        if (toast && toast.parentNode) {
+                            window.location.href = 'listeProduits.php?toast=success&message=Produit ajouté avec succès';
+                        }
+                    }, 2000);
+                });
+            } else {
+                showToast(result.message || 'Erreur lors de l\'ajout du produit', 'error');
+            }
+        } catch (error) {
+            showToast('Erreur lors de la communication avec le serveur', 'error');
         }
     });
 
-    // Validation du formulaire
-    const form = document.getElementById('add-product-form');
-    form.addEventListener('submit', validateForm);
+    // Ajouter des écouteurs pour normaliser l'entrée en temps réel
+    const decimalInputs = ['prix', 'poids'];
+    
+    decimalInputs.forEach(inputName => {
+        const input = document.querySelector(`[name="${inputName}"]`);
+        if (input) {
+            // Empêcher le collage de caractères non autorisés
+            input.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+                const sanitized = text.replace(/[^0-9.,]/g, '');
+                document.execCommand('insertText', false, sanitized);
+            });
 
-    // Validation en temps réel des champs numériques
-    const numericInputs = {
-        'prix': { min: 0.01, max: 9999.99, step: 0.01 },
-        'poids': { min: 0.01, max: 999.99, step: 0.01 },
-        'stock': { min: 0, max: 99999, step: 1 }
-    };
-
-    Object.entries(numericInputs).forEach(([field, constraints]) => {
-        const input = document.querySelector(`[name="${field}"]`);
-        let timeoutId;
-
-        // Validation uniquement quand l'utilisateur quitte le champ
-        input.addEventListener('blur', function() {
-            let value = parseFloat(this.value);
-            if (value < constraints.min) {
-                this.value = constraints.min;
-                showToast(`La valeur minimale pour ${field} est ${constraints.min}`, 'warning');
-            } else if (value > constraints.max) {
-                this.value = constraints.max;
-                showToast(`La valeur maximale pour ${field} est ${constraints.max}`, 'warning');
-            }
-        });
-
-        // Empêcher les valeurs négatives pendant la saisie
-        input.addEventListener('input', function(e) {
-            // Annuler le timeout précédent s'il existe
-            if (timeoutId) clearTimeout(timeoutId);
-
-            // Si la valeur est négative, la corriger immédiatement
-            if (this.value.startsWith('-')) {
-                this.value = this.value.replace('-', '');
-            }
-
-            // Pour les autres validations, attendre que l'utilisateur ait fini de taper
-            timeoutId = setTimeout(() => {
-                let value = parseFloat(this.value);
-                if (!isNaN(value) && value === 0) {
-                    this.value = constraints.min;
-                    showToast(`La valeur minimale pour ${field} est ${constraints.min}`, 'warning');
+            // Gérer la saisie des caractères
+            input.addEventListener('keypress', function(e) {
+                // Autoriser les touches de contrôle (backspace, delete, etc.)
+                if (e.key.length > 1) return;
+                
+                // Autoriser les chiffres
+                if (/\d/.test(e.key)) return;
+                
+                // Gérer le point et la virgule
+                if (e.key === '.' || e.key === ',') {
+                    // Empêcher plus d'un séparateur décimal
+                    if (this.value.includes('.') || this.value.includes(',')) {
+                        e.preventDefault();
+                    }
+                    return;
                 }
-            }, 1500); // Attendre 1.5 secondes après la dernière frappe
-        });
-    });
-
-    // Validation en temps réel des champs texte
-    const textInputs = {
-        'nom': 30,
-        'couleur': 30,
-        'composition': 150,
-        'description': 150
-    };
-
-    Object.entries(textInputs).forEach(([field, maxLength]) => {
-        const input = document.querySelector(`[name="${field}"]`);
-        input.addEventListener('input', function() {
-            if (this.value.length > maxLength) {
-                this.value = this.value.slice(0, maxLength);
-                showToast(`Le champ ${field} est limité à ${maxLength} caractères`, 'warning');
-            }
-        });
+                
+                // Bloquer tous les autres caractères
+                e.preventDefault();
+            });
+            
+            // Formater à la perte du focus
+            input.addEventListener('blur', function() {
+                if (this.value) {
+                    const value = parseFloat(this.value.replace(',', '.'));
+                    if (!isNaN(value)) {
+                        this.value = value.toFixed(2).replace('.', ',');
+                    }
+                }
+            });
+        }
     });
 });
 
 // Fonction pour charger les catégories principales
-async function loadMainCategories() {
-    const selectedMeres = Array.from(document.querySelectorAll('input[name="categories_meres[]"]:checked'))
-        .map(cb => cb.value);
-
+async function loadCategories() {
     try {
-        const response = await fetch('getCategories.php?parent_categories=' + selectedMeres.join(','));
+        console.log('Chargement des catégories...');
+        const response = await fetch('getCategories.php');
         const data = await response.json();
+        console.log('Données reçues:', data);
+        
+        if (!data.success) {
+            throw new Error('Erreur lors du chargement des catégories');
+        }
         
         const selectPrincipal = document.getElementById('categoriePrincipale');
+        if (!selectPrincipal) {
+            throw new Error('Select categoriePrincipale non trouvé');
+        }
+        
         selectPrincipal.innerHTML = '<option value="">Sélectionnez une catégorie</option>';
         
-        data.main_categories.forEach(category => {
-            const option = document.createElement('option');
-            option.value = category.IDCATEG;
-            option.textContent = category.NOMCATEG;
-            selectPrincipal.appendChild(option);
-        });
+        if (data.main_categories && Array.isArray(data.main_categories)) {
+            data.main_categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.IDCATEG;
+                option.textContent = category.NOMCATEG;
+                selectPrincipal.appendChild(option);
+            });
+            console.log('Catégories chargées:', data.main_categories.length);
+        } else {
+            console.error('Format de données incorrect:', data);
+        }
     } catch (error) {
+        console.error('Erreur lors du chargement des catégories:', error);
         showToast('Erreur lors du chargement des catégories', 'error');
     }
 }
@@ -163,135 +220,67 @@ async function loadSecondaryCategories(mainCategoryId) {
     }
 }
 
-// Fonction de validation du formulaire
-function validateForm(e) {
-    e.preventDefault();
-    
-    // Vérifications des champs requis et des formats
-    const form = e.target;
-    const formData = new FormData(form);
-
-    // Vérification des catégories mères
-    const catMeres = document.querySelectorAll('input[name="categories_meres[]"]:checked');
-    if (catMeres.length === 0) {
-        showToast('Veuillez sélectionner au moins une catégorie mère', 'error');
-        return false;
-    }
-
-    // Autres validations...
-    if (!validateProductData(formData)) {
-        return false;
-    }
-
-    // Envoi du formulaire
-    submitForm(formData);
+// Fonction pour convertir une chaîne en nombre, acceptant virgule ou point
+function parseDecimalNumber(value) {
+    // Conserver le point ou la virgule
+    return parseFloat(value.replace(',', '.'));
 }
 
-// Fonction pour valider les données du produit
-function validateProductData(formData) {
-    // Validation du nom
-    const nom = formData.get('nom').trim();
+// Fonction de validation du formulaire
+function validateProductForm() {
+    const form = document.getElementById('add-product-form');
+    const nom = form.querySelector('[name="nom"]').value.trim();
+    const description = form.querySelector('[name="description"]').value.trim();
+    const prix = parseDecimalNumber(form.querySelector('[name="prix"]').value);
+    const poids = parseDecimalNumber(form.querySelector('[name="poids"]').value);
+    const stock = parseInt(form.querySelector('[name="stock"]').value);
+    const image = form.querySelector('#imageProd').value;
+    
     if (nom.length === 0 || nom.length > 30) {
         showToast('Le nom doit contenir entre 1 et 30 caractères', 'error');
         return false;
     }
-
-    // Validation de la description
-    const description = formData.get('description').trim();
+    
     if (description.length > 150) {
         showToast('La description ne peut pas dépasser 150 caractères', 'error');
         return false;
     }
-
-    // Validation du prix
-    const prix = parseFloat(formData.get('prix'));
-    if (isNaN(prix) || prix <= 0 || prix > 9999.99) {
-        showToast('Le prix doit être compris entre 0.01€ et 9999.99€', 'error');
+    
+    if (isNaN(prix) || prix <= 0) {
+        showToast('Le prix doit être un nombre supérieur à 0', 'error');
+        return false;
+    }
+    
+    if (isNaN(poids) || poids <= 0) {
+        showToast('Le poids doit être un nombre supérieur à 0', 'error');
+        return false;
+    }
+    
+    if (isNaN(stock) || stock < 0) {
+        showToast('Le stock doit être un nombre positif ou nul', 'error');
+        return false;
+    }
+    
+    if (!image) {
+        showToast('Une image est requise', 'error');
         return false;
     }
 
-    // Validation du poids
-    const poids = parseFloat(formData.get('poids'));
-    if (isNaN(poids) || poids <= 0 || poids > 999.99) {
-        showToast('Le poids doit être compris entre 0.01kg et 999.99kg', 'error');
-        return false;
-    }
-
-    // Validation du stock
-    const stock = parseInt(formData.get('stock'));
-    if (isNaN(stock) || stock < 0 || stock > 99999) {
-        showToast('Le stock doit être compris entre 0 et 99999', 'error');
-        return false;
-    }
-
-    // Validation de la couleur
-    const couleur = formData.get('couleur').trim();
-    if (couleur && couleur.length > 30) {
-        showToast('La couleur ne peut pas dépasser 30 caractères', 'error');
-        return false;
-    }
-
-    // Validation de la composition
-    const composition = formData.get('composition').trim();
-    if (composition && composition.length > 150) {
-        showToast('La composition ne peut pas dépasser 150 caractères', 'error');
-        return false;
-    }
-
-    // Validation de l'image
-    const imageFile = formData.get('image');
-    if (imageFile && imageFile.name) {
-        // Vérification du type MIME
-        const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        if (!validTypes.includes(imageFile.type)) {
-            showToast('Format de fichier non supporté. Utilisez PNG, JPG, JPEG, GIF ou WEBP', 'error');
-            return false;
-        }
-
-        // Vérification de l'extension
-        const validExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
-        const extension = imageFile.name.split('.').pop().toLowerCase();
-        if (!validExtensions.includes(extension)) {
-            showToast('Extension de fichier non supportée. Utilisez PNG, JPG, JPEG, GIF ou WEBP', 'error');
-            return false;
-        }
-
-        const maxSize = 5 * 1024 * 1024; // 5MB
-        if (imageFile.size > maxSize) {
-            showToast('L\'image ne doit pas dépasser 5MB', 'error');
-            return false;
-        }
-    }
-
+    // Normaliser les valeurs dans le formulaire avant l'envoi
+    form.querySelector('[name="prix"]').value = prix.toString();
+    form.querySelector('[name="poids"]').value = poids.toString();
+    
     return true;
 }
 
-// Fonction pour envoyer le formulaire
-async function submitForm(formData) {
-    try {
-        const response = await fetch('saveProduct.php', {
-            method: 'POST',
-            body: formData
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-            showToast('Produit ajouté avec succès', 'success');
-            setTimeout(() => {
-                window.location.href = 'listeProduits.php';
-            }, 1500);
-        } else {
-            showToast(result.message || 'Erreur lors de l\'ajout du produit', 'error');
-        }
-    } catch (error) {
-        showToast('Erreur lors de la communication avec le serveur', 'error');
-    }
-}
-
-// Fonction pour afficher les messages toast
+// Fonction pour afficher les toasts
 function showToast(message, type = 'error', title = 'Erreur') {
     const toastContainer = document.querySelector('.toast-container');
+    if (!toastContainer) {
+        console.error('Toast container not found');
+        return null;
+    }
+
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     toast.innerHTML = `
@@ -305,4 +294,6 @@ function showToast(message, type = 'error', title = 'Erreur') {
     toast.addEventListener('click', () => toast.remove());
     toastContainer.appendChild(toast);
     setTimeout(() => toast.remove(), 5000);
+
+    return toast;
 } 

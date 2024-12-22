@@ -1,0 +1,169 @@
+/* Réutiliser les styles de base de ajouterProduit.css */
+@import 'ajouterProduit.css';
+
+/* Styles spécifiques pour la grille de catégories */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.category-checkbox {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--white);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--light-gray);
+    box-shadow: var(--shadow-sm);
+}
+
+.category-checkbox:hover {
+    background-color: var(--hover-gray);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* Style personnalisé pour les checkboxes */
+.category-checkbox input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--light-purple);
+    border-radius: 4px;
+    margin-right: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.category-checkbox input[type="checkbox"]:checked {
+    background-color: var(--dark-purple);
+    border-color: var(--dark-purple);
+}
+
+.category-checkbox input[type="checkbox"]:checked::after {
+    content: '\2714';
+    font-size: 14px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.category-checkbox label {
+    cursor: pointer;
+    flex: 1;
+    font-size: 0.95em;
+    color: var(--text-dark);
+}
+
+/* Style pour la section description */
+.section-description {
+    color: var(--text-light);
+    margin-bottom: 15px;
+    font-size: 0.9em;
+}
+
+/* Style pour le bouton d'ajout - copié exactement de ajouterProduit.css */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+button[type="submit"] {
+    width: 100%;
+    background-color: var(--dark-purple);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+button[type="submit"]:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+button[type="submit"] i {
+    font-size: 18px;
+}
+
+/* Animation pour les checkboxes */
+.category-checkbox input[type="checkbox"] {
+    transform-origin: center;
+}
+
+.category-checkbox input[type="checkbox"]:checked {
+    animation: checkbox-pop 0.3s ease-in-out;
+}
+
+@keyframes checkbox-pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Style pour les sections de formulaire */
+.form-section {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow);
+}
+
+.form-section h2 {
+    color: var(--dark-purple);
+    margin-bottom: 20px;
+    font-size: 1.4em;
+}
+
+/* Style pour les toasts */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.toast {
+    padding: 15px 25px;
+    margin: 10px;
+    min-width: 200px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+}
+
+.toast.success {
+    border-left: 4px solid var(--success);
+    color: var(--success);
+}
+
+.toast.error {
+    border-left: 4px solid var(--error);
+    color: var(--error);
+}
+
+.toast.show {
+    transform: translateX(0);
+} 
