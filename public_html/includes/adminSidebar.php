@@ -116,16 +116,16 @@
                 </ul>
             </li>
 
-            <!-- Lots -->
+            <!-- Packs -->
             <li class="nav-item">
-                <div class="nav-link has-submenu <?= str_contains($currentPage, 'lot') ? 'active' : '' ?>">
+                <div class="nav-link has-submenu <?= str_contains($currentPage, 'pack') ? 'active' : '' ?>">
                     <i class="fa-solid fa-layer-group"></i>
-                    <span>Lots</span>
+                    <span>Packs</span>
                     <i class="fa-solid fa-chevron-down arrow"></i>
                 </div>
                 <ul class="submenu">
-                    <li data-section="liste-lots">Liste des lots</li>
-                    <li data-section="creer-lot">Créer un lot</li>
+                    <li data-section="liste-packs" class="<?= $currentPage === 'liste-packs' ? 'active' : '' ?>">Liste des packs</li> 
+                    <li data-section="creer-pack" class="<?= $currentPage === 'creer-pack' ? 'active' : '' ?>">Créer un pack</li>
                 </ul>
             </li>
 
@@ -133,14 +133,21 @@
             <li class="nav-item">
                 <div class="nav-link has-submenu <?= str_contains($currentPage, 'avis') ? 'active' : '' ?>">
                     <i class="fa-solid fa-comments"></i>
-                    <span>Avis</span>
+                    <span>Marques</span>
                     <i class="fa-solid fa-chevron-down arrow"></i>
                 </div>
                 <ul class="submenu">
-                    <li data-section="tous-les-avis">Tous les avis</li>
-                    <li data-section="avis-signales">Avis signalés</li>
-                    <li data-section="moderation">Modération</li>
+                    <li data-section="liste-marques">Liste Marques</li>
+                    <li data-section="ajouter-marque">Ajouter une marque</li>
                 </ul>
+            </li>
+
+            <!-- Gestion Admin -->
+            <li class="nav-item">
+                <div class="nav-link <?= $currentPage === 'gestion-admin' ? 'active' : '' ?>" data-section="gestion-admin">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span>Gestion Admin</span>
+                </div>
             </li>
         </ul>
     </nav>
@@ -193,14 +200,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 case 'ajouter-categorie':
                     window.location.href = 'ajouterCategorie.php';
                     break;
-                case 'liste-lots':
-                    window.location.href = 'listeLots.php';
+                case 'liste-packs':
+                    window.location.href = 'listePacks.php';
                     break;
-                case 'creer-lot':
-                    window.location.href = 'creerLot.php';
+                case 'creer-pack':
+                    window.location.href = 'ajouterPack.php';
                     break;
-                case 'tous-les-avis':
-                    window.location.href = 'Avis.php';
+                case 'liste-marques':
+                    window.location.href = 'listeMarques.php';
+                    break;
+                case 'ajouter-marque':
+                    window.location.href = 'ajouterMarque.php';
+                    break;
+                case 'gestion-admin':
+                    window.location.href = 'gestionAdmin.php';
                     break;
             }
         });

@@ -1,0 +1,199 @@
+.recherche-main {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+:root {
+    --dark-purple: #6d00b0;
+    --clair-purple: rgba(109, 0, 176, 0.15);
+    --medium-purple: #8A2BE2;
+    --light-purple: #f8f5fb;
+    --accent-pink: #FF69B4;
+    --white: #FFFFFF;
+    --backpurple: #d3bce6;
+    --light-gray: #F0F0F0;
+    --text-dark: #2c3e50;
+    --shadow: 0 4px 6px rgba(109, 0, 176, 0.1);
+    font-family: 'Arial', sans-serif;
+
+}
+
+.recherche-filtres {
+    width: 20%;
+    background-color: var(--white); /* Utilisation du blanc */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow); /* Ombre douce */
+}
+
+.recherche-filtres h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: var(--text-dark); /* Texte foncé pour contraste */
+}
+
+.recherche-filtres label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--text-dark); /* Couleur du texte */
+}
+
+.recherche-filtres input,
+.recherche-filtres select {
+    width: 75%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    background-color: var(--light-gray); /* Couleur de fond gris clair */
+}
+
+.recherche-filtres input:focus,
+.recherche-filtres select:focus {
+    border-color: var(--dark-purple);
+    box-shadow: 0 0 5px rgba(109, 0, 176, 0.5); /* Effet focus avec couleur sombre */
+    outline: none;
+}
+
+.recherche-filtres button {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: var(--dark-purple); /* Couleur sombre pour le bouton */
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 80%;
+}
+
+.recherche-filtres button:hover {
+    background-color: var(--medium-purple); /* Couleur violet moyen au survol */
+    box-shadow: 0 4px 6px rgba(109, 0, 176, 0.2); /* Ombre plus marquée au survol */
+}
+
+.recherche-filtres input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+    transform: scale(1.2); /* Augmentation de la taille pour une meilleure accessibilité */
+}
+
+.recherche-filtres select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23555" d="M2 0L0 2h4z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    background-color: var(--light-purple); /* Fond léger pour les sélecteurs */
+}
+
+.recherche-filtres .checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.recherche-filtres input[type="checkbox"]:checked {
+    background-color: var(--accent-pink); /* Accent pink pour les cases cochées */
+}
+
+
+.recherche-resultats {
+    width: 75%;
+}
+
+.produits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.produit-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: center;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.produit-image {
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.btn-details {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #28a745;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-details:hover {
+    background-color: #218838;
+}
+
+
+.produit-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.en-stock {
+    color: green;
+    font-weight: bold;
+}
+
+.rupture-stock {
+    color: red;
+    font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 8px 12px;
+    color: #007bff;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: #ffffff;
+    border-color: #007bff;
+}
+
+.pagination a.active {
+    background-color: #007bff;
+    color: #ffffff;
+    border-color: #007bff;
+    font-weight: bold;
+}
+
+.pagination p {
+    font-size: 14px;
+    color: #888;
+    margin: 0;
+}

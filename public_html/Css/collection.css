@@ -1,0 +1,189 @@
+/* Variables globales */
+:root {
+    --dark-purple: #6d00b0;
+    --clair-purple: rgba(109, 0, 176, 0.15);
+    --medium-purple: #8A2BE2;
+    --light-purple: #f8f5fb;
+    --accent-pink: #FF69B4;
+    --white: #FFFFFF;   
+    --backpurple: #d3bce6;
+    --light-gray: #F0F0F0;
+    --text-dark: #2c3e50;
+    --shadow: 0 4px 6px rgba(109, 0, 176, 0.1);
+}
+
+.body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--light-purple);
+    margin: 0;
+    padding: 0;
+    height: auto;
+}
+
+.lienAccueil {
+    text-decoration: none;
+    color: var(--medium-purple);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.filtres {
+    position: fixed;
+    margin-top: 2em;
+    left: 1%;
+    height: 15em;
+    width: 10em;
+    text-align: center;
+    background-color: var(--backpurple);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 1%;
+    z-index: 1000;
+}
+
+.filtres h1 {
+    position: relative;
+    color: var(--text-dark);
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    top: -5%;
+}
+
+.listFiltres {
+    position: relative;
+    list-style-type: none;
+    margin-top: -1em;
+    padding: 0;
+}
+
+.listFiltres li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: var(--white);
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+}
+
+.listFiltres li:hover {
+    background-color: var(--clair-purple);
+    transform: scale(1.05);
+}
+
+.principale {
+    display: flex;
+    margin-left: 11em; /* Laisser de la place pour les filtres */
+    height: auto;
+}
+
+.CollectionContainer {
+    position: relative;
+    flex: 1;
+    background-color: var(--light-purple);
+    left: -5%;
+    height: 100vw;
+}
+
+.titreCollection {
+    font-size: 2em;
+    position: relative;
+    left: 40%;
+    color: var(--medium-purple);
+    margin-bottom: 20px;
+}
+
+
+/* Section Affichage des produits */
+.produitsContainer {
+    position: relative;
+    margin-top: 0;
+    left: 10%;
+    width: 100%;
+    height: 80em;
+    height: auto;
+}
+
+.produitsContainer ul {
+    position: relative;
+    width: 100%;
+    list-style-type: none;
+    margin-left: 1em;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; /* Permet le retour à la ligne */
+    justify-content: flex-start; /* Aligne les éléments au début */
+    align-items: flex-start; /* Aligne les éléments verticalement au début */
+}
+
+.produitsContainer ul li {
+    position: relative;
+    width: 15em;
+    margin: 0.5em;
+    padding: 0.5em;
+    background-color: var(--white);
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: var(--shadow);
+    min-height: 20em;
+}
+
+.produitsContainer ul li:hover {
+    transform: scale(1.05);
+}
+
+.produitsContainer ul li img {
+    width: 11em;
+    min-height: 10em;
+    max-height: 12em;
+    height: auto;
+}
+
+.produitsContainer ul li p {
+    font-size: 1em;
+    text-align: center;
+}
+
+.produitsContainer a {
+    text-decoration: none;
+    color: var(--medium-purple);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+
+/*Les pages de la liste des produits*/
+
+.pagination {
+    width: 300%;
+    margin-top: 20px;
+    margin-bottom: 5%;
+}
+
+.page-number {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 10px 15px;
+    background-color: var(--white);
+    color: var(--medium-purple);
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+
+.page-number:hover {
+    background-color: var(--clair-purple);
+    color: var(--dark-purple);
+}
+
+.page-number.active {
+    background-color: var(--medium-purple);
+    color: var(--white);
+    font-weight: bold;
+}

@@ -2,8 +2,14 @@
 session_start();
 include("connect.inc.php");
 
+if (!isset($_SESSION["admin"])) {
+    header("Location: connexion.php");
+    exit();
+}
+ 
 // Récupération des marques
-$queryMarques = $pdo->query("SELECT IDMARQUE, NOMMARQUE FROM MARQUE ORDER BY NOMMARQUE");
+$queryMarques = $pdo->prepare("SELECT IDMARQUE, NOMMARQUE FROM MARQUE ORDER BY NOMMARQUE");
+$queryMarques->execute();
 $marques = $queryMarques->fetchAll();
 
 // Récupération des catégories mères (11, 12, 13, 14)
@@ -76,7 +82,7 @@ $categoriesMeres = $queryCatMeres->fetchAll();
                         <div class="fields-container">
                             <div class="form-group">
                                 <label for="categoriePrincipale" class="required">Catégorie principale :</label>
-                                <select id="categoriePrincipale" name="categorie_principale" required>
+                                <select id="categoriePrincipale" name="categorie_principale" required data-public-cible="">
                                     <option value="">Sélectionnez une catégorie</option>
                                 </select>
                                 <div id="publicCible" class="public-cible-info">

@@ -1,0 +1,194 @@
+/* Définition des variables de couleur */
+:root {
+    --dark-purple: #6d00b0;
+    --clair-purple: rgba(109, 0, 176, 0.15);
+    --medium-purple: #8A2BE2;
+    --light-purple: #f8f5fb;
+    --accent-pink: #FF69B4;
+    --white: #FFFFFF;
+    --backpurple: #d3bce6;
+    --light-gray: #F0F0F0;
+    --text-dark: #2c3e50;
+    --shadow: 0 4px 6px rgba(109, 0, 176, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Style principal de la page */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-purple);
+    color: var(--text-dark);
+}
+
+header, footer {
+    background-color: var(--dark-purple);
+    color: var(--white);
+}
+
+h1, h2 {
+    color: var(--dark-purple);
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-top: 20px;
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: var(--text-dark);
+}
+
+/* Conteneur principal */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--light-purple);
+}
+
+/* Section Mentions légales */
+.mentions-legales {
+    background-color: var(--white);
+    width: 80%;
+    max-width: 1100px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 30px;
+    margin-top: 30px;
+}
+
+/* Liens */
+a {
+    color: var(--dark-purple);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Formulaires (si tu en as besoin) */
+input, select, textarea {
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: var(--light-gray);
+    font-size: 1em;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--dark-purple);
+    box-shadow: 0 0 5px rgba(109, 0, 176, 0.5);
+    outline: none;
+}
+
+/* Pied de page */
+footer {
+    padding: 20px;
+    text-align: center;
+    color: var(--white);
+    background-color: var(--dark-purple);
+}
+
+footer p {
+    font-size: 1em;
+}
+
+/* Réglages pour les petits écrans (Smartphones et Tablettes) */
+
+/* Smartphones en portrait (moins de 576px) */
+@media (max-width: 575px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    p {
+        font-size: 1em;
+    }
+
+    .mentions-legales {
+        width: 90%;
+        padding: 20px;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    footer {
+        padding: 15px;
+    }
+}
+
+/* Tablettes (576px à 768px) */
+@media (min-width: 576px) and (max-width: 768px) {
+    h1 {
+        font-size: 2.2em;
+    }
+
+    h2 {
+        font-size: 1.7em;
+    }
+
+    p {
+        font-size: 1.1em;
+    }
+
+    .mentions-legales {
+        width: 85%;
+        padding: 25px;
+    }
+
+    main {
+        padding: 15px;
+    }
+
+    footer {
+        padding: 20px;
+    }
+}
+
+/* Ordinateurs de bureau (plus de 768px) */
+@media (min-width: 768px) {
+    h1 {
+        font-size: 2.5em;
+    }
+
+    h2 {
+        font-size: 1.8em;
+    }
+
+    p {
+        font-size: 1.2em;
+    }
+
+    .mentions-legales {
+        width: 80%;
+        padding: 30px;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    footer {
+        padding: 20px;
+    }
+}

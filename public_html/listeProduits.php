@@ -2,6 +2,11 @@
 session_start();
 include("connect.inc.php");
 
+if (!isset($_SESSION["admin"])) {
+    header("Location: connexion.php");
+    exit();
+}
+  
 // Vérification de la déconnexion
 if (isset($_GET['disconnect']) && $_GET['disconnect'] === 'true') {
     session_destroy();
@@ -46,20 +51,23 @@ $query->execute();
 $produits = $query->fetchAll();
 
 // Récupération des marques pour le filtre
-$queryMarques = $pdo->query("SELECT IDMARQUE, NOMMARQUE FROM MARQUE ORDER BY NOMMARQUE");
+$queryMarques = $pdo->prepare("SELECT IDMARQUE, NOMMARQUE FROM MARQUE ORDER BY NOMMARQUE");
+$queryMarques->execute();
 $marques = $queryMarques->fetchAll();
 
 // Récupération des catégories pour le filtre
-$queryCategories = $pdo->query("SELECT IDCATEG, NOMCATEG FROM CATEGORIE ORDER BY NOMCATEG");
+$queryCategories = $pdo->prepare("SELECT IDCATEG, NOMCATEG FROM CATEGORIE ORDER BY NOMCATEG");
+$queryCategories->execute();
 $categories = $queryCategories->fetchAll();
 
 // Récupération des catégories mères pour le filtre
-$queryCategoriesMeres = $pdo->query("
+$queryCategoriesMeres = $pdo->prepare("
     SELECT DISTINCT C.IDCATEG, C.NOMCATEG 
     FROM CATEGORIE C
     WHERE C.IDCATEG IN (11, 12, 13, 14)
     ORDER BY C.NOMCATEG
 ");
+$queryCategoriesMeres->execute();
 $categoriesMeres = $queryCategoriesMeres->fetchAll();
 ?>
 

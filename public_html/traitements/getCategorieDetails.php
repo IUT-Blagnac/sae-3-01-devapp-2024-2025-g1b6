@@ -4,6 +4,11 @@ require_once('../connect.inc.php');
 
 header('Content-Type: application/json');
 
+if (!isset($_SESSION["admin"])) {
+    header('HTTP/1.1 403 Forbidden');
+    exit();
+}
+
 try {
     if (!isset($_GET['id'])) {
         throw new Exception('ID de catégorie manquant');
@@ -47,22 +52,24 @@ try {
     $categorie['parents'] = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
     // Récupérer toutes les catégories mères
-    $stmtMeres = $pdo->query("
+    $stmtMeres = $pdo->prepare("
         SELECT IDCATEG, NOMCATEG 
         FROM CATEGORIE 
         WHERE IDCATEG IN (11, 12, 13, 14)
         ORDER BY NOMCATEG
     ");
+    $stmtMeres->execute();
     $categoriesMeres = $stmtMeres->fetchAll(PDO::FETCH_ASSOC);
 
     // Récupérer toutes les catégories principales
-    $stmtPrincipales = $pdo->query("
+    $stmtPrincipales = $pdo->prepare("
         SELECT DISTINCT C.IDCATEG, C.NOMCATEG
         FROM CATEGORIE C
         JOIN CATPERE CP ON C.IDCATEG = CP.IDCATEG
         WHERE CP.IDCATEG_PERE IN (11, 12, 13, 14)
         ORDER BY C.NOMCATEG
     ");
+    $stmtPrincipales->execute();
     $categoriesPrincipales = $stmtPrincipales->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode([

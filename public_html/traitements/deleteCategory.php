@@ -3,6 +3,11 @@ session_start();
 require_once('../connect.inc.php');
 header('Content-Type: application/json');
 
+if (!isset($_SESSION["admin"])) {
+    header('HTTP/1.1 403 Forbidden');
+    exit();
+}
+
 try {
     if (!isset($_POST['idCateg'])) {
         throw new Exception('ID de catégorie non fourni');

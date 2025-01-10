@@ -1,15 +1,16 @@
-/* Palette de couleurs */
+/* Variables globales */
 :root {
-    --dark-purple: linear-gradient(#6d00b0, #b06bdc);
-    --clair-purple: #c267ff;
+    --dark-purple: #6d00b0;
+    --clair-purple: rgba(109, 0, 176, 0.15);
     --medium-purple: #8A2BE2;
-    --light-purple: #e6d1f2;
+    --light-purple: #f8f5fb;
     --accent-pink: #FF69B4;
+    --white: #FFFFFF;   
     --backpurple: #d3bce6;
-    --white: #FFFFFF;
     --light-gray: #F0F0F0;
+    --text-dark: #2c3e50;
+    --shadow: 0 4px 6px rgba(109, 0, 176, 0.1);
 }
-
 
 .container {
     flex: 1;
@@ -25,16 +26,17 @@
     align-items: center;
     justify-content: center;
     margin-top: 5em;
-    background-color: var(--backpurple);
+    background-color: var(--white);
     width: 30em;
     height: 44em;
     border-radius: 3em;
+    box-shadow: var(--shadow);
 }
 
 
 .titreCompte {
     position: relative;
-    margin-top: 5em;
+    top: 1em;
     background: transparent;
     color: var(--medium-purple);
     height: 3em;
@@ -64,23 +66,24 @@
     align-items: center;
     justify-content: center;
     color: var(--medium-purple);
-    background: var(--light-purple);
+    background: var(--white);
     padding: 1em;
     border-radius: 2em; 
 }
 
 .infos label {
-    color: var(--);
+    color: var(--text-dark);
     font-size: 1em;
 }
 
 .infos input {
-    margin-bottom: 2.8em;
+    margin-bottom: 2.4em;
     height: 2em;
     border-radius: 1em;
     border: none;
     padding-left: 1em;
     margin-left: 0.5em;
+    background-color: var(--light-purple);
     color: var(--medium-purple);
     transition: box-shadow 0.3s ease-in-out;
 }
@@ -101,13 +104,48 @@
     padding-left: 1em;
 }
 
-.tel {
+
+.telephone-container {
+    margin-top: 0em;
+    display: flex;
+    align-items: center;
+}
+
+.telephone-container select {
+    height: 2em;
+    border-radius: 1em;
+    border: none;
+    padding-left: 1em;
+    background-color: var(--light-purple);
+    color: var(--medium-purple);
+    margin-right: 0.5em;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.telephone-container select:focus {
+    outline: none;
+    box-shadow: 0 0 10px var(--medium-purple);
+}
+
+.telephone-container input {
+    position: relative;
+    top: 1.2em;
     width: 10em;
     height: 2em;
     border-radius: 1em;
     border: none;
     padding-left: 1em;
+    background-color: var(--light-purple);
+    color: var(--medium-purple);
+    transition: box-shadow 0.3s ease-in-out;
 }
+
+.telephone-container input:focus {
+    outline: none;
+    box-shadow: 0 0 10px var(--medium-purple);
+}
+
+
 
 .mail {
     width: 20em;
@@ -149,10 +187,10 @@
     width: 20em;
     height: 2em;
     border-radius: 1em;
-    color: var(--medium-purple);
-    border: 2px solid var(--light-gray);
+    color: var(--text-dark);
+    border: 2px solid var(--light-purple);
     border-radius: 2em;
-    background-color: var(--light-gray);
+    background-color: var(--light-purple);
     padding: 0.1em;
     text-align: center;
     align-items: center;
@@ -161,11 +199,11 @@
 }
 
 .infos button:hover {
-    background: var(--clair-purple);
+    background: var(--backpurple);
     transition: background 0.3s;
     cursor: pointer;
     color: var(--white);
-    border-color: var(--clair-purple);
+    border-color: var(--backpurple);
 }
 
 .infos p {
@@ -191,7 +229,7 @@
     display: flex;
     width: 20em;
     flex-direction: column;
-    color: var(--clair-purple);
+    color: var(--medium-purple);
     border: 2px solid var(--light-purple);
     border-radius: 2em;
     background-color: var(--light-purple);
@@ -206,13 +244,13 @@
     margin-top: -0.5em;
     margin-bottom: 0.5em;
     text-decoration: none;
-    color: var(--medium-purple);
+    color: var(--dark-purple);
     font-weight: bold;
     transition: color 0.3s;
 }
 
 .seConnecter a:hover {
-    color: var(--white);
+    color: var(--accent-pink);
     text-decoration: underline;
 }
 

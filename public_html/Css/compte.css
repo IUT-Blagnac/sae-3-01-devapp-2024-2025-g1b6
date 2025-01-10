@@ -26,7 +26,7 @@ body {
     line-height: 1.6;
 }
 
-main {
+main {  
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -187,12 +187,12 @@ form label {
     font-weight: bold;
 }
 
-form input[type="text"],
-form input[type="number"],
-form input[type="password"],
-form input[type="date"],
-form input[type="month"],
-form select {
+.modal-content input[type="text"],
+.modal-content input[type="number"],
+.modal-content input[type="password"],
+.modal-content input[type="date"],
+.modal-content input[type="month"],
+.modal-content select {
     padding: 10px;
     border: 1px solid var(--light-gray);
     border-radius: 5px;
@@ -240,7 +240,6 @@ button:disabled {
     color: white;
     border-left: 4px solid #e74c3c;
 }
-
 /* Confirmation de suppression */
 .confirm-delete-content {
     text-align: center;
@@ -459,6 +458,25 @@ form button:not([type]):hover {
     padding: 15px;
     border-radius: 8px;
     margin-top: 15px;
+}
+
+.total-commande {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: var(--white);
+    border-radius: 8px;
+}
+
+.total-commande p {
+    font-size: 1.1em;
+}
+
+.prix-total {
+    font-weight: bold;
+    color: var(--dark-purple);
+    margin-left: 10px;
 }
 
 .no-commandes {

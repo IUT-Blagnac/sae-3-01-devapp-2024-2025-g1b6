@@ -1,13 +1,15 @@
-/* Palette de couleurs */
+/* Variables globales */
 :root {
-    --dark-purple: linear-gradient( #6d00b0, #b06bdc);
-    --clair-purple: #c267ff;
+    --dark-purple: #6d00b0;
+    --clair-purple: rgba(109, 0, 176, 0.15);
     --medium-purple: #8A2BE2;
-    --light-purple: #e6d1f2;
+    --light-purple: #f8f5fb;
     --accent-pink: #FF69B4;
-    --backpurple: #d3bce6;
     --white: #FFFFFF;   
+    --backpurple: #d3bce6;
     --light-gray: #F0F0F0;
+    --text-dark: #2c3e50;
+    --shadow: 0 4px 6px rgba(109, 0, 176, 0.1);
 }
 
 body {
@@ -47,18 +49,13 @@ html::-webkit-scrollbar-thumb {
     
 }
 
-
-
 /* Gestion des erreurs */
-
 .error {
     color: #fff;
     background-color: #e74c3c;
     padding: 10px;
     border-radius: 1em;
 }
-
-
 
 .header {
     overflow: visible;
@@ -73,6 +70,7 @@ html::-webkit-scrollbar-thumb {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10000;
 }
 
 .barreMenu {
@@ -140,8 +138,8 @@ html::-webkit-scrollbar-thumb {
     border-color: var(--light-gray); 
 }
 
-.imgLoc {
-    background-image: url('../images/location.png');
+.imgWish {
+    background-image: url('../images/wishlist.png');
     margin-top: 0.8em;
     margin-left: 0.8em;
 
@@ -245,7 +243,7 @@ html::-webkit-scrollbar-thumb {
     position: relative;
     top: 5em;
     left: -0.5em;
-    background-color: var(--clair-purple);
+    background-color: var(--medium-purple);
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -266,7 +264,7 @@ html::-webkit-scrollbar-thumb {
     margin: 0;
     padding: 0;
     display: flex; /* Afficher les éléments en ligne */
-}
+}  
 
 .categories li {
     position: relative;
@@ -284,9 +282,71 @@ html::-webkit-scrollbar-thumb {
 }
 
 .categories li:hover {
-    background-color: var(--medium-purple);
+    background-color: var(--dark-purple);
     transition: background 0.3s;
+    height: 5em;
 }
+
+
+/* Conteneur des sous-catégories */
+.containerSouscategories {
+    display: none; /* Cacher les sous-catégories par défaut */
+    position: absolute; /* Positionner les sous-catégories sous la catégorie parent */
+    background-color: var(--backpurple);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    left: 0;
+}
+
+/* Afficher les sous-catégories lors du survol */
+.categories li:hover .containerSouscategories {
+    display: block; /* Afficher les sous-catégories au survol */
+}
+
+
+/* Style des sous-catégories */
+.containerSouscategories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.containerSouscategories ul:hover {
+    color: var(--light-purple);
+}
+
+.containerSouscategories li {
+    height: 2.45em;
+    width: 9em;
+    text-align: left;
+    transition: background 0.3s;
+    background-color: var(--clair-purple);
+}
+
+.containerSouscategories li:hover {
+    background-color: var(--backpurple);
+    color: var(--light-gray);
+    height: 2.45em;
+}
+
+.containerSouscategories li a {
+    text-decoration: none;
+}
+
+.containerSouscategories li a:hover {
+    color: var(--dark-purple);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -299,6 +359,7 @@ html::-webkit-scrollbar-thumb {
     padding: 20px;
     border-top: 5px solid var(--medium-purple);
     position: relative;
+    bottom: 0;
     width: 100%;
 }
 

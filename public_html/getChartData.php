@@ -168,17 +168,17 @@ try {
                     break;
 
                 case 'month':
-                    // Top 5 des produits des 30 derniers jours
+                    // Top 5 des produits du mois en cours
                     $query = $pdo->prepare("
                         SELECT 
                             P.NOMPROD as period,
                             COALESCE(SUM(PA.QUANTITEPROD), 0) as total
-                        FROM PRODUIT P
-                        LEFT JOIN PANIER PA ON P.IDPROD = PA.IDPROD
-                        LEFT JOIN COMMANDE C ON PA.IDCOMMANDE = C.NUMCOMMANDE 
-                            AND C.DATECOMMANDE >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+                        FROM COMMANDE C
+                        JOIN PANIER PA ON C.NUMCOMMANDE = PA.IDCOMMANDE
+                        JOIN PRODUIT P ON PA.IDPROD = P.IDPROD
+                        WHERE YEAR(C.DATECOMMANDE) = YEAR(CURDATE())
+                        AND MONTH(C.DATECOMMANDE) = MONTH(CURDATE())
                         GROUP BY P.IDPROD, P.NOMPROD
-                        HAVING total > 0
                         ORDER BY total DESC
                         LIMIT 5
                     ");
@@ -197,7 +197,7 @@ try {
                         GROUP BY P.IDPROD, P.NOMPROD
                         HAVING total > 0
                         ORDER BY total DESC
-                        LIMIT 5
+                        LIMIT 5 
                     ");
                     break;
             }

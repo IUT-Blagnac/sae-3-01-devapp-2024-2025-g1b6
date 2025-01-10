@@ -1,0 +1,50 @@
+/* Styles des formulaires */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form label {
+    font-weight: bold;
+}
+
+
+form input[type="text"], 
+input[type="number"], 
+form input[type="password"], 
+form input[type="date"], 
+form button, 
+form select {
+    padding: 10px;
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+}
+
+/* Boutons */
+.modal-btn {
+    background: linear-gradient(135deg, var(--medium-purple), var(--dark-purple));
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 5px rgba(109, 0, 176, 0.2);
+}
+
+.modal-btn:hover {
+    background: linear-gradient(135deg, var(--dark-purple), var(--medium-purple));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(109, 0, 176, 0.3);
+}
+
+/* Bouton désactivé */
+button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+    color: #808080;
+} 

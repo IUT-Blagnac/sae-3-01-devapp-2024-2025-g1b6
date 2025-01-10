@@ -2,23 +2,30 @@
 session_start();
 include("connect.inc.php");
 
+if (!isset($_SESSION["admin"])) {
+    header("Location: connexion.php");
+    exit();
+}
+
 // Récupérer les catégories mères
-$queryMeres = $pdo->query("
+$queryMeres = $pdo->prepare("
     SELECT IDCATEG, NOMCATEG 
     FROM CATEGORIE 
     WHERE IDCATEG IN (11, 12, 13, 14)
     ORDER BY NOMCATEG
 ");
+$queryMeres->execute();
 $categoriesMeres = $queryMeres->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupérer les catégories principales
-$queryPrincipales = $pdo->query("
+$queryPrincipales = $pdo->prepare("
     SELECT DISTINCT C.IDCATEG, C.NOMCATEG
     FROM CATEGORIE C
     JOIN CATPERE CP ON C.IDCATEG = CP.IDCATEG
     WHERE CP.IDCATEG_PERE IN (11, 12, 13, 14)
     ORDER BY C.NOMCATEG
 ");
+$queryPrincipales->execute();
 $categoriesPrincipales = $queryPrincipales->fetchAll(PDO::FETCH_ASSOC);
 ?>
 

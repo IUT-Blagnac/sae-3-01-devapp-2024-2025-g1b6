@@ -2,6 +2,7 @@
     session_start();
     include("connect.inc.php");
 
+    
     // Vérifier si l'utilisateur est connecté
     if (!isset($_SESSION["user"]["IDCLIENT"])) {
         header("Location: connexion.php");
@@ -281,6 +282,18 @@
                                         <?php if ($commande['suivi']): ?>
                                             <p>Code de suivi : <?= $commande['suivi'] ?></p>
                                         <?php endif; ?>
+                                    </div>
+                                    <?php
+                                    // Calcul du total HT
+                                    $totalHT = 0;
+                                    foreach($commande['produits'] as $produit) {
+                                        $totalHT += $produit['prix'] * $produit['quantite'];
+                                    }
+                                    // Calcul du total TTC avec frais d'expédition
+                                    $totalTTC = ($totalHT * 1.20) + $commande['transport']['frais'];
+                                    ?>
+                                    <div class="total-commande">
+                                        <p>Total TTC : <span class="prix-total"><?= number_format($totalTTC, 2) ?> €</span></p>
                                     </div>
                                 </div>
                             </div>

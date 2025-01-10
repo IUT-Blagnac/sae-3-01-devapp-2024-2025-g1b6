@@ -1,14 +1,18 @@
 <?php
     session_start();
     include("connect.inc.php");
-
+    
+    if (!isset($_SESSION["admin"])) {
+        header("Location: connexion.php");
+        exit();
+    }
+    
     // Vérification de la déconnexion
     if (isset($_GET['disconnect']) && $_GET['disconnect'] === 'true') {
         session_destroy();
         header("Location: connexion.php");
         exit();
     }
-    
 
     header("Cache-Control: no-cache, must-revalidate");
 ?>
@@ -25,8 +29,8 @@
 </head>
 <body>
     <?php include("header.php"); ?>
-
-    <main>
+ 
+    <main> 
         <div class="dashboard-container">
             <?php 
             $currentPage = 'accueil';
@@ -42,11 +46,13 @@
                     <div class="dashboard-stats">
                         <?php
                             // Nombre total de produits
-                            $query = $pdo->query("SELECT COUNT(*) FROM PRODUIT");
+                            $query = $pdo->prepare("SELECT COUNT(*) FROM PRODUIT");
+                            $query->execute();
                             $totalProduits = $query->fetchColumn();
                             
                             // Nombre total de clients
-                            $query = $pdo->query("SELECT COUNT(*) FROM CLIENT");
+                            $query = $pdo->prepare("SELECT COUNT(*) FROM CLIENT");
+                            $query->execute(); 
                             $totalClients = $query->fetchColumn();
                             
                             // Nombre de commandes du mois
@@ -159,8 +165,8 @@
                     
                     console.log('Données reçues:', data);
                     return data;
-                } catch (error) {
-                    console.error('Erreur lors du chargement des données:', error);
+                } catch (error) { 
+                    console.error('Erreur lors du chargement des données:', error); 
                     alert(`Erreur lors du chargement des données: ${error.message}`);
                     return null;
                 }
@@ -256,7 +262,16 @@
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1,
+                                precision: 0
+                            }
+                        }
+                    }
                 }
             });
 
@@ -311,8 +326,8 @@
                         data: [],
                         backgroundColor: [
                             '#6d00b0',
-                            '#8A2BE2',
-                            '#9370DB'
+                            '#BA55D3',
+                            '#DDA0DD'
                         ],
                         borderWidth: 2,
                         borderColor: '#FFFFFF'
@@ -325,6 +340,13 @@
                         legend: {
                             position: 'right',
                             display: true
+                        },
+                        title: {
+                            display: true,
+                            text: 'Statuts des commandes (30 derniers jours)',
+                            font: {
+                                size: 16
+                            }
                         },
                         tooltip: {
                             callbacks: {

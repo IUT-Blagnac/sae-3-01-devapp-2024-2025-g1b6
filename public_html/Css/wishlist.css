@@ -1,0 +1,120 @@
+/* Palette de couleurs */
+:root {
+    --dark-purple: linear-gradient(#6d00b0, #b06bdc);
+    --medium-purple: #8A2BE2;
+    --light-purple: #e6d1f2;
+    --accent-pink: #FF69B4;
+    --white: #FFFFFF;
+    --light-gray: #F0F0F0;
+}
+
+/* Police */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-gray);
+}
+
+/* Contenu principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--backpurple);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.wishlistContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.wishlistHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.wishlistTitle {
+    color: var(--medium-purple);
+    font-size: 2em;
+    margin: 0;
+}
+
+.productList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    align-items: center;
+}
+
+.productImage img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.productDetails {
+    flex: 1;
+}
+
+.productDetails h3 {
+    color: var(--dark-purple);
+    margin: 0 0 10px;
+}
+
+.productDetails p {
+    margin: 5px 0;
+}
+
+.productPrice {
+    font-size: 1.2em;
+    color: var(--accent-pink);
+    margin-top: 10px;
+}
+
+.productActions, .addToCartButton {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: var(--medium-purple);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--dark-purple);
+    color: var(--accent-pink);
+}
+
+button.removeFromWishlistButton {
+    background-color: var(--accent-pink);
+}
+
+button.removeFromWishlistButton:hover {
+    background-color: var(--dark-purple);
+    color: var(--white);
+}
+

@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-// Chargement des indicatifs
-$indicatifs = json_decode(file_get_contents('indicatifs.json'), true);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include("connect.inc.php");
@@ -10,15 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupération des données
     $nom = trim($_POST["nom"]);
     $prenom = trim($_POST["prenom"]);
-    
-    // Traitement du numéro de téléphone
-    $numTel = null;
-    if (!empty($_POST["numTel"])) {
-        $indicatif = str_replace("+", "00", $_POST["indicatif"]);
-        $numero = $indicatif . $_POST["numTel"];
-        $numTel = strlen($numero) > 11 ? $numero : null;
-    }
-    
+    $telephone = !empty(trim($_POST["numTel"])) ? $_POST["numTel"] : null;
     $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
     $dtn = $_POST["dtn"];
     $password = $_POST["password"];
@@ -55,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     "idClient" => $newIdClient,
                     "nom" => $nom,
                     "prenom" => $prenom,
-                    "telephone" => $numTel,
+                    "telephone" => $telephone,
                     "email" => $email,
                     "password" => $hashedPassword,
                     "dtn" => $dtn,
@@ -137,18 +127,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label for="prenom">Prénom</label>
                         <input class="nom" type="text" id="prenom" name="prenom" value="<?= isset($prenom) ? htmlspecialchars($prenom) : '' ?>" required>
 
-                        <label for="telephone">Téléphone</label>
-                        <div class="phone-input">
-                            <select name="indicatif" id="indicatif" class="indicatif">
-                                <?php foreach ($indicatifs as $indicatif): ?>
-                                    <option value="<?= $indicatif['code'] ?>" 
-                                            <?= (isset($_POST['indicatif']) && $_POST['indicatif'] === $indicatif['code']) || 
-                                                (!isset($_POST['indicatif']) && $indicatif['code'] === '+33') ? 'selected' : '' ?>>
-                                        <?= $indicatif['code'] ?> <?= $indicatif['pays'] ?> <?= $indicatif['emoji'] ?>
-                                    </option>
-                                <?php endforeach; ?>
+                        <label class="labelTel" for="telephone">Téléphone</label>
+                        <div class="telephone-container">
+                            <select id="indicatif" name="indicatif">
+                                <?php
+                                $indicatifs = json_decode(file_get_contents('indicatifs.json'), true);
+                                foreach ($indicatifs as $indicatif) {
+                                    $selected = ($indicatif['code'] === '+33') ? 'selected' : ''; // Par défaut, on sélectionne la France
+                                    echo "<option value=\"{$indicatif['code']}\" {$selected}>{$indicatif['emoji']} {$indicatif['pays']} ({$indicatif['code']})</option>";
+                                }
+                                ?>
                             </select>
-                            <input type="text" id="numTel" name="numTel" class="tel">
+                            <input type="text" id="numTel" name="numTel">
                         </div>
                         <br>
 
@@ -179,67 +169,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </main>
 
+    <?php include("footer.php") ?>
 
-
-    <!-- Pied de page -->
-    <footer class="footer">
-        <div class="footer-column">
-            <h3>Qui sommes-nous ?</h3>
-            <ul>
-                <li><a href="#">Ludorama.com</a></li>
-                <li><a href="#">Nos magasins</a></li>
-                <li><a href="#">Cartes cadeaux</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>En ce moment</h3>
-            <ul>
-                <li><a href="#">Ambiance de Noël</a></li>
-                <li><a href="#">Nouveautés</a></li>
-                <li><a href="#">Rejoignez LudiSphere !</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Marques</h3>
-            <ul>
-                <li><a href="#">Lego</a></li>
-                <li><a href="#">Playmobil</a></li>
-                <li><a href="#">Jurassic Park</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Personnages jouets</h3>
-            <ul>
-                <li><a href="#">Pokemon</a></li>
-                <li><a href="#">Tous les personnages</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>Nos sites</h3>
-            <ul>
-                <li><a href="#">France</a></li>
-                <li><a href="#">Allemagne</a></li>
-                <li><a href="#">Tous nos sites</a></li>
-            </ul>
-        </div>
-    </footer>
-
-    <!-- Déplacez le script à la fin du body -->
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const telInput = document.getElementById('numTel');
-        if (telInput) {
-            telInput.addEventListener('input', function(e) {
-                // Ne garde que les chiffres
-                this.value = this.value.replace(/[^0-9]/g, '');
-                
-                // Limite la longueur à 9 chiffres
-                if (this.value.length > 9) {
-                    this.value = this.value.slice(0, 9);
-                }
-            });
-        }
-    });
+
+
+        //----------------------VERIFICATION DU NUMERO DE TELEPHONE----------------------------
+        const numTelInput = document.getElementById('numTel');
+        numTelInput.addEventListener('input', () => {
+            // Nettoyage du numéro
+            if (numTelInput.value.startsWith('0')) {
+                numTelInput.value = numTelInput.value.substring(1);
+            }
+            // Supprimer les caractères non numériques
+            numTelInput.value = numTelInput.value.replace(/[^\d]/g, '');
+            
+            // Validation de la longueur
+            const isValid = numTelInput.value.length === 9;
+            const submitBtn = document.getElementById('submitBtn-modif-Info-Cli');
+            
+            // Mise à jour de l'interface
+            submitBtn.disabled = !isValid;
+            
+            // Limiter à 9 chiffres et afficher message d'erreur
+            if (numTelInput.value.length > 9) {
+                numTelInput.value = numTelInput.value.slice(0, 9);
+                showToast(
+                    'Le numéro de téléphone est limité à 9 chiffres',
+                    'error',
+                    'Limite atteinte'
+                );
+            }
+            // Afficher message d'erreur si nombre insuffisant de chiffres
+            else if (numTelInput.value.length > 0 && numTelInput.value.length < 9) {
+                showToast(
+                    'Le numéro de téléphone doit contenir exactement 9 chiffres',
+                    'error',
+                    'Format incorrect'
+                );
+            }
+            // Afficher succès uniquement si exactement 9 chiffres et pas de troncature
+            else if (isValid && numTelInput.value.length === 9) {
+                showToast(
+                    'Format du numéro de téléphone valide',
+                    'success',
+                    'Validation'
+                );
+            }
+        });
     </script>
+
+
 </body>
 </html>

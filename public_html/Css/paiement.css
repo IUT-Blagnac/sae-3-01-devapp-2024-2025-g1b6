@@ -156,6 +156,22 @@ html, body {
     margin-left: 20px;
 }
 
+.productActions button{
+    background-color: var(--medium-purple);
+    color: #fff;
+    border: none;
+    width: 100px; /* Augmenter la largeur du bouton */
+    height: 30px;
+    font-size: 14px; /* Ajuster la taille de la police pour s'adapter à la nouvelle largeur */
+    border-radius: 5px; /* Ajuster la bordure arrondie */
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.productActions button:hover {
+    background: var(--dark-purple);
+}
+
 .sidebar {
     flex: 2;
     background-color: #d3bce6;
@@ -234,19 +250,6 @@ html, body {
 .paymentIcons img {
     width: 30px;
     margin: 0 5px;
-}
-
-.footer {
-    background-color: #e6d1f2;
-    padding: 10px;
-    text-align: center;
-    font-size: 12px;
-    color: #666;
-    
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    margin-top: auto;
 }
 
 .breadcrumb span {

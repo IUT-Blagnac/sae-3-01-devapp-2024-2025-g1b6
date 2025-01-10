@@ -1,0 +1,67 @@
+-- Ajout de la colonne PRIXPACK à la table PACK si elle n'existe pas
+ALTER TABLE PACK ADD COLUMN IF NOT EXISTS PRIXPACK DECIMAL(10,2) DEFAULT 0;
+
+-- Suppression des triggers s'ils existent déjà
+DROP TRIGGER IF EXISTS update_pack_price_after_insert;
+DROP TRIGGER IF EXISTS update_pack_price_after_delete;
+DROP TRIGGER IF EXISTS update_pack_price_after_product_update;
+
+-- Création des nouveaux triggers
+DELIMITER //
+
+CREATE TRIGGER update_pack_price_after_insert 
+AFTER INSERT ON ASSOPACK
+FOR EACH ROW
+BEGIN
+    UPDATE PACK 
+    SET PRIXPACK = (
+        SELECT ROUND(SUM(PR.PRIXHT) * 0.85, 2)
+        FROM ASSOPACK AP
+        JOIN PRODUIT PR ON AP.IDPROD = PR.IDPROD
+        WHERE AP.IDPACK = NEW.IDPACK
+    )
+    WHERE IDPACK = NEW.IDPACK;
+END//
+
+CREATE TRIGGER update_pack_price_after_delete
+AFTER DELETE ON ASSOPACK
+FOR EACH ROW
+BEGIN
+    UPDATE PACK 
+    SET PRIXPACK = (
+        SELECT COALESCE(ROUND(SUM(PR.PRIXHT) * 0.85, 2), 0)
+        FROM ASSOPACK AP
+        JOIN PRODUIT PR ON AP.IDPROD = PR.IDPROD
+        WHERE AP.IDPACK = OLD.IDPACK
+    )
+    WHERE IDPACK = OLD.IDPACK;
+END//
+
+CREATE TRIGGER update_pack_price_after_product_update
+AFTER UPDATE ON PRODUIT
+FOR EACH ROW
+BEGIN
+    UPDATE PACK P
+    SET PRIXPACK = (
+        SELECT ROUND(SUM(PR.PRIXHT) * 0.85, 2)
+        FROM ASSOPACK AP
+        JOIN PRODUIT PR ON AP.IDPROD = PR.IDPROD
+        WHERE AP.IDPACK = P.IDPACK
+    )
+    WHERE P.IDPACK IN (
+        SELECT DISTINCT AP.IDPACK 
+        FROM ASSOPACK AP 
+        WHERE AP.IDPROD = NEW.IDPROD
+    );
+END//
+
+DELIMITER ;
+
+-- Mise à jour initiale des prix des packs existants
+UPDATE PACK P
+SET PRIXPACK = (
+    SELECT COALESCE(ROUND(SUM(PR.PRIXHT) * 0.85, 2), 0)
+    FROM ASSOPACK AP
+    JOIN PRODUIT PR ON AP.IDPROD = PR.IDPROD
+    WHERE AP.IDPACK = P.IDPACK
+); 

@@ -3,6 +3,11 @@ session_start();
 include("./../connect.inc.php");
 header('Content-Type: application/json');
 
+if (!isset($_SESSION["admin"])) {
+    header('HTTP/1.1 403 Forbidden');
+    exit();
+}
+
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo->beginTransaction();

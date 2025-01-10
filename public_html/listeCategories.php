@@ -2,6 +2,11 @@
 session_start();
 include("connect.inc.php");
 
+if (!isset($_SESSION["admin"])) {
+    header("Location: connexion.php"); 
+    exit();
+}
+
 // Gestion des messages toast
 if (isset($_GET['toast']) && isset($_GET['message'])) {
     $toastType = htmlspecialchars($_GET['toast']);
@@ -14,7 +19,7 @@ if (isset($_GET['toast']) && isset($_GET['message'])) {
 }
 
 // Récupération des catégories avec leur niveau hiérarchique et le bon comptage des produits
-$query = $pdo->query("
+$stmt = $pdo->prepare("
     WITH RECURSIVE 
     CategoriesHierarchie AS (
         SELECT 
@@ -93,8 +98,9 @@ $query = $pdo->query("
         END,
         CH.NOMCATEG
 ");
+$stmt->execute();
 
-$categoriesList = $query->fetchAll(PDO::FETCH_ASSOC);
+$categoriesList = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 

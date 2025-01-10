@@ -1,0 +1,27 @@
+[
+    {
+        "code": "+33",
+        "pays": "France",
+        "emoji": "🇫🇷"
+    },
+    {
+        "code": "+1",
+        "pays": "États-Unis",
+        "emoji": "🇺🇸"
+    },
+    {
+        "code": "+44",
+        "pays": "Royaume-Uni",
+        "emoji": "🇬🇧"
+    },
+    {
+        "code": "+34",
+        "pays": "Espagne",
+        "emoji": "🇪🇸"
+    },
+    {
+        "code": "+49",
+        "pays": "Allemagne",
+        "emoji": "🇩🇪"
+    }
+]

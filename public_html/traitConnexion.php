@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["EMAIL"]) && isset($_PO
 
         if ($user && password_verify($PASSWORD, $user["PASSWORD"])) {
             error_log("Utilisateur trouvé : " . print_r($user, true));
-            $_SESSION["user"] = $user;
+            $_SESSION["admin"] = $user; 
 
             // Gestion des cookies "Se souvenir de moi"
             if ($rememberMe) {
@@ -29,10 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["EMAIL"]) && isset($_PO
                 setcookie("PASSWORD", $PASSWORD, time() + (365 * 24 * 60 * 60));
             } else {
                 setcookie("EMAIL", "", time() - 3600);
-                setcookie("PASSWORD", "", time() - 3600);
+                setcookie("PASSWORD", "", time() - 3600); 
             }
 
-            header("Location: admin.php");
+            header("Location: dashboardAdmin.php");
             exit;
         }
 

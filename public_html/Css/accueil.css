@@ -1,12 +1,15 @@
-/* Palette de couleurs */
+/* Variables globales */
 :root {
-    --dark-purple: linear-gradient(#6d00b0, #b06bdc);
-    --clair-purple: #c267ff;
+    --dark-purple: #6d00b0;
+    --clair-purple: rgba(109, 0, 176, 0.15);
     --medium-purple: #8A2BE2;
-    --light-purple: #e6d1f2;
+    --light-purple: #f8f5fb;
     --accent-pink: #FF69B4;
-    --white: #FFFFFF;
+    --white: #FFFFFF;   
+    --backpurple: #d3bce6;
     --light-gray: #F0F0F0;
+    --text-dark: #2c3e50;
+    --shadow: 0 4px 6px rgba(109, 0, 176, 0.1);
 }
 
 /* Style général */
@@ -53,8 +56,8 @@ body {
 
 .listeCDC {
     position: relative;
+    width: 100%;
     list-style-type: none;
-    margin-top: 0.5em;
     margin-left: 1em;
     padding: 0;
     overflow: hidden;
@@ -64,126 +67,43 @@ body {
     align-items: flex-start;
 }
 
-.jeuCDC {
+.listeCDC li {
     position: relative;
-    background-color: var(--backpurple);
-    margin-right: 5em;
-    width: 16em;
-    height: 18em;
-    border-radius: 2em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.jeuCDC a {
-    text-decoration: none;  
-    width: 15em;
-}
-
-.jeuCDC:hover {
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-}
-
-.imgJeuCDC1 {
-    background-image: url('../images/Jeu1.jpg');
-    border-radius: 2em;
-    margin-top: 1em;
-    width: 9em;
-    height: 9em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.imgJeuCDC2 {
-    background-image: url('../images/nerf1.png');
-    border-radius: 2em;
-    margin-top: 1em;
-    margin-left: 3em;
-    width: 9em;
-    height: 9em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.imgJeuCDC3 {
-    background-image: url('../images/Jeu3.jpg');
-    border-radius: 2em;
-    margin-top: 1em;
-    width: 12em;
-    height: 9em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.imgJeuCDC4 {
-    background-image: url('../images/Jeu4.jpg');
-    border-radius: 2em;
-    margin-top: 1em;
-    width: 12em;
-    height: 9em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.nomJeu {
-    position: relative;
-    margin-top: 1em;
-    margin-left: 0.5em;
-    padding: 0.1em;
-    width: 15em;
-    font-size: 1em;
-    text-align: center;
-    font-family: 'Poppins', sans-serif;
-}
-
-.prixCDC {
-    position: relative;
-    margin-top: 0.5em;
-    margin-left: 10em;
-    padding: 0.1em;
-    width: 15em;
-    font-size: 1em;
-    text-align: center;
-    font-family: 'Poppins', sans-serif;
-}
-
-.listeDisponibilites {
-    position: relative;
-    list-style-type: none;
-    width: 14em;
-    border-radius: 1em;
-    margin-top: 0.5em;
-    margin-left: 0.5em;
-    padding: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    background: var(--clair-purple);
-    word-spacing: 2em;
-}
-
-.elementDispo {
-    position: relative;
+    width: 17em;
+    height: 17em;
     margin: 0.5em;
-    padding: 0.1em;
-    width: 15em;
+    padding: 0.5em;
+    background-color: var(--white);
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: var(--shadow);
 }
 
-.elementDispoImg {
-    width: 1.5em;
-    height: 1.5em;
-    position: relative;
-    left: -1em;
-    top: 0.6em;
-    margin-top: -0.3em;
+.listeCDC li:hover {
+    transform: scale(1.05);
 }
+
+.listeCDC li img {
+    width: 10em;
+    height: 10em;
+}
+
+.listeCDC li p {
+    font-size: 1em;
+    text-align: center;
+}
+
+.listeCDC a {
+    text-decoration: none;
+    color: var(--medium-purple);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
 
 
 
@@ -208,6 +128,10 @@ body {
     border: 1em solid transparent;
     border-radius: 2em; 
     position: relative; 
+}
+
+.ludiEvent a {
+    text-decoration: none;
 }
 
 .titreLudiEvent {
@@ -264,12 +188,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .btnParticipe:hover {
-    background: var(--dark-purple);
-    color: var(--accent-pink);
+    background: var(--white);
+    color: var(--medium-purple);
+    box-shadow: var(--shadow);
     cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 
@@ -328,6 +255,100 @@ body {
     position: relative;
 }
 
+.pack {
+    position: relative;
+    margin-top: 5%;
+    margin-left: 6em;
+    padding: 0.1em;
+    height: 27em;
+    overflow-x: auto; /* Défilement horizontal activé */
+    overflow-y: hidden;
+    white-space: nowrap; /* Empêche les packs de passer à la ligne */
+}
+
+.pack::-webkit-scrollbar {
+    height: 0.5em;
+}
+
+.pack::-webkit-scrollbar-thumb {
+    background-color: var(--medium-purple);
+    border-radius: 2em;
+}
+
+
+.titrePCK {
+    position: relative;
+    left: 35%;
+    padding: 0.1em;
+    width: 6em;
+    font-size: 1.5em;
+    border-bottom: var(--medium-purple) solid 0.15em;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.listePCK {
+    position: relative;
+    list-style-type: none;
+    margin-left: 1em;
+    margin-top: 2em;
+    padding: 0;
+    display: flex; /* Flexbox pour un alignement horizontal */
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.5em; /* Garde l'espacement des éléments */
+}
+
+
+.listePCK li {
+    position: relative;
+    width: 17em;
+    height: 17em;
+    margin: 0.5em;
+    padding: 0.5em;
+    background-color: var(--white);
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+}
+
+
+.listePCK li img {
+    width: 10em;
+    height: 10em;
+}
+
+.listePCK li h2 {
+    font-size: 1.2em;
+    color: var(--medium-purple);
+    margin-top: 0.5em;
+}
+
+.listePCK li:hover {
+    transform: scale(1.05);
+}
+
+.listePCK a {
+    text-decoration: none;
+    color: var(--medium-purple);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.listePCK p {
+    font-size: 1em;
+    text-align: center;
+}
+
+
 .vide{
     position: relative;
     margin-top: 0.5em;
@@ -360,7 +381,7 @@ main {
     padding: 10px 15px;
     border-radius: 20px;
     border: none;
-    color: var(--white);
+    color: var(--light-purple);
     font-weight: bold;
     margin: 0 5px;
     cursor: pointer;
@@ -368,8 +389,10 @@ main {
 }
 
 .navigation-container button:hover {
-    background: var(--dark-purple);
-    color: var(--accent-pink);
+    background: var(--white);
+    box-shadow: var(--shadow);
+    color: var(--medium-purple);
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .hero-section {
@@ -412,15 +435,18 @@ main {
 .collection-btn {
     background-color: var(--medium-purple);
     border: none;
-    color: var(--white);
+    color: var(--light-purple);
     padding: 10px 20px;
     border-radius: 20px;
     cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .collection-btn:hover {
-    background: var(--dark-purple);
-    color: var(--accent-pink);
+    background: var(--white);
+    color: var(--medium-purple);
+    box-shadow: var(--shadow);
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .age-categories {
