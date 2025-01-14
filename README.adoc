@@ -273,6 +273,9 @@ note : 2,2/3
 Manque analyse difficultés réussites et CR réunion avec le client. 
 note : 2/3
 
+=== Fiche de synthèse DROIT
+Non fait
+0/20
 
 === Evaluation bi-hebdomadaire :
 
