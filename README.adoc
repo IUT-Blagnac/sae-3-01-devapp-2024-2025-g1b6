@@ -301,6 +301,6 @@ La recette de tests n'a pas évoluée depuis 2 semaines ... pas d'évolution des
 
 === retour semaine 2
 Le projet est terminé et j'ai encore des task ouvertes ? Les issues ne sont pas rattachées à un milestone qui en scrum devrait être un sprint et non une "sur-tâche". Les remarques n'ont pas été prise en compte. Pas de section dédiée au livrables dans le readme (j'ai toujours les mêmes veilles documentations non mise  à jour). idem pour les tests, pas de doc utilisateur. site OK.
-note provisoire GPO : 9,92/20
+note provisoire GPO : 11,4/20
 
 
