@@ -269,6 +269,11 @@ note 1,9/3
 ODJ: Manque point rdv client, idem dans le CR. Dans le CR manque analyse difficutés réussites et notamment au niveau organisationnel.
 note : 2,2/3
 
+==== Evaluation semaine 51
+Manque analyse difficultés réussites et CR réunion avec le client. 
+note : 2/3
+
+
 === Evaluation bi-hebdomadaire :
 
 ifdef::env-github[]
@@ -288,4 +293,7 @@ Mettre les rôles de chacun dans le readme. Mettre le contexte du projet. Backlo
 Backlog produit : ok il manque juste l'évaluation du temps ou complexité. Backlog sprint : confus ! Les US devraient faire apparaitre le sprint en milestone dans lequelles elles sont traitées .... je ne sais pas dans quel sprint vous êtes en regardant votre projet !! Les Tasks/issues ne sont pas ratachées à des US. Elles ne sont pas assignées et n'ont pas de milestones ! Il y en a très peu en dev ... vous en êtes ou ?? doc en general : penser à noter  version, date, auteurs cf sae SAE S2 TESTS : Revoir ce qui a été fait l'an dernier, il manque notamment le résultat du test. Une US peut entrainer plusieurs tests. DOCS : conception, intégrer les schémas , ne pas mettre de liens, il manque des schémas (séquences, UC par ex). doc tech : mettre le bon nom pas doc de charte graphique ! Manque doc utilisateur. Release : ok , proposer dès que possible un lien vers le site.
 
 === retour semaine 50
-Je n'ai toujours pas de milestone sur les US ou les issues, les issues ne sont pas ratachées aux US, j'ai toujours autant de mal à savoir où vous en êtes (l'onglet current iteration est vide !). La recette de tests n'a pas évoluée depuis 2 semaines ... pas d'évolution des autres docs.
+Je n'ai toujours pas de milestone sur les US ou les issues, les issues ne sont pas ratachées aux US, j'ai toujours autant de mal à savoir où vous en êtes (l'onglet current iteration est vide !). 
+La recette de tests n'a pas évoluée depuis 2 semaines ... pas d'évolution des autres docs.
+
+
