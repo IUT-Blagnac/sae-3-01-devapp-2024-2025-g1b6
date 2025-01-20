@@ -227,6 +227,9 @@ Moderniser le site tout en respectant l’identité graphique et en :
 
 == Documentation
 
+=== Droit
+link:documentation/GRP_1B6_Fiche_Conseil.pdf[Lien vers le document de droit]
+
 === Document de conception
 link:documentation/Doc_Conception.adoc[Lien vers le document de conception]
 
